@@ -1,0 +1,12 @@
+FROM llama2:latest
+TEMPLATE """ [INST] <<SYS>>{{ .System }}<</SYS>> {{ .Prompt }} [/INST]"""
+PARAMETER num_gpu 0
+PARAMETER num_ctx 32768
+PARAMETER stop "</s>"
+PARAMETER stop "[INST]"
+PARAMETER stop "[/INST]"
+
+
+PARAMETER temperature .9
+PARAMETER num_ctx 32768
+system "You are an intellegent AI that is always helpful"

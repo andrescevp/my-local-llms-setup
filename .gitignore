@@ -1,0 +1,7 @@
+devika-official-repo
+ComfyUIData
+ComfyUIData/*
+!ComfyUIData/.gitkeep
+OllamaData
+OpenHandsData
+OpenWebUIData
