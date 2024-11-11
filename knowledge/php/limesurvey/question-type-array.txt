@@ -1,0 +1,100 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+
+An array allows you to create a set of [[Question_types#Subquestions|subquestions]]. Each of them uses the same set of answer options. For example, you can use this question type when you need feedback on several aspects of a particular product.
+
+<div style="display:none;"></div>}}</onlyinclude>
+=Video tutorial=
+
+To understand how the array-type questions work, check the following [https://www.youtube.com/watch?v=7134QebOQzY video tutorial].
+
+=General description=
+
+In the below example, the ''array question type'' is used in order to rate four sci-fi movies:
+
+<center>[[File:F_AFL.jpg]]</center>
+
+
+'''Example:''' [[Media:Question tpye - Array using flexible labels.zip|Question type - Array using flexible labels.zip]]
+
+
+<hr width="50%" style="margin:auto">
+
+
+A further option available is the '''Semantic Differential'''. You have to choose either ''Array'' or ''Array (5 point choice)'' as question type to part the answer by using a pipe char "|" - which answer should be on the left side and which one on the right side of the array. For example, If you want to have 'Good' on the left side of the row and 'Evil' on the right side of the row, just write 'Good|Evil' into the answer field: 
+
+
+<center>[[File:H_SD.jpg]]</center>
+
+
+'''Example:''' [[Media:Question type - Array - Semantic Differential Question Type.zip|Question type - Array - Semantic Differential Question Type.zip]]
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' If you use Windows and you do not know where the Pipe Char is on your keyboard, you can enter it by pressing and holding Alt key, entering 124, and releasing the Alt key.</div>
+
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:subquestion_width}}
+
+{{QS:Random_order}}
+
+{{QS:Repeat_headers}}
+
+{{QS:Question_theme}}
+
+{{QS:Hide_tip}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:use_dropdown}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:array_filter}}
+
+{{QS:array_filter_style}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:Exclusive_option}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Arrays]]

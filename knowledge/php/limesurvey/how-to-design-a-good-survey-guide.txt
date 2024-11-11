@@ -1,0 +1,384 @@
+<languages />__TOC__
+
+'''A Simple Guide to Making a Good Survey'''
+
+LimeSurvey makes it easy to put together a survey very quickly. Unfortunately, that makes putting a bad survey together very easy too.
+
+On this page, you will find a simple guide to putting together a survey which will not only be painless for your audience to complete; but will also give you meaningful answers.
+
+The blog [https://www.survey-consulting.com/survey-design-tips-tricks "Survey design tips & tricks"] also provides other very useful information.
+
+==Before Making a Survey==
+
+Some important questions need to be answered before designing any questionnaire - actually even before deciding whether a questionnaire is the right way to go.
+
+<u>What is it that you really want to find out with your research?</u>
+
+Once you have answered that question, ask the following:
+*'''Will a survey help me obtain the information that I need for my research?'''
+*'''Who are the right people to ask to complete the survey?'''
+*'''How can I ensure that I reach the right people?'''
+*'''What is the best way to help those completing the survey fully understand the questions (so that the information obtained is accurate / useful)?'''
+*'''Which, if any, statistical methods (for data analysis) do I want/need to use on the data once it has been gathered?'''
+
+
+These are just a few of the questions that you need clear answers to when deciding if LimeSurvey is the right tool for you. 
+
+LimeSurvey is great for fully structured (you know all the questions you might need to ask before you start the interview), standardized (everyone gets more or less the same questionnaire), mostly quantitative (it is mainly about numbers or questions with predefined answers) questionnaires which are collected online.
+
+
+To some extent you can, of course, vary from this.  You can use LimeSurvey to collect answers to some types of phone interviews. You can also use LimeSurvey to collect qualitative data, e.g., by using text questions.
+
+But at some point, you might come to the conclusion that other research methods are more suitable.
+
+==Structuring a Questionnaire==
+
+To decide in which order to ask questions and how to group them, there are some aspects to consider.
+
+If possible, start with questions that are easy to answer and which all participants are comfortable answering. Often these will be screening questions, i.e., questions you need to ask to find out whether you are asking the right people (use [[Setting conditions|conditions]] and/or [[Survey quotas|quotas]] to deal with these screening questions).
+
+Putting these types of questions at the beginning might help to avoid participants leaving your survey before completing it, as people might be less likely to terminate once they have already put some work into answering these lead-in/screening questions.
+
+'''Examples''':
+<syntaxhighlight lang="php">Which of the following fruit do you like?
+#Apples   ()
+#Bananas  ()
+#Cherries ()
+
+(single choice)
+
+You can use conditions to make the next question appear about cherries if participant chose ''cherries''.
+
+Why do you prefer cherries?
+#They are tasty
+#I love the color
+#They are healthy
+#They are juicy
+#I love cherry pie
+
+(multi choice (or single choice, depends if you need exact data) question)
+
+How much do you like cherries?
+#1) Not much more than other fruit
+#2) Like them more than other fruit
+#3) It's one of my favourite fruits!
+#4) I ADORE CHERRIES!
+
+(single choice)
+
+Do you know any recipes with cherries?
+
+[textfield]
+
+</syntaxhighlight>
+
+Above is an example of easy to answer lead-in questions followed by the main question.
+
+The objective was to gather recipes with cherries, apples and bananas.
+
+On the other hand, if you need to ask hard to answer questions, you might think about using different pages for each question or question group and putting these hard to answer questions at the very end. This way, if participants decide not to complete the survey, at least their previous responses are saved.
+
+Something else to consider pertaining to structure - avoid biases introduced by the questionnaire itself.
+
+For example, in market research there are concepts which require unaided and aided questions.
+
+An example of an unaided question would be:
+
+<syntaxhighlight lang="php">"Which brands of chocolate are you familiar with?"
+
+(followed by an empty text box) </syntaxhighlight>
+
+The following is an example of an aided question:
+
+<syntaxhighlight lang="php"> "Which of the following brands of chocolate are you familiar with?"
+
+(followed by a list of brands (multiple choice))</syntaxhighlight>
+
+As mentioned previously, if you choose to include both types of questions (aided and unaided) in the same questionnaire, you should make sure to put them on different pages and put the unaided questions before the aided questions.  Putting an aided question before an unaided question might unintentionally influence the response of participants, which would invalidate your results.
+
+==Individual Questions==
+
+Questions should be non-suggestive. "What is your opinion about LimeSurvey?" is an acceptable (non-suggestive) question while "Don't you agree that LimeSurvey is a really great tool?" is a suggestive question.
+
+Other examples and suggestions for phrasing questions:
+
+People may say '''"yes"''' to donating money if asked questions in the following way:
+* ''Do you love nature?''
+* ''Will you donate money to help the river?''
+
+
+They will probably say '''"no"''' when asked the questions this way:
+* ''Is lack of money a problem for you?''
+* ''Will you donate money to help the river?''
+
+
+To help solicit the proper responses, order your questions:
+*from the least sensitive to the most sensitive
+*from general to more specific
+*from questions about facts to questions about opinions
+
+Also, a survey question can be:
+*'''Open-ended''' (the person answers in their own words), or
+*'''Closed-ended''' (the person chooses from a limited number of options)
+
+Closed-ended questions are much easier to analyze, but may not allow respondents to give the answer they really want.
+
+Example: "''What is your favorite color?''"
+
+'''Open-ended''': Someone may answer "dark fuchsia", in which case you will need to have a category "dark fuchsia" in your results.
+
+'''Closed-ended''': With a choice of only 12 colors your work will be easier, but respondents may not be able to pick their exact favorite color.
+
+Carefully consider each question and decide if they should be open-ended or closed-ended.  If you need deeper insight into responses, use open-ended questions.  If this is not the case, close-ended questions can be used.
+
+Example (open-ended): "''What do you think is the best way to clean up the river''?"
+
+Make it '''open-ended''': the answers may not be easy to put in a table or graph, but you may gain deep insight into people's feelings and ideas about cleaning up the river or the environment and use direct quotes in your reporting.
+
+Example (closed-ended): "''How often do you visit the river?''"
+
+Make it '''closed-ended''' with the following options:
+*Nearly every day
+*At least 5 times a year
+*1 to 4 times a year
+*Almost never
+
+You will be able to present this data in a neat bar graph.
+
+When working with multiple-choice or single-choice questions, make sure to choose the appropriate question type and formulate both questions and answers appropriately.
+
+'''For example:'''
+
+<syntaxhighlight lang="php">Which of the following fruit do you like?
+#Apples   ()
+#Bananas  ()
+#Cherries ()</syntaxhighlight>
+
+The above is a typical multiple-choice question, as you can like several items on the list.  On the other hand, "Which one of the following fruits do you most prefer?" is a single choice question.
+
+Both fruit examples have been formulated to make clear that your concern is with only the fruit listed. If you were to ask, "Which is your favorite fruit?", you should either have a really exhaustive list of fruit or, more likely, use LimeSurvey's setting to add an "other" field. Generally, answer options in most cases need to be complete, mutually exclusive and definite.
+
+If you have multiple- or single-choice questions with a lot of options to choose from, you need to be aware that this might introduce another bias, as participants are likely to focus their attention on the very first options and not those in the middle. LimeSurvey offers a great option to randomize the order of questions and, to some extent, eliminate this problem.
+
+==What Makes a Good Survey?==
+
+There are 3 features of a survey that will help to elicit the proper responses needed for more accurate assessment(s):
+# The questions are clear and precise, collectively allowing for detailed, unambiguous and meaningful answers.
+# All predefined answers provided and their formats are appropriate to the question.
+# There is room for people to add additional information if they need to.
+
+Adding to that, always keep the user experience in mind. Reading, scrolling and clicking are tiring activities.  So,:
+# Avoid unnecessary questions.
+# Use conditions to avoid asking questions not relevant for a specific participant.
+# Keep questions and answers short and easy to read - use appropriate markup.
+# Think about the trade-off between scrolling and clicking. Display everything on one page for short questionnaires (5-15 questions, depending on question complexity). Use groups wisely for longer questionnaires, i.e., group questions comprehensibly.  Use group descriptions to give a clear statement about the topic of the following questions.
+# Avoid confusing participants with different scales, i.e., limit the amount of different scale types, scale scopes and different scale descriptions as much as possible. Try not to change the direction of scales. (There are some methodological exceptions).
+#For rating scales, it might be useful to use an even number of rating options to make decision making easier for the respondents (see below).
+
+<syntaxhighlight lang="php">Example for answer scales about how ''good'' something is:
+
+1. Very good
+
+2. Good
+
+3. Quite good
+
+4. Not that good
+
+5. Bad
+
+6. Very bad
+
+Example for answer scales about how ''bad'' something is:
+
+1. Good
+
+2. Fair
+
+3. Bad</syntaxhighlight>
+
+The best way to start designing a survey is to take a second to imagine your ideal feedback. It goes without saying that meaningful responses are the most useful ones, so try to create questions which invite these answers.
+
+How can you go about that? The best method is to separate all the areas and decide what information you need.
+
+For example, imagine you held an event that was open to the public and needed to get some general feedback about the event.
+
+The following survey is an example of one that might be inadequate for eliciting useful responses:
+
+<syntaxhighlight lang="php">Did you enjoy the Event?
+
+( ) Yes
+
+( ) No
+
+How good was the Wi-Fi?
+
+1 2 3 4 5 6 7 8 9 10
+
+( ) ( ) ( ) ( ) ( ) ( ) ( ) ( ) ( ) ( )
+
+Did you have problems getting to the event?
+
+( ) Yes
+
+( ) No
+
+Was the map provided helpful?
+
+( ) Yes
+
+( ) No
+
+How did you feel about the mixture of speakers?
+
+( ) Very sad ( ) Sad( ) Neutral ( ) Happy ( ) Very Happy</syntaxhighlight>
+
+Matrix questions would be a better choice for the above scenario.
+
+==Matrix Questions.==
+
+As a general rule, scales should only be used for questions pertaining to age, time (maybe), or quantities. Matrix questions have to be worded properly in order to obtain the most useful feedback.  Keep in mind that a matrix of compulsory questions can be a bit of a deterrent for your audience because, when not structured properly, they do not allow for any extra information to be gathered.  
+
+Chances are if someone is completing your survey, they want to give feedback, and if they don't think they can share anything useful, they'll just close the window and move on.
+
+So what's wrong with the survey above?
+
+Let's look at each question one by one.
+
+'''Question 1''' doesn't really achieve anything.  Imagine receiving 100 "no" responses.  The response alone does not provide any useful information as to why the participant did not enjoy the event.  You would be left wondering about the reason for the "no" responses and also left wondering what to do with the responses.  We'll look at a possible improvement to this in a moment.
+
+'''Question 2''' is worse than the first. Referring back to the 3 features of a good survey, we see that questions need to be clear and precise. I'm not an expert in Wi-Fi, but I'm fairly certain that there are better ways of measuring this. What's more, it doesn't allow for a meaningful answer to a question like, "What will you do with the knowledge that 33% of people rated your Wi-Fi as being good vs only 23%?"  The 3 features of a good survey also states that the predefined answers need to be appropriate for the question.
+
+It's fairly obvious that using a scale for this question won't help you improve on the quality of your Wi-Fi. There is a definite need for this question to have space for people to add additional information. How could someone report a specific problem without being able to elaborate?
+
+In this case it would be almost impossible to have enough information to properly address the issues that the participant(s) had with the Wi-Fi.  Surveys are all about obtaining useful information that you can work with or learn from.
+
+'''Questions 3 & 4''' would have the same results as the first two questions.  They only allow for a "yes" or "no" response, and neither provides an opportunity to add details. We provide suggestions after this section on how to improve on these types of questions. 
+
+'''Question 5''', the final question, is another ineffective one. Asking for the level of satisfaction about something is not very useful, as every person has different interests, and so everyone will likely have different opinions about each speaker. It's another example of where a "scale" question is being used and shouldn't be.
+
+Have a look at the improved survey below.
+
+<syntaxhighlight lang="php">Did you make use of the in-house Wi-Fi?
+
+( ) Yes
+
+( ) No
+
+Did you experience any problems with the Wi-Fi?
+
+( ) No problems at all
+
+( ) A couple of small issues, nothing major
+
+( ) One or two severe issues
+
+( ) The Wi-Fi was almost totally unusable.
+
+If you experienced problems, could you briefly describe them? (Text field)
+
+Did you have any problems getting to the event?
+
+( ) Yes
+
+( ) No
+
+How did you come to our event?
+
+( ) Train
+
+( ) Car
+
+( ) Bus
+
+( ) Light Rail (IE Tube, Tram)
+
+( ) Walk
+
+Did you use the map from our website?
+
+( ) Yes
+
+( ) No
+
+If you looked at the map, was it detailed enough?
+
+( ) Yes
+
+( ) It gave me a rough idea.  I used another map for more detail though.
+
+( ) Not detailed at all
+
+If you didn't use the map, why not?
+
+( ) Not enough detail
+
+( ) I used a satnav/Google maps instead.
+
+( ) I didn't even know it existed!
+
+Generally speaking, were the speakers interesting? Did you enjoy the presentations?
+
+( ) Nearly all were interesting and thoroughly enjoyable
+
+( ) Mainly enjoyable, but a handful of less interesting talks.
+
+( ) A 50 - 50 split
+
+( ) More dull than interesting
+
+( ) Didn't find any interesting
+
+Please elaborate on your answer to the question above. Feel free to reference any
+
+particular people/talks. (Text field)
+
+If we could improve the range of talks, or you have any other interesting ideas regarding
+
+the talks, list them below (Text field)
+
+If you have any other recommendations or ideas, please list them below. (Text field)</syntaxhighlight>
+
+This survey may be a little longer, but it is a lot easier to answer and interpret the responses. Asking two or three questions about each of the topics means that, when it comes to processing the results, you can do a little more analysis. For example, imagine that in response to the first survey question you received 30 people saying they had problems making it to the event.
+
+This would have been as much information as you could extract from the results, but with the new set of answers it would be possible to deduce which forms of transport presented people with problems. What's more, you could go on to see whether they were using the map provided or another form of navigation, and use this to target improvements in the future.
+
+''' Keep in mind, that after 50 questions, the user is most likely to stop reading'''
+
+Other important additions are the text field questions.  These allow your participants to give specific feedback which you can draw from. It's a good idea to not make these compulsory, as they may put people off answering.
+
+To conclude, when writing a survey, you should aim to create one that asks specific questions to obtain more useful information for analysis.  Also, remember that it is helpful to gather a little extra background information, as it can be used to better analyze the responses.
+
+It is also important to phrase your questions properly.  If people need to answer the questions, and they don't understand them they will close the window and move on. If possible, have someone else proofread your survey before making it publicly available to ensure that the questions are clear.
+
+==Survey Bias==
+
+In conducting market research, an important key in obtaining unbiased responses is to avoid asking survey participants questions that may influence the responses they provide.  Avoiding survey bias helps eliminate responses that may invalidate or skew the data collected. 
+It is quite easy and common for a company or individual without the proper market research training/knowledge to err in this way.  This applies to many things, such as the way a question is phrased, to the types of responses that are available to choose from, to the way that an interviewer presents the questions if data is being collected by phone or in-person.
+
+
+The following is an example of a biased question:
+
+<syntaxhighlight lang="php">How much did you enjoy the event?
+
+( )Very much
+
+( )Just a little
+
+( )Not very much
+
+( )Not at all</syntaxhighlight>
+
+At first glance, it appears that there is no problem with the structure of this question.  After all, the respondent has choices ranging from "very much" to "not at all."  However, the problem is in the way the question is phrased.  By asking the participant "How much" he or she enjoyed the event, the person conducting the survey has already established a bias by assuming that the respondent enjoyed the event in some way or another, which may not be the case.
+
+The following example would be a better way to ask the question in a way that does not influence the participant's response:
+
+<syntaxhighlight lang="php">How would you rate your overall enjoyment of the event on a scale of 1 - 5: 1 = "Not at all" and 5 = "Completely enjoyed"
+
+1 2 3 4 5
+
+( ) ( ) ( ) ( ) ( )</syntaxhighlight>
+
+Rephrasing the question allows the respondent to answer using a scale that makes it easy for him or her to specify the enjoyment level, and makes it easy for the person conducting the survey to tabulate and compare the results with other respondents. Of course, more questions should be added to gather specifics on what the participants enjoyed or didn't enjoy.
+
+This is just one example of how minor changes in wording can improve your survey.  

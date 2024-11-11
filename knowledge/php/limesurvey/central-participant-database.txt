@@ -1,0 +1,418 @@
+<languages /> <translate>
+
+<!--T:1-->
+__TOC__
+
+=Introduction= <!--T:3-->
+
+<!--T:163-->
+To access this feature: '''Configuration''' -> '''Central Participant Database''':
+
+
+<!--T:190-->
+<center>[[File:Central participants database.png]]</center> 
+
+
+<!--T:4-->
+This feature allows the administrator to store the participant information in a central table that is independent of any survey participants table. Its major advantages are:
+* The central table acts as a backup. If a user creates a new survey, they will not have to export its participants to a CSV file and then import them back into a new survey.
+* Users need only to add the participants to the central table. Then, the same participants can be added to as many surveys as the user wants.
+* In case multiple users have access to a LimeSurvey installation, its owner(s) can choose to share their participants with other users and also set access rights for the shared users.
+
+<!--T:5-->
+You may also find in your LimeSurvey installation an advanced [[Central Participant Database#Attributes|attribute control]] and several other features.
+
+=The participants panel management tools= <!--T:6-->
+
+<!--T:164-->
+The following options are available:
+
+
+<!--T:7-->
+<center>[[File:The participants panel management tools.png]]</center>
+
+
+
+<!--T:165-->
+*[[Central Participant Database#Display CPDB participants|Display CPDB (Central Participant Database) participants]] 
+*[[Central Participant Database#Info|Info]]
+*[[Central Participant Database#Import|Import]]
+*[[Central Participant Database#Blacklist settings|Blacklist settings]]
+*[[Central Participant Database#Attributes|Attributes]]
+*[[Central Participant Database#Share panel|Share panel]]
+*[[Central_Participant_Database#Export_participants|Export all participants]]
+
+== Display CPDB participants == <!--T:28-->
+
+<!--T:29-->
+This is the main component of this panel. The majority of options can be accessed from here, such as adding, deleting, exporting, adding participants to surveys, etc.
+
+<!--T:32-->
+Five options are available in the '''Action''' column for every participant listed in the table:
+
+
+<!--T:31-->
+<center>[[File:displayParticipant.png]]</center>
+
+
+<!--T:166-->
+*[[Central Participant Database#Edit participant|Edit this participant]]
+*[[Central Participant Database#Delete participant|Delete this participant]]
+*[[Central Participant Database#Share participant|Share this participant]]
+*[[Central Participant Database#List active surveys|List active surveys]]
+*[[Central Participant Database#Add participant to survey|Add participant to survey]]
+
+
+<!--T:167-->
+{{Box|Before accessing the options mentioned above, you must have users listed in your database. To create them, click the '''[[Central Participant Database#Add participant|Add new participant]]''' button, located in the upper-right part of the window.}}
+
+===Add participant=== <!--T:45-->
+
+<!--T:46-->
+Click the '''Add new participant''' button located in the upper-right part of the window: [[File:Add new participat CPDB.png]].
+
+<!--T:168-->
+A dialog box with the following basic attributes will then appear: 
+
+
+<!--T:169-->
+<center>[[File:addParticipant.png]]</center>
+
+
+<!--T:170-->
+*'''First name'''
+*'''Last name'''
+*'''E-mail'''
+*'''Blacklist user'''
+*'''Owner''': Any user of LimeSurvey defined in the [[Manage_users#User_management|user control management page]] can be an owner.
+
+<!--T:171-->
+{{Box|'''Custom attributes''' can be added. For further details, see the [[Central Participant Database#Attributes|attributes]] and [[Central Participant Database#Examples|examples]] sections.}}
+
+===Edit participant=== <!--T:172-->
+
+<!--T:173-->
+To edit the basic and/or custom attributes of a participant, click the first button (from left to right) located in the '''Action''' column ([[File:Edit participant CPDB.png]]). A window with all the available attributes will be displayed.
+
+===Delete participant=== <!--T:47-->
+
+<!--T:49-->
+You can easily delete one or multiple participants:
+* If you want to delete one participant, go to the row where the respective participant is located and click the red bin button: [[File:Delete participant CPDB.png]].
+* If you want to delete two or more participants, click the '''Selected participant(s)...''' button (under the last row, below the '''Action''' column) after you selected the corresponding entries: [[File:Select participants CPDB.png]]. Then, click the delete option. 
+
+<!--T:174-->
+When you delete the participant(s), three options are available to you:
+
+
+<!--T:50-->
+<center>[[File:deleteParticipant.png]]</center>
+
+
+<!--T:52-->
+1) '''Delete only from the central panel''': The first option deletes the participant from the central participant database only. If the participant is in any survey participants table, they will not be removed.
+
+<!--T:53-->
+2) '''Delete from the central panel and associated surveys''': The second option deletes the participant from central panel and from the surveys where they have been added to, but their responses are not deleted.
+
+<!--T:54-->
+3) '''Delete from central panel, associated surveys and all associated responses''': The third option deletes all traces of that participant from the system, including their responses.
+
+
+<!--T:58-->
+{{Alert|title=Attention|text=Please note that in all the three scenarios, the links created for the purpose of maintaining a participant's history are also deleted.}}
+
+===Share participant=== <!--T:59-->
+
+<!--T:83-->
+This is another important feature of the '''Central Participant Database'''. You can share your participants with other users. You just have to select the participant(s) you want to share and click either the green right-arrow icon ([[File:Share participate CPDB.png]]) or the '''Selected participant(s)...''' button located in the bottom left part of the participants table. A modal box will open which will allow you to select the user with whom you want to share the respective participant(s). You can also set whether the user who shares your participant can edit those participants. If you set it to ''No'', they will get an access denied error when trying to edit the entries of the shared participant.
+
+
+<!--T:84-->
+<center>[[File:shareParticipant.png]]</center>
+
+===List active surveys=== <!--T:60-->
+
+<!--T:175-->
+If you click the next icon ([[File:List active surveys CPDB.png]]), all the active surveys where the respective participant has been added to will be listed.
+
+===Add participant to survey=== <!--T:61-->
+
+<!--T:86-->
+Adding a participant to a survey can be done by clicking the last icon ([[File:Add participant to survey CPDB.png]]) from the '''Action''' column. If you wish to add more than one participant to a survey, mark them and select the '''Share''' option from the '''Selected participant(s)...''' dialog box (located in the bottom-left part of the central table).
+
+
+<!--T:91-->
+<center>[[File:addtoSurvey.png]]</center>
+
+
+<!--T:191-->
+<div class='simplebox'> [[File:help.png]] Please note that if you wish to add participants from the central database to a survey, the respective survey needs to contain a '''survey participants table'''! For further details, please continue reading the following [[Survey participants|wiki section]].</div>
+
+<!--T:94-->
+The title of the dialog box will show you the number of participants that are going to be added to the respective survey. Besides that, there is also a checkbox, that if checked, it will take you to the survey participants table of the survey to which you are adding the participants to.
+
+<!--T:95-->
+After clicking 'Next', you will be taken to the attribute map page.
+
+<!--T:96-->
+The attribute map page contains four tables and uses an advanced drag-and-drop functionality:
+
+
+<!--T:97-->
+<center>[[File:attributemap.png]]</center>
+
+
+<!--T:192-->
+* The first table, ''Unmapped participant attributes'', shows all the attributes that are present in the central participant database. They are currently unmapped - not present in the survey participants table. These unmapped attributes can either be moved into the ''Token attributes to create'' table which creates new attributes in the survey participants table or they can be merged with the existing token attributes by dragging the unmapped attributes into the ''Existing token attributes'' table, besides the existing token attribute you wish to be merged with. 
+
+<!--T:193-->
+* The second table, ''Token attributes to create'', helps you copy unmapped participant attributes into the survey participants table, creating new columns. Drag the attribute(s) you wish to add to the survey participants table and drop them into the second table. In this way, new columns/attributes will be added to the survey participants table.
+
+<!--T:194-->
+* The third table, ''Existing token attributes'', displays the current attributes existing in the survey participants table. Drop the unmapped attributes here if you wish to copy the data from the unmapped attributes into the one of the existing token attributes (see screenshot below) 
+
+<!--T:195-->
+* The fourth table, the ''Standard token fields'', displays the standard token fields that can be merged with unmapped participant attributes. The only standard token field from a survey participants table that can be edited is the '''Token''' one. This is important when you wish, for example, to easily copy token codes across different LimeSurvey installations.
+
+
+<!--T:196-->
+<center>[[File:Attributemaps test.png]]</center>
+
+
+<!--T:197-->
+<div class='simplebox'> [[File:help.png]] You can also overwrite the existing token attribute values from the survey participants table if a participant already exists. Use this option cautiously in order not to lose any important data on survey respondents.</div>
+
+
+<!--T:98-->
+After you have mapped all the attributes, you can click '''Continue'''. After processing the participants, a summary page will be displayed, telling you how many participants were successfully copied. If you have previously asked for redirection, you will be redirected to the survey participants table, otherwise you will be redirected to the CPDB main page.
+
+
+<!--T:99-->
+<center>[[File:addtosurveysummary.png]]</center>
+
+==Info== <!--T:20-->
+
+<!--T:21-->
+Displays '''CPDB''' stats:
+
+
+<!--T:198-->
+<center>[[File:ParticipantPanel.png]]</center>
+
+
+<!--T:22-->
+1) ''Total participants in central table'' : The total number of participants located in the central participant database.
+
+<!--T:23-->
+2) ''Participants owned by you'' : Shows the total number of participants that have you as a owner. By default, <u>the new participants</u> entered into the central participant database <u>have as owner the user that firstly added them to it</u>. 
+
+<!--T:24-->
+3) ''Participants shared with you'' : The number of participants that were shared with you by other users.
+
+<!--T:25-->
+4) ''Participants you have shared'' : The number of participants you shared with other users.
+
+<!--T:26-->
+5) ''Blacklisted participants'' : The number of blacklisted participants.
+
+<!--T:27-->
+6) ''Total attributes in the central table'' : The total number of attributes that can be found in the central table.
+
+==Import== <!--T:81-->
+
+<!--T:176-->
+If you wish to add participants via the import function, click the Import button that is located on the main toolbar of the '''Central participant database''' page: [[File:importCSV.png]]
+
+<!--T:177-->
+The following options are available:
+
+
+<!--T:178-->
+[[File:Import CSV CPDB.png]]
+
+
+<!--T:82-->
+Please note the text from the box on '''CSV input format''': 
+{{Box|The file should be a standard CSV (comma delimited) file with optional double quotes around values (default for OpenOffice and Excel). The first line must contain the field names. The fields can be in any order. 
+'''Mandatory field''': email
+'''Optional fields''': firstname, lastname, blacklisted, language}}
+
+===Steps to import=== <!--T:110-->
+
+<!--T:111-->
+1) Select a file to import and specify the settings associated with it.
+
+<!--T:113-->
+2) Map the attributes from the CSV file. Import the attribute data either into an existing attribute from the central participant database or into a new column by creating a new attribute. The newly created attribute will be of text box type - the format can be changed later.
+
+
+<!--T:114-->
+<center>[[File:attributeMapCSV.png]]</center>
+
+
+<!--T:115-->
+In the screenshot from above, a new attribute called "New Age" will be created. The data from attribute "Sex" was mapped and copied into the existent "Sex" attribute from the central participant database.
+
+<!--T:116-->
+3) Click continue, and wait for the process to be done. At the end, a short summary will be displayed.
+
+
+<!--T:117-->
+<center>[[File:CSVsummary.png]]</center>
+
+
+<!--T:118-->
+Clicking ''OK'' will redirect you to the participants screen, showing you the newly imported participants.
+
+==Blacklist settings== <!--T:78-->
+
+<!--T:181-->
+The '''Blacklist settings''' button is available on the main toolbar of the '''Central participant database''' page. Once you click it, the following page will be displayed.
+
+
+<!--T:199-->
+<center>[[File:CPDB Blacklist settings panel.png]]</center>
+
+
+<!--T:182-->
+The following ''Yes/No'' options are available:
+*'''Blacklist all current surveys for participant once the global field is set''': If set to ''Yes'', the blacklisted participant(s) cannot be added to any survey.
+*'''Blacklist participant for any new added survey once the global field is set''': If new surveys are created, the respective participant(s) cannot be added to them (if ''Yes'' is picked up). However, they can still be added to those surveys created earlier.
+*'''Allow blacklisted participants to be added to a survey''': Even if a participant is blacklisted, they can still be added to a survey.
+*'''Hide blacklisted participants''': Useful function when you would like to hide participant for a specific amount of time and then make them available for the rest of users with whom those blacklisted participants have been shared with.
+*'''Delete globally blacklisted participants from the database''': If ''Yes'', the blacklisted participants will be deleted from the database.
+*'''Allow participant to un-blacklist himself/herself''': If ''Yes'', participants can un-blacklist themselves without the help of a LimeSurvey user.
+
+==Attributes== <!--T:126-->
+
+<!--T:183-->
+To access the '''Attributes management''' panel, click the '''Attributes''' button located on the main toolbar of CPDB main page: [[File:Attributes management icon.png]]
+
+
+<!--T:132-->
+<center>[[File:Add new attribute CPDB.png]]</center>
+
+
+<!--T:127-->
+The attribute management facilitates the addition of three types of attributes: ''text box, date, and drop-down list''. To add a new attribute, click t'''Add new attribute''' located in the upper-right part of the window:
+
+
+<!--T:135-->
+<center>[[File:addingattribute.png]]</center>
+
+
+<!--T:184-->
+When adding a new attribute, the following options are available:
+*'''Defaultname''': It will be used by LimeSurvey to name the attribute in case no other English name is provided. 
+*'''Attribute type''': You can choose either of the attribute types and the associated user interface will be presented to you while editing.
+*'''Should this attribute be visible on the panel?''': It can be ''Yes'' or ''No''. This function determines whether the attribute is visible in the CPDB table or not. This can be later edited from the '''Visible''' column that is located in the main attributes table. 
+*'''Languages''': If you would like LimeSurvey not to use the defaultname as the name of the attribute, type here the desired name. Please note that the attribute management has multilingual support. Click on the plus sign after you have selected the language. A new field will appear below the English/default language. 
+
+<!--T:185-->
+Once the changes are done, click '''Save'''.
+
+<!--T:200-->
+<div class='simplebox'>[[File:help.png]] We recommend tha you write the name of the attribute in the corresponding language box even if you use only one language (the base language). The reason for this is that when you map attributes and you wish to add them to different survey participants table, the '''defaultname''' of the attribute is not displayed in the respective panel - only the name you give in the corresponding language box is shown.</div>
+
+<!--T:186-->
+In the attributes table, two actions are available (see the ''Action'' column):
+
+<!--T:187-->
+<center>[[File:Action table attribute management.png]]</center>
+
+<!--T:188-->
+If you click the first icon, a dialog box will be displayed. It includes the basic settings of the selected attribute that can be edited according to your needs.
+
+<!--T:137-->
+To delete an attribute from the table, click on the red trash button, located next to the edit button. Clicking the delete button will not only delete the attribute, but also the associated values from the CPDB.
+
+== Share panel== <!--T:146-->
+
+<!--T:147-->
+The share panel shows all the information related to the shared participants. Please note that this panel shows only the shared participants owned by that particular user.
+
+
+<!--T:148-->
+<center>[[File:sharepanel.png]]</center>
+
+
+<!--T:149-->
+This panel shows values like:
+
+<!--T:151-->
+1) ''Last name''
+
+<!--T:150-->
+2) ''First name''
+
+<!--T:152-->
+3) ''Email address''
+
+<!--T:153-->
+4) ''Shared by''
+
+<!--T:154-->
+5) ''Owner''
+
+<!--T:155-->
+6) ''Date added''
+
+<!--T:156-->
+7) ''Can edit?''
+
+<!--T:157-->
+This information is for viewing/sorting purposes. Only the '''Can Edit''' field is editable for the user. The '''Can edit''' field allows you to determine whether to allow the respective participant to be editable by the user with whom that participant was shared with or not. Clicking on the check box will make an AJAX call and save the changes on the server.
+
+==Export participants== <!--T:179-->
+
+<!--T:62-->
+The export function is located on the main toolbar of the '''Central participant database''' page: [[File:Export CPDB.png]]
+
+<!--T:180-->
+When exporting to CSV, you are presented with a dialog box that asks you to mark the attributes you wish to export.
+
+<!--T:63-->
+You can export:
+
+<!--T:201-->
+*'' '''None''' of the additional attributes''
+
+<!--T:202-->
+*'' '''All''' the additional attributes''
+
+<!--T:203-->
+*'' '''Certain''' additional attributes''
+
+
+<!--T:67-->
+<center>[[File:exporttoCSV.png]]</center>
+
+
+<!--T:68-->
+The format of the exported file will be CSV.
+
+===Export filtered participants=== <!--T:204-->
+
+<!--T:205-->
+To export filtered participants, use first the [[Central Participant Database#Search filters|search filters]]. Then. click the checkbox located on the left side of the '''Action''' column (to select all the filtered participants). Then, click the '''Selected participant(s)...''' button located at the bottom-right side of the table and select the export function. In this way, only the '''filtered participants''' will be exported.
+
+==Search filters== <!--T:69-->
+
+<!--T:206-->
+If you wish to filter the users from your database, use the search/dropdown boxes located below each column title: 
+
+
+<!--T:207-->
+<center>[[File:CPDB Filtered search.png]]</center>
+
+
+<!--T:208-->
+Enter information in the search fields or select from the dropdown lists (when possible) the participants you want to be listed after the filtering process.
+
+=Additional information= <!--T:160-->
+
+<!--T:161-->
+Additional (technical) information is available in the [[Central participants database (User panel) Development]] wiki.
+
+</translate>

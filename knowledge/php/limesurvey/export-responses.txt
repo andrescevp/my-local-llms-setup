@@ -1,0 +1,417 @@
+<languages /> __TOC__
+
+
+Once your survey is active, you can start browsing responses and export them for further analyses. To access the export function, click on '''Responses''' (displayed on any survey-related panel) and then click on '''Responses & statistics''' from the dropdown menu.
+
+
+<center>[[File:browse_results.png]]</center>
+
+
+The default page that is loaded is [[Response summary]]. Now, look for the '''Export''' option located on the top toolbar:
+
+
+<center>[[File:export2.png]]</center>
+
+
+Several options are available:
+
+*[[Export responses#Export responses|Export results]]
+*[[Export responses#Export responses to SPSS|Export responses to SPSS]]
+*[[Export responses#Exporting a VV survey file|Export a VV survey file]]
+
+
+=Export responses=
+
+
+The following panel is displayed when the first export-related option is selected from the drop-down menu:
+
+
+<center>[[File:Export responses page.png]]</center>
+
+
+Several filter options are separated into:
+
+*'''Format:''' it allows you to select the format in which you wish to export your results. The following formats are available:
+** ''CSV File (all charsets):'' see also the "CSV field separator" option at the bottom of the '''Format''' tab. The default one is "comma". The other options are  "semicolon" and "tab"
+** ''HTML''
+** ''R (data file):'' if this option is chosen, please also export your survey into R (syntax file). To find out more details about how you can analyse your data in R, check [[Export_responses#Export_R|this wiki subsection]]
+** ''Microsoft Word (latin charset)''
+** ''Microsoft Excel (all charsets)''
+** ''STATA (.xml):'' for more details on how to analyse your data in STATA, read the following [[Export_responses#Export_STATA-xml|wiki subsection]]
+** ''PDF''
+** ''R (syntax file):'' if this option is chosen, please also export your survey into R (syntax file). To find out more details on how you can analyse your data in R, check [[Export_responses#Export_R|this wiki subsection]]
+
+*'''General'''
+** ''Completion state:'' set to export all records OR completed records only OR incomplete records only. For more information on their meaning, check [[Responses_%26_statistics#Responses_summary|this wiki subsection]]
+** ''Export language:'' the default option is the base language of your survey
+
+*'''Range''': refers to the id of the stored responses from the [[Responses#The_response_table_page|response table]]. In case the values you introduced are wrong (ie., no response id was found between the values you entered), a pop-up will be displayed when you will try to export the responses asking you to enter values that can be found in the table.
+
+
+{{Note|'''Range''' is not displayed if you wish to export [[Export_responses#Export_a_single_response|only one response]] or [[Export_responses#Export_a_group_of_responses|a group of responses]].}}
+
+
+*'''Responses'''
+** ''Export responses as:'' you can either export full answers or convert answer codes. If the later is selected, the answers submitted by your respondents will be replaced by the answer code of the respective answer.  "Yes" and "No" answers will be converted to "Y" and "N" answers to any string of characters. If "Convert Y/N to" is enabled, then the answer codes that use Y and N as answers will be converted into the strings of characters from their corresponded boxes. By default, the values are 1 for Y and 2 for N. 
+
+
+{{Note|To better understand the difference between full answer and answer codes, check the following [[Adding_answers_or_subquestions|wiki section]].}}
+
+
+*'''Headings'''
+**''Export question as:'' sets how the heading should look like in the exported file. The following options are available:
+***Question code
+***Abbreviated question text: the length of the question is decreased if this option is selected (useful if you work with long questions)
+***Full question text (default)
+***Question code & question text
+**''Strip HTML code:'' enabled by default in order not to export the HTML used in question text boxes
+**''Convert spaces in question text to underscores:'' disabled by default. If enabled, the spaces from the question text are converted to underscores. 
+**''Text abbreviated:'' disabled by default. If enabled, the question text will be abbreviated. The length of the question text is given by the number put into the "Number of characters". Please note that this option is useful in the case in which you wish to abbreviate the question texts resulted from selecting either "Full question text" or "Question code & question text" as heading text.
+** ''Use ExpressionScript code:'' disabled by default. If enabled, the questions and subquestions will be exported as they are used within the ExpressionScript. Therefore, the heading would resemble the [[ExpressionScript - Presentation#Qcode_variable_naming|qcode variable naming]]. Please note that one of the following question heading options has to be chosen: "Question code" or "Question code & question text".  
+** ''Number of characters:'' set up a maximum number of characters to be displayed in the headings. This option works if you wish to export your question as abbreviated question text. The default number is 15.
+** ''Code/text separator:'' select the option you wish to use to separate the question code from the text of the question. By default, it is a "dot" followed by an empty string (<SPACE>).
+
+*'''Column Control''': sets the questions (and their corresponding answers) to be exported. The questions in this list are represented by their corresponding question code and question text. By default, all columns will be exported. To select multiple columns, use CTRL and/or SHIFT keys. 
+
+*'''Token control''' - sets which '''''survey participant''''' data should be exported. This option is only available if your survey is [[Participant_settings#Anonymized_responses|not anonymous]]! Click here for more information on what a [[Survey participants|survey participant table]] is and how you can use it in LimeSurvey.
+
+
+<center>[[File:export_tokens.png]]</center>
+
+
+==Export R==
+
+
+The free software environment [http://www.r-project.org/ R] is an alternative for SPSS used for statistical computing and graphics.
+
+'''Follow these steps to import your dataset in R:'''
+
+#Download '''both''' the syntax file and data file
+#Store both files in your R working directory (use ''getwd()'' and ''setwd()'' in a R command window to get and set your working directory)
+#Enter <code>source("File_name_syntax.R")</code> in the R command window. It will import the data in the correct format to a data frame called "data".
+
+
+{{Note|You may also use [https://www.rstudio.com/products/rstudio/download/ RStudio] (free open source solution) to work with your data in R in a nice and easy-to-understand GUI. By following the above guideline, your data should look like this:
+
+
+<center>[[File:Rstudio-screen1.png]]</center>
+
+<center>[[File:RStudio-screen2.png]]</center>}}
+
+
+Responses with limited options will be factored with the levels matching the code of the question and the labels matching the options.
+
+Questions with "other" as an option will have the question field with _Other appended as a new column for the other data.
+
+<div class="simplebox"> '''R-export''' is a plugin in LimeSurvey. If you cannot find the R-export options (R (syntax file), R (data file)) under '''Format''', make sure the R-export plugin is enabled in the [[Plugin menu|plugin menu]].
+
+
+<center>[[File:Export results to R plugin.png]]</center></div>
+
+
+==Export Stata-xml==
+
+
+Stata is a commercial data analysis and statistical software package. 
+
+This export routine was created to facilitate rapid analysis of data collected with LimeSurvey. It creates an XML-file in Stata's proprietary format. This format offers several advantages over importing plain CSV files:
+*Data sets are fully labelled including variable labels (question, subquestion) and value labels (answers, if applicable).
+*Dates are already transformed to Stata's internal date format and thus can directly be used to calculate differences between days etc.
+*Variable names are, if necessary, converted to a Stata compatible format.
+*Data formats of variables (string, integer, float, etc.) are already set according to the underlying data (no more numbers encoded as strings!). 
+
+'''How to load the file in Stata:'''
+# In Stata's menu, click on File, Import, xml-data
+# Choose browse to navigate to your exported file and click 'OK'.
+
+{{Note|If you prefer Stata's binary .dta files, you can just save your data again in this format.}}
+
+
+{{Alert|title=Attention|text=
+*Due to a limitation in Stata's data format, the length of string (text) variables have a maximum of 244 characters (Stata versions 8-12) and 2045 characters (Stata version 13 and above). Please indicate your Stata version in the settings of the [[Plugin menu|export plugin]]: 
+
+
+<center>[[File:STATA export plugin.png]]</center>
+
+
+<center>[[File:Export_for_stata.png]]</center>
+
+
+*Stata only supports attaching value labels to numerical values. So, to achieve short answers (usually one or two digits) and have these properly labelled, one should use numerical answer-codes in LimeSurvey (1=Totally agree). If non-numerical answer codes are used (A=Totally agree), then the complete answer text will be used as answer (eg., 'Totally agree').}}
+
+=Export responses to SPSS=
+
+
+SPSS Statistics is a software package used for logical batched and non-batched statistical analysis. You can use the official SPSS package or [https://www.gnu.org/software/pspp/ GNU PSPP] replacement for the proprietary program SPSS.
+
+To export your response data to SPSS, go to '''Responses & statistics''' section and select the SPSS-corresponding option located under the '''Export''' menu:
+
+
+<center>[[File:Export2Spss.png]]</center>
+
+
+The following page is displayed:
+
+
+<center>[[File:Export response data to SPSS.png]]</center>
+
+
+The following options are displayed in the panel:
+
+*'''Data selection:''' you can select which data should be selected for export: all responses OR only complete responses OR only incomplete responses
+*'''SPSS version:''' Check your SPSS installation version. Three different export options can be chosen: "Prior to version 16 / PSPP", "16 or up" and "16 or up with Python Essentials"
+*'''Language:''' acts like a filter that allows you to filter the exported responses based on the language used to fill out the survey
+*'''Limit:''' type in any numerical value to get exported only the first "n" entries from your response table
+*'''Offset:''' type in any numerical value to get exported your response table without the first "n" entries from your response table
+*'''No answer:''' if left empty, an empty string is stored as answer for the questions that have not been answered by respondents. Type in this box any string of characters to replace the empty string. The set of characters will be displayed in the exported .dat file
+
+SPSS export includes two files:
+# a syntax file (''survey_xxxx_SPSS_syntax_file.sps'')
+# and a data file (''survey_xxxx_SPSS_data_file.dat'').
+
+After having downloaded these files you can open them using a raw text editor like notepad to take a look how the exported data looks like. The syntax file holds the commands that should be run to import the data. It is like a programming language inside SPSS. The .dat file contains a comma separated file with all data. '''We recommend you not to import your data as csv''' because there is the risk of loosing information about questions, label sets, and so on. 
+
+
+==Import LimeSurvey responses to SPSS==
+
+
+To import your data to SPSS, pursue these steps:
+#Download the data and the syntax file.
+#Open the syntax file in SPSS in Unicode mode.
+#Edit the 'FILE=' line and complete the filename with a full path to the downloaded data file.
+#Choose 'Run/All' from the menu to run the import.
+#Done
+
+=VVExport=
+
+
+Once you've begun collecting responses, there may be occasions where you need to be able to directly edit and modify large quantities of data from your responses table (where a spreadsheet tool may be more useful).
+
+VVExport (the "VV" stands for vertical verification) allows you to export your responses table into a .csv file. So long as the general structure of the file remains intact, you can then edit values within it, and then import the file again into your responses table using the "VVImport" feature.
+
+
+<div class="simplebox">'''When do I need to use VVExport and VVImport?
+It is often used in three scenarios:
+# In the first one, it is used to combine large amounts of data in one LimeSurvey installation. Imagine that you run two similar surveys on two different machines. In order to combine the two response tables, you will have to use VVExport, VVImport, and a third-party app (e.g., spreadsheet apps) to combine your data and put it on one LimeSurvey installation.
+# It may also be used to edit the response table of a survey. For small edits, you can access the [[Responses#The_response_table_page|response table]] and edit the desired answers. Still, for "macro-editing", VVExport and VVImport are recommended because a spreadsheet program can help you quickly edit dozens of responses at the same time.
+# A "vv survey file" allows you to import the responses to a survey when the question/answer combinations have changed. Effectively, this allows you to add or remove questions in an active survey. 
+
+'''Attention!''' To add, remove or '''edit''' questions, you have to deactivate your survey, do the changes, and then activate it again. The old response table that was created as a result of the [[Closing_a_survey#Deactivation|response table deactivation]] can be imported into the newly activated survey by selecting '''Import''' -> '''Import responses from a deactivated survey table'''. For more details, check this [[Import responses#Import responses from a deactivated survey table|wiki subsection]].</div>
+
+
+To export your data via VVExport, go to [[Responses & statistics]] section and select the VV-corresponding option located under the '''Export''' menu:
+
+
+<center>[[File:Export VV button.png]]</center>
+
+
+The following page will be loaded:
+
+
+<center>[[File:VV2-export-en.png]]</center>
+
+
+* '''Survey ID:''': The ID of the survey to be exported
+* '''Export:''' The completion state of the responses to be exported: 
+**''Completed responses only:'' if a respondent reaches the last page of a survey and clicks the '''Submit''' button, then his or her response is marked as being complete
+**''Incomplete responses only:'' if a respondent does not click on that ''Submit'' button located before the end page, then the response is marked as being incomplete  
+**''All responses:'' export both completed and incomplete responses
+* '''File extension:''' The file extension. The file is a TSV ([[wikipedia:Tab-separated_values|tab-separated values]]) file. For easy opening in MS-Excel set the extension to .txt. If you use LibreOffice, OpenOffice or any other spreadsheet program, you can leave it to .csv (default format)
+
+
+{{Note|The first two rows of the spreadsheet are the column labels. The first row is a "human readable" column heading that details the name of the question. The second row is the real column name (Internal DB- or Qcode-name) for that response.}}
+
+
+* '''VV export version:''' The 1.0 version (''Old VV version'') uses database column headers, version 2.0 (Last VV version) uses [[Expression_Manager#Qcode_Variable_Naming|Qcode Variable Naming]]. Version 2.0 is selected by default if all of your question code are unique.
+
+
+{{Note|''Last VV version'' allows different column names than the ones from the database. If your question codes are unique, then the new version is selected. In the new version each column name uses the [[Expression_Manager#Qcode_Variable_Naming|Qcode Variable Naming]]. The update of surveys is [[Export responses#Editing a VV survey file|easier]] in this way.}}
+
+
+{{Alert|title=Attention|'''Things you should be aware of:'''
+* If you want to import responses using "VVImport" make sure to check whether the responses should be added to the existing responses or all responses should be overwritten.
+* If you are trying to import responses from a different yet identical (e.g., identical questions/answers from another survey), make sure you are using the correct vv file and that the first two lines of the .csv file are correct.
+* If you import a survey to your LimeSurvey installation the SID will not change (if possible). The group id and question id however might change. So you might have to adjust the first two heading lines to match the new group id/question id.}}
+
+
+==Exporting a VV survey file==
+
+
+When you choose to export responses using VVExport, you will be given the option to choose whether you want to export all responses or complete responses only or incomplete responses only. The file extension allows you to choose which extension the exported file will have. For easy use, .csv should be chosen.
+
+The first two rows of the spreadsheet/tab-delimited file are the column labels. The first row is a "human readable" column heading that details the name of the question/answer field. The second row is the internal PHP/database column name for that response.
+
+You should not modify the first two rows of this spreadsheet if you want to be able to "import" the data back into LimeSurvey at a later point.
+
+==VV files structure - example==
+
+===VV version 1 TSV file===
+
+
+<syntaxhighlight lang="text">
+Response ID	Date submitted	Last page	Start language	Token	please vote from 1 to 6 (1 - super, 6 - worst)
+id	submitdate	lastpage	startlanguage	token	46492X40X1991
+183	09.11.11 11:44	3	de	jsfhusdgqfygqsy	4
+184	09.11.11 11:53	3	de	sdfhsifgsyergze	2
+190	09.11.11 11:44	3	de	qsdqshkfhkdsjhj	1
+</syntaxhighlight>
+
+
+===VV version 2 TSV file===
+
+
+<syntaxhighlight lang="text">
+Response ID	Date submitted	Last page	Start language	Token	please vote from 1 to 6 (1 - super, 6 - worst)
+id	submitdate	lastpage	startlanguage	token	QCODE
+183	09.11.11 11:44	3	de	jsfhusdgqfygqsy	4
+184	09.11.11 11:53	3	de	sdfhsifgsyergze	2
+190	09.11.11 11:44	3	de	qsdqshkfhkdsjhj	1
+</syntaxhighlight>
+
+
+In this example, the SQGA identifiers are not used - instead, the Qcode variable naming <code>QCODE</code> is used in the second line.
+
+<div class="simplebox">To understand the difference between SGQA and Qcode, please check the following two wiki sections:
+* [[SGQA_identifier|SGQA wiki section]]
+* [[Expression_Manager_-_presentation#Qcode_variable_naming|Question code wiki section]]
+
+We generally recommend our users to use question codes since they are much easier to be used (it represents an addition to the SGQA system used in the earlier versions of LimeSurvey.
+</div>
+
+
+==Reserved names==
+
+
+A .vv file uses left and right brackets for reserved names. When importing, this string is replaced by:
+* <code>{question_not_shown}</code> : NULL value in database. LimeSurvey uses [empty string] for not answered question, and NULL value for questions not shown.
+* <code>{quote}</code> : " (a double quote)
+* <code>{cr}</code> : Carriage return
+* <code>{newline}</code> : A new line
+* <code>{lbrace}</code> : Left bracket (for example, if you want to have {cr} in response : use <code>{lbrace}{cr}</code> )
+
+==Editing a VV survey file==
+
+
+When a .vv file has been successfully exported you can use a spreadsheet tool to open and edit the file. If you have to choose a column separator when opening the file please use the "Tab" character. If you are using non-ASCII characters make sure you set "UTF-8" as character set.
+
+
+{{Alert|If you are using Microsoft Excel to edit the exported vv file, you should know that Excel destroys the original data structure of the file. This causes an error when you try to reimport the edited .vv file. The workaround is to save as a .txt file once you edited the data from the .csv file. If you save as .csv, Excel uses comma-delimits which will not import into LimeSurvey. By saving as a .txt file, Excel saves as a tab-delimited file which can be imported into LimeSurvey. For other Excel-related issues, check this [[Problems_%26_solutions#Excel|wiki subsection]].}}
+
+If you simply wish to simply edit your data, then be careful at the first two columns so that you can later easily VVImport your data back into your LimeSurvey installation!
+
+If you combine data from two different surveys, please note that the old VV version uses [[SGQA_identifier|SGQA]] which will most probably give you different "question ids". Therefore, be careful how you merge the data! 
+
+The alternative would be to use the last VV version because question codes can be constant throughout different LimeSurvey installations (if you use the same survey structure across multiple LimeSurvey instances).
+
+When importing the VV file, if two response IDs match and the '''Exclude record IDs''' is disabled, you can make LimeSurvey:
+*Report and skip the new record
+*Renumber the new record
+*Replace the existing record
+*Replace answers in file in the existing record
+
+{{Note|For more information on how to import a VV file, check the following wiki subsection: [[Import_responses#Import_a_VV_survey_file|Import a VV survey file]].}}
+
+=Other export options=
+
+
+In case you do not need to export the whole survey, you can also choose to export only:
+* [[Export responses#Export a single response|a single responses]] or
+* [[Export responses#Export a group of responses|a group of (filtered) responses]]
+
+
+==Export a single response==
+
+
+If you want to export an individual response, you can do it in two ways:
+
+1. Login to LimeSurvey, choose your survey, click on [[Notifications & data]] tab and make sure you receive basic email notifications:
+
+
+<center>[[File:Receive emails detailed.png]]</center>
+
+
+Every time someone has completed a survey, you will receive an email with a link: "Click the following link to see the individual response". This will take you to a page with a button above the response data saying "Export this response":
+
+
+<center>[[File:Export one response 2.png]]</center>
+
+
+Choose how the single response will be exported:
+
+
+<center>[[File:Export one response 3.png]]</center>
+
+
+{{Note|You can observe that no '''Range''' export option is displayed since you export only one answer}}
+
+
+2. Login to your LimeSurvey installation/instance, choose your survey. Select tab [[Responses]] located under the '''settings''' tab:
+
+
+<center>[[File:Responses settings menu.png]]</center>
+
+
+{{Note|[[Responses]] and [[Statistics|statistics]] options are displayed under the '''settings tab''' only if the survey is '''not''' [[Closing_a_survey#Deactivation|deactivated]].}}
+
+
+See the "action" column. Hover the mouse over each option and see which one allows you to see the response details (the first button):
+
+
+<center>[[File:Export one response 1.png]]</center>
+
+
+The response entry will be loaded. Click on the "Export this response" button. You will be redirected to a panel from where you can select how the exported file should look like:
+
+
+<center>[[File:Export one response 3.png]]</center>
+
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+As you can observe, you can also export the response as a pdf file:
+
+
+<center>[[File:Export a response as pdf.png]]</center>
+
+
+This option is usually needed when you wish to share to one of your respondents his/her results. In the case in which you wish to share only certain parts of his/her answer, check the pdf export option located in the [[Statistics#Statistics_-_expert_mode|Statistics panel]]. In this way, you can hide your ''hidden questions'' and/or ''different assessments'' you run "in the background".
+
+
+==Export a group of responses==
+
+
+This option is useful in the case in which you wish to export a certain group of filtered responses. 
+
+To do it, access your [[Responses#The_response_table_page|Responses table]] table:
+
+
+<center>[[File:Responses settings menu.png]]</center>
+
+
+{{Note|[[Responses]] and [[statistics|statistics]] options are displayed under the '''settings tab''' only if the survey is '''not''' [[Closing_a_survey#Deactivation|deactivated]].}}
+
+
+You can either order the responses according to the value from each column by clicking on the column label or you can type in the empty boxes located below the column labels a string of characters according to which you wish your data to be filtered to. 
+
+
+<center>[[File:Filter group of responses.png]]</center>
+
+
+<div class="simplebox">[[File:Help.png]] Not any string of characters may work. It is dependent of the question type. For example, a popup will be displayed for "startdate". For number-based questions, you may use signs such as ">=, <=, <, >" to better filter your data. For the "completed" column, a dropdown box is displayed if you click on "All" (default option), allowing you to filter your response table data according to the completion state of the responses and so on.</div>
+
+
+Once done, your table should look like the one below. Now, tick all the filtered responses, click on the '''Selected response(s)...''' button located in the bottom left side of the response table, and select the '''Export''' button:
+
+
+<center>[[File:Export group of responses 1.png]]</center>
+
+
+The next page will be loaded:
+
+
+<center>[[File:Export group of responses 2.png]]</center>
+
+
+The '''Range''' column is not displayed since you have already selected the entries you wish to export. To check those IDs, check '''Selection''' (see the above screenshot). You can click on '''Reset''' if you wish to export all your data instead.

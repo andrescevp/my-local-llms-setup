@@ -1,0 +1,287 @@
+<languages />
+__TOC__
+
+= User management=
+
+The user management tool allows you to add additional administration users to LimeSurvey. We refer to them as  'users'.  Do not confuse them with [[Survey participants|survey participants]] (respondents).
+
+
+==Create users==
+
+To create a new user, open the user management dialog by clicking on '''Configuration''' (located on the main LimeSurvey toolbar) -> '''User management'''.
+
+
+<center>[[File:LimeSurveyMenuUserManagement.png]]</center>
+
+
+Then, click '''Add user''' located in the upper right area of '''User control''' table. A window will be displayed asking you to:
+
+* Enter the desired username into the '''Username''' field.
+* Enter the email address into the '''Email''' field. Please note that:
+** LimeSurvey sends out a confirmation email to the address entered into the '''Email''' field. This email address will be used as the standard contact email address for surveys created by the respective user.
+** If you do not want the user to receive the confirmation email with a link to the LimeSurvey application, username, and password, you can use your own email address to send the confirmation email to you. After that, you can change the email address to the address of the user.
+* Enter user's full name into the '''Full name''' field. Please note that the full name entered here will be used as the standard contact person name for surveys created by the respective user.
+* Click '''Save''' to create the new user.
+
+Note that password complexity is enforced and validated by the PasswordRequirement plugin.
+
+<center>[[File:LimeSurveyAddUser.jpg]]</center>
+
+
+You have now created your first user. To find out more about [[Manage users#Set global permissions for a user|setting user permissions]], please read on.
+
+
+<center>[[File:LimeSurveyBleistiftSymbol.jpg]]</center>
+
+
+Below you can see four options under the '''Action''' column that allow you to:
+
+
+<center>[[File:Edit users.png]]</center>
+
+
+*edit the general aspects of a user - by clicking the pen symbol.
+*delete the user from the survey administrators database - by clicking the trash button.
+*set global permissions for a user - by clicking the lock symbol.
+*set theme permissions for a user - by clicking the pen-and-lock symbol.
+
+==Edit user==
+
+Click the pen icon to edit user information.
+
+
+You can enter a new email address, name, and change their password. Click '''Save''' to confirm changes.
+
+==Delete user== 
+
+To delete a user account, click the corresponding trash icon (located on the same line as the user account you want to delete) and click '''OK'''.
+
+==Set global permissions for a user==
+
+{{Alert|Global permissions apply to the whole LimeSurvey application. If you want to set permissions only for a specific survey, you can use the [[Manage users#Setting permissions for a single survey|survey permissions settings]].}}
+
+To set global permissions for a user, click the lock symbol.
+
+
+<center>[[File:User_global_permission.png]]</center>
+
+
+The CRUD (create, read, update, and delete) system is employed (as it is in the [[Manage users#Setting permissions for a single survey|survey permission settings]]). For more user permission options, we recommend extending the matrix using the double-right arrowhead, which is located in its upper right corner. If you check the first box, all the CRUD permissions in that row are automatically checked. 
+
+<center>[[File:User_global_permission_complete.png]]</center>
+
+You can now add or remove the following permissions:
+
+* '''Participant panel''': For more details, continue reading about the [[Central Participant Database|central participant database here]].
+
+* '''Label sets''': Permission to create, view, update, delete, export, and import label sets. The label sets do not have specific permissions (unlike themes).
+
+* '''Settings & Plugins''': With this permission a user can check data integrity, save the SQL database to an .sql file, manage global settings, view the PHP info in the global settings, and manage all plugins.
+
+*  '''Survey groups'''{{NewIn|v=4.4.0}}: Give access to all surveys' group. To allow user to manage their own surveys' group, give the user the 'create' permission. A creator of a surveys' group are (by default) the owner of this surveys' group. 
+{{Note|Permission on a surveys group does not give all permissions on surveys, but a user can give permissions on all surveys in surveys' group}}
+
+* '''Surveys''': Gives access to all surveys. To allow a user to only create and manage their own survey, give the user the 'create' permission. A creator of a survey is the owner of the survey and will always be able to manage it. Remember that each survey can grant different permissions . 
+{{Note|'''The global permission is applied before the survey-specific permission!'''}}
+
+* '''Themes''': Allows the user to use all the available design themes and edit all non-standard themes. A person with this permission should have sufficient knowledge in terms of HTML, Javascript, and CSS. If a user is not familiar with these things and is supposed to use a specific design themes, it would be better to only give them 'read' permission. Each theme can have specific permissions.
+
+* '''User groups''': Allows a user to create/view/update/delete user groups.
+
+* '''Users''': A user can create, modify, and delete their own administration users with this permission. The newly created users cannot have higher permissions than the parent user. You will also not be able to edit users owned by other administration users. If this has to be done, then a Superadministrator permission must be granted.
+
+* '''Superadministrator''': Can only be added by other Superadministrator with this setting as update and grants full permission to the whole LimeSurvey application, including installing plugins and using any kind of content (including JavaScript) in survey content. (see also [[Global_settings#Security|global security settings]])
+
+*'''Use internal database authentication''': Allows users to access LimeSurvey's panel via the authentication page (e.g. ''http://domain/admin/authentication/sa/login''). If it is unchecked and the respective user tries to connect to LimeSuvey's panel, they will get the following error: 'Internal database authentication method is not allowed for this user'.
+
+{{Note|All the permissions mentioned above that belong to the [[Optional_settings#Security|forced super administrator]] cannot be removed via the GUI.}}
+
+
+==Import and export users==
+
+You can import and export users in CSV and JSON format by using these buttons on User Management page.
+<center>[[File:ImportExportButtons.png]]</center>
+
+When you are importing users, a modal opens that shows you which fields should be present. You can choose to overwrite existing users by selecting this checkbox.
+<center>[[File:ImportUsersModal.png]]</center>
+
+Example of the JSON structure:
+
+<syntaxhighlight lang="json">
+[
+	{
+		"uid": 1,
+		"users_name": "admin2",
+		"full_name": "Administrator",
+		"email": "your-email@example.net",
+		"lang": "en",
+		"password": ""
+	},
+	{
+		"uid": 2,
+		"users_name": "ben2",
+		"full_name": "Ben Alister",
+		"email": "ben@test.ing",
+		"lang": "auto",
+		"password": "test!123"
+	}
+]
+</syntaxhighlight>
+
+Example of the CSV structure:
+
+<syntaxhighlight>
+uid;users_name;full_name;email;lang;password
+1;admin;Administrator;your-email@example.net;en;
+2;ben;"Ben Alister";ben@test.ing;auto;test!123
+</syntaxhighlight>
+
+
+==Set theme permissions for a user==
+
+With theme permissions, you can decide which design themes a user can select when creating or editing a survey. 
+
+If you have specific design themes for a group of users or customers, you can restrict their access to other themes to ensure that they use only themes created for them.
+
+To set or edit the themes permissions for a user, click the pen-and-lock symbol for design themes.
+
+
+<center>[[File:LimeSurveySetDesignTemplatesLS.jpg]]</center>
+
+
+Select the design themes to which the respective user or user groups should have access. After you finished your selection or deselection, do not forget to click '''Save''': [[File:Save.png|0.75px]].
+
+To better understand this function, view [[Manage users#Examples|the examples provided below]].
+
+==Activate and deactivate users==
+
+{{FeatureStarting|6.4.0}}
+It's possible to mark a user as activated or deactivated.
+
+A deactivated user is not able to log in to the admin interface.
+
+=Use one-time passwords=
+
+A user can call the LimeSurvey login at /limesurvey/admin and enter a username and a one-time password (which was previously written into the users table - ''column one_time_pw'' - by an external application).
+
+To enable this login method, the line [[Optional settings#Use_one_time_passwords|<code>'use_one_time_passwords' => true;</code>]] has to be added to config.php (it is 'false' by default) . 
+
+The URL has to contain the following variables:
+* '''user:''' The username normally used to login into LimeSurvey. This username has to exist in the 'users' table of the database.
+* '''onepass:''' The plain text password which is then compared to the password in the 'users' table
+
+A valid URL to login using a one-time password will look like this:
+
+<div class="simplebox">http://www.yourdomain.org/limesurvey/index.php/admin/authentication/login?user=myusername&onepass=secretpassword</div>
+
+<div class='simplebox'> [[File:help.png]] The 'secretpassword' field is plain text, not a SHA 256 hash.</div>
+
+'''Things to watch out for:'''
+* To enable this login method, the line [[Optional settings#Use_one_time_passwords|<code>'use_one_time_passwords' => true</code>]] has to be added in config.php (it is 'false' by default).
+* The passed username has to exist in the LimeSurvey ''users table''.
+* The one-time password (which can be set via an external application) has to be stored as [https://secure.php.net/manual/en/function.md5.php MD5 hash] in the column ''one_time_pw'' of table ''users''.
+* The passed plain text password will be hashed using the sha256 function and will then compared to the stored hash in column ''one_time_pw'' of table ''users''. Both passwords have to match.
+* After the first login with the one-time password, it gets deleted from the database. The user won't be able to log in with that respective password a second time.
+
+=Set permissions for a single survey=
+
+These permissions only apply for a single survey. If you want to set permissions for the whole system, you can use [[Manage users#Set global permissions for a user|global permissions]].
+These permissions can be offered either to a single user or to a user group.
+
+
+{{Alert|title=Attention|text=An existing user account is required to set permissions for a single survey. If the account doesn't exist, you have to create it first and then change the survey permissions. The same applies to offering survey permissions to a user group. Besides the necessity to have one created, you also need to add at least one user to that group in order to be able to select it and grant it survey permissions.}}
+
+
+{{Note| By default, an user (non-admin) cannot grant survey permissions to users that are not part of the same group as the survey administrator. This is a security option enabled by '''default''' in LimeSurvey. To change this, you need to deactivate option [[Global_settings#Security|Group member can only see own group]], located in the '''Global settings''', under the '''Security tab'''. However, if you feel unsure about disabling this option, you can create groups containing those users that can be seen and be granted survey permissions by a survey creator.}}
+
+
+To change the survey permissions, click the '''Settings''' tab. Then, click '''Survey permissions''' and choose to whom would you like to offer permissions. The permissions can be offered either separately to specific users or to a user group.
+
+
+<center>[[File:LimeSurveySurveyPermissions.jpg]]</center>
+
+
+<center>[[File:LimeSurveySurveyPermissionsRights.png]]</center>
+
+
+==Grant survey permissions to a user==
+
+In the next step, select the user that will receive survey permissions and click '''Add user'''.
+
+
+<center>[[File:LimeSurveyAddSurveyPermission.jpg]]</center>
+
+
+After you click '''Set survey permissions''', the user's survey permissions matrix will be shown.
+
+<center>[[File:LimeSurveyUserPermissionMatrix.jpg]]</center>
+
+
+You can set in this matrix the user's survey permissions. Checking a box grants survey permissions to the respective user. If you click a checkbox from the first column, all the permissions of the corresponding line will be selected/removed. 
+
+Click the double-right arrowhead to access the extended version of the matrix to choose specifically the actions that can be performed by a user.
+After you finished editing the survey permissions, click '''Save''', which is located in the upper right corner of the screen.
+
+Some examples are provided [[Manage_users#Examples|below]] in order to help you get a better understanding of Limesurvey's survey permissions system.
+
+==Grant survey permissions to a user group==
+
+Click '''add a user group''' and select the user group to which you would like to add the permission permissions.
+
+<center>[[File:LimeSurveyPermissionpermissionsUserGroup.png]]</center>
+
+In the next step,  select  the permissions that you will allocate to the members of that user group. Do not forget to click the double right arrowhead to get an extended view of the permissions matrix.
+
+
+<center>[[File:UserGroupSurveyPermissions.png]]</center>
+
+
+After you have finished editing the survey permissions, click '''Save''', which is located in the upper right part of the screen.
+
+Some examples are provided [[Manage_users#Examples|below]] to help you get a better understanding of the Limesurvey's survey permissions system.
+
+{{Note|[[Manage user groups|The user group function]] is still experimental. Use our [https://bugs.limesurvey.org/ bugs tracker] to describe any kind of inconsistencies.}}
+
+=Examples=
+
+Different scenarios are presented below. They provide some advice about which permissions are necessary for some specific tasks and how they can be granted to the users.
+
+
+==Add new LimeSurvey administrator==
+* Log in as '''admin'''.
+* Create a new user account.
+* Grant that user the '''Superadministrator''' permission.
+* ''Not necessary'' : Setting the theme permissions ('''Superadministrator''' has all permissions for all themes).
+* ''Not necessary'' : Setting the survey permissions ('''Superadministrator''' has all permissions for all surveys).
+
+==A new user wants to create their own surveys==
+* Log in as '''admin''' (or as a user that has the '''Superadministrator''' permission).
+* Create a new user account.
+* Set global permissions for that user to '''Create survey'''.
+* ''Optional'' : Set theme permissions - select which theme(s) should be used by the user/user group.
+
+==The creator of a survey needs to give another person permission to edit their survey==
+* Log in as '''admin''' (or as a user that has the '''Superadministrator''' permission).
+* Create a new user account.
+* Set '''no global permissions''' for user.
+* Set '''no theme permissions''' for user.
+* Set the survey permissions the way you want. If he/she should receive all the survey permissions, you can check the first box from each row. Otherwise, click on the double-right arrowhead to see the expanded matrix (upper right corner) and select only those permissions you believe the respective user should have.
+
+==A person responsible for the survey wants to view and export survey results==
+* Log in as '''admin''' (or as a user that has the '''Superadministrator''' permission).
+* Create a new user account.
+* Set '''no global permissions''' for user.
+* Set '''no theme permissions''' for user.
+* Set survey permissions to: '''Responses''' -> '''View/read''' and '''export''', and '''Statistics''': '''View/read'''.
+
+
+<center>[[File:LimeSurveyCusomerOwnStatistics.jpg]]</center>
+
+==Granting permission for help with translation of a survey==
+* Log in as ''admin'' (or as a user that has the ''Superadministrator'' permission).
+* Create ''n'' user accounts (where n is the number of translators).
+* Create a user group called ''Translators'' and add the ''n'' accounts to this group.
+* Go to the '''Survey permissions''' and click on '''Add a user group'''.
+* If they only do translations, then offer them the '''Quick translation''' permission.
+
+{{Note|Check our [[LimeSurvey Users|wiki section on users]] and their classification as it can be found in the code and documentation.}}

@@ -1,0 +1,102 @@
+<languages /> 
+
+=Introduction=
+
+
+Under the '''Settings''' tab, you will find '''Survey settings''' and '''Survey menu'''.  This wiki section will cover the '''Survey menu'''.
+
+
+<center>[[File:Survey menu options settings tab.png]]</center>
+
+
+*[[Survey menu#List questions|Question list]]
+*[[Survey menu#List question groups|Group list]]
+*[[Survey menu#Reorder questions and question groups|Reorder questions and question groups]]
+*[[Survey menu#Survey participants|Survey participants]]
+*[[Survey menu#Quotas|Quotas]]
+*[[Survey menu#Assessments|Assessments]]
+*[[Survey menu#Survey permissions|Survey permissions]]
+*[[Survey menu#Email templates|Email templates]]
+*[[Survey menu#Panel integration|Panel integration]]
+*[[Survey menu#Resources|Resources]]
+*[[Survey menu#Plugin menu|Simple plugins]]
+
+<div class="simplebox">[[File:help.png]] To find out about the survey options, click the following [[Survey settings|link]].</div>
+
+=Question list=
+
+
+To view a list of your questions, click '''List questions'''. A list of survey questions will be displayed in a table with quick action buttons in the last column.
+
+For more details, read our [[List questions|wiki page about this option]].
+
+=Group list=
+
+
+To view a list of your survey question groups, click '''List question groups'''.   All groups are displayed in a table. 
+
+For more details read the following [[List question groups|wiki page]].
+
+=Reorder questions and question groups=
+
+
+To get an overview of the overall structure of your survey, click '''Reorder questions/question groups'''. This allows you to reorder questions and question groups. 
+
+For more details, read our [[Reorder questions and question groups|wiki page about this option]].
+
+=Survey participants=
+
+
+You may want to invite a specific group to participate in your survey to keep track of who has completed the survey and who has not, and ensure that each person can participate only once. To do this, click '''Survey participants''' and add only those persons that you wish to complete the survey.. 
+ 
+For a more in-depth presentation of this functionality, access the [[Survey participants|following link]].
+
+=Quotas=
+
+	
+A quota is used to set a limit on responses from defined groups of people on an active survey. Some common attributes used in defining quotas are things like gender, age, race, province/state. A quota can be added by clicking Add new quota located in the right part of the window.
+	
+For further details, access the following link on [[Survey quotas|quotas and their usage]].
+
+=Assessments= 
+
+
+LimeSurvey contains a feature that allows the survey administrator to create survey ''assessments'' for participants- even for multilingual surveys. Assessments are rules which evaluate the responses to a survey immediately after it is submitted, displaying text blocks to the survey participant (based on that evaluation).  
+ 
+For further details on its usage, check our [[Assessments|wiki page about it]].
+
+=Survey permissions= 
+ 
+
+In some cases the administrator may not want to give a user (e.g., a translator) global permissions to access more than one survey. That is why the survey permissions panel was created - to facilitate the allocation of permissions to different users without the need of using the [[Manage users|global system of permissions]]. To learn more about global permissions and survey permissions, access the following [[Manage users|wiki section]].
+	
+For more details on survey permissions and their usage, click the following [[Survey permissions|link]].
+
+=Email templates=
+ 
+ 		 	
+The email templates are used to send personalized invitations, reminders, confirmations, and registrations emails to survey participants (from the [[Survey participants|survey participants table]]). You can also edit the standard basic (or detailed) admin notifications that are sent to the survey administrator(s).
+ 
+For more information, access the wiki section dedicated to [[Email templates|email templates]].
+
+=Panel integration=
+
+
+You can set up which additional URL parameters will be accepted by your survey (these parameters will be attached to the start URL of the survey). 
+
+For further details, see the wiki section on [[Panel integration|panel integration]].
+
+=Resources=
+ 
+	
+Here you can manage pictures and media files that were uploaded in the HTML Editor.
+
+For more details, refer to our wiki section on [[Resources|how to use external resources]] in your survey.
+
+=Simple plugins=
+
+	
+{{Alert|title=Attention|text=Under construction}}
+ 
+	
+For more details, refer to the [[Plugin menu|wiki section]] on plugin menu.

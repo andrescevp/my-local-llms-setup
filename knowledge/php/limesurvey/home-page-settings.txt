@@ -1,0 +1,80 @@
+<languages /> 
+
+==General==
+The '''home page settings''' page allows users to customize their home page: '''Configuration'''-> '''Settings''' -> '''Home page settings
+<center>[[File:Configuration Home page settings.png]]</center>
+
+Besides editing home page settings, new boxes (for different user groups) can be created to facilitate the management of your LimeSurvey installation.
+
+==Home page settings==
+
+The following home page settings are available:
+
+<center>[[File:Home page settings view.png]]</center>
+
+*'''Display logo''': If it is turned 'Off', the logo situated above the boxes disappears (the default value is 'On')
+*'''Show last visited survey and question''': Turned 'On' by default. It shows the last visited question and survey, the bar being located between the logo and the boxes
+*'''Show survey list''': The default value is 'Off'. If you switch it to 'On', a survey list will appear below the boxes from the home page
+*'''Show search box on survey list''': If it is ticked 'Off', the search box will not be shown in the '''survey list'''. Please note that this option does not have any effect on your home page if the '''Show survey list''' option is not turned on
+*'''Wrap container around Boxes'''{{NewIn|3.0}}: If it is turned 'On', the container around each box gets smaller (useful function when more boxes are added to your home page)
+*'''Boxes by row''': The number of boxes you would like to have on each row. The default number is '3'
+*'''Box offset'''{{ObsoleteIn|3.0}}: '''Box offset''' is a function that helps users center the boxes. For example, if you use 15 boxes, you can use the '''box offset''' function in order to better arrange them into your home page. This function does not exist anymore in LimeSurvey 3.0 (and the later versions) because the boxes are automatically centered
+*'''Box orientation'''{{NewIn|3.0}}: Three options are available: ''left to right'', ''right to left'', ''centered'' 
+
+Click '''Save boxes settings''' once you are done. If everything is turned on, the home page should look like this:
+[[File: Home page view.png]]
+
+==Boxes==
+
+The LimeSurvey installation comes by default with six boxes created: ''Create survey'', ''List survey'', ''Global settings'', ''ComfortUpdate'', ''Label sets'' and ''Templates''. They can be either edited (the green pen button) or deleted (the red trash button):
+
+<center>[[File:Boxes Table.png]]</center>
+
+===Create/Edit a box===
+
+To add a new box into the '''Boxes''' table, click '''Create a new box''', located in the upper part of the screen:
+<center>[[File:Creat and reset - boxes.png]]</center>.
+
+Different fields have to be filled in:
+<center>[[File:Create a new box.png]]</center>
+
+*'''Position''': shows the box position (it is a numerical value)
+*'''Destination URL''': the link via which the respective option/function is accessed. For example, the destination URL to backup the entire database is ''admin/dumpdb''
+*'''Title''': name of the box
+*'''Icon''': allows the user to select one of the LimeSurvey predefined icons
+*'''Description''': short description of the purpose of the box
+*'''Display this box to''': allows you to choose who can see the respective box
+**''Only admin'' : only the super administrator of the LimeSurvey installation can see those respective boxes
+**''Everybody'' : everyone who logs in the LimeSurvey installation can see those respective boxes, i.e. survey users defined in the [[Manage users|User Control panel]]
+**''Nobody'' : nobody can see those boxes. It can be used when you would like to hide boxes from a specific [[Users#Manage user groups|user group]] for example
+**''Other user groups'' : a certain user group is allowed to see those boxes. To find out more about user groups, read our wiki [[Users#Manage user groups|on how to manage them]]
+
+Once done, click the '''Save''' button that is located in the upper right part of the screen.
+
+<div class="simplebox">[[File:help.png]] The fields of a box can be edited later by clicking on the green pen button located in the last column of the '''Boxes''' table.</div>
+
+{{Note|Check [[Home page settings#Examples|the example provided below]] to better understand this functionality.}}
+
+===Reset to the default settings===
+
+If you want to reverse the changes that you made, click the '''Reset to default boxes''' button, located on the upper right side of the window. This would restore the default boxes.  
+
+<center>[[File:Creat and reset - boxes.png]]</center>
+
+==Examples==
+
+===I want to create a new box===
+
+*Access '''Home page settings''' from the '''Configuration''' dialog.
+*Click '''Create new box''', located in the upper right part of the window.
+*Enter the requested information
+<center>[[File:Add a new box - example.png]]</center>
+
+{{Box|The destination URL can be found in the address bar. In this example, the URL leads to the '''General settings''' of a survey:
+<center>[[File:Destination URL.png]]</center>}}
+
+*Save the box and access the home page of your LimeSurvey installation. 
+<center>[[File:Add a new box - example 2.png]]</center>
+
+*Click the newly created box and check whether it is working or not (if not, recheck its destionation URL):
+<center>[[File:Create a new box example test.png]]</center>

@@ -1,0 +1,75 @@
+<languages />
+
+__TOC__
+
+=Introduction=
+
+Here you can edit the presentation- and navigation-related settings of your survey.  These changes impact how the survey is presented to survey participants.  E.g., you can choose to show the number of the questions at the beginning of the survey, a progress bar or the current statistics of the survey once it is completed, ....
+
+To access the presentation panel, navigate to the home page of your survey, and under the '''Settings''' tab, select '''Presentation'''.
+
+
+<center>[[File:Survey menu - presentation and navigation settings.png]]</center>
+
+{{Box|Different options have a corresponding option in the [[Global settings#Presentation|Presentation panel from the global settings]]. As a result, some of the features might not be selectable if they have been already deactivated/activated from the [[Global settings|global settings]] of your LImeSurvey installation. '''The global settings override the survey settings'''. Please note that only the super-admins can access the global settings.}}
+
+=Presentation Panel=
+
+The following options can be found in this panel:
+
+
+<center>[[File:Presentation features.png]]</center>
+
+
+==Navigation Delay (seconds)==
+It shows the number of seconds before the previous, next, and submit buttons are enabled. If none is specified, the option will use the default value, which is "0" (seconds).
+
+==Show Question Index / Allow Jumping==
+A question index can be displayed in the survey if this function is enabled, allowing the user to jump from one question group to another. You can choose the following:
+*'''Disabled''' : If this option is selected, no index is shown in the survey;
+*'''Incremental''' : If this option is selected, the question groups will be shown incrementally in an index menu located on the survey page. You are allowed "to jump" only to the question groups that were previously visited/accessed;
+*'''Full''' : Jumping from question group to question group is allowed via the index menu.
+
+==Show Group Name and/or Group Description==
+Your survey will show the survey participants the names and/or group descriptions for question groups.
+
+==Show Question Number and/or Code==
+What is to be shown to the survey participants - the question number and/or the question code, both or none. The number of the questions is shown at the moment a participant wishes to start the survey, while the question code is shown next to each survey question.
+
+==Show "No Answer"==
+When a radio button or select type question that contains editable answers (e.g.,: list & array questions) has the '''Show "No answer"''' enabled and is also '''not mandatory''', an additional entry "No answer" is displayed for each subquestion. This way, the participants can choose not to answer the respective question/subquestion. As a survey administrator, the following two options are available:
+
+*'''On''' : If this option is selected, the participants can choose the "no answer" option when it comes to selecting an answer for a non-mandatory question.
+*'''Off''' : If selected, the "no answer" option will not be displayed as a possible answer for any non-mandatory question.
+
+
+{{Box|If the super-admninistrator chooses to have the "No answer" option displayed (from the [[Global settings#Presentation|global settings]]), the '''Show "No answer"''' of the local survey field becomes non-selectable because the global settings trump the survey settings (idem for the ''Off'' case). To offer freedom to your survey administrators, the super-administrator has to choose ''Selectable'' for the '''Show "No answer"''' option from the global settings of your LimeSurvey installation.}}
+
+==Show "There Are X Questions In This Survey==
+Shows the total number of questions in your survey.
+
+==Show Welcome Screen==
+If turned off, the [[Text elements#Survey text elements panel|welcome text message]] will no longer be displayed at the beginning of the survey.
+
+==Allow Backward Navigation==
+If enabled, users can navigate backward and change his or her previous answers.
+
+.
+
+==Show On-screen Keyboard==
+If turned on, an on-screen keyboard will be displayed when answering questions that require typing in information.
+
+==Show Progress Bar==
+Shows survey participants a progress bar that emphasizes how much of the survey has been completed and how much is left to be completed.
+
+==Participants May Print Answers==
+If turned on, survey participants can choose at the end of the survey to print their answers.
+
+==Public Statistics==
+A link to a set of current survey statistics will be shown at the end of the survey if this option is enabled.
+
+==Show Graphs in Public Statistics==
+If enabled, graphs will also be shown in the public statistics at the end of the survey. Please note that the "Public statistics option" has to be enabled to allow the survey participants see the graphs in the public statistics.
+
+==Automatically Load URL When Survey Complete==
+[[Text elements#Survey text elements panel|The end URL]] becomes a redirect link once the survey is completed if this option is turned on.

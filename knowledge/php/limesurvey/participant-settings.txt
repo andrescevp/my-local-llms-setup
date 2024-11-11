@@ -1,0 +1,57 @@
+<languages />
+
+
+=Introduction=
+
+
+From this panel, you can edit different survey participants table settings. For example, you can choose to anonymize all the responses you get from a survey or allow public survey registration. It represents together with the [[Survey participants]] panel a powerful feature of LimeSurvey.
+
+To access these settings, '''Participant settings''' from the '''Settings''' menu.  
+
+
+
+<center>[[File:Survey menu - participant tokens.png]]</center>
+
+=Participant settings panel=
+
+
+The following options are available:
+
+
+<center>[[File:Participants tokens panel.png]]</center>
+
+
+==Set token length to==
+Usually, the default value of 15 (max. supported value: 35) digits does not need to be changed. However, if you wish to change this setting, please enter a number (X) which is greater than 5. If the number entered is smaller than 5, it will be converted to the default value of 15. '''When generating tokens, all tokens will use a length of X digits.'''
+
+
+==Anonymized responses==
+This option allows you to determine whether responses to your survey are matched up with information from your survey participants table, or kept "anonymous". The default is "No". If you choose "Yes", then your survey is set to anonymize responses - '''there will be no way to connect answers and participants'''. Even the admin will not be able to link response data and participant data. However, you will always be able to specifically view each response entered by your participants in the survey. Thus individual and anonymous analyses can still be done. 
+
+
+{{Alert|title=Attention|text=If this feature is activated, the response submission date and the token completed date are always set to 1980-01-01 00:00, no matter of other settings. Invalidating the submission date ensures no match with webserver logs where the token key might show up when a survey is started. Invalidating the token completed date guarantees that you can't align the order of submitted responses to the order of the token date/time.}}
+
+
+==Enable token-based response persistence==
+If your survey uses tokens and your responses are not anonymized, you may want to enable this feature. If you turn this on, your participants will be able to leave the survey and resume later at any time '''without''' using the "Resume later" function - for example, when they get distracted or their browser crashes. Upon clicking the invitation link again, they will find their survey answers still in place when they return to the survey and will even find themselves on the same page where they were before leaving.
+
+==Allow multiple responses or update responses with one token==
+
+If this option is activated, participants will be able to return to their survey by clicking the invitation link, even if they have already submitted the survey. 
+
+* If the survey is anonymous or "Enable token-based response persistence" is set to "No", this will '''add a new response'''. 
+
+* If the survey is not anonymous and token-based response persistence is enabled, the user will '''update the existing responses'''. If quota is activated : submitted response are not checked, participant can update the quota enable response and set a value out of quota.
+
+==Allow public registration==
+If you use tokens to control access to your survey, the only people who can use the survey are those who have an entry and a unique token allocated in the survey participants table. If you would like to use tokens, but also allow public registration, set this to "Yes". The "Yes" setting will allow a visitor to register his name and email address. The script will create a new entry in your survey participants table for this person, then send them an invitation email. The script will ensure that only one person per email address can complete your survey.
+
+==Use HTML format for token emails==
+When enabled, all emails sent via the LimeSurvey email system management interface (invite, reminder, confirmation) will be formatted as HTML. You'll then be able to use rich formatting for these emails. The default value is "Yes".
+
+As of version 4.x, when using HTML format a WYSIWYG editor will be available to edit email templates.
+{{Box|This settings is used for [[Notifications_%26_data#Basic_and_detailed_admin_notifications_email|basic and detailed admin notifications email ]] too.}}
+{{Alert|title=Attention|text=When you switch on or off this feature, you'll have to double check that your email templates are still displayed as you want.}}
+
+==Send confirmation emails==
+If enabled, the participant will receive a confirmation email that the survey was submitted.

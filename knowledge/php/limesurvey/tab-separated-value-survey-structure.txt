@@ -1,0 +1,223 @@
+<languages />
+__TOC__
+
+
+=Tab Separated Value Import and Export of Survey Structure=
+
+
+This feature is designed to make it easy to use a spreadsheet software like LibreOffice, Excel or Google Docs to author and edit surveys. It completely eliminates the dependence upon SGQA codes.
+
+This feature supports import from ASCII or UTF-8 encoded Tab Separated Value (TSV) files which have an extension of .txt.
+
+
+{{Note|Check out the following [https://account.limesurvey.org/about-limesurvey/surveyhelp/2125-creating-limesurvey-questionnaires-in-excel example] to get a better understanding of this functionality.}}
+
+
+=Getting Started=
+
+
+The easiest way is to take an existing survey and export it in Tab Separated Value format. Use the normal export survey button, and instead of selecting .lss format, select "Tab Separated Values format (*.txt)". It will be saved as a Tab Separated Value file in the proper format (tab delimited unicode file), with all the correct column headings.
+
+Any spreadsheet software that supports tab separated values is fine (e.g., OpenOffice or LibreOffice). LimeSurvey ignores any formatting within the spreadsheet, but feel free to add some if it helps you.
+
+<div class="simplebox">Note that the exported file is in UTF-8 format with the Byte Order Mark (BOM) as the first three (hidden) characters. If you double click on the .txt and try to open it directly with Excel, it will not open properly because Excel does not realize that it is UTF-8 formatted. To open these files with Excel, first open Excel, then select File:Open, select the .txt file, and tell Excel that it is using UTF-8 encoding.</div>
+
+There will be one row for each group, question, subquestion, and answer. There are also rows for global survey variables, and for language-specific survey variables. The primary language will be listed first, followed by any secondary languages. So, if there are multiple languages, the entire contents of the base language will appear first (e.g., all groups, questions, subquestions, and answers). This will be followed by a translated copy for each secondary language (with exactly the same number and order or rows for the translated set).
+
+Relationships are inferred by proximity. So, questions following a group are part of that group; subquestions following a question are part of that question, and answers following a question are part of that question. Thus, you don't need to know the IDs (gid, qid, sqid) for any questions. Those will be computed automatically upon import. In fact, this format does not use gid, qid, or sqid (or SGQA codes) at all.
+
+
+=Tips=
+
+
+The goal of the Tab Separated Value import/export is to let you rapidly design your survey using a spreadsheet. We expect that you will frequently import the sheet, check its validity using the "Show Survey Logic" feature, and test it. Each time you import it, you will get a new survey. So, you might end up with many partially developed surveys, but that is fine. Just get in the habit of keeping track of which is the most recent, or delete the old one after you import the new ones. Since you never use SGQA codes in the Tab Separated Value, you never need to worry about what codes LimeSurvey assigns for the primary survey, group, question and answer keys. So, feel free to import and export as often as you like.
+
+Here are some convenient things you can do with this approach to authoring instruments:
+#'''Use same Answers for many questions'''. Just copy the 'A' rows and paste after each question that should have the same set.
+#'''Use same subquestions for many questions'''. Just copy the 'SQ' rows and paste them after each question that needs it.
+#'''"Looping" - use same group many times'''. After the group is the way you want it, copy it as many times as needed. Use Excel filtering to view just the 'G' rows (for groups), and use the Excel column drag feature to update the relevance equations for each group (e.g., for a census, the first relevance might be "numPeople > 1", the next should be "numPeople > 2". The drag feature will auto-update the number). Filter by 'Q' rows and ensure that each question has a unique value (e.g., say you name your variables g1_q1, g1_q2, g1_qN, use find/replace to convert g1 to g2 the second group; g3 for the third, etc.).
+#'''Re-ordering questions/groups'''. Simply re-order the rows of the spreadsheet file.
+#'''Testing survey modules'''. For long surveys, you may want to break up the testing into modules. Simply create new spreadsheet files for each module, deleting any rows that you don't need. This avoids the need to enter lots of data to test later sections of the survey.
+#'''Testing mandatory questions'''. A common complaint is not the need to make many questions mandatory, but the need to turn off the mandatory feature for testing. Simply create the master spreadsheet with mandatory set to the final desired values. Then, to test it, just delete the "mandatory" column and save the test version of the spreadsheet. When you import that version, none of the questions will be mandatory. After you have finished your testing, import the master copy.
+#'''Setting defaults'''. Rather than using the GUI, you can enter any desired defaults in the default column. This is especially helpful for cases where the GUI does not let you enter the desired value, like [[ExpressionScript - Presentation|expressions]] to set the default for list items (like populating a list from a [[Survey participants|survey participant]] attribute).
+#'''Translation'''. You can create copies of your spreadsheet - one per language. Include all the rows for the primary language, then copy and paste them below, and use drag to change the language field to the target language. These can be distributed to your translators, and re-integrated into a single spreadsheet file when they are done.
+#'''Bulk setting of advanced question attributes'''. You may want all of your equations to start visible (so you can see their values as you collect data), but then hide them all before going to production. Simply filter the spreadsheet on class = 'Q' and question type = '*' (equation), and set always_hide to 1 for each of those questions. Similarly, say after you create the survey, you decide which questions should appear in public statistics. Rather than edit each question through the GUI, filter on class = 'Q', and set public_statistics = 1 for all of the questions that should be visible in statistics.
+#'''Find and replace'''. Say you decide you need to change some phrasing across all of your questions, you can use Excel find and replace to make those changes. Similarly, say you decide to do a bulk-renaming of your variables, find and replace can come to the rescue. If you need regular-expression based find and replace, you can select the desired column, copy to a text editor, do your find and replace, and paste the column back into the spreadsheet.
+#'''Gaining approvals'''. If you are doing research, you may have an Institutional Review board who insists upon seeing the text of the questions. This may be a convenient way to share it.  Similarly for discussions with a client.
+#'''Team consensus'''. If you are trying to get a group to agree upon the wording or appearance of a question or group, you can rapidly prototype / edit the spreadsheet, import it, and show the team (via question or group preview) exactly what the users will see.  That way you can get approval from the team before they leave the room rather than having to document requirements, build them, and get approval at future meetings.
+#'''Upgrading from other survey formats'''. If your survey is in XML, Word, or other format, you can create a translation process to map them to this format. Although you could also try mapping to the .lss format, the advantage of this format is that it doesn't require you to keep track of foreign key relationships between groups, questions, subquestions, answers, and defaults.
+
+
+=Limitations=
+#By design, this feature only works properly for surveys that use qcode (rather than SGQA) naming. This feature assumes that variable names (question identifiers) are unique throughout the survey. Subquestion names can be repeated, as long as they are unique within the scope of a particular question.
+
+
+=File Format=
+
+
+==General==
+
+
+We use the same set of column headings for multiple purposes. The first 14 columns serve different purposes depending upon the type of entity (e.g., group, question, answer). The remaining columns are an alphabetical list of the database field names for the advanced question codes. Below is the syntax for each entity type
+
+The first 14 columns are:
+#id {{NewIn|3.14.0}}
+#related_id {{NewIn|3.14.0}}
+#class
+#type/scale
+#name
+#relevance
+#text
+#help
+#language
+#validation
+#mandatory
+#other
+#default
+#same_default
+
+{{Hint|Text=Columns id and related_id are used only for quota and are optional. If you don't have quota, you can directly remove this 2 columns.}}
+
+==Survey Global Parameters==
+
+
+There is one row per parameter in the surveys table.
+#class => 'S'
+#name => database field name
+#text => value
+
+
+==Survey Language-Specific Parameters==
+
+
+There is one row per field per language in the surveys_languagesettings table. All entries for a given language are collected before doing the insert into that table.
+#class => 'SL'
+#name => database field name
+#text => value
+#language => language
+
+
+==Groups==
+
+
+One group row per survey language (e.g., there would be 3 group rows if survey has 3 languages).
+#id => unique numeric identifier for the group, starting with number 1, use the same ID for additional languages belonging to current group
+#class => 'G'
+#name => group_name -- the unique identifier for the group
+#relevance => grelevance -- the group-level relevance equation, without curly braces
+#text => description -- the language-specific description of the group
+#language => language -- the language for the group (e.g., 'en')
+
+
+==Questions==
+
+
+One question row per survey language (e.g., there would be 3 question rows if survey has 3 languages). Questions are assumed to belong to the group that precedes them.
+#id => unique numeric identifier for the question, starting with number 1, use the same ID for additional languages belonging to current question
+#class => 'Q'
+#type/scale => type -- the (usually one letter) [[Question types|question type]] (e.g., 'M' is Multiple Choice)
+#name => title -- the unique question name (the root of the qcode naming system)
+#relevance => relevance -- the [[ExpressionScript - Presentation#Access_to_Variables|relevance equation]] for the question
+#text => question -- the language-specific text of the question
+#help => help -- the language-specific help text
+#language => language -- the language for the group (e.g., 'en')
+#validation => preg -- the optional regular expression validation criteria for the question
+#mandatory => mandatory -- 'Y' if mandatory
+#other => other -- 'Y' if the "Other" option should be available (only for some question types)
+#default => default -- if set, this value is inserted into the defaultvalues table for this question
+#same_default => same_default -- 'Y' for true, in which case any defaultvalue set for primary language applies to other languages
+
+
+==Subquestions==
+
+
+One subquestion row per survey language. Subquestions are assumed to belong to the question that precedes them.
+#id => same unique numeric identifier which is used for the questions. Subquestions should use next available value, question and subquestion IDs should be different (e.g. use ID 1 for question and IDs 2, 3 and 4 for subquestions belonging to question 1, next question ID should be 5 and so on). Use the same subquestion ID for additional languages belonging to current subquestions.
+#class => 'SQ'
+#type/scale => scale_id -- 0 or 1, depending upon question type (e.g. array text will have two scales)
+#name => title -- the "name" of the subquestion, e.g. the one used for exclude_all_others
+#relevance => relevance -- (Future) to support subquestion-level relevance
+#text => question -- the language-specific text of the subquestion
+#help => help -- (Future) to support subquestion-level help
+#language => language -- the language for the subquestion
+#validation => preg -- (Future) to support subquestion-level regular expression validation (e.g. for address parts)
+#mandatory => mandatory -- (Future) to support subquestion-level mandatory (e.g. make only a few subquestions mandatory)
+#default => default -- if set, then this is the default value for the subquestion (inserted into defaultvalues table)
+#same_default => same_default -- if set, then the default for the primary language is  used for all other languages
+
+
+==Answers==
+
+
+One answer row per survey language (e.g., there would be 3 answer rows if survey has 3 languages). Answers are assumed to belong to the question that precedes them, and be in the desired sort order.
+#id => use the same ID as the ID of the question it belongs to
+#class => 'A'
+#type/scale => scale_id -- 0 or 1 (e.g. for dual-scale)
+#name => code -- the unique answer identifier
+#relevance => assessment_value -- if using assessment option, this is the assessment value for the answer
+#text => answer -- the language-specific text of the answer
+#language => language -- the language for this answer (e.g. 'en')
+
+
+==Assessments==
+
+
+One assessment row per survey language (e.g., there would be 3 assessment rows if survey has 3 languages). Assessments are written at the end of file.
+#id => unique numeric identifier for the assessment, starting with number 1, use the same ID for additional languages belonging to current assessment
+#related_id => id of group to which current assessment belongs to
+#class => 'AS'
+#type/scale => assessment scope: T-Total, G-group
+#name => name
+#text => message
+#min_num_value => Minimum
+#max_num_value => Maximum
+#language => language -- the language for this answer (e.g. 'en')
+
+
+==Quotas==
+
+
+One row per quota. Quotas are written at the end of file.
+#id => unique numeric identifier for the quota, starting with number 1
+#class => 'QTA'
+#name => quota name 
+#mandatory => limit
+#other => quota action
+#default => active
+#same_default => autoload URL
+
+
+==Quota language settings==
+
+
+One quota row per survey language. Quota language settings are assumed to belong to the quota that precedes them.
+#id => unique numeric identifier for the quota language settings, starting with number 1. Each row for different survey languages should have different IDs
+#related_id => quota id of quota to which this setting belongs to
+#class => 'QTALS'
+#relevance => message
+#text => URL
+#help => URL description
+#language => language -- the language for this quota (e.g. 'en')
+
+
+==Quota members==
+
+
+One row per quota member, no language dependent. Quota member row should be placed immediately after question it relates to. Quota members are assumed to belong to the question that precedes them.
+#id => unique numeric identifier for the quota members, starting with number 1
+#related_id => quota id of quota to which this member belongs to
+#class => 'QTAM'
+#name => answer code
+
+
+==Conditions==
+
+
+One row per condition, no language dependent. Condition row should be placed immediately after question it relates to. Conditions are assumed to belong to the question that precedes them.
+#id => unique numeric identifier for the condition, starting with number 1.
+#related_id => question id of related question, if applicable
+#class => 'C'
+#type/scale => scenario
+#name => answer field name 
+#relevance => comparison operator
+#text => expected answer

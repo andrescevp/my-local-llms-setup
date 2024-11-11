@@ -1,0 +1,68 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+To save response-related details into the responses tables, access this panel. You can save the referrer URL, IP address, timings, etc. that can help you produce more in-depth analyses. LimeSurvey allows you to use the tracking ID from Google Analytics.
+
+To access this panel, click the corresponding survey setting tab: '''Settings''' > '''Notifications & data'''
+
+
+<center>[[File:Survey menu - data management.png]]</center>
+
+=Data Management Panel=
+
+
+The following options are available:
+
+
+<center>[[File:Notification and data management settings.png]]</center>
+
+
+==Date Stamp==
+Enable to see the time when the answers were submitted.
+
+==Save IP Address==
+If enabled, the IP address of the survey respondent will be stored together with his or her answers. 
+
+==Save Referrer URL==
+If ''yes'' is selected, the referrer URL will be stored together with the answers.
+
+==Save Timings==
+If enabled, the time spent on each page of the survey by each survey participant is recorded.
+
+==Enable Assessment Mode==
+You can enable/disable assessments for this survey with this setting.
+
+==Participant may save and resume Later==
+This setting allows a participant to save responses and complete the survey at a later time using a username and password. Please note that this makes most sense with open surveys or surveys with anonymized answers. If you are using tokens and the survey is not anonymous, in most cases it is better to activate [[Participant_settings#Participant settings panel|Token-based response persistence]].
+
+To force a certain password complexity on the entered password, please use the plugin [[PasswordRequirement]].
+
+==Basic and Detailed Admin Notifications Email==
+These two fields allow you to send notifications or survey responses to any email addresses once the survey is submitted. You can edit the templates for these emails from the [[Survey settings#Email templates|Email templates menu]]. Multiple recipients can be set by separating the entries with a semicolon (;) - e.g., "yourname@test.com; myname@test.com;hisname@test.com" or (if using placeholders) "yourname@test.com;{QUESTION.shown};{TOKEN:EMAIL}". 
+
+
+{{Alert|title=HTML or text|text=The setting [[Participant_settings#Use_HTML_format_for_token_emails|use HTML format for token emails]] is used for the format of admin email.}}
+
+{{Box|To send an email to the survey administrator, '''you must use {ADMINEMAIL}'''. There are also other ways to enter an address:
+#Enter a specific email address (ie: yourname@test.com);
+#Enter a SGQA code and the response will be sent to an email address entered as an answer to that particular question (use the format {QUESTION.shown} in the [[Expression_Manager#Qcode_Variable_Naming|same way you would reuse information from previous answers]]);
+#Enter a survey participant table field name (only possible if your survey is not anonymous) and the response will be sent to an email address retrieved from a participant field (use the format {TOKEN:EMAIL} or {TOKEN:ATTRIBUTE_1} in the same way you would re-use Information from the survey participant table).}}
+
+==Google Analytics Settings==
+For more details about the survey web traffic, use Google Analytics. Three options are available:
+**''None'': Google Analytics will not be used.
+**''Use settings below'': If chosen, the survey owner can type in his or her Google Analytics Tracking ID to be stored only with the respective survey. You can choose one of the three Google Analytics styles:
+***Do not use Google Analytics - so {GOOGLE_ANALYTICS_JAVASCRIPT} is an empty string.
+***Default Google Analytics - {GOOGLE_ANALYTICS_JAVASCRIPT} uses the standard Google Analytics code, inserting the proper Google Analytics Key.
+***SurveyName-[SID]/GroupName - {GOOGLE_ANALYTICS_JAVASCRIPT} contains customized Google Analytics code to log the URL as {SURVEYNAME}-[{SID}]/{GROUPNAME}. This can be helpful if you want to analyze navigation paths through your survey, time spent per page, and drop-off rates per page.
+**''Use global settings'': If selected, the survey will use the same Google Analytics Tracking ID as the one mentioned in the [[Global settings#General|global settings]] and then you choose the desired Google Analytics style. 
+
+
+{{Box|Google Analytics Tracking ID for this survey: Allows for integration with Google Analytics. The tracking ID can be inserted into templates using {GOOGLE_ANALYTICS_API_KEY}. The full JavaScript that Google Analytics expects (including the key) can be included in templates via {GOOGLE_ANALYTICS_JAVASCRIPT}.}}
+
+{{Note|For further details on how to use Google's API with LimeSurvey, check our [[Google API howto|Google API howto page]].}}

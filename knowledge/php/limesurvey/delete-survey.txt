@@ -1,0 +1,19 @@
+<languages />
+
+There are multiple ways to delete your survey. The most common one is from the survey list. For more details, click on the following [[Surveys_-_introduction#Delete_a_survey|link]].
+
+A "delete survey" button can also be found under the '''Tools''' menu:
+
+
+<center>[[File:Delete survey - location.png]]</center>
+
+
+A message will be displayed asking you to confirm once more if you really wish to delete the survey and its corresponding groups, questions, subquestions, answers, responses, and conditions:
+
+
+<center>[[File:Delete survey - window confirmation.png]]</center>
+
+
+{{Alert|title=Attention|text=</br>
+*We highly recommend our users to export the survey and its corresponding responses table before deleting it.</br>
+*The responses table is getting archived and it can still be recovered for a limited period of time. However, for the sake of simplicity and to avoid further import-related complications, we recommend our users to also backup the responses table.}}

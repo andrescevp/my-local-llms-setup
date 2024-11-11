@@ -1,0 +1,35 @@
+<languages />
+<onlyinclude>
+
+
+=Introduction=
+
+
+You can assign for different question types a default value to be recorded in the case in which the survey participant skips the question or decides that he or she is happy with the provided default answer. To access this option, look for the '''edit default answers''' button located on the question panel:
+
+
+<center>[[FIle:Edit default answers example.png]]</center>
+
+
+=Valid values= 
+
+
+*For single choice questions, you will see drop-down boxes from where you can select the desired default value.
+*For multi-choice questions, you will see checkboxes from where you can select the desired default state (checked or not checked).
+*For text-entry questions, you will have a text entry field in which you can enter any string or [[ExpressionScript - Presentation|expression]]. If you use an expression, curly brackets must be used.
+*For date-time questions, if you set a fixed value the format of the fixed value needs to be YYYY-MM-DD (for example: 2022-02-28). If you're using an expression to set a date, the format must be like date ('Y-m-d') or date ('Y-m-d H:s'). For example, if you want to set the current time as default in a date question with format HH:MM (hour and minute), you would have to use the full-time format in the default answer box: '''date ('Y-m-d H:s')'''. The format in the expression is independent of the format from the question settings.
+
+{{Alert|Title=Attention|text= '''Attention:'''
+* For hidden question, an alternative solution can be ExpressionScript with [[ExpressionScript - Presentation#Caution_about_using_Assignment_Operator_.28.3D.29|assignment operator]].}}
+
+
+=Default value with ExpressionScript=
+
+
+Only "Text" and "Yes/No" question types allow the survey administrator to make use of the LimeSurvey [[ExpressionScript - Presentation|ExpressionScript]] to change the default value. For all the other question types you can use [[ExpressionScript - Presentation#Using_Assignment_Operator|assignment operators]].
+
+
+=Example= 
+
+
+*You have a non-anonymous survey, where {TOKEN:ATTRIBUTE_1} is the person's age as of the time the survey participants table was created. You want to prefill a question/default answer with the person's age and ask them to validate the age or to let him or her change the age value if it is not accurate. To do that, enter {TOKEN:ATTRIBUTE_1} in the text entry field for the default answer.

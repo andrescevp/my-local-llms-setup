@@ -1,0 +1,70 @@
+<languages /> <translate>
+<!--T:1-->
+__TOC__
+
+=General= <!--T:2-->
+To administrate your LimeSurvey installation, click the '''Configuration''' button located in the top toolbar of the home page:
+
+
+<!--T:3-->
+<center>[[File:Configuration dialog.png]]</center>
+
+
+<!--T:4-->
+The menu contains three tabs: [[Administering LimeSurvey#Settings tab|settings]], [[Administering LimeSurvey#Users tab|users]], and [[Administering LimeSurvey#Advanced tab|advanced]].
+
+=Settings tab= <!--T:5-->
+
+<!--T:6-->
+This tab contains five options which can be used to customize your LimeSurvey installation:
+
+
+<!--T:18-->
+<center>[[File:Settings tab configuration.png]]</center>
+
+
+<!--T:7-->
+*[[Home page settings|Home page settings]]
+*[[Global settings|Global settings]]
+*[[Plugin manager|Plugin manager]]
+*[[Menu configuration|Menu configuration]]
+*[[Menu entries configuration|Menu entries configuration]]
+
+<!--T:9-->
+{{Box|You can also customize your LimeSurvey installation from config.php. For more details, read our wiki on [[Optional settings|LimeSurvey optional settings]].}}
+
+=Users tab= <!--T:10-->
+
+<!--T:11-->
+The '''Users tab''' contains options related to user and participant management. You have the ability to offer different [[Manage users#Grant survey permissions to a user|survey]] and/or [[Manage users#Set global permissions for a user|global permissions]] to your employees/helpers by creating different [[Manage user groups|user groups]]. Creating user groups makes managing users with different permissions easier.  The [[Central Participant Database|central participant database (CPDB)]] contains survey participants who are allocated to more than one survey and/or are shared with other LimeSurvey survey administrators.
+Three options are located under the '''Users tab''':
+
+
+<!--T:19-->
+<center>[[File:Users tab configuration.png]]</center>
+
+
+<!--T:12-->
+*[[Manage users|Manage survey administrators]]
+*[[Manage user groups|Create/edit user groups]]
+*[[Central Participant Database|Central participant database]]
+
+=Advanced tab= <!--T:13-->
+
+<!--T:14-->
+Under this tab you will find options that are neither users- nor settings-related. The '''Advanced tab''' contains functionalities that you can use to enhance your survey or your LimeSurvey installation:
+
+
+<!--T:20-->
+<center>[[File:Advanced_tab_configuration.png]]</center>
+
+
+<!--T:15-->
+*[[Theme editor|Theme editor]] (was ''Template editor'')
+*[[Label sets|Manage label sets]]
+*[[Check data integrity|Check data integrity]]
+*[[Backup entire database|Backup entire database]]
+*[[ComfortUpdate|ComfortUpdate]]
+
+
+</translate>

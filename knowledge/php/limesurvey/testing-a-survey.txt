@@ -1,0 +1,17 @@
+<languages />
+
+
+You can test a survey at any point while you are creating it by clicking the '''Preview survey''' button located on the survey toolbar:
+
+
+<center>[[File:Testing_a_survey_preview.png]]</center>
+
+
+This allows you to check the survey look and feel before activating it. When testing/previewing your survey, the responses will '''not''' be stored in the response table.
+
+<div class="simplebox"><center>'''Hint:''' Use this functionality to test surveys that employ [[Setting conditions|conditions]] and/or [[ExpressionScript - Presentation|expressions]] to check if everything works as expected! If something is wrong, you should use the [[Show logic file|logic file]] option to quickly find out where the error is.</center>
+
+
+<center>'''Testing a survey thoroughly prevents a lot of problems at a later time! '''</center></div>
+
+{{Alert|title=Attention|text=If the survey is active and you open too many tabs by clicking ''Execute survey'', you may not be able to continue the survey (an error will pop up suggesting you to use the index to navigate the survey). When that happens, please close all the tabs and make sure to open only 2 or 3 tabs to test the live version of your survey.}}

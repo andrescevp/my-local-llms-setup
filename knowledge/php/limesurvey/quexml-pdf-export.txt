@@ -1,0 +1,108 @@
+<languages />
+
+= Introduction =
+
+
+The queXML PDF Export function allows you to export the current survey in to a structured PDF file that is suitable for being processed using Optical Mark Recognition (OMR) software such as [https://quexf.acspri.org.au/ queXF].
+
+To make use of this function, access any [[Survey settings|survey-related setting]], select the [[Display/Export survey|Display/export menu entry]], and select the queXML PDF export option:
+
+
+<center>[[File:quexml pdf export location.png]]</center>
+
+
+Included in the exported ZIP file is the survey in PDF form, a banding XML file (this describes the location of fields on the paper form), a style XML file (describes the settings used to produce the PDF file), and a [https://quexml.acspri.org.au/ queXML] file (a structured description of the questionnaire structure).
+
+
+= LimeSurvey Options =
+
+
+<center>[[File:QueXML PDF export options.png]]</center>
+
+
+The settings presented on this page are the defaults of the queXML PDF export software. These can be altered to produce a different looking paper questionnaire.
+
+;Language selection
+:If the survey has been translated into multiple languages - you can choose the language for export here.
+
+;Style
+:Apply styling to elements on the paper form using CSS.
+
+;Allow array style questions to be split over multiple pages
+:If you have arrays with many subquestions in your survey, this will allow for the array to be split over multiple pages. This avoids having pages with very long questions or too much white space on a page. An arrow will appear at the bottom of the page to indicate the question continues on the next page.
+
+;Allow single choice questions to be split over multiple pages 
+:Single choice questions such as "radio" style questions can be allowed to split over multiple pages. Useful if you have questions with a long list of possible responses. An arrow will appear at the bottom of the page to indicate the question continues on the next page.
+
+;Allow multiple short text / numeric questions to be split over multiple pages
+:Where multiple short text or multiple numeric question types are used - allow their subquestions to appear split over multiple pages (an arrow will appear at the bottom of the page to indicate the question continues on the next page).
+
+;Allow slider questions to be split over multiple pages
+:Slider questions present as Visual Analog Scale (VAS) items in queXML PDF pages. This will allow for a list of sliders to be split over multiple pages. An arrow will appear at the bottom of the page to indicate the question continues on the next page.
+
+;Minimum height of single choice answer boxes
+:This sets the minimum height in millimetres of each response item to a single choice (e.g., radio) question. Set this value lower to fit more questions on a page.
+
+;Minimum height of subquestion items
+:The minimum height in millimetres of sub questions in an array style question. Set this value lower to fit more sub question items in an array style question. Please be wary that setting this too low may cut the end from long sub question text items.
+
+;Margin before questionnaireInfo element (mm)
+:The questionnaireInfo element is the "Welcome" text or "End text" of the survey. This setting sets the margin in millimetres before the text is displayed.
+
+;Answer option / subquestion font size
+:The font size in points of answer options or sub question text.
+
+;Answer label font size (normal)
+:The font size in points of answer labels when displayed in subquestions.
+
+;Answer label font size (small)
+:The font size in points of answer labels when displayed in subquestions where the used long words that cannot fit in the area are provided without being split.
+
+;Minimum section height (mm)
+:Each group in a LimeSurvey survey appears as a new section in the queXML PDF document. This setting sets the minimum height in millimetres of the heading for the new section.
+
+;Background colour for sections (0 black - 255 white)
+:The amount of greyness behind a section heading.
+
+;Background colour for questions (0 black - 255 white)
+:The amount of greyness behind questions. Good form design suggests having a light grey background to avoid eye strain and to make the areas for responses clearly defined (the areas for responses are always white).
+
+;Page orientation
+:Portrait or landscape orientation for the paper questionnaire.
+
+;Page format
+:The size of the paper to use (A4, A3, US Letter).
+
+;Edge detection format
+:What edge style to be used on the page to allow for alignment when scanned.
+
+
+Clicking on the "queXML PDF export" button will generate a ZIP archive containing the PDF questionnaire and associated files. 
+
+
+If you have changed the settings above and wish to reset them back to the default queXML PDF settings, click on the "Reset to default settings" button:
+
+
+<center>[[File:Reset quexml pdf options .png]]</center>
+
+= General Configuration Settings =
+You may find some extra configurations settings under the file application/config/config-defaults.php. 
+
+
+This file contains the default settings for LimeSurvey. Do not edit this file as it may change in future revisions of the software.
+Correct procedure to setup LimeSurvey is the following:
+* copy the lines corresponding to the parameter you want to change from this file to the config.php file
+* edit these lines in config.php
+This way the default values will be overridden.
+
+TODO: Example
+
+;quexmlshowprintablehelp
+If set to true, the printable_help attribute will be visible on the exported PDF survey.
+If used, the appearance (font size, justification, etc.) may be adjusted by editing td.questionHelpBefore and $helpBeforeBorderBottom of quexml.
+
+;quexmlusequestiontitleasid {{NewIn|v=4.3}}
+If set to true, each question in the PDF will be identified by the question title instead of the automatic section and number generated for the report.
+
+;quexmlkeepsurveydateformat {{NewIn|v=4.3}}
+If set to true, the Data/Time answers will be formated with the survey's date format, instead of using the default DB format.

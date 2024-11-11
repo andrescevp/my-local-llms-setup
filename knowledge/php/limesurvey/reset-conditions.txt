@@ -1,0 +1,14 @@
+<languages />
+
+In the case in which you wish to reset all the conditions that were created via our [[Setting conditions|conditions manager]], use the '''reset conditions''' function. 
+
+To access it, select one of the survey-related settings and click on '''Tools''' located on the top toolbar:
+
+
+<center>[[File:Reset conditions location.png]]</center>
+
+
+Once clicked, you will have to confirm one last time that you wish to delete all the conditions before proceeding further:
+
+
+<center>[[File:Reset conditions final confirmation.png]]</center>

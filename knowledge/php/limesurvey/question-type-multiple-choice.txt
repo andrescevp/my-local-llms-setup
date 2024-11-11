@@ -1,0 +1,87 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type can collect input of multiple selections through checkboxes.<br />
+
+
+<center>[[File:M_multiple_options.png]]</center>
+
+
+'''Example''': [[Media:Multiple choice question type example.zip|Multiple choice question type example]].
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:other}}
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Question_theme}}
+
+{{QS:Hide_tip}}
+
+{{QS:Random_order}}
+
+{{QS:other_replace_text}}
+{{QS:Other_Position}}
+
+{{QS:display_columns}}
+
+{{QS:Text_input_width}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:other_numbers_only}}
+
+{{QS:assessment_value}}
+
+{{QS:Array_filter_style}}
+
+{{QS:array_filter}}
+
+{{QS:Exclusive option}}
+
+{{QS:Autocheck exclusive option}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Multiple choice questions]]

@@ -1,0 +1,15 @@
+<languages /> 
+
+=Check question logic=
+
+
+This functionality looks for syntax errors within your question. It is useful especially if complex equations, expressions and/or validation criteria are used.
+ 
+
+<center>[[File:Check logic question.png]]</center>
+
+
+<center>[[File:Check logic question 2.png]]</center>
+
+
+<div class='simplebox> [[File:help.png]] '''Note:''' To get a general overview on the survey logic plus a more in-depth explanation of this function, check the following [[Show_logic_file|wiki section]].

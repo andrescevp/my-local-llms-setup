@@ -1,0 +1,229 @@
+<languages />
+
+
+__TOC__
+
+
+{{Note|The following wiki section is the result of the work of multiple LimeSurvey community members. For more up-to-date information, check the [https://www.limesurvey.org/forum LimeSurvey forum]. For professional support, contact one of our LimeSurvey authorized partners: https://limesurvey.com.}}
+
+
+=General=
+This page lists typical technical issues and their solutions ''after'' a successful installation. If you need to troubleshoot issues that happen during installation please refer to the [[Installation FAQ]].
+
+=When trying to open the administration login page=
+==Error message: "No input file specified" after installation==
+or
+==Any URL lets you end up on the survey list page==
+During the installation process, LimeSurvey tries to determine the best solution for the URL-format. Sometimes this does not work properly.
+
+You have to force LimeSurvey to use another URL manager system by editing your config file.
+
+In /application/config/config.php replace
+
+      'urlFormat' => 'path',			
+
+by this:
+
+      'urlFormat' => 'get',
+
+Then try to open the administration panel by using the short admin URL:
+    http://<yourserver.net>/<limesurvey_dir>/admin
+
+=After logging into the administration=
+
+==Any action in admin page will return you to login screen==
+
+This may happen for the following main reasons :
+*PHP sessions problems
+*UTF8 encoding problems
+*IE problems
+
+<u>PHP Sessions :</u>
+# Update upload_tmp_dir and session.save_path in php.ini
+# Create the configured session and upload directories
+# IIS: Assigned permission to create and modify to IIS guest user account
+# Apache: Make sure your webserver has permissions to write into the configured directory
+# Check if the variable  "session.use_cookies" in php.ini is set to 1.
+# Check the variable "session.auto_start" in php.ini. If it is set to 1, change it to 0.
+
+<u>Internet Explorer issues</u>
+LimeSurvey does not support any longer the access to the administration interface via Internet Explorer.
+
+<u>UTF8 Encoding : </u>
+
+If you edit any file (most probably config.php) do not save it as UTF8 to support special language chars! Always save .php files as true ANSI/ISO format.
+
+==Submitting a page which contains a big number of questions/answer options/subquestions does not work== 
+
+There was a new setting introduced in PHP 5.3.9 (and was even backported to some earlier PHP versions): max_input_vars. This setting limits the maximum number of variables that can be POSTed (submitted) to the server.
+Default is set to 1000 but if you have a question with lots of answer options or a survey page with lots and lots of questions/answers this limit might be exceeded. You will need to set this in your PHP configuration file (php.ini).
+
+==Dates are not correctly displayed using MSSQL Server with FreeTDS on Linux==
+Locate the locales.conf file of FreeTDS and edit it. If you do not have any other applications using FreeTDS, just replace the contents with 
+
+<syntaxhighlight lang="ini">
+[default]
+    date format = %Y-%m-%d %H:%M:%S.%z
+</syntaxhighlight>
+
+If you have other applications using FreeTDS, you might want to check first what locale you need to edit.
+
+Save and restart the server. Dates should now be shown properly. If this does not work, you might have edited the wrong file - rinse and repeat.
+
+==When I am entering special chars (Chinese, Cyrillic, Greek, Arabic) into my survey or administration , every character is shown as a question mark?==
+
+This happens if your database itself is not created to use an UTF-8 charset. This can happen when you have to create the database using a provider administration panel. You can fix this problem by executing the following SQL command on your database (using for example phpMyAdmin)
+ALTER DATABASE `<your_database_name>` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+Replace <your_database_name> with the name of your database. '''You need to do this before installing LimeSurvey.'''
+
+==PageSpeed creates some troubles to Limesurvey==
+
+You should include ModPagespeed off in your LimeSurvey virtualhost.
+
+Otherwise, you will not be able to use ConfortUpdate, neither export data. Probably something else is going to fail.
+
+=While taking a survey=
+==Error "Session has expired" ==
+
+You might at one point get a message like:
+
+<syntaxhighlight lang="php">ERROR
+
+We are sorry but your session has expired.
+
+Either you have been inactive for too long, you have cookies disabled for your browser, or there were problems with your connection.</syntaxhighlight>
+
+If Suhosin is activated on your server, it might be the reason why you get this in the middle of a survey.
+
+{{Note|When your survey is not active, the behavior might be different and you could be redirected in the middle of a survey to the public list of surveys. The solution is the same.}}
+
+Suhosin is an advanced protection system for PHP installations but the Suhosin default configuration can create troubles with LimeSurvey.
+
+First, check and test using the Suhosin log by setting suhosin.log.sapi = 511 and suhosin.simulation = on according to the [http://www.hardened-php.net/suhosin/configuration.html Suhosin documentation].
+
+The configuration file is usually located in /etc/php5/apache2/conf.d/suhosin.ini, but to be sure you can check your phpinfo (LimeSurvey administration > Global Settings > Button Show phpinfo > Line : "Additional .ini files parsed") to get the correct path.
+
+Don't forget to restart your Apache/Nginx server for the parameters to be taken into account (service apache2 restart or service nginx restart).
+
+When the simulation is on, Suhosin is not blocking anything and the errors are reported into the logs (usually in your system log: /var/log/syslog). If you get an error messages such as "ALERT-SIMULATION - configured POST variable limit exceeded" that's Suhosin alerting...", try the following configuration (which seems to work well with LimeSurvey): 
+
+<syntaxhighlight lang="php">
+suhosin.memory_limit = 128
+suhosin.post.max_value_length = 5000000
+suhosin.post.max_vars = 5000
+suhosin.request.max_value_length = 5000000
+suhosin.request.max_vars = 5000</syntaxhighlight>
+
+With those parameters, you should be able to switch the suhosin.simulation back to "off" value (so that the server is protected and LimeSurvey still works).
+
+The default values of Suhosin are not working well with LimeSurvey. If you really want to secure your server tightly, you might want to use the simulation mode to tune the setting and find the good values between 1000 and 5000 for the vars and 1000000 and 5000000 for the value_lengths.
+
+<div class="simplebox"> '''Note''': There was an additional PHP setting introduced recently which needs to be tweaked, too: max_input_vars - this setting is the same as suhosin.post.max_vars but needs to be set separately in php.ini. </div>
+
+==I can't change the language!==
+
+No matter what language you choose, the interface (admin and user) are always displayed in the English language. Normally, this is caused by a bug in your PHP version. There is no other fix for this than updating your PHP version.
+
+==Some common errors (IIS focused)==
+
+===Index.php won't open===
+
+Possible cause: This might happen if you haven't installed the necessary extensions
+* You need to install Multi-byte string and MSSQL (or MySQL) extensions
+
+
+Possible cause: ISAPI filter not configured
+* In IIS, for the website (you could do it at the directory level) you must configure it to use php5isapi.dll
+
+
+===Index.php won't open and "php.exe -i" gives error messages about missing .dll's===
+
+
+This may happen if you install too many extensions
+* If you install all PHP extensions, PHP will fail because not all dependencies were met (e.g., the oracle package needs oracle dll's)
+* Install only the extensions you need
+* To test, try running php.exe -i from the command line
+
+===Message stating database was missing===
+
+This may happen if you navigate to wrong url:
+* Make sure you go to limesurvey/admin/install/index.php instead of limesurvey/index.php !
+
+===Above fixes do not solve the problem===
+
+This may happen if you have not restarted IIS
+* Restart IIS
+
+Things that are easy to forget:
+* .php needs to be associated to filter php5isapi.dll
+* limesurvey/tmp directory needs writing permission for survey uploads
+* updating doc_root in php.ini and $rootdir in config.php
+
+===Missing files ("No such file or directory")===
+
+When uploading LimeSurvey to your server it might happen that the connection is interrupted so that some files are not transferred or not transferred completely. Depending on the files, you can get different error messages whenever you access different features/parts of LimeSurvey. The missing files throw errors look like this:
+
+<div class="simplebox">
+
+"Warning: require_once(/path/to/your/limesurvey/installation/filename) [function.require-once]: failed to open stream: No such file or directory in /path/to/your/limesurvey/installation/filename on line 12345" OR
+
+"Fatal error: require_once() [function.require]: Failed opening required 'require_once(/path/to/your/limesurvey/installation/filename)' (include_path='.:/x/y/z) in /path/to/your/limesurvey/installation/filename on line 12345"
+
+</div>
+
+'''Solution'''
+
+1. Delete all uploaded files.
+
+2. Re-upload the files.
+
+(3. If necessary: Reinstall by browsing to /limesurveyfolder/admin/install)
+
+==After submitting a page, you end up on the general index page/on a 404 page or you get the message 'The CSRF token could not be verified' ==
+or
+
+==After clicking 'Next' on a page which contains a big number of answers/subquestions, not all responses are being saved ==
+or
+==After clicking 'Next', I end up on the same page== 
+or
+
+==Using the quick translation system doesn't save answers or subquestions ==
+or
+
+==When exporting a big number of response fields, not all of them are being exported==
+
+*This is most likely because of a limiting setting in your webserver: [http://php.net/manual/en/info.configuration.php#ini.max-input-vars '''max_input_vars'''] . This setting limits the maximum number of variables that can be POSTed (submitted) to the server.
+Default is set to 1000, but if you have a question with lots of answer options or a survey page with lots and lots of questions/answers, this limit might be exceeded. You will need to edit your PHP configuration (php.ini).
+
+*Also, check your PHP settings if your host is using the '''Suhosin extension for Apache''' which may be set to be too limiting on a couple of settings.
+
+*For example, the two settings "suhosin.post.max_vars" and "suhosin.request.max_vars" are both set to a value of 200 by default. Increase those settings both to 400 or higher so users can complete and submit long surveys.
+
+*If you still have problems, try switching the module to simulation_mode (and so basically deactivate it), as the maximum value always depends on your particular survey.
+
+*Another reason might be a proxy or a similar software which does not allow big post requests or requesting the same page several times in the background (which leads to a new CSRF-key being created). Try a different internet connection in this case.
+
+==No questions are shown when using MSSQL Server with FreeTDS on Linux==
+If you check carefully any question group there is a space in the group relevance which makes the entire group non-relevant. The underlying problem is that your FreeTDS returns spaces on empty fields because of a misconfiguration. You can fix this problem by forcing the FreeTDS protocol version to at least 8.0. 
+So, edit freetds.conf (e.g. /etc/freetds/freetds.conf) and change the respective line to 
+
+     tds version = 8.0
+
+That should fix this issue.
+
+=After taking the survey=
+
+==Texts that were entered by the participant appear as question marks in the results==
+This happens if your database itself does not by default use an UTF-8 charset. This can happen when you have to create the database using a provider administration panel. You can fix this problem by executing the following SQL command on your database (using for example phpMyAdmin):
+
+    ALTER DATABASE `<your_database_name>` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+
+Replace <your_database_name> with the name of your database. After you did that, deactivate your survey and activate it again.
+
+=Database specific issues=
+
+== I want LimeSurvey to use a specific Postgres schema ==
+Set in config.php 
+'initSQLs' => array('SET search_path TO "LimeSurvey";'),
+See config-defaults for an example.

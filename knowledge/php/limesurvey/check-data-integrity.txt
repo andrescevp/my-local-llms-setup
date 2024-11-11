@@ -1,0 +1,32 @@
+<languages />
+
+__TOC__
+
+==General==
+
+The '''Data integrity''' function checks the consistency and the redundancy of data. It can be accessed from the top menu, section '''Advanced''', menu item '''Data integrity'''. When opening this menu entry, it will immediately start checking your data for any faults.
+
+
+In general two categories of checks will be executed: 
+* Data consistency
+* Data redundancy
+
+==Data consistency check==
+
+This check looks for possible errors that might exist between the response tables and survey tables or between the token list and the CPDB, etc. If it finds errors, most of them will be automatically fixed, for some you will be asked if they should be fixed.
+In general, we advise letting the integrity check fix these errors. After the fixes are done, please run the check again, until no more errors can be found.
+
+=== Additional parameter for response table field checks ===
+Starting with version 6.x you can set an additional parameter to the integrity check URL named checkResponseTableFields.
+Just add the following text to the end of the URL
+
+<code>?checkResponseTableFields=y</code> 
+
+and press enter.
+If you set this parameter, an additional check will be executed, which checks if all fields in all response tables have correct names, which can take a long time to complete.
+
+==Data redundancy check==
+
+If you deactivate a survey, the token tables, the response tables etc., will not be automatically deleted. They will get stored in archived tables. If you do not need them anymore, use the '''Check data integrity''' function and select the "leftovers" you wish to delete:
+
+{{Alert|title=Warning|text=Please note that you cannot undo the deletion. Once you click on the '''Delete checked items!''' button, the data will be gone forever.}}

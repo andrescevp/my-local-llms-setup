@@ -1,28 +1,17 @@
 # Local LLMs Stack
 
+## Requirements
+
+Install Ollama locally to better performance: https://ollama.com/download
+If you want to have it in docker: https://ollama.com/blog/ollama-is-now-available-as-an-official-docker-image
+
 ## Install
 
-Will create Ollama, Web Open UI, and ComfyUI as a docker container always running in the background.
-
-- http://localhost:8111 - Web Open UI
-- http://localhost:8112 - ComfyUI
-- http://host.docker.internal:8112 - ComfyUI Docker Containers
-- http://localhost:11434 - Ollama
-- http://host.docker.internal:11434 - Ollama Docker Containers
-
 ```bash
-make build
+python build_env.py
 ```
 
-## Creating a Open Hands Session (Open Devin)
+# N8N Community Nodes installed:
 
-```bash
-make run_openhands
-```
-
-# create a new model from file
-
-```bash
-make ollama_model name=<model_name> file=<model_file>
-```
+- `n8n-nodes-browserless`: Requires Browserless
 

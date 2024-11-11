@@ -1,0 +1,15 @@
+<languages />
+
+
+
+The users that have the permission to edit questions can allocate a unique ID to any survey question. However, if these IDs differ too much (the numbering is too messy), the '''Regenerate question codes''' function can be used to automatically rename the survey questions and question groups.
+
+To access it, click on any [[Survey settings|survey-related setting]], then click on '''Tools''' located on the top toolbar, and then select the code regeneration function that fits your needs: 
+
+
+<center>[[File:Regerate question codes - location.png]]</center>
+
+
+The code regeneration can be done:
+*'''Straight:''' If this option is used, each question will be allocated a code that corresponds to their order from the [[Survey structure|survey structure]] (e.g. Q00001, Q0002, etc.);
+*'''By question group:''' If this option is chosen, each question will be allocated a code that corresponds to the group each of them belongs to and their order within that question group: (G1Q00001, G1Q00002, G2Q00001, etc.).

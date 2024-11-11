@@ -1,0 +1,56 @@
+<languages />
+
+== Introduction ==
+When doing automated installs (e.g. in a virtual machine setup), we can use LimeSurvey's (v2.x referred to here) CLI (command-line interface) to good effect. The files used for this purpose (and for resetting passwords as well) are in the '''WEBROOT/application/commands''' folder, the one of interest here being '''console.php'''.
+
+== Pre-requisites ==
+* PHP CLI should be available
+* '''WEBROOT/application/config/config.php''' should be available and populated with the parameters provided by the automated installation process.
+* The availablity of the PHP Modules permissions should match the needs of '''LimeSurvey'''.
+* An empty MySQL database should be created and the user should have the proper privileges in order to use it.
+
+== Usage ==
+For illustration purposes, we assume in our example the '''WEBROOT''' to be '''/var/www/limesurvey'''.
+
+<source lang="bash">
+cd /var/www/limesurvey/application/commands
+php console.php
+</source>
+This will show:
+<pre>
+Yii command runner (based on Yii v1.1.14)
+Usage: console.php <command-name> [parameters...]
+
+The following commands are available:
+ - install
+ - message
+ - migrate
+ - plugin
+ - resetpassword
+ - shell
+ - webapp
+
+To see the individual command help, use the following:
+   console.php help <command-name>
+</pre>
+
+== Syntax ==
+<pre>
+php console.php <Admin User Name> <Admin User Password> <Full Name> <EMail ID>
+</pre>
+
+* The Full Name and Password are enclosed in double quotes if they contain spaces or other special characters.
+* All the other parameters like DB Name, DB Type, DB User, DB Password etc. are to be populated in the '''config.php''' file before script execution.
+* The script should be executed from and in the '''WEBROOT/application/commands''' folder only.
+
+== Example ==
+<source lang="bash">
+cd /var/www/limesurvey/application/commands
+php console.php install limeadmin pwd123 Admin admin@mydomain.com
+</source>
+
+outputs the following text:
+<pre>
+/var/www/limesurvey/installer/sql/create-mysql.sql
+</pre>
+and the database should be properly installed at the moment.

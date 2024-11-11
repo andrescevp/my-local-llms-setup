@@ -1,0 +1,61 @@
+<languages />
+
+
+__TOC__
+
+
+=General=
+
+
+LimeSurvey contains a built-in facility that enables quick and easy translation of surveys. This facility is designed to make it easy for a human translator to translate a survey from the base language into any specified target language.
+
+
+{{Note|Check our [[Multilingual survey|quick guide on multilingual surveys]] to better understand how the in-built LimeSurvey translation tools work.}}
+
+
+=Requirements=
+
+
+To access the quick translation facility you have to have a survey with at least one additional language. So in the [[General settings|general settings]] of your survey, add the desired additional language(s).
+
+
+<center>[[File:Add additional languages.png]]</center>
+
+
+By default, the quick-translation facility can be accessed from the tool menu in the survey toolbar. To enable this for a specific user (without providing him global permissions), go through the following steps:
+#In [[Manage users|create/edit users]] add each translator as a new user.
+#Go to the "local" [[Survey permissions|survey permissions]], select each desired user, and provide him/her the necessary user rights for "quick translation".
+
+
+<center>[[File:Quick-translation permissions for users.png]]</center>
+
+
+=Quick-translate a survey=
+
+
+Once these steps are complete, you and your translators are ready to translate the survey:
+
+
+<center>[[File:Quick-translation - location.png]]</center>
+
+
+#In the "tools" menu, click on "quick-translation" button
+#You are now presented with a screen with a separate tab for each type of survey content type, e.g., "Survey title and description", "Welcome and end text", etc. Do the translation for each content type, and be sure to press the '''Save''' button to update your changes.
+
+
+<center>[[File:Sondaj - quick translation example.png]]</center>
+
+=Auto-translate=
+
+
+The "Auto-translate" feature makes use of the Google translate web service for automatic translation of a survey. If you are using LimeSurvey CE must enter your [[Global settings#General|Google Translate API Key]] under global settings to access this feature. 
+
+
+If you are using '''LimeSurvey Cloud''' with a paid subscription plan, there is no need to enter a key - you can use this feature without providing an API key.
+
+=Troubleshooting=
+
+
+Q: When saving not all translations are saved.
+
+A: With big surveys the number of variables sent to the server can easily exceed 1000. By default, PHP only allows 1000 post variables at a maximum, any variables beyond the first 1000 are ignored. You will need to modify your PHP configuration and set the variable 'max_input_vars' to a much higher value - try 5000 or better 10000. If you don't understand what you have to do, please contact your server administrator with this information!

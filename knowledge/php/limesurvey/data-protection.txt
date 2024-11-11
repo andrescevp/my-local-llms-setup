@@ -1,0 +1,18 @@
+== Cookies ==
+=== Session ===
+The session cookie identifies the current user to the website. This is required to provide the service. The session ID is temporarily associated with the user account during login. 
+
+If the user does not have an account, the cookie is never associated with any user data. For admin users, the association between the session cookie and user is removed when the admin logs out or when the session expires. 
+
+By default, session cookies expire after 24 hours. 
+
+=== Cross Site Request Forgery ===
+The YII_CSRF_TOKEN cookie is used for cross-site-request-forgery protection. It is a security token which contains some random data. It automatically expires after 24 hours, but the value is changed after every request.
+
+=== Survey Status ===
+The survey status cookie (e.g. LS_21157_STATUS) may optionally be enabled on a per-survey basis. By default, it is not enabled. The purpose of this cookie is to remember that the user has completed a given survey to prevent them from completing the same survey twice. 
+
+This cookie automatically expires after 1 year.
+
+=== Other ===
+Custom plugins may set additional cookies. See the plugin developer documentation for details.

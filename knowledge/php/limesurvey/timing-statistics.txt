@@ -1,0 +1,94 @@
+<languages />
+
+
+__TOC__
+
+
+=Introduction=
+
+
+To quickly track how much time a respondent spends answering each question or question group, enable the [[Notifications_%26_data#Save_timings|timings options]] from the [[Notifications_%26_data|Notifications and data panel]]:
+
+
+<center>[[File:Enable save timings.png]]</center>
+
+
+If '''timings''' option is enabled, '''Timing statistics''' can be accessed from the [[Responses_%26_statistics|Response & statistics]] toolbar:
+
+
+<center>[[File:Timing statistics - location.png]]</center>
+
+
+=Timing statistics=
+
+
+A table with the timings of each response will be displayed:
+
+
+<center>[[File:Timing statistics table.png]]</center>
+
+
+As it can be observed, the columns are made of an "Action" column and sortable columns (ID, Total time, group and question time).
+
+{{Note|The above example does not display any group time statistics because only one group was used within the respective survey. The group time corresponds to the total time. Numerical values will be displayed in the group columns if there are at least two groups in the survey.}}
+
+
+The "Action" column contains the following response-related options:
+
+
+<center>[[File:Action column Timing statistics.png]]</center>
+
+
+*'''View response details:''' To check the response submitted by a respondent, click on this button. The panel allows you to edit the response entry, delete the entry or export it
+
+*'''Edit this response:''' To edit the response submitted by a respondent, click on the green pencil button
+
+*'''Delete this response:''' click on the red trash button if you wish to delete the response from your response table.
+
+
+{{Note|Please note that you cannot edit the time statistics table!}}
+
+
+The ID refers to the response ID, while the rest of the columns express the time a respondent spent on a group or question. The value is expressed in seconds.
+
+
+{{Note|The time statistics are stored in the [[Responses|response table]]! Therefore, if you wish to analyse the time-related data, [[Export responses|export it]] and save it to your machine. Then, you can further analyse it with the help of a spreadsheet software or a specialized software in data analysis.}}
+
+
+In the case in which you use to display more responses on the same page, change the default value of 10, and go for a larger value:
+
+
+<center>[[File:Chage display responses timing statistics.png]]</center>
+
+
+==Interview time==
+
+
+Two statistics are automatically calculated for all the stored complete responses:
+
+*'''Average interview time'''
+*'''Median'''
+
+
+=Frequently asked questions=
+
+
+==If I go back to edit one of my previous responses, is the time getting aggregated?==
+
+
+Yes, the time gets aggregated (visit 1 + visit 2...). 
+
+If survey attribute "[[Presentation#Allow_backward_navigation|backward navigation]]" is enabled, you can go to one of your previous answers and correct the response. The "timings" work in background, counting how much time you spent on each survey page, aggregating the results from each visit.
+
+
+'''Example'''
+
+Preconditions:
+* [[General_settings#Format|Survey format]]: ''Group by group'' or ''question by question''
+* [[Presentation#Allow_backward_navigation|Backward navigation]] has to be enabled.
+* [[Notifications_%26_data#Save_timings|Save timings]] has to be enabled.
+
+Let's assume that you have already reached Question 5 (Q5) and you want to edit your response to Question 1 (Q1). Click "Previous" till you reach Q1. The time spent on the page where Q1 is located gets aggregated with the time spent when you first answered the question. By going back and forth, the "times" spent on Q2, Q3, and Q4 also increase.
+
+
+In case you are unhappy with this behavior, you may allow users to "jump" backwards via the [[Presentation#Show_question_index_.2F_allow_jumping|index feature of LimeSurvey]].

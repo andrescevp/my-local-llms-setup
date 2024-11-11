@@ -1,0 +1,41 @@
+<languages /> 
+
+=Introduction=
+
+
+The following panel allows you to add your own survey policy text, which, if enabled, must be accepted by your participants in order to complete the survey.
+
+The ''Data policy setting'' is located under the '''Settings''' tab.
+
+
+<center>[[File:Data policy settings location.png]]</center>
+
+=Data policy settings=
+
+
+The following options can be edited from the ''Data policy settings'' panel:
+
+
+<center>[[File:Data policy settings panel.png]]</center>
+
+
+*'''Show survey policy text with mandatory checkbox:''' If enabled, a policy notice (e.g., regarding the protection of personal data) will be displayed on the welcome page to the survey participants. The following options are available:
+**''Don't show'' : If chosen, no policy notice will be displayed to your survey participants.
+**''Show as text'' : If enabled, the whole data security/policy text will be displayed after the welcome message. The checkbox will be displayed at the bottom of the text.
+**''Collapsible text'' : If enabled, only the checkbox text will be displayed. To access the full policy/data security text, survey participants will have to click the '''Show policy''' button located under the checkbox text.
+
+*'''Survey data policy checkbox label:''' Fill in the following box to add the text you wish to be displayed next to the checkbox that needs to be ticked by your survey participants to complete the survey. If empty, the default text is: "To continue please first accept our survey data policy".
+
+*'''Survey data policy message:''' Fill in the textbox to add all the information related to your survey data policy (e.g., where the data is stored, for how long, and so on).
+
+*'''Survey data policy error message:''' In the case a participant forgets to tick the survey data policy checkbox, the message from this textbox will be displayed on the screen.
+
+*'''Survey legal notice''' (Note: This feature is only available in ''LimeSurvey Cloud''.)''':''' Fill in the textbox to add all information related to your legal notice (e.g., rights, duties obligations). <br />''Note: This feature is only available in LimeSurvey Cloud.''
+
+*'''Show data policy in survey''' (Note: This feature is only available in ''LimeSurvey Cloud''.)''':''' Here you can choose whether or not to display the "data policy" button on all survey page. Clicking this button will display a pop up box(modal) with the "data policy" message.
+
+*'''Show legal notice in survey''' (Note: This feature is only available in ''LimeSurvey Cloud''.)''':''' Whether to display the "legal notice" button on all survey page. Once clicked, this will display a button that shows a popup box(modal) with the "legal notice". <br />Note: This feature is only available in LimeSurvey Cloud.
+
+<div class="simplebox">[[File:help.png]] If you want to specify a link to the survey data policy, set "''Show survey policy text with mandatory checkbox''" to "''Collapsible text''" and use the placeholders {STARTPOLICYLINK} and {ENDPOLICYLINK} in the "''Survey data policy checkbox label''" field to define the link that opens the policy popup. If there is no placeholder given, there will be an appendix.</div>
+
+<div class="simplebox">[[File:help.png]] '''Note:''' If questions are displayed 'All in one' page, the 'Survey data policy checkbox' is not shown and the survey is displayed.</div>

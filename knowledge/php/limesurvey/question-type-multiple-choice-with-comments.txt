@@ -1,0 +1,92 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type can collect input of multiple selections through checkboxes, while allowing the user to provide additional comments.
+
+<center>[[File:P_multiple_options_with_comment.png]]</center>
+
+
+'''Example:''' [[Media:Multiple choice with questions example.zip|Multiple choice with questions example.zip]]
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:other}}
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+{{QS:Preg_validation}}
+
+=Display=
+
+{{QS:Choice_column_width}}
+
+{{QS:Text_input_width}}
+
+{{QS:Question_theme}}
+
+{{QS:Hide_tip}}
+
+{{QS:Random_order}}
+
+{{QS:other_replace_text}}
+{{QS:Other_Position}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:assessment_value}}
+
+{{QS:other_numbers_only}}
+
+{{QS:other_comment_mandatory}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:array_filter_style}}
+
+{{QS:array_filter}}
+
+{{QS:Commented_checkbox}}
+
+{{QS:Remove text or uncheck checkbox}}
+
+{{QS:Exclusive option}}
+
+{{QS:Autocheck exclusive option}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}} 
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+[[Category:Question types]][[Category:Multiple choice questions]]

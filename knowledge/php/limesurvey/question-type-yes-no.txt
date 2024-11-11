@@ -1,0 +1,56 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+Survey administrators can collect "Yes" or "No" responses from the respondents with the help of this question type.
+
+
+<center>[[File:Y_YN.jpg]]</center>
+
+
+'''Example:''' [[Media:Yes-no question type example.zip|Yes/No question type example]].
+
+}}</onlyinclude>
+
+=General settings=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Display_type}}
+
+{{QS:hide_tip}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Mask questions]]

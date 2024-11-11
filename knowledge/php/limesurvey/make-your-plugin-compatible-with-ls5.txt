@@ -1,0 +1,83 @@
+<languages />
+
+
+=Technical changes=
+
+==The new XML config file ==
+
+
+Since LimeSurvey 4.0, plugins need a XML config file to be run in the application. 
+
+The reason for this is the possibility to store meta-data information such as plugin Author, support email or updaters information. 
+
+This XML file is mandatory in LimeSurvey 4. It should be located in the root directory of the plugin. For more information check the plugin development [[Plugins_-_advanced#Available_plugins|plugins]]
+
+'''Example:'''
+
+<center>[[File:config_xml.png]]</center>
+
+==The new plugin directory==
+
+The plugin directory is changed in LimeSurvey 4. For security reasons, the plugin directory is now located in the upload directory (/upload/plugins)  due to the new plugin manager (Plugin uploader). 
+For manual uploads, we recommend to upload your files to the new directory to avoid software malfunctioning. 
+
+Make sure to change or add the new directory if it is hard-coded in your plugin. 
+
+'''Example:'''
+
+
+<center>[[File:path_possiblity.png]]</center>
+
+
+==The new plugin events==
+
+
+
+Some plugin events from LS3 were deprecated. Use the new plugin events introduced in LS4 to replace the old plugin events. 
+For more information check our development manual on [[Plugin_events|plugin events]].
+
+==Deprecated functions and methods==
+
+
+Since the code base or structure of LimeSurvey 4 changed, there are a lot of methods or functions that are not used anymore. 
+To fix this problem, you need to enable the debug mode on the config.php file first and then go to the plugin page. Any method that does not exit anymore will be shown on the error page. 
+
+Some of the methods are renamed in LS4 or are not used anymore. To be sure that your plugin works for both LS3 & LS4, check the version of LS before calling the method you need. 
+
+
+'''Example:'''
+
+
+<center>[[File:version.png]]</center>
+
+
+=Best Practice=
+
+
+
+==Avoid SVG files==
+
+
+
+For security (XSS) reasons, the upload of SVG Files is not possible. The Plugin uploader will ignore SVG files. Replace them by PNG or JPEG files. 
+The upload of SVG files is possible only if you have access to the installation directory via ftp or other server tools (Upload any files at your own risks).
+
+
+==Avoid global constants==
+
+
+
+Avoid the use of global constants that can collapse with variables of the core application or other plugins like „ROOT_PATH“. Don‘t use global constant in general for plugin development. 
+
+==Use Namespaces==
+Use namespace for better organization by grouping classes that work together to perform a task in your plugin. In that way you avoid using classes that are being used already in the core application.
+
+
+'''Example:'''
+
+
+
+<center>[[File:helper.png]]</center>
+
+
+<center>[[File:menu_items.png]]</center>

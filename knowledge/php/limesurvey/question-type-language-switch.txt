@@ -1,0 +1,46 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type allows the user to change the language of the survey. Users can choose from a dropdown list, the language in which they wish to have the survey questions displayed. 
+
+The dropdown list includes the base language (which is selected when the survey is created for the first time) and the [[General_settings#General_settings_panel|additional ones]] (they can be edited from the '''general settings panel''').
+
+<center>[[File:Language switch question type.png]]</center>
+
+'''Example:''' [[Media:Language switch question type.zip|Language switch question type]]
+
+}}</onlyinclude>
+
+<div class="simplebox">[[File:help.png]] '''Note:''' LimeSurvey also shows by default a dropdown list with the available languages on the welcome page.</div>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:hide_tip}}
+
+{{QS:CSS_Class}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+=Statistics=
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Mask questions]]

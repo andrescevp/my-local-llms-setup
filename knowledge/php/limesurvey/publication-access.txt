@@ -1,0 +1,46 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+This setting allows the survey administrator to choose the way the survey can be accessed by survey participants (e.g., CAPTCHA codes can be used to increase the security of your survey).  Also, here is where you can set a start/expiry date/time.
+
+From the '''Settings''' tab, select '''Publication & Access'''
+
+
+<center>[[File:Survey menu - publication and access.png]]</center>
+
+=Publication & Access Panel=
+
+
+The following are the Publication & access panel options:
+
+
+<center>[[File:Publication & access panel.png]]</center>
+
+
+==Start Date/Time==
+The date the survey starts.
+
+==Expiry Date/Time==
+Set this to the date  you want your survey to expire. This is the last date on which the public survey script will allow survey participation. For example, If you set the date for December 31, then people will no longer be able to use the survey script on January 1. To disable this, clear the date from the input field.
+
+==Link survey on public index page==
+This setting is disabled by default. If enabled, your survey will be listed on the public index page under 'Available surveys:' of your LimeSurvey application. For example, if your LimeSurvey administration is available under https://some.url.com/admin it would be listed at https://some.url.com/.
+
+==Set Cookie to Prevent Repeated Participation==
+If this is turned on, a survey participant will be blocked from completing a survey for the second time.
+
+
+{{Note|If you do not know what a cookie is, please check this [https://en.wikipedia.org/wiki/HTTP_cookie wikipedia article].}}
+
+
+==Use CAPTCHA for Survey Access==
+In order to access the survey, a CAPTCHA code has to be typed in by the survey participant.
+==Use CAPTCHA for Registration== 
+In order to register for the survey, a CAPTCHA code has to be typed in by the survey participant.
+==Use CAPTCHA for Save and Load== 
+Enable it if a survey participant loads his survey again after he completed only a part of it.

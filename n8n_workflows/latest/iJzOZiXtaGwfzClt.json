@@ -1,0 +1,492 @@
+{
+  "createdAt": "2024-11-09T19:22:50.034Z",
+  "updatedAt": "2024-11-10T21:42:01.000Z",
+  "id": "iJzOZiXtaGwfzClt",
+  "name": "Google Search",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {
+        "functionCode": "return items.map(item => {\n  const data = item.json;\n  return {\n    json: {\n      search_info: data.search_information,\n      organic_results: data.organic_results,\n      pagination: data.serpapi_pagination\n    }\n  };\n});"
+      },
+      "id": "4503e891-0f2b-4ad8-9305-b8f9fb8d1a53",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        2680,
+        40
+      ],
+      "name": "Process Results"
+    },
+    {
+      "parameters": {},
+      "id": "90b9bee4-66f6-4064-9ed4-dc8c674b2fef",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        2160,
+        40
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "066aadcc-25bc-41b0-8e92-3fa4e4a2878f",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1880,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "37a9682a-1df8-4b4f-9fbb-8e6126f008e1",
+              "name": "term",
+              "value": "Empresa \"SuperPopi\"",
+              "type": "string"
+            },
+            {
+              "id": "cca53068-e49d-4d7c-bab0-bb982d77bea0",
+              "name": "pages",
+              "value": "1",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "04a75dc9-dfea-4320-8210-da3e4e95caef",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2080,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "pagination.other_pages",
+        "options": {}
+      },
+      "id": "6e8d0431-6734-44cc-ae46-bd0d071958f8",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3180,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "functionCode": "return items.map(item => {\n  const data = item.json;\n  return {\n    json: {\n      search_info: data.search_information,\n      organic_results: data.organic_results,\n    }\n  };\n});"
+      },
+      "id": "072e145a-5744-4aca-b10b-5451a79895e5",
+      "type": "n8n-nodes-base.function",
+      "position": [
+        3740,
+        280
+      ],
+      "name": "Process Results1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fc74e8fd-de80-47f7-8bf9-dfaf3207bb07",
+              "name": "organic_results",
+              "value": "={{ $json.organic_results }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "deb0ed50-a288-4847-8fa6-0da453a9215d",
+      "name": "Edit Fields3",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3920,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "organic_results",
+        "include": "=\n",
+        "options": {}
+      },
+      "id": "231ba82c-1730-4b12-a890-a0a534320cb8",
+      "name": "Split Out1",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        3160,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "organic_results",
+        "options": {}
+      },
+      "id": "0cc31d11-65e9-4d78-92be-716ae3b55265",
+      "name": "Split Out2",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        4100,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fc74e8fd-de80-47f7-8bf9-dfaf3207bb07",
+              "name": "organic_results",
+              "value": "={{ $json.organic_results }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "675e08a9-0b95-4283-8fdb-fbc40a8f3094",
+      "name": "Get Results",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2920,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "fieldsToMatchString": "link",
+        "joinMode": "keepEverything",
+        "options": {}
+      },
+      "id": "effa2d0b-52fd-493a-b4d3-4e9f96a1ecc8",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4360,
+        -40
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b55d0b4b-2f00-4ff3-a307-8ad8425960b3",
+              "name": "organic_results",
+              "value": "={{ $json.organic_results }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "287a57bf-0d2d-4983-82d7-0ac470acec42",
+      "name": "Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4540,
+        -40
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "7103667f-6f6e-4854-9baa-f8003bf303e4",
+              "name": "pagination",
+              "value": "={{ $json.pagination }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "33454b75-defb-494b-a0a4-3153952b0781",
+      "name": "Get Pagination",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2940,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "url": "={{ $json['pagination.other_pages'] }}",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "options": {}
+      },
+      "id": "68365198-7d9b-425d-b750-52e19fdb03ff",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        3560,
+        280
+      ],
+      "name": "Get Page",
+      "credentials": {
+        "serpApi": {
+          "id": "aK4P7Zm23AJdETeM",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.term }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "83141caf-6340-435f-994d-42a2fd85aa0d",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        2460,
+        40
+      ],
+      "name": "SerpAPI Search - Page 1",
+      "credentials": {
+        "serpApi": {
+          "id": "aK4P7Zm23AJdETeM",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Pagination Block\n\nEdit Limit Node to increase the number of pages. 0 - No Pagination",
+        "height": 350.5232558139531,
+        "width": 1330.8720930232548
+      },
+      "id": "7883902f-ed37-4e43-af84-e5b8a4f8de3f",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        2900,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "maxItems": 2
+      },
+      "id": "229fb18d-c7ef-4474-822d-b552f1ad1c36",
+      "name": "Pagination Limit",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        3380,
+        280
+      ]
+    }
+  ],
+  "connections": {
+    "Process Results": {
+      "main": [
+        [
+          {
+            "node": "Get Results",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Pagination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Pagination Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process Results1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields3": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Results": {
+      "main": [
+        [
+          {
+            "node": "Split Out1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "SerpAPI Search - Page 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Pagination": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Page": {
+      "main": [
+        [
+          {
+            "node": "Process Results1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI Search - Page 1": {
+      "main": [
+        [
+          {
+            "node": "Process Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    },
+    "Pagination Limit": {
+      "main": [
+        [
+          {
+            "node": "Get Page",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "89a45e73-19ee-4a18-977f-3496bccb3ae2",
+  "triggerCount": 0,
+  "tags": []
+}

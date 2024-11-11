@@ -1,0 +1,888 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+LimeSurvey uses Expression Script which lets LimeSurvey support more complex branching, assessments, validation, and tailoring. It replaces how LimeSurvey manages Replacements, [[Setting conditions|Conditions]], and [[Assessments]] on the back-end. It also speeds up processing considerably since it eliminates most run-time database reads. Expression Script was developed by Dr. Thomas White (TMSWhite).
+
+
+==Key definitions== 
+
+
+#'''Expression''': Anything surrounded by curly braces:
+#*As long as there is no white space immediately after the opening brace or before the closing curly brace.
+#*The expression content is evaluated by EM, so it can contain mathematical formulas, functions, and complex string and date processing.
+#'''Tailoring''': Sometimes called "piping". It is the process of conditionally modifying text:
+#*You have access to all 'replacement fields', participant data, and response data.
+#*You also have easier access to questions, answers, and their properties.
+#'''Relevance''' Equation: A new question attribute controlling question visibility:
+#*If there is a relevance equation, then the question is only shown if the relevance evaluates to true.
+#*Internally, all [[QS:Array_filter|array_filter]] and [[QS:Array_filter_exclude|array_filter_exclude]] commands become subquestion-level relevance.
+#'''SGQA''' (how variables were named in the past):
+#*Stands for Survey-Group-Question-Answer
+#*SGQA variable names look like 123X5X382X971, and may have subquestion suffixes.
+#*These variable names are specific to the underlying S/Q/G/A database codes, so they often need to be changed
+#'''Equation''' Question Type: [[Question type - Equation|A new question type]] that saves calculations or reports to the database:
+#*It is like a Boilerplate question, but its contents are saved to the database even if you set "Always Hide this Question".
+#'''Question Code''': This is the preferred variable name for EM:
+#*This can be a descriptive name indicating the purpose of the question, making it easier to read complex logic.
+#*Valid question codes should NOT start with a number, so when using the question code to number your questions, simply use "q1", or "q1a" or "g1q2".
+#*This is what becomes the variable name if you export data to SPSS or R. So, if you do statistical analysis, you need to create only unique question codes.
+
+
+==Do I have to use Expression Script?==
+
+
+The short answer is "no". However, this heavily depends on the complexity of the survey you want to create. 
+
+For example, the [[Setting conditions|Conditions editor]] covers some basic expressions that can be applied to the questions of your survey. However, the Conditions editor is limited. That is why the Expression Script is used - it expands the realm of [[Expression_Manager_to_be_updated#Quick_start_tutorial|customization possibilities]].
+
+
+==Can I mix Conditions and Relevance equations?==
+
+
+Yes. You can use the [[Setting conditions|Conditions editor]] for some questions and [[QS:Relevance|Relevance equations]] for others. 
+
+'''You cannot have both conditions and expressions set up in the same question!''' Once a condition is set up, it replaces whatever expression is written in the relevance equation field. Moreover, the [[QS:Relevance|Relevance equation]] field cannot any longer be manually edited.
+
+Yet, there is a way to use both expressions and conditions within a question. As mentioned above, a condition replaces the relevance equation field. Once done, check what is the newly created equation and copy it in a text editor. Delete the newly created condition from the [[Setting conditions|Conditions editor]] and then edit the question by adding the condition-based expressions from your text editor file alongside the rest of expressions you wish to use. 
+
+
+==How should I choose between Conditions and Relevance?==
+
+
+Here is a list of the pros and cons of each style:
+
+{| class="wikitable"
+!Style!!Pros!!Cons
+|-
+|Conditions||1. Nice [[Setting conditions|GUI]] for creating simple conditions. <br/>2. GUI well documented and understood by support team||1. Only supports simple comparisons and does not "AND" and "OR" conditions well. <br/>2. Cascading conditions work erratically <br/>3. Slow - database intensive -it can slow down long surveys. <br/>4. Some reported problems with reloading conditions.<br/>5. GUI doesn't scale well when there are dozens, hundreds, or thousands of questions. <br/>6. It could be slow to convert paper-based surveys since it must use [[SGQA identifier|SGQA]] names. <br/>7. Often need a programmer to custom-code logic needed for complex branching.
+|-
+|Relevance||1. Supports very complex logic, including 80+ functions and math/string operators. <br/>2. Perfect support for [[ExpressionScript_-_Presentation#Cascading_Conditions|cascading logic]]. <br/>3. Fast - no extra database calls, supporting 1000+ question surveys. <br/>4. No problems with reloading logic since it does not require [[SGQA identifier|SGQA]] codes. <br/>5. Syntax-highlighting scales to 1000+ question surveys. <br/>6. Easy and fast to use for groups wanting to computerize existing paper-based surveys. <br/>7. It easily supports semi-structured interviews and epidemiological surveys without needing a programmer.||1. No GUI for simple conditions - it makes use of [[Expression_Manager_to_be_updated#Syntax_Highlighting|syntax-highlighting]] instead.
+|}
+
+
+{{Note| '''Note:'''
+*We recommend you to use whatever fits better your needs.
+*For a more detailed explanation of the EM features, click on the following [[EM and its features|link]].}}
+
+=Getting Started=
+
+
+The best way to get started with the EM is to:
+*Install the latest stable version from https://www.limesurvey.org/en/download. 
+*Import and explore some [[ExpressionScript sample surveys|sample surveys]].
+*Explore the [[ExpressionScript How-tos|use cases and how-tos]], and the [[ExpressionScript examples|step-by-step examples]].
+*Explore the EM documentation (this page)
+**Unit Tests of Isolated Expressions (advanced)
+***shows examples of using all EM functions and operators, and the PHP and JavaScript results;
+***note there are few functions that generate different results in the PHP and JavaScript versions, so this page lets you plan your EM logic accordingly.
+
+=Terminology=
+
+
+These words are commonly used to describe the capabilities of the EM:
+*'''Relevance-based Branching''' - if a question is relevant, then ask it, otherwise don't (e.g., make it invisible and mark it as NULL in the database). You may find the [[QS:Relevance|Relevance fields]] in the question editor panel as well as in the question group editor panel. The later is used to apply a set of conditions to an entire group without having to copy the same condition to each question, and/or combine group and question-level conditional logic).
+*'''Tailoring''' - Once you know which questions should be asked, tailoring (sometimes called ''piping'') specifies how the question should be asked. This lets you support not only simple substitution (like {TOKEN:FIRSTNAME}), but also conjugation of verbs and declination of nouns based upon the gender or number of your subjects. It also lets you change the message you deliver to a survey respondent based upon whether they answered (or how they answered) other questions.
+*'''Equations''' - EM adds a new question type called [[Question type - Equation|Equation]] which stores the result of an Expression. The equation results are computed and written to the database, even if you hide them on the page. Thus, they are used for hidden scoring calculations, navigation based upon complex equations, assessments, and reports that will be generated and stored within the database.
+
+
+==Relevance and Cascading Relevance==
+
+
+Every question type now has a [[QS:Relevance|Relevance option]] which controls whether the question is displayed or not. The EM processes each Relevance Equation in the order they appear in the survey. If the expression is true (or missing - to support legacy surveys), the question will be displayed. If it is not relevant, then the question will be hidden, and the value will be NULLed in the database. If there are no relevant questions in a group, the entire group will be skipped.
+
+Moreover, if any of the variables within an expression is irrelevant, then the expression always evaluates to false. This enables '''Cascading Relevance''' so that you do not have to write very long Relevance equations for each question.
+
+Say you have five questions Q1-Q5, and you only want to show Q2 if Q1 was answered, and Q3 if Q2 was answered, etc. The relevance equations might be:
+
+{| class="wikitable"
+!Question Code!!Relevance!!Question
+|-
+|Q1||1||What is your name?
+|-
+|Q2||Q1||{Q1}, how old are you?
+|-
+|Q3||Q2||So, you are {Q2} years old.  Are you married?
+|-
+|Q4||Q3 == "Y"||{Q1}, how long have you been married?
+|-
+|Q5||Q4||How many children do you have, {Q1}?
+|}
+
+
+==Group-level Relevance==
+
+
+ExpressionScript also supports group-level relevance. This makes it easier to implement looping.  Say you want to collect information from up to 10 entities (such as products or people from a household), where you first determine how many entities need follow-up (such as by asking how many people live in a household or having people check which products they like from a long list). After knowing how many entities need follow-up, you can use Group-level relevance like {count >= 1}, {count >=2}, ... {count >= 10} for each of the 10 groups of follow-up questions. Within each group, you can have question-level conditional logic (e.g., gender or age-specific follow-up questions for each subject). The question and group-level relevance equations are ANDed together to determine which should be shown.
+
+To check such an example, import the following survey: [[Media:EM survey - Cohabs.zip|Census survey example]].
+
+It can be observed in the below screenshot that ''Person 1'' group is displayed (or relevant) if the respondent lives with at least another cohabitant:
+
+
+<center>[[File:Group-level relevance example screen.png]]</center>
+
+
+==Tailoring/Piping==
+
+
+Anything within curly braces is now treated as an Expression (with one exception described below). Expressions have access to all the LimeReplacementFields and variables (via several aliases), all typical equation operators (mathematical, logical, and comparison), and to dozens of functions (that even work dynamically on the client-side).
+
+By Using these equations, you can do things such as:
+#Conditionally show tailored messages to the respondents based on prior responses;
+#Create assessments and show assessment results (or conditionally branch or show messages) based upon those results, all without using the [[Assessments|assessments module]] itself;
+#Conjugate verbs and decline nouns within questions, answers, and reports;
+#Show summaries of responses before the "Show your answers" page at the end of the survey.
+
+
+==Equations==
+
+
+There is a new question type called [[Question type - Equation|Equation]]. Think of it as a [[Question type - Text display|Text display question type]], except that it stores the value of what is displayed in the database. So, if the Equation Question text contains an Assessment computation, that value would be stored in the database in a variable that can be displayed in public or private statistics.
+
+
+=Syntax=
+
+
+Anything contained within curly braces is now considered an Expression (with one exception: '''there must be no leading or trailing whitespace''' - this is needed to ensure the ExpressionScript does not try to process embedded JavaScript).
+
+Note that it is OK for expressions to span multiple lines, as long as there is no whitespace after the opening curly brace or before the closing curly brace. This is especially helpful for nested "if()" statements like this:
+
+<syntaxhighlight lang="java">{if(is_empty(PFTotals),
+ '',
+ if(PFTotals >= -5 && PFTotals <= -4,
+   'Very Soft',
+   if(PFTotals >= -3 && PFTotals <= -2,
+     'Soft',
+     if(PFTotals == -1,
+       'Somewhat Soft',
+       if(PFTotals == 0,
+         'Moderate',
+         if(PFTotals == 1,
+           'Somewhat Hard',
+           if(PFTotals >= 2 && PFTotals <= 3,
+             'Hard',
+             if(PFTotals >= 4 && PFTotals <= 5,
+               'Very Hard',
+               ''
+             )
+           )
+         )
+       )
+     )
+   )
+ )
+)}
+</syntaxhighlight>
+
+The ExpressionScript supports the following syntax:
+*All standard mathematical operators (e.g. +,-,*,/,!);
+*All standard comparison operators (e.g. <,<=,==,!=,>,>=, plus their equivalents: lt, le, eq, ne, gt, ge);
+*Parentheses (so you can group sub-expressions);
+*Conditional operators (e.g. &&,| | and their equivalents: and, or);
+*Single and double-quoted strings (which can each embed strings with the other quote type);
+*Comma operator (so can have a list of expressions and just return the final result);
+*Assignment operator (=);
+*Pre-defined variables (to refer to questions, question attributes, and responses) - e.g., the [[SGQA identifier|SGQA codes]];
+*Pre-defined functions (there are already 80+, and it is easy to add more).
+
+
+==Operators==
+
+
+EM syntax follows normal operator precedence:
+
+{| class="wikitable"
+!Level!!Operator(s)!!Description
+|-
+|1||()||parentheses for grouping or calling functions
+|-
+|2||! - +||unary operators: not, negation, unary-plus
+|-
+|3||* /||times, divide
+|-
+|4||+ -||plus, minus
+|-
+|5||< <= > >= lt le gt ge||relative comparisons
+|-
+|6||== != eq ne||equality comparisons
+|-
+|7||and||logical AND
+|-
+|8||or||logical OR
+|-
+|9||=||assignment operator
+|-
+|10||,||comma operator
+|}
+
+{{Note| For consistency between JavaScript and PHP, the plus operator (+) does addition if both operands are numeric, but does concatenation if both parts are non-numeric strings. However, we recommend using the "join()" function for concatenation, as that makes your intent more clear. It also avoids unexpected results if you were expecting strings but got numbers instead (or vice versa).}}
+
+==== Warning with mismatch number and string and alphabetical/numerical comparison ====
+
+When you want to compare value with relative or equality comparisons, pay attention at mismatches. A value entered by user (or provided via answer code) can be used as number '''if it is clearly a number'''.
+If you surround one of the values with <code>"</code>, a text/string comparison will take place. If you want to compare as number, never surround a number with <code>"</code>.
+
+For example <code>Q0.NAOK > "50"</code> is true if Q0.NAOK is a numeric question with 9 as value. This is because the operator <code>></code> will assume it is an <i>alphabetical</i> comparison and not a <i>numerical</i> one.
+
+To make sure that you compare integer values, you can use <code>[[Expression_Manager#Implemented_Functions|intval]](Q0.NAOK) > 50</code>. Just remember if Q0.NAOK is not a number (empty or a string), then intval(Q0.NAOK) === 0. To compare string values ("A" < "B") use [[Expression_Manager#Implemented_Functions|strcmp]] directly : <code>strcmp(Q0.NAOK,"B")</code> or <code>strcmp(Q0.NAOK,"A5")</code>.
+
+==Caution about using Assignment Operator (=)==
+
+
+You should avoid using the assignment operators unless absolutely necessary, since they may cause unexpected side-effects. For example, if you change the value of a previous response, the cascading relevance and validation logic between that question and the current question is not re-computed, so you could end up with internally inconsistent data (e.g., questions that stay answered but should have been NULLed, or questions that are skipped but should have been answered). In general, if you want to assign a value to a variable, you should create an Equation question type, and use an expression to set its value. However, there are some rare times that people really need this operator, so we made it available.
+
+To help caution you about this operator, it is shown in red font within the syntax equations (so that you don't confuse it with "==").
+
+
+<center>[[FIle:Example assignment operator.png]]</center>
+
+
+===Using assignment operator=== 
+
+
+The main reasons you may want to use the assignment operator are:
+*You need to set the default value via equation for a question that does not accept default values (such as list radio, where the user interface lets you pick one of the answer options, but does not let you enter an equation). However, be careful, as LimeSurvey will not be able to validate that your equation generates one of the allowable answers for that question;
+*You need to forcibly change the response to a previous question based upon a later response;
+* etc...
+
+
+{{Alert|title=Attention|text= The assignment is done only in PHP. This means that the value is not getting updated on the same page, but only when the user moves to the next page. Therefore, please pay attention when the assignment operator is used on the same page with other expressions.}}
+
+
+You can use all the expression manager system for this purpose. It's better to use an [[Question_type_-_Equation|Equation]] for this purpose.
+
+Some examples:
+* Set answer to a short text question in lowercase : <code>{QCODE=strtolower(QCODE.NAOK)}</code>;
+* Set a default answer to an array question type at start of a survey : <code>{Q1_SQ1=(is_empty(Q1_SQ1.NAOK),"A99",Q1_SQ1.NAOK)}</code>;
+* Set a default answer to an array texts question type at start of a survey : <code>{Q1_SQY1_SQX1 = (is_empty(Q1_SQY1_SQX1.NAOK),"Inserted answer", Q1_SQY1_SQX1.NAOK)}</code>;
+* Set an answer with condition : <code>{QCODE=if(YesNo="Y","A1","")}</code>.
+
+= XSS security =
+
+
+With [[Global_settings#Security|XSS enabled]], some parts of the expression manager system cannot be used: 
+* starting a HTML tag in expression but ending in another expression;
+* using a complex expression within a URL. 
+
+
+{{Note| Please note that XSS is enabled by default in any LimeSurvey installation.}}
+
+
+Examples and workarounds:
+* <code>{if( 1 ,"&lt;strong&gt;","")}information{if( 1 ,"&lt;/strong&gt;","")}</code> is broken with XSS security, here you can use <code>{if(1,"<strong&gt;information&lt;/strong&gt;","information")}</code>;
+* <code>&lt;a href="/script.php?value={if(QCODE == "Y","yes","no")}"&gt;next&lt;/a&gt;</code>, here you can use an equation question because using a complete question code is OK : <code>&lt;a href="/script.php?value={EQUATION.NAOK}"&gt;next&lt;/a&gt;</code>.
+
+
+=Access to variables=
+
+
+ExpressionScript provides read-only access to whichever variables you might need. For backwards compatibility, it provides access to the following:
+*[[Survey_participants|TOKEN:xxx]] - the value of a TOKEN (e.g., TOKEN:FIRSTNAME, TOKEN:ATTRIBUTE_5) (only for '''not''' [[Participant_settings|anonymous survey]]).
+*[[Questions_-_introduction#Information_from_previous_answers|INSERTANS:SGQA]] - the display value of an answer (e.g., "Yes") - similar to using {QCODE.shown}.
+*All [[Theme_editor#Keywords|{XXX} values used by templates]].
+*In question text, you can use {QID} replaced by the question id and {SGQ} replaced by the SGQA of the question.
+
+In addition, ExpressionScript lets you refer to variables by the Question Code (the 'title' column in the questions table within the database). This is also the variable label used when you export your data to SPSS, R, or SAS. For example, if you have questions about name, age, and gender, you could call those variables ''name'', ''age'', and ''gender'' instead of ''12345X13X22'', ''12345X13X23'', and ''12345X13X24''. This makes equations easier for everyone to read and validate the logic, plus making it possible to shuffle questions around without having to keep track of group or question numbers.
+
+<div class='simplebox'>
+'''Important:''' It is safer to refer to variables that occur in the preceding pages or questions.
+</div>
+
+Furthermore, ExpressionScript lets you access many properties of the question:
+
+
+{| class="wikitable"
+!Syntax!!Meaning!!Example!!Example Result
+|-
+|Qcode||an alias for Qcode.code||{implode(',',name,gender)}||'Tom','M'
+|-
+|Qcode.code||the selected response code for the question if it is relevant (otherwise blank), or the text value if it is not a coded question||{implode(',',name.code,gender.code)}||'Tom','M'
+|-
+|Qcode.NAOK||same as Qcode - see discussion of NAOK||{gender.NAOK}||'M'
+|-
+|Qcode.value||the assessment value for the question if it is relevant (otherwise blank), or the text value if it is not a coded question||{gender.value}||'1'
+|-
+|Qcode.valueNAOK||same as Qcode.value - see discussion about NAOK||{gender.valueNAOK}||'1'
+|-
+|Qcode.shown||the display value for the question||{implode(',',name.shown,gender.shown)}||'Tom','Male'
+|-
+|Qcode.question||the text of the question||{gender.question}||'What is your gender?'
+|-
+|Qcode.mandatory||whether the question is mandatory (Y/N)||{gender.mandatory}||'N'
+|-
+|Qcode.qid||the internal question number (not the sequential number)||{gender.qid}||337
+|-
+|Qcode.type||the question type||{gender.type}||'G'
+|-
+|Qcode.jsName||the correct javascript name for the question, regardless whether declared on or off this page||{gender.jsName}||'java1827X3X337'
+|-
+|Qcode.gid||the internal group number (not the sequential number)||{gender.gid}||3
+|-
+|Qcode.qseq||the sequential number of the question, starting from 0||{gender.qseq}||5
+|-
+|Qcode.gseq||the sequential number of the group, starting from 0||{gender.gseq}||1
+|-
+|Qcode.relevanceStatus||whether the question is currently relevant (0 or 1)||{gender.relevanceStatus}||1
+|-
+|Qcode.relevance||the question-level relevance equation||{gender.relevance}||'!is_empty(name)'
+|-
+|Qcode.grelevance||the  group-level relevance equation||{gender.grelevance}||'num_children >= 5'
+|-
+|Qcode.sgqa||the SGQA value for this question||{gender.sgqa}||'1827X3X337'
+|}
+
+
+== HTML editor issue==
+
+
+If you use the HTML editor, some characters are replaced by HTML entities.
+* & by &amp;amp;
+* < by &amp;lt;
+* > by &amp;gt;
+
+If you use HTML editor you need to use :
+* and for &
+* lt for <
+* le for <=
+* gt for >
+* ge for >=
+
+
+It is recommended to clear your expression of HTML that appears within your expression. If you use the LimeSurvey HTML editor, click on the "Source" button (located in the upper left part of the editor) and delete all the characters that are not related to your expression (e.g., <p>,</br>, and so on).
+
+
+=Qcode variable naming=
+
+
+Here are the details of how to construct a Qcode (and access some properties) by question type. In general, Qcodes are constructed as:
+
+  QuestionCode . '_' . SubQuestionID . '_' . ScaleId
+
+For '''comment''' and '''other''', the corresponding question codes are QuestionCode_comment and QuestionCode_other, respectively.
+
+{| class="wikitable"
+!Type!!Description!!Code!!SubQs!!Answer Options!!Scales!!Answer Code!!Answer Shown!!Relevance
+|-
+|5||5 Point Choice Radio-Buttons||Q1|| ||1-5|| ||{Q1}||{Q1.shown}||{Q1==3}
+|-
+|B||Array (10 Point Choice) Radio-Buttons||Q2||L1-L6||1-10|| ||{Q2_L2}||{Q2_L2.shown}||{Q2_L2==7}
+|-
+|A||Array (5 Point Choice) Radio-Buttons||Q3||1-5||1-5|| ||{Q3_1}||{Q3_1.shown}||{Q3_1>=3}
+|-
+|1||Array (Flexible Labels) Dual Scale||Q4||sq1-sq5||0:a1-a3||1:b1-b3||{Q4_sq1_0}||{Q4_sq1_1.shown}||{Q4_sq1_1=='b2'}
+|-
+|H||Array (Flexible) - Column Format||Q5||1-5||s,m,t|| ||{Q5_1}||{Q5_1.shown}||{Q5_1=='s'}
+|-
+|F||Array (Flexible) - Row Format||Q6||F1-F5||1-5|| ||{Q6_F3}||{Q6_F3.shown}||{Q6_F3==4}
+|-
+|E||Array (Increase/Same/Decrease) Radio-Buttons||Q7||1-7||I,S,D|| ||{Q7_4}||{Q7_4.shown}||{Q7_4=='D'}
+|-
+|:||Array (Multi Flexi) 1 To 10||Q8||ls1,todo,ls2||min,max,avg|| ||{Q8_ls1_max}||{Q8_ls2_avg.shown}||{Q8_ls2_min==7}
+|-
+|;||Array (Multi Flexi) Text||Q9||hp,st,sw||1st,2nd,3rd|| ||{Q9_hp_3rd}||{Q9_hp_3rd.shown}||{Q9_hp_3rd=='Peter'}
+|-
+|C||Array (Yes/Uncertain/No) Radio-Buttons||Q10||1-5||Y,N,U|| ||{Q10_1}||{Q10_1.shown}||{Q10_3=='Y'}
+|-
+|X||Boilerplate Question||Q11|| || || || ||{Q11.shown}||
+|-
+|D||Date||Q12|| || || ||{Q12}||{Q12.shown}||
+|-
+|*||Equation||Q13|| || || ||{Q13}||{Q13.shown}||{Q13>5}
+|-
+|~124~||File Upload (records number of files uploaded)||Q14|| || || ||{Q14}|| ||{Q14>0}
+|-
+|G||Gender Drop-Down List||Q15|| ||M,F|| ||{Q15}||{Q15.shown}||{Q15=='M'}
+|-
+|U||Huge Free Text||Q16|| || || ||{Q16}||{Q16.shown}||{strlen(Q16)>100}
+|-
+|I||Language Question||Q17|| || || ||{Q17}||{Q17.shown}||{Q17=='en'}
+|-
+|!||List - Dropdown||Q18|| ||1-5|| ||{Q18}||{Q18.shown}||{Q18==3}
+|-
+|L||List Drop-Down/Radio-Button List||Q19|| ||A-Z|| ||{Q19}||{Q19.shown}||{Q19=='X'}
+|-
+|O||List With Comment Drop-Down/Radio-Button List + Textarea||Q20|| ||A-F|| ||{Q20},{Q20comment}||{Q20.shown}||{Q20=='B'}
+|-
+|T||Long Free Text||Q21|| || || ||{Q21}||{Q21.shown}||{strstr(Q21,'hello')>0}
+|-
+|M||Multiple Choice Checkbox||Q22||A-F, other|| || ||{Q22_E}, {Q22_other}||{Q22_E.shown}, {Q22_other.shown}||{Q22_E=='Y'}
+|-
+|P||Multiple Choice With Comments Checkbox + Text||Q23||A-F|| || ||{Q23_D}, {Q23_Dcomment}||{Q23_D.shown}||{!is_empty(Q23)}
+|-
+|K||Multiple Numerical Question||Q24||self,mom,dad|| || ||{Q24_self}||{Q24_self.shown}||{Q24_self>30}
+|-
+|Q||Multiple Short Text||Q25||A-F|| || ||{Q25_B}||{Q25_B.shown}||{substr(Q25_B,1,1)=='Q'}
+|-
+|N||Numerical Question Type||Q26|| || || ||{Q26}||{Q26.shown}||{Q26 > 30}
+|-
+|R||Ranking Style||Q27||1-4|| || ||{Q27_1}||{Q27_1.shown}||{Q27_1==3}
+|-
+|S||Short Free Text||Q28|| || || ||{Q28}||{Q28.shown}||{Q28=='mine'}
+|-
+|Y||Yes/No Radio-Buttons||Q29|| || || ||{Q29}||{Q29.shown}||{Q29=='Y'}
+|}
+
+
+=Usage of NAOK= 
+
+
+NAOK --> "Not Applicable" (NA) is alright (OK)
+
+
+Using NAOK, means that all or some of the variables are irrelevant (e.g. "Not Applicable" (NA) is alright (OK)). 
+
+For example: count(Q1_SQ1,Q1_SQ2,Q1_SQ3,Q1_SQ4) give always an empty string if one subquestion of Q1 is filtered.
+To count the number of checked subquestion in such question can be count(Q1_SQ1.NAOK,Q1_SQ2.NAOK,Q1_SQ3.NAOK,Q1_SQ4.NAOK). If the subquestion is hidden, the EM returns an empty string.
+
+Without NAOK, if one question or one subquestion is hidden, the EM returns always an empty string (same to returning false).
+
+The .shown always use the NAOK system (empty string if hidden) but if you need the code of the answer: it's always a good idea to add .NAOK after the question code (except if you need it and know what you do).
+
+More information is provided in the [[#Overriding_Cascading_Conditions|Overriding Cascading Conditions subsection]].
+
+
+=The reserved "this", "self", and "that" variables=
+
+
+Quite often you want to evaluate all the parts of a question, such as counting how many subquestions have been answered or summing up the scores. Other times you want to process just certain rows or columns of a question (such as getting the row or column sums and storing them in the database). These reserved variables make that process relatively painless.
+
+
+=="This" variable==
+
+
+The '''"this"''' variable is used exclusively within the "[[QS:Relevance|Whole question validation equation]]" and "[[QS:Em_validation_sq|Subquestion validation equation]]" options (the later is not possible from GUI). It expands to the variable names of each of the cells within those questions. So, if you want to make sure that each entry is greater than three, you would set the "Subquestion validation equation" to (this > 3).
+
+
+=="Self" variable==
+
+
+The '''"self"''' and '''"that"''' variable are more powerful, and serve as macros which are expanded prior to processing equations. The syntax choices for the "self" variable are:
+*self
+*self.''suffix''
+*self.''sub-selector''
+*self.''sub-selector''.''suffix''
+
+#''suffix'' is any of the normal qcode suffixes (e.g., NAOK, value, shown)
+
+#''sub-selector'' can be one of the following:
+*comments - only subquestions that are comments (e.g., [[Question type - Multiple choice with comments|multiple choice with comment]] and [[Question type - List with comment|list with comment]]);
+*nocomments - only subquestions that are not comments;
+*sq_X - where X is a row or column identifier.  Only subquestions matching pattern X are selected. Note that search is done on complete code identifier, then sq_X match and include subquestions nX, X, Xn (e.g. if you use sq_1, subquestions a1, 1a, 1, 11 or 001 was included). Put attention at dual scale question type where subquestions code are QCODE_SQCODE_1 and QCODE_SQCODE_1 and to ranking question type where subquestions code are QCODE_1,QCODE_2 ....
+
+'''Examples:'''
+*Has any part of a question been answered? -> {count(self.NAOK)>0}
+*What is the assessment score for this question? -> {sum(self.value)}
+
+You can also use these to get row and column totals.  Say you have an array of numbers with rows A-E and columns 1-5.
+*What is the grand total? -> {sum(self.NAOK)}
+*What is the total of row B? -> {sum(self.sq_B.NAOK)}
+*What is the total of column 3? -> {sum(self.sq_3.NAOK)}
+
+
+=="That" variable==
+
+
+The '''"that"''' variable is like the "self" variable, but it allows you to refer to other questions. Its syntax is:
+*that.''qname''
+*that.''qname''.''suffix''
+*that.''qname''.''sub-selector''
+*that.''qname''.''sub-selector''.''suffix''
+
+''qname'' is the question name without any subquestion extensions. So, let's create a question 'q1', 'q' representing also its ''qname''.
+
+Examples:
+*Has any part of question q1 been answered? -> {count(that.q1.NAOK)>0}
+*What is the assessment score for q2? -> {sum(that.q2.NAOK)}
+*What is the grand total of q3? -> {sum(that.q3.NAOK)}
+*What is the total of row C in q4? -> {sum(that.q4.sq_C.NAOK)}
+*What is the total of column 2 in q4? -> {sum(that.q4.sq_2.NAOK)}
+
+The "self" and "that" variables can be used in any relevance, validation, or tailoring.
+
+The one caveat is that when you use the [[Show logic file|Show logic file]] feature, it will show you the expanded value of "self" and "that". This lets you see the actual equation that will be generated so that you (and the EM) can validate whether the variables exist or not. This may seem confusing since you may see quite lengthy equations. However, if you edit the question, you will see the original equation using "self" and/or "that".
+
+{{Note| You should not use these variables if 
+*you want to explicitly name each variable used in an equation, or 
+* use variables that do not have subquestions (e.g., single response questions). In those cases, prefixing a variable with "that" is overkill, and you run the risk of getting unexpected results.}}
+
+=Access to functions=
+
+
+The ExpressionScript provides access to mathematical, string, and user-defined functions, as shown below. It has PHP and JavaScript equivalents for these functions so that they work identically on server-side (PHP) and client-side (JavaScript).  It is easy to add new functions.
+
+
+==Implemented functions==
+
+
+The following functions are currently available:
+
+{| class="wikitable"
+!Function!!Meaning!!Syntax
+|-
+|[http://www.php.net/manual/en/function.abs.php abs]||Absolute value||number abs(number)
+|-
+|[http://www.php.net/manual/en/function.acos.php acos]||Arc cosine||number acos(number)
+|-
+|[http://www.php.net/manual/en/function.addslashes.php addslashes]||Quote string with slashes||string addslashes(string)
+|-
+|[http://www.php.net/manual/en/function.asin.php asin]||Arc sine||number asin(number)
+|-
+|[http://www.php.net/manual/en/function.atan.php atan]||Arc tangent||number atan(number)
+|-
+|[http://www.php.net/manual/en/function.atan2.php atan2]||Arc tangent of two variables||number atan2(number, number)
+|-
+|[http://www.php.net/manual/en/function.ceil.php ceil]||Round fractions up||number ceil(number)
+|-
+|[http://www.php.net/manual/en/function.checkdate.php checkdate]||Returns true(1) if it is a valid date in gregorian calendar||bool checkdate(month,day,year)
+|-
+|convert_value||Convert a numerical value using a inputTable and outputTable of numerical values||number convert_value(fValue, iStrict, sTranslateFromList, sTranslateToList)
+|-
+|[http://www.php.net/manual/en/function.cos.php cos]||Cosine||number cos(number)
+|-
+|count||count the number of answered (non-blank) questions in the list||number count(arg1, arg12, ..., argN)
+|-
+|countif||Count the number of answered questions in the list equal to the first argument||number countif(matches, arg1, arg2, ... argN)
+|-
+|countifop||Count the number of answered questions in the list which pass the criteria (arg op value)||number countifop(op, value, arg1, arg2, ... argN)
+|-
+|[http://www.php.net/manual/en/function.date.php date]||Format a local date/time||string date(format <nowiki>[</nowiki>, timestamp=time()])
+|-
+|[http://www.php.net/manual/en/function.exp.php exp]||Calculates the exponent of e||number exp(number)
+|-
+|fixnum||Display numbers with comma as radix separator, if needed||string fixnum(number)
+|-
+|[http://www.php.net/manual/en/function.floor.php floor]||Round fractions down||number floor(number)
+|-
+|[http://www.php.net/manual/en/function.gmdate.php gmdate]||Format a GMT date/time||string gmdate(format <nowiki>[</nowiki>, timestamp=time()])
+|-
+|[http://www.php.net/manual/en/function.html-entity-decode.php html_entity_decode]||Convert all HTML entities to their applicable characters (always uses ENT_QUOTES and UTF-8)||string html_entity_decode(string)
+|-
+|[http://www.php.net/manual/en/function.htmlentities.php htmlentities]||Convert all applicable characters to HTML entities (always uses ENT_QUOTES and UTF-8)||string htmlentities(string)
+|-
+|[http://www.php.net/manual/en/function.htmlspecialchars.php expr_mgr_htmlspecialchars]||Convert special characters to HTML entities (always uses ENT_QUOTES and UTF-8)||string htmlspecialchars(string)
+|-
+|[http://www.php.net/manual/en/function.htmlspecialchars-decode.php expr_mgr_htmlspecialchars_decode]||Convert special HTML entities back to characters (always uses ENT_QUOTES and UTF-8)||string htmlspecialchars_decode(string)
+|-
+|[http://www.php.net/manual/en/function.idate.php idate]||Format a local time/date as integer||string idate(string <nowiki>[</nowiki>, timestamp=time()])
+|-
+|if||Excel-style if(test,result_if_true,result_if_false)||if(test,result_if_true,result_if_false)
+|-
+|[http://www.php.net/manual/en/function.implode.php implode]||Join array elements with a string||string implode(glue,arg1,arg2,...,argN)
+|-
+|[http://www.php.net/manual/en/function.intval.php intval]||Get the integer value of a variable||int intval(number <nowiki>[</nowiki>, base=10])
+|-
+|[http://www.php.net/manual/en/function.empty.php is_empty]||Determine whether a variable is considered to be empty||bool is_empty(var)
+|-
+|[http://www.php.net/manual/en/function.is-float.php is_float]||Finds whether the type of a variable is float||bool is_float(var)
+|-
+|[http://www.php.net/manual/en/function.is-int.php is_int]||Find whether the type of a variable is integer||bool is_int(var)
+|-
+|[http://www.php.net/manual/en/function.is-nan.php is_nan]||Finds whether a value is not a number||bool is_nan(var)
+|-
+|[http://www.php.net/manual/en/function.is-null.php is_null]||Finds whether a variable is NULL||bool is_null(var)
+|-
+|[http://www.php.net/manual/en/function.is-numeric.php is_numeric]||Finds whether a variable is a number or a numeric string||bool is_numeric(var)
+|-
+|[http://www.php.net/manual/en/function.is-string.php is_string]||Find whether the type of a variable is string||bool is_string(var)
+|-
+|join{{NewIn|2.0|b=130129}}||Join elements as a new string||join(arg1, arg2, ... argN)
+|-
+|list||Return comma-separated list of non-blank values||string list(arg1, arg2, ... argN)
+|-
+|listifop{{NewIn|3.16.1}}||Return a 'glue'-separated list of the specified question property (retProp) from questions in the list which pass the criteria (cmpProp op value)||string listifop(cmpProp, op, value, retProp, glue, sgqa1, sgqa2, ... sgqaN)
+|-|[http://www.php.net/manual/en/function.log.php log]|| The logarithm of number to base, if given, or the natural logarithm. ||number log(number,base=e)
+|-
+|[http://www.php.net/manual/en/function.ltrim.php ltrim]||Strip whitespace (or other characters) from the beginning of a string||string ltrim(string <nowiki>[</nowiki>, charlist])
+|-
+|[http://www.php.net/manual/en/function.max.php max]||Find highest value||number max(arg1, arg2, ... argN)
+|-
+|[http://www.php.net/manual/en/function.min.php min]||Find lowest value||number min(arg1, arg2, ... argN)
+|-
+|[http://www.php.net/manual/en/function.mktime.php mktime]||Get UNIX timestamp for a date (each of the 6 arguments are optional)||number mktime([hour [, minute [, second [, month [, day [, year ]]]]]])
+|-
+|modulo-function||The modulo function is '''not supported''' yet. You can use the floor() function instead||floor(x/y)==(x/y)
+|-
+|[http://www.php.net/manual/en/function.nl2br.php nl2br]||Inserts HTML line breaks before all newlines in a string||string nl2br(string)
+|-
+|[http://www.php.net/manual/en/function.number-format.php number_format]||Format a number with grouped thousands||string number_format(number)
+|-
+|pi||Get value of pi||number pi()
+|-
+|[http://www.php.net/manual/en/function.pow.php pow]||Exponential expression||number pow(base, exp)
+|-
+|[http://www.php.net/manual/en/function.quoted-printable-decode.php quoted_printable_decode]||Convert a quoted-printable string to an 8 bit string||string quoted_printable_decode(string)
+|-
+|[http://www.php.net/manual/en/function.quoted-printable-encode.php quoted_printable_encode]||Convert a 8 bit string to a quoted-printable string||string quoted_printable_encode(string)
+|-
+|[http://www.php.net/manual/en/function.quotemeta.php quotemeta]||Quote meta characters||string quotemeta(string)
+|-
+|[http://www.php.net/manual/en/function.rand.php rand]||Generate a random integer, see [[ExpressionScript sample surveys#Randomly Ask One Question Per Group|this example]]||int rand() OR int rand(min, max)
+|-
+|regexMatch||compare a string to a [[Using regular expressions|regular expression]]||bool regexMatch(pattern,input)
+|-
+|[http://www.php.net/manual/en/function.round.php round]||Rounds a number to an optional precision||number round(val <nowiki>[</nowiki>, precision])
+|-
+|[http://www.php.net/manual/en/function.rtrim.php rtrim]||Strip whitespace (or other characters) from the end of a string||string rtrim(string <nowiki>[</nowiki>, charlist])
+|-
+|[http://www.php.net/manual/en/function.sin.php sin]||Sine||number sin(arg)
+|-
+|[http://www.php.net/manual/en/function.sprintf.php sprintf]||Return a formatted string||string sprintf(format, arg1, arg2, ... argN)
+|-
+|[http://www.php.net/manual/en/function.sqrt.php sqrt]||Square root||number sqrt(arg)
+|-
+|stddev||Calculate the Sample Standard Deviation for the list of numbers||number stddev(arg1, arg2, ... argN)
+|-
+|[http://www.php.net/manual/en/function.str-pad.php str_pad]||Pad a string to a certain length with another string||string str_pad(input, pad_length <nowiki>[</nowiki>, pad_string])
+|-
+|[http://www.php.net/manual/en/function.str-repeat.php str_repeat]||Repeat a string||string str_repeat(input, multiplier)
+|-
+|[http://www.php.net/manual/en/function.str-replace.php str_replace]||Replace all occurrences of the search string with the replacement string||string str_replace(search, replace, subject)
+|-
+|[http://www.php.net/manual/en/function.strcasecmp.php strcasecmp]||Binary safe case-insensitive string comparison||int strcasecmp(str1, str2)
+|-
+|[http://www.php.net/manual/en/function.strcmp.php strcmp]||Binary safe string comparison||int strcmp(str1, str2)
+|-
+|[http://www.php.net/manual/en/function.strip-tags.php strip_tags]||Strip HTML and PHP tags from a string||string strip_tags(str, allowable_tags)
+|-
+|[http://www.php.net/manual/en/function.stripos.php stripos]||Find position of first occurrence of a case-insensitive unicode string (starting by 0, return false if not found)|||int stripos(haystack, needle <nowiki>[</nowiki>, offset=0])
+|-
+|[http://www.php.net/manual/en/function.stripslashes.php stripslashes]||Un-quotes a quoted string||string stripslashes(string)
+|-
+|[http://www.php.net/manual/en/function.stristr.php stristr]||Case-insensitive strstr||string stristr(haystack, needle <nowiki>[</nowiki>, before_needle=false])
+|-
+|[http://www.php.net/manual/en/function.strlen.php strlen]||Get string length||int strlen(string)
+|-
+|[http://www.php.net/manual/en/function.strpos.php strpos]||Find position of first occurrence of an unicode string (starting by 0, return false if not found)||int strpos(haystack, needle <nowiki>[</nowiki> offset=0])
+|-
+|[http://www.php.net/manual/en/function.strrev.php strrev]||Reverse a string||string strrev(string)
+|-
+|[http://www.php.net/manual/en/function.strstr.php strstr]||Find first occurrence of a string||string strstr(haystack, needle<nowiki>[</nowiki>, before_needle=false])
+|-
+|[http://www.php.net/manual/en/function.strtolower.php strtolower]||Make a string lowercase||string strtolower(string)
+|-
+|[http://www.php.net/manual/en/function.strtotime.php strtotime]||Parse about any English textual datetime description into a Unix timestamp||int strtotime(string)
+|-
+|[http://www.php.net/manual/en/function.strtoupper.php strtoupper]||Make a string uppercase||string strtoupper(string)
+|-
+|[http://www.php.net/manual/en/function.substr.php substr]||Return part of an unicode string||string substr(string, start <nowiki>[</nowiki>, length])
+|-
+|sum||Calculate the sum of values in an array||number sum(arg1, arg2, ... argN)
+|-
+|sumifop||Sum the values of answered questions in the list which pass the criteria (arg op value)||number sumifop(op, value, arg1, arg2, ... argN)
+|-
+|[http://www.php.net/manual/en/function.tan.php tan]||Tangent||number tan(arg)
+|-
+|[http://www.php.net/manual/en/function.time.php time]||Return current UNIX timestamp||number time()
+|-
+|[http://www.php.net/manual/en/function.trim.php trim]||Strip whitespace (or other characters) from the beginning and end of a string||string trim(string <nowiki>[</nowiki>, charlist])
+|-
+|[http://www.php.net/manual/en/function.ucwords.php ucwords]||Uppercase the first character of each word in a string||string ucwords(string)
+|-
+|unique||Returns true if all non-empty responses are unique||boolean unique(arg1, ..., argN)
+|}
+
+{{Note| Click [[Functions that are Planned or Being Considered|here]] if you wish to find out more about planned (or being constrained) functions.}}
+
+==Create new expression functions with plugin {{NewIn|4.0.0}}==
+
+If you need a new function that doesn't exist in core, you can create one with a plugin. Such a new function is created using the  [[expressionManagerStart]] event.
+
+=ExpressionScript knows which variables are local=
+
+
+In order to properly build the JavaScript for a page, EM needs to know which variables are set on the page, and what their JavaScript ID is (e.g., for document.getElementById(x)). It must also know which variables are set on other pages (so that it can ensure that the needed <input type='hidden' value='x'> fields are present and populated).
+
+
+==Cascading Conditions==
+
+
+If any of the variables are irrelevant, the whole equation will be irrelevant (false). For example, in the following table, N/A means that one of the variables was not relevant:
+
+
+{| class="wikitable"
+!Operator!!Example!!a!!b!!Result
+|-
+|<nowiki>+ (unary)</nowiki>||<nowiki>+a</nowiki>||N/A|| ||false
+|-
+|- (unary)||-a||N/A|| ||false
+|-
+|!||!a||N/A|| ||false
+|-
+|== (or eq)||a == b||N/A||5||false
+|-
+|== (or eq)||a == b||N/A||0||false
+|-
+|== (or eq)||a == b||N/A||N/A||false
+|-
+|!= (or ne)||a != b||N/A||5|| false
+|-
+|!= (or ne)||a != b||N/A||N/A|| false
+|-
+|!= (or ne)||a != b||N/A||0||false
+|-
+|> (or gt)||a > b||N/A||5|| false
+|-
+|>= (or ge)||a >= b||N/A||5||false
+|-
+|< (or lt)||a < b||N/A||5||false
+|-
+|<= (or le)||a <= b||N/A||5||false
+|-
+|and||a and b||N/A||5||false
+|-
+|and||a and b||N/A||N/A||false
+|-
+|or||a or b||N/A||N/A||false
+|-
+|or||a or b||N/A||5||false
+|-
+|<nowiki>+</nowiki>||a + b||N/A||5||false
+|-
+|-||a - b||N/A||5||false
+|-
+|*||a * b||N/A||5||false
+|-
+|/||a / b||5||N/A||false
+|-
+|()||(a)||N/A|| ||false
+|-
+|(exp)||(a && b)||N/A||5||false
+|-
+|(exp) op (exp)||(b + b) > (a && b)||N/A||5||false
+|-
+|function||sum(a,b,b)||N/A||5||false
+|-
+|function||max(a,b)||N/A||5||false
+|-
+|function||min(a,b)||N/A||5||false
+|-
+|function||implode(', ',a,b,a,b)||N/A||5||false
+|-
+|function||if(a,a,b)||N/A||5||false
+|-
+|function||is_empty(a)||N/A|| ||false
+|-
+|function||is_empty(a)||0 (or blank)|| ||true
+|-
+|function||!is_empty(a)||N/A|| ||false
+|}
+
+
+==Overriding Cascading Conditions==
+
+
+Say you want to show a running total of all relevant answers. You might try to use the equation {sum(q1,q2,q3,...,qN)}. However, this gets translated internally to LEMif(LEManyNA("q1","q2","q3",...,"qN"),"",sum(LEMval("q1"),LEMval("q2"),LEMval("q3"),...,LEMval("qN"))). So, if any of the values q1-qN are irrelevant, the equation will always return false. In this case, the sum() will show "0" until all questions are answered.
+
+To get around this, each variable can have a ".NAOK" suffix (meaning that Not Applicable is OK) added to it. In such cases, the following behavior occurs. Say you have a variable q1.NAOK:
+#q1 is not added to the LEManyNA() clause
+#LEMval('q1') will continue to check whether the response is relevant and will return <nowiki>""</nowiki> if it is not (so individual irrelevant responses will be ignored, but they will not void the entire expression).
+
+So, the solution to the running total problem is to use the equation '''sum(q1.NAOK,q2.NAOK,q3.NAOK,...,qN.NAOK)'''.
+
+The use of the .NAOK suffix also lets authors design surveys that have several possible paths but then converge on common paths later. For example, say subjects answer a survey in a way that is outside the normal range of responses. The author could alert the subjects that they may not get valid results, and ask them whether they really want to continue with the survey. If they say "Yes", then the rest of the questions will be shown. The condition for the "rest of the questions" would check whether the initial responses were answered within the normal range OR whether the subject said "Yes" to the question that is only relevant if they answered outside the normal range.
+
+=How does ExpressionScript support conditional micro-tailoring?=
+
+
+Here is an example of micro-tailoring (where Question Type=='expr' means an Equation):
+
+
+{| class="wikitable"
+!Question Code!!Relevance!!Question Type!!Question
+|-
+|name||1||text||What is your name?
+|-
+|age||1||text||How old are you?
+|-
+|badage||!is_empty(age)||expr||{(age<16) or (age>80)}
+|-
+|agestop||badage||message||Sorry, {name}, you are too {if( (age<16),'young',if( (age>80),'old','middle-aged') ) } for this test.
+|-
+|kids||!badage||yesno||Do you have children?
+|-
+|parents||1||expr||{!badage && kids=='Y'}
+|-
+|numKids||parents||text||How many children do you have?
+|-
+|kid1||parents && numKids >= 1||text||How old is your first child?
+|-
+|kid2||parents && numKids >= 2||text||How old is your second child?
+|-
+|kid3||parents && numKids >= 3||text||How old is your third child?
+|-
+|kid4||parents && numKids >= 4||text||How old is your fourth child?
+|-
+|kid5||parents && numKids >= 5||text||How old is your fifth child?
+|-
+|sumage||1||expr||{sum(kid1.NAOK,kid2.NAOK,kid3.NAOK,kid4.NAOK,kid5.NAOK)}
+|-
+|report||parents||text||{name}, you said you are {age} and that you have {numKids}.  The sum of ages of your first {min(numKids,5)} kids is {sumage}
+|}
+
+
+To download the above survey example, click on the following link: [[Media:No_of_kids_-_Micro_Tailoring.zip|Number of kids survey example]].
+
+All of these questions can be on a single page (e.g., in the same group), and only the relevant questions will be displayed. Moreover, as you enter the ages of children, the sum() expression in the last question will dynamically get updated.
+
+ExpressionScript provides this functionality by surrounding each expression with a named <nowiki><span></nowiki> element. Every time a value changes, it recomputes the expression that should appear in that <nowiki><span></nowiki> element and regenerates the display. You can have dozens or even hundreds of such tailored expressions on the same page.
+
+
+=Syntax highlighting=
+
+
+To help with entering and validating expressions, the EM provides syntax highlighting with the following features:
+
+==Types and Meanings of Syntax Highlighting==
+
+
+{| class="wikitable"
+!Color!!Sample!!Meaning!!Tooltip!!Comments
+|-
+|tan background||style='background-color: #eee8aa'|Sample||the whole equation||none||Anything within curly braces that is recognized as an equation (e.g., there is no leading or trailing whitepace) will be color-coded with a tan background to help distinguish it from surrounding text
+|-
+|bold red text||style='color:#ff0000; background-color:#eee8aa'|'''Sample'''||An error||Some explanation on error||Can be an unknow variable or an error in function. Survey is broken and the questions that rely on the respective expression will not be shown to the respondents.
+|-
+|blue text||style='color:#0000ff; background-color:#eee8aa'|Sample||function name||meaning and allowable syntax||It refers to function names or things that should be functions since they are followed by an open parenthesis. They are displayed in bold blue text. Tooltips show the meaning and allowable syntax for the function.
+|-
+|grey text||style='color:#808080; background-color:#eee8aa'|Sample||string||none||Single and double-quoted strings are shown in grey text.
+|-
+|cyan text||style='color:#4169e1; background-color:#eee8aa'|Sample||variable set on the same page,||<nowiki>[</nowiki>name or SGQA code]: question; value; answerList showing codes for each value||Any variable that is set on the same page as the question you are currently editing is shown in cyan text (it can be updated in javascript). The tooltip shows its name (if you used INSERTANS:xxx) or its SGQA code (if you used the new naming system), the actual question, and its current value (or blank if not set). If the question type expects responses from an enumerated value set, the mapping of the codes to display values is shown.
+|-
+|green text||style='color:#008000; background-color:#eee8aa'|Sample||variable set on a prior page||<nowiki>[</nowiki>name or SGQA code]: question; value; answerList showing codes for each value||Any variable that is set on a prior page is shown in bold green text. The tooltip shows its name (if you used INSERTANS:xxx) or SGQA code (if you used the new naming system), the actual question, and its current value (or blank if not set).  If the question type expects responses from an enumerated value set, the mapping of the codes to display values is shown.
+|-
+|bold pink text||style='color:#9370db; background-color:#eee8aa'|Sample||variable set on a later page <sup>in general : empty at survey start, but can be filled with index or move previous</sup>||<nowiki>[</nowiki>name or SGQA code]: question; value; answerList showing codes for each value||Any variable that is set on a prior page is shown in bold pink text. The tooltip shows its name (if you used INSERTANS:xxx) or SGQA code (if you used the new naming system), the actual question, and its current value (or blank if not set). If the question type expects responses from an enumerated value set, the mapping of the codes to display values is show.
+|-
+|bold tan text||style='color:#a0522d; background-color:#eee8aa'|Sample||a lime replacement value||the value||Lime Replacement Strings (like {TOKEN:xxx}, {PRIVACY_MESSAGE}) are shown in bold tan text.  
+|-
+|red text||style='color:#ff4500; background-color:#eee8aa'|Sample||assignment operator (=) ||warning message||If you use one of the assignment operator (=), that operator will be displayed in red text. This is meant to help prevent accidental re-assignment of values when you really meant to check whether a == b instead of  setting the value of a = b.
+|-
+|normal black text||style='color:black; background-color:#eee8aa'|Sample||punctuation||none||All other punctuation signs within the expression are shown as normal black text.
+|-
+|red-boxed text||a bold red line surrounds the error||syntax error||description of the error||Any detected syntax errors are shown within red boxes. The tooltip shows the error. Examples include unmatched parentheses, use of undefined functions, passing the wrong number of arguments to functions, poorly structured expressions (e.g., missing operators between variables), trying to assign a new value to a read-only variable, trying to assign values to non-variables, or using unsupported syntax. Note that the syntax error dectection system may only report one error in an expression even if there are multiple errors; however, if any errors are detected, at least one error will be shown.
+|}
+
+
+{{Note| By tooltips, we refer to the popup message that is displayed when you hover over certain functions and variables.}}
+
+
+=Additional reading=
+
+
+==[[ExpressionScript sample surveys|ExpressionScript sample surveys]]==
+
+
+==[[ExpressionScript How-tos|Use cases and how-tos]]==
+
+
+==[[ExpressionScript examples|Step-by-step examples]]==
+
+
+==[[ExpressionScript for developers|Reference for Developers]]==
+
+
+==[[ExpressionScript Engine roadmap|RoadMap, status, ToDo List]]==

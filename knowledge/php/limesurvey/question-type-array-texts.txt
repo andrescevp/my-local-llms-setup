@@ -1,0 +1,92 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+The Array (Text) question type allows for an array of text boxes with a set of subquestions as the "y-axis", and another set of subquestions as the "x-axis".
+
+[[File:SC_MFT.jpg]]
+
+
+'''Example:''' [[Media:Array_Texts_Example_text.zip|Array_Texts_Example_text.zip]]
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+You can also limit this question type to allow numerical answers only (see the question attribute "Numbers only") and "Show totals" for enabling then display of totals for rows, columns or both:
+
+[[File:array_text_numbers_totals.PNG]]
+
+
+'''Example:''' [[Media:Array Texts Example text numbers.zip|Array Texts Example text numbers.zip]]
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+{{QS:preg_validation}}
+
+=Display=
+
+{{QS:subquestion_width}}
+
+{{QS:hide_tip}}
+
+{{QS:Random_order}}
+
+{{QS:Input box size}}
+
+{{QS:Repeat_headers}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+=Input=
+
+{{QS:Input_max_characters}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:array_filter}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:array_filter_style}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+{{QS:em_validation_sq}}
+
+{{QS:em_validation_sq_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:numbers_only}}
+
+{{QS:show_totals}}
+
+{{QS:show_grand_total}}
+
+=Statistics=
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Arrays]]

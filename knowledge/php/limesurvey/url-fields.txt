@@ -1,0 +1,122 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+URL fields parameters can be used in the:
+* [[URL_fields#End_URL_field|End URL]] field of the survey (see [[Text elements|survey text elements]]) 
+* URL field of the quota rule (read more about survey quotas [[Survey quotas|here]])
+* [[URL_fields#Start_URL|Start URL]] field of the survey (see [[Text elements|survey text elements]]).
+
+
+=End URL field=
+
+
+'''At the end of a survey or when a quota causes a survey to terminate''', there is the option to set an ending URL. This URL is presented to the participant who has finished the survey on the end page or you can optionally set the participant to be automatically redirected to the respective URL. This can be done by filling in the End URL option from the [[Text elements|Survey text elements]] panel and by enabling the automatic load of the end URL from the [[Presentation]] panel once a survey is completed .
+
+But, LimeSurvey offers the possibility to use URL fields in many other ways which in turn allows you to enhance the functionality of your survey.
+
+If you go to “Survey participants” in the survey side menu and change the survey to be in “closed access mode“, after pre adding participants there with each having a token, the token parameter will be added in the end url.
+
+==Basic fields==
+
+
+You can use '''{SAVEDID}''', '''{TOKEN}''', '''{SID}''', and '''{LANG}''' in the end URL:
+*'''SAVEDID''' is the id assigned to this particular submission;
+*'''TOKEN''' is the token used to participate in the survey;
+*'''SID''' is the survey ID;
+*'''LANG''' is the language code.
+
+For example:
+
+<code>
+<nowiki>https://www.limesurvey.org/test.php?var1={SAVEDID}&var2={TOKEN}&var3={SID}&lang={LANG}</nowiki>
+</code>
+
+
+==Answer fields==
+
+
+You can also use '''{INSERTANS:SGQA}''' or [[ExpressionScript - Presentation#Qcode_Variable_Naming|ExpressionScript variables]]. This URL field allows you to add the response to a specific question in the survey into the end URL. This can be useful for sending a response to an external script (i.e. an email address collected during the survey).
+
+For example:
+
+<code><nowiki>
+https://www.limesurvey.org/test.php?email={EMAILADDRESS}
+</nowiki></code>
+
+It is important to add "newtest/y" to the URL to force a new session whenever your survey participants wants to fill in your survey.
+
+<code><nowiki>
+https://exampletest.limequery.com/index.php/survey/index/sid/48315/newtest/Y?48315X2X222007=Y&48315X2X222008=Y 
+</nowiki></code>
+
+In the above scenario, the URL pertains to a survey with ID = 48315, group =2, question=22 and answercodes = 2007 and 2008. 
+
+{{Note|For more details on the necessity of "newtest/y", check the following [https://www.limesurvey.org/forum/installation-a-update-issues/108334-use-case-for-not-using-newtest-y forum thread].}}
+
+==Expressions==
+
+
+You can also use any [[ExpressionScript - Presentation|expression]] here.
+
+For example:
+
+<code><nowiki>
+http://www.limesurvey.org/test.php?gender={if(sex=='Male','M','F')}&name;={name}
+</nowiki></code>
+
+
+==Passthrough fields==
+
+
+To use passthrough fields, you '''must''' define the variable names via panel integration. If you don't assign a target question, the variables will not be saved into responses (read more about the LimeSurvey [[Panel integration|panel integration]] feature). To use such a parameter in the end URL, just insert the tag '''{PASSTHRU:<paramname>}''' where ''<paramname>'' is the name of your input parameter.
+
+Let's suppose that you defined [[Panel integration|a parameter]] named "foobar". The survey is started with a link like this one:
+
+<code>
+<nowiki>https://example.org/limesurvey/index.php/survey/index/sid/12345/lang/eb?foobar=XYZ123</nowiki>
+</code>
+
+The XYZ123 is the value you want "to pass".
+
+The end URL of a survey with the following URL <code><nowiki>https://www.limesurvey.org/test.php?foobarout={PASSTHRU:foobar}</nowiki></code> would then be converted to <code><nowiki>https://www.limesurvey.org/test.php?foobarout=XYZ123</nowiki></code>
+
+=Start URL=
+
+
+==Prefilling a survey using GET parameters==
+
+
+You can prefill all answers except the [[Question_type_-_File_upload|upload]] and [[Question type - Equation|equation question type]]. You can use [[ExpressionScript - Presentation#Access to Variables|qcode naming]] for parameters and set the value for single question types or use the [[SGQA identifier]].
+
+Then, answers are set to the prefilled value. For single choice option, you must use the code of the answer, for multi choice question, you must use Y if you want to prefill the answer.
+
+Here are some start URL examples:
+
+* <code><nowiki>http://ls.example.org/1234?QTEXT=prefilled</nowiki></code> : Fill in the question with code QTEXT with <nowiki>'prefilled'</nowiki>
+* <code><nowiki>https://ls.example.org/1234?MULTI_SQ001=prefilled</nowiki></code> {{NewIn|v=3.14.1}} : Fill in the subquestion SQ001 of question with title MULTI with <nowiki>'prefilled'</nowiki> (for a multiple text question for example).
+* <code><nowiki>https://ls.example.org/1234?single=-oth-&single_other=Other%20text</nowiki></code> {{NewIn|v=3.14.1}} : Select the "other" answer option of a single choice question and fill in the other value with the text "Other text".
+* <code><nowiki>https://ls.example.org/1234?1234X1X1SQ001=prefilled</nowiki></code> : Fill in the subquestion SQ001 of question with ID: 1 from group with ID: 1 with <nowiki>'prefilled'</nowiki>
+* <code><nowiki>https://ls.example.org/1234?1234X1X1SQ001=A1</nowiki></code> : Preselect the answer option <nowiki>'A1'</nowiki> of the subquestion SQ001 of question with ID: 1 from group that has ID: 1.
+* <code><nowiki>https://ls.example.org/1234?1234X1X1SQ001=Y</nowiki></code> : Preselect the subquestion SQ001 of the question that has the ID 1, from the group that has ID: 1.
+
+
+{{Hint|Text=GET parameters use "?" for the first parameter and "&" for the subsequent ones. If you already have "?" in your URL, you must use "&" to add more GET parameters.}}
+
+
+{{Hint|Text=The extra GET parameters are only filled in when the survey starts anew. Therefore, for testing, always add newtest=Y to start a fresh survey. For example: <code><nowiki>http://ls.example.org/1234?QTEXT=prefilled&newtest=Y</nowiki></code>}}
+
+==Prefilling a survey using GET parameters using URL parameters tab==
+
+
+You can prefill (sometimes easier) answers using URL parameters which can be configured in [[Panel integration|panel integration]].
+
+
+==Prefilling and hiding the answer==
+
+
+You can use the [[QS:Hidden|hidden attribute]] of a question to hide it from your respondents. If so, the question still remains prefilled.

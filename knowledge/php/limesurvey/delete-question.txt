@@ -1,0 +1,12 @@
+<languages /> 
+
+=Delete question=
+
+
+To delete a question, click on the '''Delete''' button located on the top question toolbar:
+
+
+<center>[[File:Delete question image.png]]</center>
+
+
+Once clicked, a pop-up will be displayed asking you to confirm whether you really want to proceed with the deletion or not.

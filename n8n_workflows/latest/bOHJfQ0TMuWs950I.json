@@ -1,0 +1,710 @@
+{
+  "createdAt": "2024-11-09T01:56:25.245Z",
+  "updatedAt": "2024-11-10T21:41:25.000Z",
+  "id": "bOHJfQ0TMuWs950I",
+  "name": "Competitors Research",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "71b06728-7f59-49e3-9365-3281189a6659",
+      "name": "When clicking \"Test workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        920,
+        340
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fcc97354-b9f6-4459-a004-46e87902c77c",
+              "name": "company_input",
+              "type": "string",
+              "value": "={{ $json.input }}"
+            },
+            {
+              "id": "e5415c49-5204-45b1-a0e9-814157127b12",
+              "name": "row_number",
+              "type": "number",
+              "value": "={{ $json.row_number }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b37019e3-c7ab-4119-986d-c27d082a036e",
+      "name": "Input",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1340,
+        340
+      ],
+      "typeVersion": 3.3
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "7d5d53ac-6d3c-4b24-97c7-deb6b76749e5",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        3060,
+        420
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "openAiApi": {
+          "id": "T5jdxSwNa48cKr5W",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI",
+          "mode": "list",
+          "cachedResultName": "Competencia Research",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "input",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "67d485c9-3289-4bb3-9523-cd24c0b1aa05",
+      "name": "Get rows to enrich",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        1140,
+        340
+      ],
+      "typeVersion": 4.3,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "id": "0c1dafa9-28fe-4ef4-b80e-d4034e16f6c0",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        920,
+        580
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "QcNgpKSw0nFwXEnK",
+          "mode": "list",
+          "cachedResultName": "Google Scrapper"
+        },
+        "options": {}
+      },
+      "id": "d5539ba4-8bbd-4e2a-82df-96e74807d30f",
+      "name": "Scrappe Google Results",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        2060,
+        -80
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 1
+        }
+      },
+      "id": "4272d3e3-9c1b-4c2c-9c8e-0f7080a1ef04",
+      "name": "4o-mini",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        100
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "T5jdxSwNa48cKr5W",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "eef496dd-9893-4133-88c3-6b22886c1eaf",
+              "name": "term",
+              "value": "=Empresa \"{{ $json.company_input }}\"",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "eccc6f8f-6355-4f7b-8a27-e1668f58e0f6",
+      "name": "Create Google Search Query",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1840,
+        -80
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "b6520794-6571-4766-90e9-30895567ee76",
+              "name": "text_analysis",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            },
+            {
+              "id": "3b096102-8cf1-408b-aeb0-307f8c35807b",
+              "name": "Company",
+              "value": "={{ $('Input').first().json.company_input }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "016bbf31-f6d0-4200-8c01-c2d30a854bce",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3160,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI",
+          "mode": "list",
+          "cachedResultName": "Competencia Research",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "output",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "link": "={{ $json.link }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text_analysis",
+              "displayName": "text_analysis",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "original_text",
+              "displayName": "original_text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "keywords",
+              "displayName": "keywords",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "044e98dd-4518-4fca-b0f1-8526013ad3f1",
+      "name": "Google Sheets3",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3700,
+        -80
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "id": "92a81d89-2e2b-4c80-9a51-69f533a2b396",
+      "name": "Limit",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b32be09a-3980-42f1-8908-418591a3d8b9",
+              "leftValue": "={{ $json.data[0].results[0].text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "34628a41-830b-440c-be58-55c3a29a2c74",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2480,
+        -80
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {},
+      "id": "4e122e43-fed9-43fe-bc54-46bc95acafd5",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2460,
+        160
+      ]
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"properties\": {\n    \"is_official_site\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"market\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"cheapest_plan\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"has_API\": {\n      \"type\": [\"boolean\", \"null\"]\n    },\n    \"has_enterprise_plan\": {\n      \"type\": [\"boolean\", \"null\"]\n    },\n    \"has_free_trial\": {\n      \"type\": [\"boolean\", \"null\"]\n    },\n    \"integrations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": [\"string\", \"null\"]\n      }\n    },\n    \"pricing\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"analysis\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"strong_points\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": [\"string\", \"null\"]\n      }\n    },\n    \"weak_points\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": [\"string\", \"null\"]\n      }\n    }\n  }\n}"
+      },
+      "id": "f7e4fddf-728b-4bea-b79b-7c456db436e6",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        3400,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "43b8ec6e-5e08-4520-97a3-3f8d6e5f0fb8",
+              "name": "link",
+              "value": "={{ $('If').item.json.organic_results.link }}",
+              "type": "string"
+            },
+            {
+              "id": "8d21b8ea-5dad-403d-8e7f-70495009b1c9",
+              "name": "company",
+              "value": "={{ $json.Company }}",
+              "type": "string"
+            },
+            {
+              "id": "029017ef-1a05-486c-a8fd-582dbea38588",
+              "name": "text_analysis",
+              "value": "={{ $json.text_analysis }}",
+              "type": "string"
+            },
+            {
+              "id": "0c747013-926d-4820-9908-acd95f22f0dd",
+              "name": "original_text",
+              "value": "={{ $('If').item.json.data[0].results[0].text }}",
+              "type": "string"
+            },
+            {
+              "id": "3f8d9017-76f0-4d1f-a3a3-20d882c90496",
+              "name": "keywords",
+              "value": "={{ $('If').item.json.organic_results.snippet_highlighted_words }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6b780ba2-9c53-4ec4-b233-682a968e776c",
+      "name": "Edit Fields2",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3440,
+        -80
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n\"link\":null,\n\"company\":null,\n\"text_analysis\": null,\n\"original_text\": null,\n\"keywords\": null\n}\n",
+        "includeOtherFields": "=",
+        "options": {}
+      },
+      "id": "f503c52f-c09d-4754-9569-7a310c2b99fe",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1940,
+        360
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI",
+          "mode": "list",
+          "cachedResultName": "Competencia Research",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "=output",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "id": "ff903683-a1b9-430b-abc7-e44335bda674",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2140,
+        360
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI",
+          "mode": "list",
+          "cachedResultName": "Competencia Research",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit?usp=drivesdk"
+        },
+        "title": "=output",
+        "options": {}
+      },
+      "id": "542eb35f-3372-4d28-a042-f1b22cfe7e6e",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1680,
+        380
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=You are a SEO Expert Assitant Analize websites text content of competitors to help to create my company in Spain. Your duty is create human format deep and detailed SEO analysis based ONLY in the text. Additionally to your deep analysis as expert make sure to cover:\nsi son B2B o B2C. Responde solo con \"B2B\" o \"B2B\" o \"B2B2C\"\nel plan pago más bajo que ofrece la empresa. Si no estás seguro, responde null.\ndime si la empresa ofrece una API\ndime si la empresa tiene un plan empresarial\ndime si la empresa tiene una prueba gratuita mencionada en su página de inicio. Responde false si no encuentras evidencia sólida.\nTiene integraciones con otros servios como zappier o salesforce?\nresumen de precios\nLista de Puntos fuertes de la empresa o servicio\nAnálisis detallado de la publicacion para poder usarla como referencia en mi propia web, debe contener keywords, calidad del contenido, relenvancia en base a tu conocimiento, longitud, etc\nPlease use Spanish to answer and only the report in human format with formal spell.\nEXPETED ANSWER:\n```\nSEO Analysis:\nLong and deep analysis..\n...\n..\n\nAditionals points:\n- aditional point 1\n```\n\nWebsite url: {{ $json.organic_results.link }}\nWebsite snippet: {{ $json.organic_results.snippet }}\nTEXT TO ANALIZE:\n{{ $json.data[0].results[0].text }}",
+        "options": {
+          "maxIterations": 20,
+          "returnIntermediateSteps": false
+        }
+      },
+      "id": "088aa2d2-580b-41fa-8a08-0058b4d5e8c1",
+      "name": "Contet Summarizer",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        2780,
+        -80
+      ],
+      "alwaysOutputData": true
+    }
+  ],
+  "connections": {
+    "Input": {
+      "main": [
+        [
+          {
+            "node": "Create Google Search Query",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get rows to enrich",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get rows to enrich": {
+      "main": [
+        [
+          {
+            "node": "Input",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Test workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Get rows to enrich",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrappe Google Results": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4o-mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Contet Summarizer",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Google Search Query": {
+      "main": [
+        [
+          {
+            "node": "Scrappe Google Results",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Contet Summarizer",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Contet Summarizer": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "staticData": null,
+  "meta": {
+    "templateId": "2324",
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "24a65e82-2335-4897-91d4-dfda3cb07750",
+  "triggerCount": 0,
+  "tags": []
+}

@@ -1,0 +1,109 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type collects input from a list of radio buttons.
+
+<center>[[File:L_ListR.png]]</center>
+
+
+'''Example:''' [[Media:List radio example.zip|List_radio_example.zip]]
+}}</onlyinclude>
+
+=General options=
+
+{{QS:other}}
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Answer_order}}
+
+{{QS:other_replace_text}}
+{{QS:other_Position}}
+
+{{QS:Question theme}}
+
+{{QS:display_columns}}
+
+{{QS:Hide_tip}}
+
+{{QS:Hidden}}
+
+{{QS:CSS Class}}
+
+{{QS:Printable survey relevance help}}
+
+=Logic=
+
+{{QS:array_filter_style}}
+
+{{QS:array_filter}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:other_numbers_only}}
+
+{{QS:other_comment_mandatory}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}} 
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+=Timer=
+
+The following question types support timers:
+* [[Question type - Text display|Text display]] 
+* [[Question type - List (Radio)| List (Radio)]]
+
+The timer attributes work best with surveys using the [[General settings|Question by question]] format. They can also be used in the surveys that use the [[General settings|Group by group]] format. But, running the group by group format can break the mandatory questions, and implicitly, the survey.
+
+{{QS:time_limit}}
+
+{{QS:time_limit_action}}
+
+{{QS:time_limit_disable_next}}
+
+{{QS:time_limit_disable_prev}}
+
+{{QS:time_limit_countdown_message}}
+
+{{QS:time_limit_timer_style}}
+
+{{QS:time_limit_message_delay}}
+
+{{QS:time_limit_message}}
+
+{{QS:time_limit_message_style}}
+
+{{QS:time_limit_warning}}
+
+{{QS:time_limit_warning_display_time}}
+
+{{QS:time_limit_warning_message}}
+
+{{QS:time_limit_warning_style}}
+
+[[Category:Question types]][[Category:Single choice questions]]

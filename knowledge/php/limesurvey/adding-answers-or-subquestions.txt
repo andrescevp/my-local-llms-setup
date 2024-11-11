@@ -1,0 +1,56 @@
+<languages /> 
+
+__TOC__
+
+
+=General=
+
+Different question types allow you to create advanced questions for your survey respondents. Adding answers and/or subquestions represent one way through which you can increase the complexity of your survey. 
+
+<div class='simplebox'>[[File:help.png]] To find out more about the available LimeSurvey question types, please continue reading [[Question types|the following wiki section]].</div> 
+
+To start adding answers and subquestions, click on the question you wish to edit and look for the '''edit answer''' (or '''subquestion''') button:
+
+
+<center>[[File:Edit subquestions example.png]]</center>
+
+When adding an answer you have to assign each answer/subquestion a ''code'' (which can be used for [https://manual.limesurvey.org/Expression_Manager#Relevance_.28Controlling_Navigation.2FBranching.29 ExpressionScript relevance equations], for example) and you have to enter the ''answer/subquestion text''. 
+
+# '''Position:''' Click the "three-lines" symbol and drag it up and down to reorder the fields.
+# '''Code:''' This is the data that will usually be exported to your spreadsheet when compiling results. You may choose whatever code you want (5 character maximum). The code can only contain standard alpha-numeric characters and has to be unique among the answer options for this question.
+# '''Assessment value:''' <sup>Only for answers</sup> This field will only show if the assessments mode is activated in the survey settings. It can be set to a positive or negative integer value. For more information, please check out the [[Assessments|assessments]] wiki section.
+# '''Text answer/subquestion:''' The answer/subquestion text that will be displayed to your survey respondents.
+## ''HTML Editor:'' Click on the green pencil button to increase the complexity of your answer/subquestion text (e.g., you can add images, videos, and so on).
+# '''Relevance equation:''' <sup>Only for subquestion (Y-axis)</sup> This field allow you to set a relevance using [[ExpressionScript - Presentation|ExpressionScript]]
+# '''Actions:''' Two actions are available:
+## ''Add new field:'' Click on the green "plus" button to introduce a new answer/subquestion;
+## ''Delete this field:'' Click on the red "trash" button to delete the respective field.
+
+== Specific for Answers==
+
+<div class='simplebox'>[[File:help.png]] Please note the '''edit answers''' is different from the '''edit default answers''' one. Click on the following [[Default_answers|link]] to read more about the possibility to edit the default answers in LimeSurvey.</div>
+
+If the [[Assessments|assessment mode]] is enabled, you can - for certain question types - also enter an ''assessment value'' for each answer.
+ 
+
+<center>[[File:Add_edit_subquesitons_answers.png]]</center>
+
+== Specific for subquestions==
+
+The relevance equation is available only for the subquestions located on the X axis . It is the default axis if there is only one list of subquestions (except array by columns):
+
+
+<center>[[File:Limesurvey-subquestions.png]]</center>
+
+=Hints & Tips=
+
+*You can adjust the layout as well as include pictures or other media elements in your individual answers. This is possible by clicking on the ''pencil icon'' at the end of the answer text-box and [[First login - your user preferences#HTML editor mode|using the WYSIWYG editor]] to create, edit or design your answer layout as well as upload images and media.
+
+*There is a special feature to create an answer that is showing up left and right of an array row (this works only with the question type [[Question types#Array|Array]]). This can be done by using a pipe char '|'  to part the answer. For example, if you want to have 'Good' and 'Evil' on the left and right side of the row, just write 'Good|Evil' into this field. This is essentially useful if you want to create a ''Semantic Differential Question''.
+
+*'''Relevance:''' You can enter [https://manual.limesurvey.org/ExpressionScript_-_Presentation#Relevance_and_Cascading_Relevance relevance equations] for each subquestion (available for question types using subquestions such as multiple choice or array questions). In this way, you can conditionally show/hide certain items of your question. The default value of "1" means that the item is always shown. 
+
+
+{{Hint|Text=Always perform a [[Show_logic_file|logic file check]] to make sure your relevance equation has no errors.}}
+
+*You can import/export label sets, too. For example, if you have a list of countries and you want to use them as answers in a dropdown list, you can use the export/import functionalities to get the existing data into your LimeSurvey installation.

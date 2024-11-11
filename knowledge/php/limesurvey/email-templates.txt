@@ -1,0 +1,278 @@
+<languages />
+
+
+=Introduction=
+
+
+The email templates are used to send personalized invitations, reminders, confirmations, and registration emails to your participants (from the survey participants table). You can also edit the standard basic (or detailed) admin notifications that are sent to the survey administrators. 
+
+Email Templates: '''Settings''' > '''Survey menu''' > '''Email templates'''
+
+
+<center>[[File:Location email templates.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] If you have the superadministrator permission (you have access to the [[Global settings|global settings of your LimeSurvey installation]]), you can change the Default HTML editor mode for all of your LimeSurvey users. For further details, continue reading [[Global_settings#General|the following wiki subsection]].</div>
+
+
+{{Alert|title=Attention|text=If you want to use the popup/inline HTML editor, do not forget to enable the '''HTML format for token emails'''! This is located in the '''Settings menu''' of your survey, under the [[Participant settings]] tab.}}
+
+=Email Templates Panel=
+
+
+The email templates panel:
+
+
+<center>[[File:Email templates panel.png]]</center>
+
+
+In the above screenshot the "HTML source" editor mode is used. To change it, go to your [[First_login_-_your_user_preferences#HTML_editor_mode|personal account settings]]. 
+
+
+{{Note|To edit the text fields, go to your account settings and choose the ''inline HTML editor mode''.}} 
+
+
+Five types of emails can be sent to users or admins:
+*[[Email templates#Invitation|Invitation]]
+*[[Email templates#Reminder|Reminder]]
+*[[Email templates#Confirmation|Confirmation]]
+*[[Email templates#Registration|Registration]]
+*[[Email templates#Basic & detailed admin notifications|Basic & detailed admin notifications]]
+
+
+==Invitation==
+
+
+This functionality is used to send emails in bulk to all survey participants in the [[Survey participants#Send email invitation|survey participants table]] who have not yet received an invitation to complete your survey.
+
+From the email templates panel, you can edit the message sent to survey participants. To check which email placeholders can be used, continue reading the following [[Email templates#Email placeholders|wiki subsection]]. You can also use the [[ExpressionScript - Presentation|ExpressionScript]] to further customize your invitation email template.
+
+==Reminder==
+
+
+The ''Reminder'' functionality provides a way for survey administrators to remind the [[Survey_participants#Send_email_reminder|participants from the survey participants table]] to answer the survey.
+
+You can edit the default format of the reminder email from the ''Email templates panel''.  To verify which email placeholders can be used, continue reading the following [[Email templates#Email placeholders|wiki subsection]]. The [[ExpressionScript - Presentation|ExpressionScript]] can help you customize the text body of this email template.
+
+<div class="simplebox">[[File:help.png]] '''Note:''' A reminder will be sent only to those participants in the [[Survey participants|survey participants table]] where the "''Completed''" field is turned off. This means the respondent has either not taken or completed the survey.</div>
+
+==Confirmation==
+
+
+If tokens are used and a participant fills out the survey, a confirmation email will be sent to his/her email address. You can deactivate this functionality from the [[Participant settings]] panel.
+
+Click the '''Confirmation''' tab if you want to edit the email template. Check the [[Email templates#Email placeholders|email placeholders]] to see which ones can be used in this type of email. You may also use the [[ExpressionScript - Presentation|ExpressionScript]] to customize your email.
+
+==Registration==
+
+
+If '''closed-access mode''' is enabled (there is a [[Survey participants|survey participants table]], which means that only those participants who have an allocated entry and a unique token code associated to it can complete the respective survey. If you allow participants [[Participant settings|to publicly register to your survey]], a new entry in your survey participants table will be created once the respondent has submitted his or her name and email address. A script that runs in the background will automatically send the respective respondent a '''registration email'''. It contains the URL with the token that needs to be accessed by the newly registered user.
+
+Click the '''registration''' tab to edit the format of this email. Don't forget to take a look first at which [[Email templates#Email placeholders|email placeholders]] can be used within the text body. The [[ExpressionScript - Presentation|ExpressionScript]] can provide further customization to the body text you wish to use.
+
+==Basic & Detailed Admin Notifications==
+
+
+To get admin notifications, click the [[Notifications & data|Data management]] tab and type in an email address in the "''Send basic admin notification email to''" field and another one (or the same) in the "''Send detailed admin notification email to''" field.
+
+By default, the only difference between the two is related to the extra placeholder {ANSWERTABLE} that is included in the detailed admin notification email template. This allows the user who receives these kinds of emails to also check the submitted answers.  They do not have to access the LimeSurvey installation.
+
+However, by using the [[ExpressionScript - Presentation|ExpressionScript]] and the [[Email templates#Email placeholders|email placeholders]] you can customize these two email templates.
+
+=Email Templates Fields=
+
+
+Each email template contains:
+
+*'''The subject of the email:''' The title of the email/batch of emails you want to send;
+
+*'''The email body:''' A text box that contains the text message you want to send to the participants. It may contain text, images, and [[Email templates#Email placeholders|email placeholders]]. The [[ExpressionScript - Presentation|ExpressionScript]] can also be used to further customize the message you want to deliver; 
+
+<div class="simplebox">[[File:help.png]] '''Note:''' Another tab is displayed above the tab with the  email templates tab if your survey uses [[General settings|additional languages]]. If you click any language tab other than the default language tab, the email templates will load the corresponding texts in the respective language. Access each email template in order to start editing them. Do not forget to click the '''Save''' button located in the upper-right part of the screen to save your changes.</div>
+
+
+*'''Email actions:''' Two actions are available: 
+**''Reset this template:'' Once clicked, the HTML code is reset. No text is deleted;
+**''Validate expressions:'' Checks the logic of the email - whether the placeholders are correctly used or not. We highly recommend using it before sending a batch of emails. This way you can see whether the placeholders are correctly defined or not. In the below example, a small typo exists - it is emphasized in red.
+
+
+<center>[[File:Validate email - email templates.png]]</center>
+
+=Email Placeholders= 
+
+
+{{Alert|title=Attention|text=Please note that some email placeholders can be used only within certain email templates! Read below for further details.}}
+
+In the default email templates, different email placeholders are used either in the body and/or the subject of the email. Their role is to connect the email you want to send to each participant in your [[Survey participants|survey participants list]]. The data from the survey participants table (e.g., email, first name, last name, token, etc.) is automatically taken and put into different unique emails before being sent to each participant from your survey participants list.
+
+Below are the email placeholders that can be used within the body message of your invitation and  reminder [[Email templates|email templates]]. When sending out the emails, these email placeholders will be replaced in the preview of your invitation/reminder email with data from your survey and [[Survey participants|survey participants table]].
+
+{|class="wikitable"
+|{ADMINEMAIL}||Email of the Survey admin
+|-
+|{ADMINNAME}||Name of Survey Admin
+|-
+|{SURVEYNAME}||Title of your survey
+|-
+|{SURVEYDESCRIPTION}||Description of your survey
+|}
+
+The following placeholders are allowed in invitation/reminder email templates (subject '''and/or''' body fields) and they will be replaced when sending out the emails:
+
+{|class="wikitable"
+|{EMAIL}||Email of the recipient
+|-
+|{FIRSTNAME}||First Name
+|-
+|{LASTNAME}||Last Name
+|-
+|{SURVEYURL}||The URL to start the survey - if you are sending HTML emails, a full URL will be displayed to the survey participant
+|-
+|@@SURVEYURL@@||The URL to start the survey - this is the barebone link. Use this if you want to integrate the link in your custom HTML elements somewhere (available in v1.90 and later)
+|-
+|{OPTOUTURL}||The URL to deactivate sending of emails for the respective survey - a full link will be displayed in the HTML version of the email template
+|-
+|{OPTINURL}||If a user is blacklisted and wants to participate in the respective survey, they have to click the opt-in URL to receive survey invitations/reminders again. 
+|-
+|{GLOBALOPTOUTURL}||The URL for a respondent to opt-out of central participant list for this site - a full link will be displayed in the HTML version of the email template
+|-
+|{TOKEN}||The token to access the survey
+|-
+|{USESLEFT}|| The number of uses left for the token
+|-
+|{VALIDFROM}|| The date the token is valid from
+|-
+|{VALIDUNTIL}|| The date the token is valid until
+|-
+|{EMAILSTATUS}|| Used for skipping emails on email sending. Default email status is "OK".
+|-
+|{LANGUAGE}|| Used to define the language to be used for emails and survey URL when using multilingual surveys
+|-
+|{SENT}|| Invitation send date in ISO8601 format with time (Y-m-d H:i:s in PHP)
+|-
+|{REMINDERSENT }|| Reminder send date in ISO8601 format with time (Y-m-d H:i:s in PHP)
+|-
+|{REMINDERCOUNT}|| Number of reminders already sent
+|-
+|{COMPLETED }|| Survey completion date
+|-
+|{TID}|| Internal ID at token table
+|-
+|{ATTRIBUTE_1}||Attribute 1
+|-
+|{ATTRIBUTE_2}||Attribute 2 (...and so on for more attribute fields)
+|}
+
+If your survey is '''not''' anonymous, the email placeholders can be used in order to add specific entry/participant data into the [[text elements|Survey text elements]] panel (e.g., survey description, welcome message, end message).
+
+{|class="wikitable"
+|{TOKEN:EMAIL}||Displays the email of the participant from the survey participants table
+|-
+|{TOKEN:FIRSTNAME}||Displays the first name of the participant from the survey participants table
+|-
+|{TOKEN:LASTNAME}||Displays the last name of the participant from the survey participants table
+|-
+|{TOKEN}||Displays the token code of the participant from the survey participants table
+|-
+|{TOKEN:ATTRIBUTE_1}||Displays "Attribute 1" of the participant from the survey participants table 
+|-
+|{TOKEN:ATTRIBUTE_2}||Displays "Attribute 2" of the participant from the survey participants table (and so on for more attribute fields)
+|}
+
+{{Note|To find out more about attributes, read the following [[Survey_participants#Manage_attributes|wiki section]].}}
+
+These email placeholders can also be used in the confirmation and admin notification email templates. 
+
+Certain placeholders can be used only within the the admin notification templates. Please note that one email per response will be sent to the email address of the administrator! 
+
+Some of the placeholders that can be used only in the admin notification panels are mentioned below:
+
+{|class="wikitable"
+|{VIEWRESPONSEURL}||Displays an URL that redirects you to the respondent's submitted answer
+|-
+|{EDITRESPONSEURL}||Displays an URL that redirects you to a LimeSurvey page from where you can edit the responses submitted by the respective survey participant
+|-
+|{STATISTICSURL}||Click this URL to access the statistics of the survey
+|-
+|{ANSWERTABLE}||If you want to display the submitted answers of the participant in the admin notification email, use this email placeholder. This way, you no longer need to access your LimeSurvey installation in order to check the submitted answers of the respective respondent (as the {VIEWRESPONSEURL} placeholder does).
+|}
+
+<div class="simplebox">[[File:help.png]] '''Hints:'''
+* If your survey is using anonymized responses, then token-related placeholders will not work in the notification email template.
+* You can use [[ExpressionScript - Presentation|ExpressionScript]] to use expressions for tailoring an email{{NewIn|1.92}}. Please have a look at the [[ExpressionScript How-tos|ExpressionScript how-tos]] for an example.
+* Also have a look at the examples on using [[Questions - introduction#Information from survey participants table|Information from survey participants table]].</div>
+
+{{Box|Before sending the emails, we highly recommend the [[Email templates#Email templates fields|validation of your email templates]] - click on the validate expressions button located under the email text body.}}
+
+
+==Participant Opt-out==
+
+When you use the '''{OPTOUTURL}''' tag in your invitation/reminder email, your participants can opt out of this particular survey by clicking the related URL in the email - so you don't send them reminder emails. A participant that opts out of your survey will have the email status 'OptOut' set in the [[Survey participants|survey participants list]].
+
+==Barebone URL==
+
+URL placeholders have their corresponding Barebone URL. E.g., @@SURVEYURL@@: you can use @@OPTOUTURL@@, @@OPTINURL@@ …
+
+=Using Replacement Function=
+
+Some specific keywords can be used within your email templates. For example, certain keywords can be used to replaces the token URL address.
+
+The below example uses a plain link to the survey instead of a long url:
+
+1) First, access the email templates panel and choose ''Invitation''.
+
+2) Write the text you want to appear as a link to start the survey.
+
+3) Then select that text.
+
+[[File:mark_text_to_hyperlink.jpg]]
+
+4) Add the placeholder for the plain link @@SURVEYURL@@ and choose other from the protocol-select-box.
+
+[[File:add_link_placeholder_choose_other.jpg]]
+
+Now, when you send out your invitation emails, the link to start the survey will be shorter.
+
+= Email Attachments =
+
+== File Actions ==
+
+When clicking '''Add file''' the following window will be displayed asking you to choose the document from the files folder that you want to send via email:
+
+
+[[File:Upload_files_-_email_templates.png]]
+
+
+Attachments can be added at the bottom of the email template editing interface. Please note that email attachments are uploaded on a per survey basis.
+
+You can also upload, on the spot, a file from the desktop to your LimeSurvey installation by clicking the '''upload''' button and then selecting the file you want to attach to the respective email template.
+
+Once selected, double click it and the file will be immediately displayed in the '''Files''' table, below the '''Add File''' button: 
+
+
+[[File:Files_table_-_email_templates.png]]
+
+
+To have it permanently attached to the respective email template, do not forget to click the '''Save''' button located in the upper-right part of the window.
+
+To determine if an attachment should be sent on an individual basis, it is possible to add a relevance equation to each attachment.
+
+All functions supported by the [[ExpressionScript - Presentation|ExpressionScript]] can be used, as well as token attributes if the survey uses tokens.
+
+With notification or confirmation templates, it is also possible to use [[ExpressionScript - Presentation#Access_to_Variables|question codes]] used in the survey.
+
+If you want to delete a file, click the red trash button located under the Action column and save the changes. 
+
+{{Alert|title=Attention|text=* When a file can not be found on the file system, the email will be sent without an attachment.
+*Exporting/importing a survey does not export/import the attached uploaded files. However, the settings for attachments will be maintained, as well as the relevance equations.}}
+
+== Image Attachment ==
+
+
+You can attach an image/images if you send HTML emails. To do this, you need to update the URL source of the image by settings its path to your public directory of your LimeSurvey instance.
+
+
+<center>[[File:Image-email-embed.png]]</center>
+
+
+{{Alert|The source must be relative to your public directory on the server. If you LimeSurvey instance is installed in a subdirectory, the image will not be shown in your HTML editor.}}

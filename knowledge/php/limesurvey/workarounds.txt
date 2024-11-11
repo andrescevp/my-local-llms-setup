@@ -1,0 +1,12 @@
+<languages /> 
+'''Workaround sub-sections:'''
+
+* [[Workarounds: Question design, layout and templating]]: Everything about styling your survey, adjusting the layout and setting up special question types
+* [[Workarounds: Manipulating a survey at runtime using Javascript]]: Workarounds dealing with manipulating a survey at runtime using Javascript
+* [[Workarounds: Survey behaviour]]: Change the behavior of a survey
+* [[Workarounds: Further solutions provided by LimeSurvey users]]
+
+
+If you are looking for '''general troubleshooting''' please check our [[General FAQ]] and [[Installation FAQ]]. If you can't find a solution for your problem please [http://www.limesurvey.org/en/forum open a new thread at our forum] or ask at our [http://www.limesurvey.org/en/community-services/live-chat live chat].
+
+''Please keep in mind that the workarounds linked here are no official LimeSurvey extensions but solutions that other users created for themselves.<br /><span style='color:#EE0000,#FFFFFF'>Therefore we can't give support for any solution on these pages.</span><br />Please contact the users that, thankfully, shared their solutions with the community if you have any questions.''

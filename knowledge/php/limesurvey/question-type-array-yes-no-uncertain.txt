@@ -1,0 +1,78 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+
+It is an array question type that is prefilled with the following answer choices: "Yes", "No", and "Uncertain". You can also add a "No answer" choice if the question is not mandatory.
+
+[[File:C_YNU.jpg]]
+
+
+'''Example:''' [[Media:Array Yes No Uncertain Example.zip|Array Yes No Uncertain Example.zip]]
+
+<div class='simplebox'>[[File:help.png]] The "No answer" option is displayed if the question is '''not''' [[Question type - Array (Yes-No-Uncertain)#Mandatory|mandatory]].</div>
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+
+=Display=
+
+{{QS:answer_width}}
+
+{{QS:hide_tip}}
+
+{{QS:Random_order}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:array_filter}}
+
+{{QS:array_filter_style}}
+
+{{QS:exclusive_option}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Arrays]]

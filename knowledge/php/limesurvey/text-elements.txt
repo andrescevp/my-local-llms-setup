@@ -1,0 +1,64 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+From the [[Text elements#Survey text elements panel|survey text elements panel]] you can edit the title of the survey and its description, welcome and end messages, end URL of your survey, and the format of the decimal mark and date.
+
+To view or change the text elements, click the '''Settings''' tab and select '''Text elements'''.
+
+
+<center>[[File:Text_elements_settings_location.png]]</center>
+
+=Survey text elements panel=
+
+The following fields are located in this panel:
+
+
+<center>[[File:Settings Menu - Survey texts.png]]</center>
+
+
+==Survey title==
+The title of the survey can be changed in this field.
+
+==Survey Alias {{NewIn|5.5}}==
+
+You have the ability to assign "alias" to a survey, allowing participants to take the survey using a friendly URL.
+
+The alias of the survey can be changed in this field. You can have different alias per languages.
+You don't need to set alias for all languages.
+
+After setting the alias, the short/friendly URL will be avalable in the survey summary to be shared.
+
+==Description==
+You can add a survey description.
+
+
+==End URL==
+
+You have the ability to redirect users to another page when they complete the survey.  If you wish to redirect them, type in the URL and activate the '''automatically load URL''' option that is located under the [[Surveys - introduction#Presentation & navigation|Presentation & navigation tab]].
+
+You can construct your url, see [[URL_fields#End_URL_field|details]] on the way to do.
+
+==URL description==
+A short end URL description can be added in the case the user is redirected to a non-related survey webpage. It may help the survey administrator to add notes vis-à-vis the usage of the respective URL.
+
+==Date format==
+This option is important when you want to record [[Surveys - introduction#Notification & data management|timestamps]] together with the survey participants' answers. If you click it, a drop-down list with a number of date formats will be displayed.  Choose the one that fits your survey participants. Do not forget that different date formats are used across the world. For example, it is recommended to use a different time format if your survey focuses on the US market (mm-dd-yyyy) and not on the British market (dd-mm-yy).
+
+==Decimal mark==
+Two options are available: dot (.) and comma (,). Choose the one that fits the place where you conduct your study (e.g, US vs Germany).
+
+
+==Welcome message==
+Type in a message that will welcome the survey participants when they access your survey link.
+
+
+==End message==
+Type in a message that will be displayed to the survey participants when they complete the survey.  If the end URL field is automatically loaded, the end message will no longer be displayed.
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' If enabled from the [[Global settings|global settings]], use the [[Global_settings#General|HTML editor]] to better customize the welcome and end messages, and the description of the survey.</div>
+
+{{Box|If your survey is multilingual, each language will have a corresponding tab on the languages toolbar (they will be displayed after the base language).}}

@@ -1,0 +1,432 @@
+<languages /> 
+{{Alert|title=Attention|text=The following section is outdated. For up-to-date information, please check:
+*[[Export responses]]
+*[[Import responses]]
+*[[Problems & solutions]]}}
+
+
+__TOC__
+
+
+
+Once your survey is active you can start viewing responses and export them. To get to the survey response overview click: '''Responses''' -> '''Responses & statistics'''
+
+[[File:browse_results.png]]
+
+=Export to application (Excel/.csv)=
+
+On top of the page several export options are listed.
+
+[[File:export2.png]]
+
+When exporting results there are several filter options:
+*'''General'''
+** Set a range (for example, "export records X to Y")
+** Set to export all records OR completed records only OR incomplete records only
+*'''Questions'''
+** Determine how the heading should appear: abbreviated heading OR full headings OR question codes
+** Convert spaces in question text to underscores
+*'''Answers'''
+** You can either export full answers or convert answer codes Y and N to a defined variable
+*'''Format'''
+** Microsoft Word (latin charset)
+** Microsoft Excel (all charsets)
+** CSV File (all charsets)
+** HTML
+** PDF
+*'''Column Control'''
+** Set which answers should be exported. All answers in this list are represented by their [[SGQA identifier|SGQA identifier]]
+** Set which '''''token''''' data should be exported. This option is only available if your survey is '''''not anonymous'''''!
+
+[[File:export_tokens.png]]
+
+=SPSS Export=
+
+==General==
+
+SPSS Statistics is software used for logical batched and non-batched statistical analysis. You can use official SPSS package or use [https://www.gnu.org/software/pspp/ GNU PSPP] replacement for the proprietary program SPSS.
+
+To export your response data to SPSS go to ''Responses & Statistics'' section and click the icon to export to SPSS.
+
+==Export and filter data==
+
+When exporting data to SPSS there are two filter options. You can select '''which data''' should be selected (''all records/completed records only/incompleted records only'') and for '''which SPSS version''' the export files will be used (''prior version 16/16 or up'').
+
+SPSS export includes two files:
+# a syntax file (''survey_xxxx_SPSS_syntax_file.sps'')
+# and a data file (''survey_xxxx_SPSS_data_file.dat'').
+
+After downloading these files, you can open them using a raw text editor like notepad to take a look at how the exported data looks. The syntax file holds the commands that should be run to import the data. It is like a programming language inside SPSS. The data file contains a comma separated file with all data. If you just import this data as csv via a wizard you loose information about questions, labelsets etc. so we do not do that.
+
+==Import data in SPSS==
+
+Place the two files in the same folder on your drive (example: ''c:\data\survey_xxxx_SPSS_syntax_file.sps'' and ''c:\data\survey_xxxx_SPSS_data_file.dat'')
+
+We have two options now:
+
+1. When using Windows use the explorer to browse to the folder used above. If SPSS is connected to the .sps file extension you can just open the file by double clicking it:
+
+[[File:spss_explorer-screenshot.jpg]]
+
+Now you can choose Run->All from the opened window and after some time have your output dataset that you can save as a normal .sav file.
+
+2. Sometimes the easy solution above does not work. Then you can proceed as follows:
+* Open SPSS
+* Choose File->Open->Syntax
+* Choose the appropriate file: c:\data\survey_xxxx_SPSS_syntax_file.sps
+* Now the syntax opens.
+* Change the line that reads ''/FILE='survey_xxxx_SPSS_data_file.dat' '' to include the path where the files are: ''/FILE='c:\data\survey_xxxx_SPSS_data_file.dat' '', for mac user : ''/FILE='HD/Users/username/survey_xxxx_SPSS_data_file.dat' ''
+* Now mark the whole command text and choose Run->All from the menu and after a while (please be patient) you have the dataset with all info like questions, labels etc.
+
+=R Export=
+
+Feel free to add more information if you have some!
+
+The freeware software [http://www.r-project.org/ R] is an alternative for SPSS. It is an export to an application export in Limesurvey. 
+
+Instructions on how to import your dataset in R:
+#Download both the syntax file and the data file.
+#Store both files in R working directory (use ''getwd()'' and ''setwd()'' in a R command window to get and set).
+# In your code enter ''source("Surveydata_syntax.R", encoding = "UTF-8")'' in R command window which will import the data in the correct format to a data frame called "data".
+
+
+Responses with limited options will be factored with the levels matching the code of the question and the labels matching the options.
+
+Questions with other as an option will have the question field with _Other appended as a new column for the other data.
+
+NB: R-export is a plugin in Limesurvey. If you cannot find the R-export options (''R (syntax file)'', ''R (data file)'')  under ''Export results to application'', make sure the R-export plugin is enabled in the plugin menu.
+
+=STATA-xml Export=
+
+<div class="simplebox">This option is available from version 2.05</div>
+
+STATA is a commercial data analysis and statistical software package. 
+
+This export routine was created to facilitate rapid analysis of data collected with LimeSurvey. It creates an XML-file in STATAs proprietary format, which can be imported independent of the platform STATA is run on. Using this format offeres several advantages over importing plain CSV files:
+*Data sets are fully labelled including variable labels (question, subquestion) and value labels (answers, if applicable).
+*Dates are already transformed to STATAs internal date format and thus can directly be used to calculate difference between days etc.
+*Variable names are, if necessary, converted to a STATA compatible format.
+*Data formats of variables (string, integer, float, etc.) are already set according to the underlying data. (No more numbers encoded as strings!). 
+
+'''How to load the file in STATA:
+In STATA's menu, click on File, Import, xml-data. Choose browse to navigate to your exported file and click 'OK'. That should be it.
+If you prefer STATA's binary .dta files, you can just save your data again in this format.
+'''
+
+'''Be aware:''' 
+*Due to a limitation in STATA's data format, the length of string (text) variables have a maximum of 244 characters (Stata versions 8-12) and 2045 characters (Stata version 13 and above). Please indicate your Stata version in the settings of the export plugin. 
+*STATA only supports attaching value labels to numerical values. So to achieve short answers (usually one or two digits) and have these properly labelled, one should use numerical answer-codes in LimeSurvey (1=Totally agree).cIf non-numerical answer codes are used (A=Totally agree), then the complete answer text will be used as answer (eg.: 'Totally agree').
+
+=VVExport and VVImport=
+
+{{FeatureChange|v=2.05}} 
+
+Once you have started collecting responses, there may be occasions where you need to be able to directly edit and modify large quantities of data from your responses table, where a spreadsheet tool may be more useful.
+
+VVExport (the "VV" stands for vertical verification) allows you to export your responses table into a .csv file. So long as the general structure of the file remains intact, you can then edit values within it, and then import the file again into your responses table using the "VVImport" feature.
+
+Things you should be aware of:
+* If you want to import responses using "VVImport" make sure to check whether the responses should be added to the existing responses or all responses should be overwritten.
+* If you are trying to import responses from a different yet identical (e.g. identical questions/answers from another survey) make sure you are using the correct vv file and that the first two lines of the .csv-file are correct.
+* If you import a survey to your LimeSurvey installation the SID will (if possible) not change. The group id and question id however might change. So you might have to adjust the first two heading lines to match the new group id/question id. See '''Adjusting vv file headings'''
+
+== VVExport file version 2 {{NewIn|2.05}} ==
+This new feature allows different column names than the database. If your question codes are unique, then the new version is selected. In the new version each column name uses the [[Expression_Manager#Qcode_Variable_Naming|Qcode Variable Naming]]. For example this allows to update an existing survey in different installation more easily.
+
+==Exporting a VV survey file==
+
+[[File:limesurveyExportVVen.jpg]]
+
+When you choose to export responses using VVExport you will be given the option to choose which survey to be exported, whether you want to export all responses or complete responses only or incomplete responses only. The file extension allows you to choose which extension the exported file will have. For easy use .csv should be chosen.
+
+A 'vv survey file' allows you to import the responses to a survey when the question/answer combinations have changed. Effectively this allows you to add or remove questions in an active survey.
+
+Clicking on "Export a VV survey file" will then produce a tab delimited file that can be opened by Excel or similar style spreadsheet program. The first two rows of the spreadsheet are the column labels. The first row is a "human readable" column heading that details the name of the question/answer field. The second row is the internal PHP/database column name for that response.
+
+You should not modify the first two rows of this spreadsheet if you want to be able to "import" the data back into LimeSurvey at a later point.
+
+===Exporting a VV survey file {{NewIn|v=2.05}}===
+
+{{FeatureStarting|v=2.05}} 
+
+[[File:VV2-export-en.png|center]]
+
+* '''Export survey''' : The survey ID to be exported (read-only)
+* '''Export''' : The completion state of the responses to be exported
+* '''File extension''' : The file extension. The file is a TSV ([[wikipedia:Tab-separated_values|Tab-separated values]]) file. For easy opening in MS-Excel set the extension to .txt, with LibreOffice, OpenOffice or other spreadsheet program you can leave it to .csv.
+* '''VV export version''' : The 1.0 version uses database column headers, version 2.0 uses [[Expression_Manager#Qcode_Variable_Naming|Qcode Variable Naming]]. Version 2.0 is selected by default if all of your question code are unique.
+
+The first two rows of the spreadsheet are the column labels. The first row is a "human readable" column heading that details the name of the question. The second row is the real column name (Internal DB- or Qcode-name) for that response.
+
+==Editing a VV survey file==
+
+When a .vv file has been successfully exported you can use a spreadsheet tool to open and edit the file. If you have to choose a column separator when opening the file please use the "Tab" character. If you are using non-ASCII characters make sure you set "UTF-8" as character set.
+
+{{Alert|If you are using Microsoft Excel to edit the exported vv file, you should know that excel destroys the original data structure of the file. This causes an error when you try to re-import the edited .vv file.}}
+
+By default the first two rows of the .vv file are headers. If needed you can remove the first line to have a real TSV file. There are different use cases for importing a .vv file so we will differentiate between adding new responses to a survey and overwriting all responses of the survey.
+
+Example structure of a .vv file:
+
+===VV version 1 TSV file===
+
+<syntaxhighlight lang="text">
+Response ID	Date submitted	Last page	Start language	Token	please vote from 1 to 6 (1 - super, 6 - worst)
+id	submitdate	lastpage	startlanguage	token	46492X40X1991
+183	09.11.11 11:44	3	de	jsfhusdgqfygqsy	4
+184	09.11.11 11:53	3	de	sdfhsifgsyergze	2
+190	09.11.11 11:44	3	de	qsdqshkfhkdsjhj	1
+</syntaxhighlight>
+
+===VV version 2 TSV file===
+
+<syntaxhighlight lang="text">
+Response ID	Date submitted	Last page	Start language	Token	please vote from 1 to 6 (1 - super, 6 - worst)
+id	submitdate	lastpage	startlanguage	token	QCODE
+183	09.11.11 11:44	3	de	jsfhusdgqfygqsy	4
+184	09.11.11 11:53	3	de	sdfhsifgsyergze	2
+190	09.11.11 11:44	3	de	qsdqshkfhkdsjhj	1
+</syntaxhighlight>
+
+
+Here SQGA identifier are not used - instead Qcode variable naming <code>QCODE</code> is used in the second line.
+
+===Reserved names===
+
+.VV file uses left and right brackets for reserved names, when importing this string is replaced by :
+* <code>{question_not_shown}</code> : NULL value in database. LimeSurvey use [empty string] for not answered question, and NULL value for question not shown (by Expression manager or max step in survey).
+* <code>{quote}</code> : " (a double quote)
+* <code>{cr}</code> : Carriage return
+* <code>{newline}</code> : A new line
+* <code>{lbrace}</code> : Left bracket (for example, if you want to have {cr} in response : use <code>{lbrace}cr}</code> )
+
+===VV Version 1 editing===
+
+====Adding new responses to the existing responses of a survey====
+This is not supported for version 1 of the format as it easily can lead to various problems including data being imported into the wrong columns. The version 1 of the .vv file was always meant for vertical verification of data in an external tool like Excel, not as a mean to pull together data from different source (like the same survey running on another server).
+
+====Modify all responses of a survey====
+
+If you want to modify responses of survey you can just add the edit the file. 
+
+'''Example:'''
+
+Step 1: Open the file
+
+<syntaxhighlight lang="text">
+Response ID	Date submitted	Last page	Start language	please vote from 1 to 6 (1 - super, 6 - worst)
+id	submitdate	lastpage	startlanguage		46492X40X1991
+183	09.11.11 11:44	3	de	4
+184	09.11.11 11:53	3	de	2
+190	09.11.11 11:44	3	de	1
+</syntaxhighlight>
+
+
+Step 2: Modify responses
+
+<syntaxhighlight lang="text">
+Response ID	Date submitted	Last page	Start language	please vote from 1 to 6 (1 - super, 6 - worst)
+id	submitdate	lastpage	startlanguage		46492X40X1991
+1000	09.11.11 11:44	3	de	3
+1001	09.11.11 11:53	3	de	3
+1002	09.11.11 11:44	3	de	3
+</syntaxhighlight>
+
+You can then import the survey, make sure to override the existing responses (see "Importing a VV survey file").
+
+==Importing a VV survey file==
+
+[[File:LimeSurveyImportVVen.jpg]]
+
+As long as the first two lines are intact, you can then import the data in your vv survey file back into an active LimeSurvey survey.
+
+If you used Microsoft Excel to edit the exported vv file, the data structure of this file may be corrupted, so LimeSurvey is not able to import the edited file. You can try the following workaround to get the import working without an error:
+*Open your exported vv file in Excel and do your changes (I guess you already did that)
+*Save it as tab-separated text file (It creates a new file with the extension .txt)
+*Do another "clean" vv export from LimeSurvey
+*Open this new exported vv file with a texteditor like notepad or something else (I used textwrangler on mac)
+*Press CTRL + A to mark all of the content and delete it
+*Open the Excel edited vv file (the tab separated .txt file) with a texteditor and press CTRL + A to mark all of the content
+*Press CTRL + C to copy the content and paste it into the new (now empty) vv file
+*Press CTRL + S to save the file as it is (as .csv)
+*Now try to import this file
+
+Then, from the browse screen, choose the "Import a VV Survey file" icon.
+
+The "Import a VV Survey File" screen needs you to choose the "vvexport" file you are importing. If you choose to "Exclude Record IDs" the records will be imported and brand new Record ID's will be generated for them (use this option for the use case "Adding new responses to the existing responses of a survey"). If you un-check this box, then the original record id's will be imported (use this option for the use case "Overwriting all responses of the survey").
+
+There are a range of options you can choose that tell LimeSurvey how to deal with double or multiple entries.
+*Report an error (and skip the new record).
+*Renumber the new record
+*Replace the existing record (uses this for the use case "Overwriting all responses of the survey")
+
+===Importing a VV survey file {{NewIn|2.05}}===
+
+* '''File''' : Select the file to be uploaded. The file must be a [[wikipedia:Tab-separated_values|TSV file]]: A text file with each column separated by TAB.
+* '''Exclude record IDs?''' : If 'id' column exist in the file you can exclude this line or not. If this setting is checked then a new record is added for each line of the .vv file. If unchecked you can choose:
+* '''When an imported record matches an existing record ID''':
+** ''skip'' : Report and skip the new record. After upload you will see if the record already existed - if it existed it's not imported.
+** ''renumber'' : Renumber the new record. A new record is added to the response table with answer of the VV file.
+** ''replace'' : Replace the existing record. The old record is deleted and completely replaced by the record from the VV file
+** ''replaceanswer'' : Replace response details from the file in the existing record. The old record is updated with the new response from the VV file. This allow to replace only one question in the response table.
+* '''Import as not finalized response?''' : If checked the submitdate is set to NULL, so the response is set to not completed.
+* '''Character set of the file''' : You can choose the character set of the file - the default and recommended value is UTF-8 but some spreadsheet program don't allow to choose a character set.
+* '''First line contains question codes''' : By default VV file first line contain human readable question, the real column names are in the second line. This allow to use the first line as the real column names.
+* '''Force import''' : If the question codes are not found in the database name or in [[Expression_Manager#Qcode_Variable_Naming|Qcode Variable Naming]] then columns are assigned depending of order. This can be used to import VV file from different LimeSurvey instance but each survey must be exactly the same. We strongly recommend to use this only if you know what you are doing. It can be very dangerous and lead to results ending up in the wrong column.
+
+=Other export options=
+
+==Export a single response==
+
+If you want to export an individual response, you can do it in 3 ways:
+
+1. Login to limesurvey admin backend, choose your survey, goto "Edit survey settings" -> "Notification and data management" and make sure you receive basic email notifications.
+
+Every time someone has completed a survey, you will receive an email with a link: "Click the following link to see the individual response"
+
+This will take you to a page with a button above the data saying "Export this response"
+
+2. Login to limesurvey admin backend, choose your survey and "Browse responses for this survey". Click on "Display responses" and the id number you want to export in the left column. Then you can click on "Export this survey" above the data.
+
+3. Login to limesurvey admin backend, choose your survey and "Export results to application". In the last field above "Export data" you can choose which entry you want to export.
+
+==Match responses from different surveys==
+
+If you want to track survey responses for particular individuals over time, LimeSurvey can help you do that. A possible use case is to track group responses before and after the group takes a particular seminar.
+
+The steps to implementing this are as follows:
+
+1. Create the survey
+
+2. Make sure the survey is non-anonymous and uses tokens. To create a non-anonymous survey:
+
+a - Click on the icon General settings.
+
+b - Then under the Tokens tab select "No" for Anonymized responses.
+
+3. Activate the survey.
+
+When you activate the survey, click on the "switch to closed-access mode" button to create the token table:
+
+[[File:switch_to_closed.png]]
+
+4. Populate the tokens table with whatever method you wish (follow the instructions found at the [[Tokens]] page ).
+
+5. Export the survey results and make sure you include the token information.
+
+To export click ''browse results''...
+
+[[File:browse_results.png]]
+
+...and then ''export'':
+
+[[File:export2.png]]
+
+Remember to choose one or more elements from the token table to associate with the survey responses:
+
+[[File:export_tokens.png]]
+
+6. When you run the survey again, which can easily be done by copying the survey and tokens table using export/import, just repeat the steps, and make sure the same query is used to build the csv token import file.
+
+=Problems & Solutions=
+
+==Excel==
+
+===Modifying responses in Excel prior to Import===
+
+In order to make multiple changes to responses, you may choose to Export and open a file in Excel. Make changes to the data (other than the top lines) and then save as a .txt file. If you save as .csv, Excel uses comma-delimits which will not import into LimeSurvey. By saving as a .txt file, Excel saves as a tab-delimited file which imports back into LimeSurvey.
+
+===Edit .csv with Excel===
+
+In general '''''we do not recommend to use Excel to edit the exported .csv files''''' because Excel does some changes to the internal data structure which results in a failing import. If you nevertheless want to use Excel you have to set the seperator for Excel to a comma in System Control (Windows Systems):
+
+System Control|Region- Languageoptions|Regional Settings, customize...|Tab Numbers|Digit grouping symbol| replace ; with ,
+
+===Workaround to edit .csv files with Excel===
+
+Using Excel for editing questions can prevent you from being able to re-import them. But editing is the way to go if you have more than 5 or so options or ranking options, want to use Excel capabilities like sorting, etc.
+
+This is a partial workaround that seems to work in 1.82-essentially, only use Excel on the part of the file that is the data:
+* Export a question similar to what you would like to reuse as .csv file
+* Open the CSV file in a rawtext editor
+* Copy the part that has the answers to Excel, and parse it with Text to Columns or equivalent.
+* Use the talent of Excel to allow pasting text in columns to paste in 20, 50, 100 answers, as you wish
+* Save the file as Excel CSV, which will likely have no quotes.
+* Open this file in the editor, and Select All, Copy
+* Go back to the file you opened with the rawtext editor
+* Paste over the answers there
+* Save AS, with a different name, maybe one that you can remember for reuse
+* Import this file.
+
+===Excel - export limited to 255 columns===
+
+Due to limitations in Excel (versions lower and equal to 2003), LimeSurvey can export only 255 columns at the same time. Microsoft has proposed a [http://support.microsoft.com/kb/272729/en-us workaround as a VB macro].
+
+Although newer spreadsheets (Excel >= 2007, OpenOffice) can display more than 255 columns, the internal module used by LimeSurvey still can't export more than 255 columns.
+
+Two workarounds are however possible, use one of the following solutions:
+* Either export to CSV and import in your spreadsheet
+* Or use multiple exports (selecting at most 250 columns at a time), then merge the exported results
+
+===Excel/.csv - export fails===
+
+If you are unable to export your data to excel or into a .csv file please try to clear your browser cache and cookies.
+
+==CSV==
+
+===CSV defaults to 255 columns===
+
+When exporting large surveys the GUI by default limits the export to the first 255 columns. To work around this, simply mark all data sets for export.
+
+==SPSS export==
+
+===General steps===
+
+To import the LimeSurvey response data please use the following steps:
+#Click the 'Export to SPSS' icon.
+#From the select boxes select which responses you want to export and your SPSS version.
+#Download both files, the .sps (SPSS syntax command file) and .dat file (data file)
+#Open the .sps file with SPSS by opening SPSS, then select 'Choose another type of file' and select the downloaded .sps file.
+#Now an editor opens inside SPS where you can edit the commands in that file. Look for the line that starts with '/FILE=...'
+#Edit that line and adjust the path so it points to your .dat file. Example: Your *.dat file is in c:\temp so set this line to  /FILE='c:\temp\survey_(xxxx)_SPSS_data_file.dat'
+#Now select all commands inside the editor by pressing CTRL-A.
+#From the SPSS menu select Run/All.
+#Be patient, it will take some time to import all data and labels. Check the status bar for the progress.
+#Done!
+
+===Possible error messages in SPSS===
+
+====ERROR. command name:Get Data====
+
+If you receive the error message ''ERROR. command name:Get Data. 2267 Unexpected Token missing.'' please edit the forth line of your syntax file so it points to the absolute path of the data file like
+
+<div class="simplebox">C:\spss\Data\limesurvey\SPSS\survey_35276_SPSS_data_file.dat</div>
+
+====Error: "Text value unmappable in the current server locale"====
+
+This error can happen if you try to open an exported syntax file in SPSS 16. The solution is to force SPSS to interpret the syntax file as unicode.
+
+<div class="simplebox">Open SPSS. Go to Edit > Options > Character encoding for data and syntax. Change the option to "unicode".</div>
+
+LimeSurvey data can now be exported to SPSS 16 without any problem.
+
+===Define the scale to use for your variable===
+
+It is possible to override the default scale used for a variable by setting the question attribute [[Advanced question settings#scale_export|scale_export]] to the appropriate value.
+
+==VV Export/Import==
+
+===VV - Problems with vv import===
+
+If you have difficulties importing a vv file, try a Tab-delimited file and it should work fine.
+
+==Other problems and solutions==
+
+===Copying responses into a different survey (using tokens)===
+# Create new survey, add a dummy response, export the response file, open in Excel. This creates the format for the new import file.
+# Export the responses from the old survey, including tokens, open in Excel.
+# Use this data to create an Excel worksheet for the standard token file import (eg. Firstname, Lastname, Token, Email address, Email status (OK), Language (En)). Save as .csv and import tokens to the new survey in LimeSurvey.
+# In Excel, copy the response fields from the old survey responses that you want in the new survey (including token) into the appropriate Excel column of the new survey format.
+# Save as .txt file.
+# Use VVImport to import the new data into the new survey.
+# Possible import errors include date format - some system date fields do not allow a NULL value, some do. If the date looks okay but gives an error, use the Excel cell format "2009-12-01".

@@ -1,0 +1,75 @@
+<languages />
+__TOC__
+
+=General=
+
+''ComfortUpdate'' is a professional service from LimeSurvey GmbH to update LimeSurvey easily from your web browser with just a few mouse clicks (instead of having to perform [[Upgrading from a previous version|a manual update]]).
+
+To use and test ComfortUpdate, you have to sign up [https://account.limesurvey.org on LimeSurvey] to receive a [https://community.limesurvey.org/comfort-update-extension/ free trial key]. After that trial key has expired, you can either [https://community.limesurvey.org/comfort-update-extension/ buy one of our premium packages] or [[Upgrading from a previous version|update your installation manually]].
+
+
+{{Alert|To copy and use your ComfortUpdate key, access your LimeSurvey profile and check out the bottom section COMFORTUPDATE KEYS.}}
+
+=Requirements=
+
+Your PHP installation must be compiled with support for [http://php.net/manual/en/book.zlib.php ZLib] and have the [https://www.php.net/manual/en/book.openssl.php OpenSSL extension] installed and enabled. Check your PHPInfo or ask your system administrator for a confirmation. 
+
+Your server must be able to connect by SSL to ''comfortupdate.limesurvey.org'' to use the ComfortUpdate tool. If you have problems and get error messages such as ''10060 could not connect to the host 'comfortupdate.limesurvey.org''', you will have to tweak/edit your proxy/firewall security settings or ask your server administrator for further guidance/help.
+
+=Using ComfortUpdate=
+
+The LimeSurvey ComfortUpdate feature is safe to use even with active surveys. It does not delete or destroy any existing data. However, out of precaution, you should backup your current database and files manually before proceeding.
+
+*Locate the ''Update'' button
+**For the older LimeSurvey versions, go to the Global Settings Icon, select the first tab, and click the ''Updates'' button
+**For the recent Limesurvey versions, you will find the '''ComfortUpdate''' button in the '''Configuration''' dialog, under the ''Advanced'' tab:
+
+
+<center>[[File:ComfortUpdate.png]]</center>
+
+
+*The ComfortUpdate screen will display an update link if a new version of LimeSurvey is available. If not, click “Check now” to see if a new update is available
+*If an update is found, LimeSurvey will display a link to allow you to update. Click this to begin updating
+*If you have never used ComfortUpdate before or the ComfortUpdate upgrade key is not valid, you will be asked to enter an upgrade key.
+
+
+<center>[[File:ComfortUpdateKey.png]]</center>
+
+
+*LimeSurvey will now verify your installation directory to verify that the appropriate permissions are set to allow an update. A list of proposed changes will be displayed
+*If there are any problems, you must correct them at this point and then proceed to the next step
+*The ComfortUpdate will now make a backup of your database (if you use MySQL) and save your old installation files in the /tmp directory. If you use a different database, you should backup your database manually before proceeding
+* ComfortUpdate will then update your installation files to the latest version and finish. 
+On major version updates you will be redirected to a page for any necessary database updates. 
+
+Please note that the database updates are not part of ComfortUpdate, but a general function of LimeSurvey, no matter how you update.
+
+=Disabling ComfortUpdate=
+To disable ComfortUpdate to avoid receving ''New release available'' popup messages after each new release, you can add the following option to your "config.php" file (which is located in /limesurvey/application/config):
+<syntaxhighlight lang="php" enclose="pre">
+'updatable' => false 
+</syntaxhighlight>
+'''However, we strongly recommend not disabling this, as you might miss important security updates.'''
+
+=Troubleshooting=
+
+== I get some error during ComfortUpdate ==
+As a first step, please try to run the same step again after one minute. Occasionally, the server has to first generate the update package, which might take a minute. If it still does not work, check the other solutions in this troubleshooting section.
+
+==No server answer - The ComfortUpdate server is not responding ==
+Starting December 2022 the connection default to our updated server was changed to only use SSL.
+This requires that the OpenSSL PHP library on your server is properly configured and activated and that your server is allowed to connect by HTTP SSL connection to the outside (to our server comfortupdate.limesurvey.org).
+If one of these requirements is not met, you will get this message.
+A '''temporary''' workaround (which we don't recommend) is to disable this requirement in the /application/config/updater_version.php
+by setting
+<syntaxhighlight lang="php" enclose="pre">
+$config['comfort_update_server_ssl'] = 0; 
+</syntaxhighlight>
+
+==Blank page on step 3==
+
+If you get a blank page on step 3, it usually means that the memory limit of your PHP configuration is set too low. During that step, LimeSurvey tries to create a database backup and a file backup (of the files that will be replaced).
+
+==Using a proxy server to connect to update.limesurvey.com==
+
+If you are behind a proxy, you may have to adjust some settings to be able to use ComfortUpdate. You can set the details of your proxy server in the configuration file (see [https://manual.limesurvey.org/Optional_settings#General_settings the general settings wiki]).

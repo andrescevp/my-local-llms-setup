@@ -1,0 +1,213 @@
+<languages /> <translate>
+<!--T:1-->
+__TOC__
+
+
+<!--T:14-->
+<div class="simplebox">[[File:help.png]] Please note that the below explanations and screenshots are based on LimeSurvey 3.</div>
+
+
+=Create question group= <!--T:15-->
+
+
+<!--T:19-->
+Groups are a great way to organize your surveys by placing them into categories (groups).  How you categorize your surveys/groups is completely up to you.  
+
+<!--T:69-->
+To add question groups to your survey:
+
+<!--T:63-->
+(1) From the [[Survey structure|survey '''structure''']] tab of your survey click '''+Add question group'''. 
+
+  
+<!--T:20-->
+[[File:Option 2 - create a question group.png]]
+
+
+<!--T:21-->
+After you click ''Add question group'', the add question group panel will be displayed.
+
+<!--T:64-->
+(2) Complete the required fields.
+
+
+<!--T:22-->
+<center>[[File:Add question group panel.png]]</center>
+
+
+<!--T:4-->
+''Add question group'' fields
+
+<!--T:23-->
+*'''Title:''' Type in this box the name you wish to give to the question group;
+
+<!--T:8-->
+*'''Description:''' This field allows you to publish an explanatory note for any set of questions. If you add a description, it will be presented along with the survey before commencing any of the questions in that group. If no text is added, then public participants will simply move straightaway to the survey questions. You can use the HTML editor to include images, formatted text, etc. to your liking;
+
+<!--T:13-->
+*'''Randomization group:''' To start randomizing a question group, enter a string into the field such as ''randgroup1''. You will need to enter that same string in all question groups that you want to randomize and which will then appear in a random order when taking the survey. Only places <u>inside</u> the same group will be randomly switched!
+
+<!--T:10-->
+*'''Relevance equation:''' You can set a "relevance equation" in this field for the group with the help of the [[ExpressionScript - Presentation|ExpressionScript]]. This is helpful for "looping" or other cases where you are repeating similar content multiple times. For example, say you want to ask the same set of follow-up questions for each child in a household and you have asked how many children are there via a question named ''numKids''. Then, for each group of follow-up questions you would have to use relevance equations (which would collect data about the third child) such as: '''numKids == 3''';
+
+<!--T:11-->
+<div class="simplebox">[[File:help.png]] '''Note:''' An explanation and example for hiding question groups are available in the [[https://manual.limesurvey.org/ExpressionScript_examples#Hide_question_group_if_answer_from_previous_question_is_Yes_or_No|ExpressionScript examples wiki subsection]].</div>
+
+<!--T:6-->
+<div class="simplebox">[[File:help.png]] '''Hint:''' Groups can be used to group questions in a survey. If you are going to have multiple groups, you should note that the survey questions will be displayed group by group by default (you can change that from your [[General settings|survey settings]]). To display the groups in a particular order using the group reordering feature. If you have only one group in your survey then the name of this group is irrelevant (except for the survey format).</div>
+
+
+<!--T:65-->
+You can create as many groups as you like!
+
+
+
+==Add question group toolbar== <!--T:24--> 
+
+
+<!--T:25-->
+You will find the following options on the top toolbar:
+
+
+<!--T:26-->
+<center>[[File:Add question group - toolbar.png]]</center>
+
+
+<!--T:27-->
+* '''Display/Export''': This function is used to export your whole survey in different formats.
+* '''Survey participants:''' Clicking this button will redirect the survey administrator to his/her [[Survey participants|survey participants table]].
+* '''Responses:''' If the survey is active, the button becomes visible. It offers you access to the responses table. 
+* '''Import a group:''' Besides the two ways [[Question groups - introduction#Create question group|mentioned above]], new question groups can also be added via the [[Question groups - introduction#Import a question group|import group function]].
+
+==Import a question group== <!--T:28-->
+
+
+<!--T:29-->
+You can also import a question group (.lsg file format) that was previously exported from a LimeSurvey survey. 
+
+
+<!--T:66-->
+(1) From the survey '''Structure''' tab, click '''+Add question group'''.
+
+<!--T:67-->
+(2) Click '''Import a group''' on the top toolbar.  
+
+
+<!--T:30-->
+[[File:ImportQuestionGroup.png]]
+
+
+<!--T:31-->
+(3) '''Browse''' your computer/server and upload the .lsg file that contains the question group you wish to import.
+
+
+<!--T:68-->
+[[File:ImportQuestionGroupII.png]]
+
+=Question group actions= <!--T:32--> 
+
+
+<!--T:33-->
+After the creation of a survey, you can access the newly created group from the [[Survey structure|survey structure]] menu. The following page will be displayed:
+
+
+<!--T:34-->
+<center>[[File:Question group - after its creation.png]]</center>
+
+
+<!--T:35-->
+The page is divided into three sections:
+
+<!--T:36-->
+*'''Question group toolbar:''' You will find the following options on the toolbar:
+**''Preview survey/question group:'' Click one of the two buttons to either preview your whole survey or only the current question group. If additional languages were added to your survey, the survey/question group can be previewed in each language of the survey. Just click one of the two ''preview'' buttons and select the desired language.
+**''Edit current question group:'' Click this button to edit the title, description, relevance equation, or randomization group of the current question group.
+**''Check survey logic for current question group:'' This helps you see the possible errors that might exist within a question group - it is especially useful when the [[ExpressionScript - Presentation|ExpressionScript]] is used.
+**''Delete current question group:'' To delete the current question group, click this button.
+**''Export this question group:'' If you wish to export this question group to later import it into another LimeSurvey survey, click this button. The file will be exported in the .lsg format.
+
+<!--T:37-->
+*'''Group summary:''' The main [[Question groups - introduction#Create question group|question group details are displayed]];
+
+<!--T:38-->
+*'''Group quick actions:''' This allows you to quickly perform question-groups-related actions - in our case, the add new question to group option is displayed. To find out more about questions, read our [[Questions - introduction|introductory wiki section on question]].
+
+=Preview question group= <!--T:42-->
+
+
+<!--T:43-->
+Once you have started to add questions into your group, you may want from time to time to preview how the respective question group looks. To do that, look for the '''question group''' button that can be accessed from the:
+
+<!--T:44-->
+*[[Question groups - introduction#Preview question group - survey structure|survey structure menu]]
+*[[Question groups - introduction#Preview question group - question group panel|question group panel]]
+*[[Question groups - introduction#Preview question group - question panel|question panel]]
+
+<!--T:61-->
+{{Note|When previewing a group, the relevance of this group is automatically forced to true.}}
+
+<!--T:62-->
+{{Hint|Text=You can add [[URL_fields#Prefilling_a_survey_using_GET_parameters|GET params in URL]] to prefill questions.}} 
+
+==Preview question group - survey structure== <!--T:45-->
+
+
+<!--T:46-->
+Click the survey '''Structure''' tab, select the desired '''Question group''', and click '''preview question group''':
+
+
+<!--T:47-->
+<center>[[File:Preview q group - survey structure.png]]</center>
+
+==Preview question group - question group panel== <!--T:48-->
+
+
+<!--T:49-->
+You can preview the question group once you have finished editing it.
+
+
+<!--T:50-->
+<center>[[File:Question group panel - preview.png]]</center>
+
+==Preview question group - question panel== <!--T:51-->
+
+<!--T:52-->
+The question group to which questions belong can be previewed from the question panel - see the top bar:
+
+
+<!--T:53-->
+<center>[[File:Preview question group - question panel.png]]</center>
+
+=Reordering question groups= <!--T:39-->
+
+
+<!--T:40-->
+The question groups and questions can be reordered.  For further details, read the [[Survey structure#Reordering questions and question groups|survey structure wiki subsection]].
+
+=Example= <!--T:54-->
+
+
+<!--T:55-->
+The relevance equation offers many possibilities to further customize your survey. A simple example is presented below to show how some question groups can be hidden according to the answer provided by the respondent to a prior question (part of another question group). For example, if you want to find out more information about parents that have one child in comparison to those with two or more, using the relevance equation to hide certain questions/question groups is recommended.
+
+
+<!--T:56-->
+Link .lss file: [[Media:Question_groups_simple_example.zip|Question_groups_simple_example.zip]] -> For instructions on how to import the file, refer to the following [[Surveys_-_introduction#Import_a_survey|wiki section]].
+
+
+<!--T:57-->
+<center>[[File:Logic file question groups example.png]]</center>
+
+
+<!--T:58-->
+The above file contains three question groups, each containing one question. Question group "1kid" is displayed only if the value introduced by the respondent to the question "numkids" is 1. Question group "2ormorekids" is displayed only if the answer to the question "numkids" is >1.
+
+<!--T:59-->
+This is just a simple example to show how expressions can be used to further customize your survey. For more details, please read about the [[ExpressionScript - Presentation|ExpressionScript]] functionality. 
+
+<!--T:60-->
+<div class='simplebox'>[[File:help.png]] '''Notes:''' 
+*There are several ways to hide questions. One is to use [[Setting conditions|conditions]]. However, for more complex surveys, the [[ExpressionScript - Presentation|ExpressionScript]] has to be used.
+*If you use expressions, don't forget to look for syntax errors with the help of the logic file.</div>
+
+</translate>

@@ -1,0 +1,56 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type collects gender information ("Male" or "Female") from the respondents.
+
+<center>[[File:G_Gender.jpg]]</center>
+
+'''Example:''' [[Media:Gender question type.zip|Gender question type.zip]]
+
+<div class='simplebox'>[[File:help.png]] The "No answer" option is displayed if the question is '''not''' [[Question type - Gender#Mandatory|mandatory]].</div>
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:display_type}}
+
+{{QS:hide_tip}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Mask questions]]

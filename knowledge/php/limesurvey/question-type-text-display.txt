@@ -1,0 +1,84 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+
+This question type does not collect any input from the respondent. It just simply displays text. It can be used to provide further instructions or a design break in the survey.
+
+Please note that you can write in the text of this question also html or javascript. In this way, you can use this question for other purposes.
+
+
+<center>[[File:X_Boilerpl.jpg]]</center>
+
+
+'''Example:''' [[Media:Text display example.zip|Text_display_example.zip ]]
+
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Question_theme}}
+
+{{QS:hide_tip}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+=Other=
+
+{{QS:Page_break}}
+
+=Statistics=
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+=Timer=
+
+The following question types support timers:
+* [[Question type - Text display|Text display]] 
+* [[Question type - List (Radio)| List (Radio)]]
+
+The timer attributes work best with surveys using the [[General settings|question by question]] format. They can also be used in the surveys that use the [[General settings|group by group]] format. But, running the group by group format can break the mandatory questions, and implicitly, the survey.
+
+{{QS:time_limit}}
+
+{{QS:time_limit_action}}
+
+{{QS:time_limit_disable_next}}
+
+{{QS:time_limit_disable_prev}}
+
+{{QS:time_limit_countdown_message}}
+
+{{QS:time_limit_timer_style}}
+
+{{QS:time_limit_message_delay}}
+
+{{QS:time_limit_message}}
+
+{{QS:time_limit_message_style}}
+
+{{QS:time_limit_warning}}
+
+{{QS:time_limit_warning_display_time}}
+
+{{QS:time_limit_warning_message}}
+
+{{QS:time_limit_warning_style}}
+
+[[Category:Question types]][[Category:Mask questions]]

@@ -1,0 +1,69 @@
+<languages /> 
+== General ==
+<br />Once you are happy with the structure of your survey, you can activate it by clicking the '''Activate this survey''' button: 
+
+
+<center>[[File:QSG_LS3_Activate_survey.png]]</center> 
+
+
+Before activation, a window will be displayed, asking you about general survey-related settings:
+
+
+<center>[[File:QSG LS3 Save and activate survey.png]]</center>
+
+
+*'''Anonymyzed responses:''' This option allows you to determine whether responses to your survey are matched with information from your survey's token table, or kept "anonymous". If you decide to enable it, your survey is set to anonymize responses - there will be no way to connect responses and participants;
+*'''Save IP address:''' If enabled, the IP address of the survey respondent will be stored together with the response;
+*'''Save timings:''' If enabled, the time spent on each page of the survey by each survey participant is recorded;
+*'''Date stamp:''' Enable this if you would like to record the date/time the responses were submitted;
+*'''Save referrer URL:''' If enabled, the referrer URL will be stored together with the responses.
+
+Once you have chosen your desired settings, click the '''Save & activate survey''' button. The following message will be displayed: 
+
+
+<center>[[FIle:QSG_LS3_after_activating_a_survey.png]]</center>
+
+
+Select the option that suits your needs. For more information on survey participants, access the following [[Survey participants|link]]. 
+
+
+Now, copy the link to your survey and start sharing it:
+
+
+<center>[[File:QSG_LS3_Survey_url.png]]</center>
+
+
+
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+By activating a survey, LimeSurvey:
+*creates a separate database table where all survey responses are stored, a new entry being added for each new collected survey response
+*allows survey administrators to [[Data entry|manually enter data]] into that response table or edit the existent data
+
+
+Before you activate a survey, note that:
+*when the survey is initialized, you can change the text for questions, answers, the survey etc, but not the type of question or the type of answer.
+*you cannot add new questions or delete questions. Nor can you add answers to any of the array or multiple choice questions.  However, you can add answers to the basic list type questions.
+*if you deactivate (not expire) the survey, responses will be moved to a backup table and you will lose participation information; but you will again be able to add new questions and groups and modify survey parameters.
+
+== Problems when activating the survey ==
+
+=== Activation button/function is disabled ===
+If the '''Activate this survey''' button is disabled, there is an error preventing activation (for example, you have not added questions yet).
+
+=== Too many questions===
+When you activate your survey you may have too many questions in your survey so that the response table cannot be created.
+The error would say something like 'Too many columns' in older versions of LimeSurvey. In the latest version the error message would say "The survey response table cannot be created. This is probably caused by too many questions or sub-questions in the survey. If possible try to remove questions from the survey."
+
+In this case you could try one or more of the following:
+* Remove some questions in your survey. 
+* Verify that you always used the correct question types.  A common error would be using a Multiple-choice question type with a limit of one choice instead of using a List(Radio) question type. The former one would use a lot more data fields, while the latter one uses only one.
+* The length of the column names seem to matter. If you copy the survey using a small survey ID (you can set that when copying the survey) you might be able to activate the survey
+* If none of the above helps, or it is impossible to shorten the survey, you could split the survey to two surveys. In that case you would auto-load the second survey at the end of the first one. You could skip the welcome screen of the second survey and the participant would barely notice the switch.
+
+
+
+{{Alert|title=Attention|text=If the survey is active and you open several tabs by clicking '''Execute survey''', you may not be able to fill out the survey (an error will be displayed suggesting that you use the index to navigate the survey) in tabs previously opened to the last one. When that happens, please close all the tabs and make sure to open only one tab at a time to test the live version of your survey.}}

@@ -1,0 +1,42 @@
+<languages /> {{FeatureStarting|v=4.4.0}}
+
+== Global permissions ==
+
+* '''Create''': This allows an administration user to create a group. By default the user is the owner of the group. The owner has all permissions for the groups he owns.
+* '''View/Read''': This allows an administration user to view and read all surveys groups.
+* '''Update''': This allows an administration user to update all surveys groups. 
+* '''Delete''': This allows an administration user to delete all surveys groups.
+
+== Survey groups shown in list ==
+
+If a user has the permission to view surveys groups, all surveys groups are shown, e.g. in the dropdown when choosing a Survey Group or in the Survey group list).
+
+What is shown in general:
+* The ''Default'' Surveys group (the surveys group with ID 1)
+* ''Always available'' surveys groups (setting in each survey group)
+* If a user has permission for one survey in the group, the related surveys group is shown.
+* If user has permissions for surveys groups (User listed in surveys group permissions)
+
+== Surveys Group permission ==
+
+=== Surveys group settings ===
+
+If you look at the survey group settings you can see the following fields: name, description, parent group, sort order, owner, availability.
+
+Except for the description all these settings are shown in the list too, so any user without this specific permission can see this information.
+
+=== Survey group security ===
+
+Permission to modify survey group security settings. To add a new user on a permission the adding user needs update permissions.
+
+=== Survey settings for surveys inside group ===
+
+This allows to update inherited surveys settings for surveys inside this group. This doesn't include theme options for survey inside the group.
+
+== Surveys in survey group inherited permissions==
+
+This permissions are not part of Surveys group permissions. Then giving all read permissions on Surveys Group didn't give all read permissions on all surveys inside the group.
+
+This give permissions on all surveys inside the group. See the related [[Manage_users#Set_global_permissions_for_a_user|global permission for surveys]]. 
+
+{{alert|User can add survey in group only if he can see the group. There is no 'Create' for this permission.}}

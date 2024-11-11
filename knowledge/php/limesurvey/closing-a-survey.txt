@@ -1,0 +1,82 @@
+<languages /> 
+
+
+__TOC__
+
+
+=General=
+
+
+To stop a survey, you can either ''expire'' or ''deactivate'' it.
+
+
+{{Alert|title=Attention|text='''We strongly recommend using the expiry option to close a survey.''' The explanation is stated below.}}
+
+=Expiry=
+
+
+You can manually expire the survey if you edit the [[Publication & access|survey details]] and set an '''''Expiry date/time''''': 
+
+
+<center>[[File:Publication_%26_access_panel.png]]</center>
+
+
+Alternatively, when deactivating the survey (by clicking the '''''stop this survey''''' button), an option to expire the survey is provided, which performs the same function:
+
+
+<center>[[File:Expiry and Deactivation - Survey.png]]</center>
+
+
+If you decide to ''expire'' your survey:
+*No results are lost
+*No respondent information is lost
+*Change of questions, groups, and parameters is limited
+*An expired survey is not accessible to participants (they only see a message that the survey has expired)
+*It's possible to perform [[Statistics|statistics]] on responses inside LimeSurvey
+
+To make the survey available to your participants again, change or remove the expiration date from the [[Publication & access|publication & access panel]].
+
+=Deactivation=
+
+
+(1) Click the '''Stop this survey''' button located on the top toolbar.
+
+
+<center>[[File:Quick_start_guide_-_Stop_this_survey.png]]</center>
+
+
+(2) Click the '''Deactivate survey button'''
+
+
+<center>[[File:Expiry and Deactivation - Survey.png]]</center>
+
+
+*All results are lost (you cannot access them via the LimeSurvey user interface).
+*All participant information is lost.
+*The deactivated survey is not accessible to the participants (a message will be displayed stating that they are not permitted to see this survey).
+*All questions, groups, and parameters are editable again.
+*We recommend that you [[Export responses|export]] your responses before using this option.
+
+
+==Help! I accidentally closed my survey - what now?==
+
+
+'''If you closed your survey accidentally, it is important that you do not change anything in your survey.''' To recover your data:
+
+#Activate your survey again.
+#Select [[Responses]] from the survey toolbar.
+#Click [[Import responses|Import]] and select the "Import answers from a deactivated survey table" menu entry.
+#Choose your source table.
+#Click '''Import''' located in the upper-right part of the screen.
+
+
+{{Alert|title=Warning|text= You can import all of the old responses that are compatible with your current survey. '''Compatibility is determined by comparing column types and names, the ID field being always ignored.''' Using type coercion may cause serious issues with your data; use it with care or not at all if possible.}}
+
+
+<center>[[File:Import deactivated table into a new survey.png]]</center>
+
+
+Currently, LimeSurvey detects and handles the following changes:
+*Question is moved to another group (result is imported correctly).
+*Question is removed from target (result is ignored).
+*Question is added to target (result is set to database default value).

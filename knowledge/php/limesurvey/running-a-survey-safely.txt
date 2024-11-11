@@ -1,0 +1,5 @@
+<languages /> 
+<br />Once you have activated a survey and started to receive responses it is worthwhile considering the following:
+*Export the survey as [[Display/Export survey|survey archive immediately]] and save the .lsa file on a safe location.
+*Try not to make changes to the survey. There are some parts of the survey that can still be changed after it has been activated.  Certain minor changes should not cause problems.  However, it is better to fully [[Testing a survey|test your survey]] and make changes before activating/distributing it..
+*If you are a superadministrator, you can also export the whole database (MySQL only) by choosing the [[Backup entire database|related option]] from the configuration menu.

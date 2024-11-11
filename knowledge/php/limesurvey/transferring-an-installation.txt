@@ -1,0 +1,54 @@
+<languages /> 
+__TOC__
+
+You might get the task of moving the LimeSurvey installation to a new server. The process should be simple, but it can get complicated due to other factors. Below, you may find information on how to do the transfer and what to look out for, as well as information on how to recover from encountering any problems.
+
+In general, the only changes from a new and clean installation are the following:
+# '''config.php''' is usually changed to store basic installation parameters as well as any custom settings made;
+# '''upload/*''' may contain custom templates or uploaded files;
+# '''SQL database tables''' should have had data added to the tables created at installation time. Note also that some new tables may have been created to save copies of token and result data from previously or currently active surveys. These new tables are usually named '''lime_survey_nnn...''', '''lime_tokens_nnn...''', '''lime_oldsurvey_nnn...''', and '''lime_oldtokens_nnn...'''.
+
+Otherwise, unless you went in and made custom patches to the code, changes should be limited to these areas.
+
+The goal in transferring an installation over to a new system is similar to upgrading. The biggest difference is that we simply try to recreate the existing installation on the new computer. If you wish to [[Upgrading from a previous version|upgrade to a newer version]] also, rather do this after you have transferred the installation and verified that it works.
+
+=Transferring any version=
+* Prepare and save the old release
+** Backup your installation directory files and SQL-based database
+*** At the command-line level, make a '''.zip''' or similar archive of the whole installation directory tree of files
+*** Use phpMyAdmin or similar to export all tables; or use the '''LimeSurvey backup entire database''' button that is located in the '''Configuration''' dialog, under the Advanced tab
+** Copy your '''config.php''' file separately to ease the editing process
+* Move the saved release to the new machine
+** Unpack your installation files
+*** Create your new installation directory (same name is convenient)
+*** Unpack/unzip the installation files into the same folder
+** Setup your SQL database
+*** Create the new database using phpMyAdmin or a command-line interface
+*** Load the saved SQL-based database to recreate the tables and content
+* Edit '''config.php''' to reflect changes from the old release and check your installation
+** Be careful to check the database name, username, and password, as well as the installation server name, URL path, and physical directory path to the installation
+** Visit the survey admin page or the page of an active survey and check if everything works
+* You are good to go now :)
+
+{{Box|If you do not change the location of your LimeSurvey installation and wish only to upgrade it, go through the same process described in the section related to the [[Upgrading from a previous version|LimeSurvey upgrade to a newer version]].}}
+
+=Things that could go wrong=
+
+As simple as this appears, things do seem to go wrong sometimes. Take a deep breath. Verify that you followed the steps thoroughly. Otherwise, read below to see where other people got stuck along the way.
+
+==Different PHP installation on each machine==
+
+==Different SQL Database between machines==
+
+==Different LimeSurvey version (installation and DB backup file archives do not match)==
+
+There is a possibility that you did not have the correct installation backup code to match the backed-up SQL database. It could be easy to get these separate backups confused, out of sync, or otherwise separated. There are a few things that can help you find out what version each backup may be. When using the '''LimeSurvey''' SQL backup option, the default file name it creates has the date of the backup in the name. Also, if you search inside the SQL database backup file, you will find a section that looks similar to the example provided below where the database version is stored: 
+
+<syntaxhighlight lang="sql">
+#-----------------------------------------------------------------------
+# Table data for lime_settings_global
+#-----------------------------------------------------------------------
+INSERT INTO lime_settings_global VALUES("DBVersion","126");
+....</syntaxhighlight>
+
+'''This value is used by the installer to determine how to apply changes to tables when upgrading.'''

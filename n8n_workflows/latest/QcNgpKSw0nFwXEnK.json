@@ -1,0 +1,207 @@
+{
+  "createdAt": "2024-11-09T18:07:04.540Z",
+  "updatedAt": "2024-11-10T21:41:56.000Z",
+  "id": "QcNgpKSw0nFwXEnK",
+  "name": "Google Scrapper",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "4e7c3249-d620-4a94-8744-4f49f733959d",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed7e9da6-730c-464a-a12c-c81c5a713213",
+              "name": "term",
+              "value": "Empresa \"ReviewPro\"",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "437ab00c-494b-474a-ac7c-2e4ee4b9976b",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1240,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "iJzOZiXtaGwfzClt",
+          "mode": "list",
+          "cachedResultName": "Google Search"
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "id": "39378666-34e7-495d-949d-60bbe6223359",
+      "name": "Google Search",
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.1,
+      "position": [
+        1400,
+        40
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {},
+      "id": "5f4856f0-7059-4e13-ab15-ad4944266277",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        40
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Browser Rest Apis",
+        "operation": "Scrape",
+        "url": "={{ $json.organic_results.link }}",
+        "elements": {
+          "items": [
+            {
+              "selector": "body",
+              "timeout": 1000
+            }
+          ]
+        },
+        "waitForSelector": {
+          "items": {
+            "selector": "body",
+            "timeout": 1000
+          }
+        },
+        "requestOptions": {
+          "allowUnauthorizedCerts": true
+        }
+      },
+      "id": "e5fd836b-3c0f-450e-9705-383f4a7bc216",
+      "name": "Browserless",
+      "type": "n8n-nodes-browserless.browserless",
+      "typeVersion": 2,
+      "position": [
+        1660,
+        40
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "browserlessApi": {
+          "id": "9mIEXR9FRmqEku7t",
+          "name": "Browserless Credentials account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a38246ef-4a9b-48a8-b3dc-2aef05e9e044",
+              "name": "organic_results",
+              "value": "={{ $('Google Search').first().json.organic_results }}",
+              "type": "object"
+            },
+            {
+              "id": "750fbd8c-c5d3-4d6e-8a5b-9e99925aad99",
+              "name": "data",
+              "value": "={{ $json.data }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8f9f8f13-c927-4b68-8b9e-3c5416ef3861",
+      "name": "Output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2080,
+        40
+      ]
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Search": {
+      "main": [
+        [
+          {
+            "node": "Browserless",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Browserless": {
+      "main": [
+        [
+          {
+            "node": "Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Search",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "01a28118-ec93-4fd8-a34d-1e893ae53ab8",
+  "triggerCount": 0,
+  "tags": []
+}

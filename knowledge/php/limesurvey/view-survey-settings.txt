@@ -1,0 +1,99 @@
+<languages />
+
+__TOC__
+
+=Introduction=
+
+
+The survey settings menu allows users to edit different survey-related settings. The following survey settings are available by default:
+
+
+<center>[[File:Settings Menu screen.png]]</center>
+
+
+*[[Survey settings#Overview|Overview]]
+*[[Survey settings#General settings|General settings]]
+*[[Survey settings#Survey texts|Text elements]]
+*[[Survey settings#Data policy settings|Data policy settings]]
+*[[Survey settings#Theme options|Theme options]]
+*[[Survey settings#Presentation|Presentation]]
+*[[Survey settings#Participant settings|Participant settings]]
+*[[Survey settings#Notifications & data|Notifications & data]]
+*[[Survey settings#Publication & access|Publication & access]]
+
+
+In the screenshot above, two buttons are emphasized. They can be used by users to rearrange the survey settings menu dimensions. If you wish to rearrange the main survey settings menu, drag the right side of the menu to the left or to the right by clicking the '''three-dots'''. If you click the '''left arrowhead''', the menu collapses and is minimized until the only a side menu with icons is left. To go back to the default view of the survey settings menu, click the '''right arrowhead''' located above the survey settings menu. Hover the mouse over each option to see what each icon does.
+
+<div class="simplebox">[[File:help.png]] '''Note''': The menu can be changed/edited from the [[Menu configuration]] and [[Menu entries configuration]] pages. They can be accessed from the LimeSurvey configuration dialog. '''We recommend that only advanced users edit menus.'''</div>
+
+
+{{Note|The survey menu (located below the survey settings) is described [[Survey menu|here]].}}
+
+=Overview=
+
+
+The overview page offers an overview of your survey. It is divided in two parts:
+*'''Overview toolbar:''' The functions from the toolbar allow you to start/stop the survey, check its logic, save & export it, add survey participants, and manually introduce survey participants' data (in the case in which you conduct an offline survey);
+
+*'''Survey summary:''' A short summary of your survey.
+
+
+For a complete description, check the [[Overview|Overview panel]] wiki page.
+
+=General settings=
+
+
+The general settings of a survey allow the user to edit basic survey information, such as the survey owner, administrator's email, and the template used in the survey.
+
+For further details, please continue reading [[General settings|the following wiki]] page.
+
+=Text elements=
+
+
+From the '''Survey text elements''' panel, you can edit the title of the survey and its description, welcome and end messages, end URL, and the format of the decimal mark and date.
+
+For more details, access the [[Text elements|Survey text elements]] section.
+
+
+=Data policy settings=
+
+
+The set of options displayed under this option are related to the security text/policy settings.  These are the settings that survey participants need to be aware of before completing the survey. 
+
+For more details, access our wiki section on [[Data policy settings|data policy settings]].
+
+=Theme options=
+
+
+This panel is for users who would like to enhance their templates by using the inheritance function and the bootswatch themes.
+
+For more details, access our wiki section on [[Theme options|theme options]].
+
+
+=Presentation=
+
+In this panel you can edit presentation- and navigation-related settings. These changes impact how the survey is presented to survey participants. You can choose to show the number of the questions at the beginning of the survey, a progress bar or the current statistics of the survey once it is completed, and so on.
+
+For a complete description, access the following [[Presentation|link]].
+
+=Participant settings=
+
+
+From this menu you can edit different survey participants table settings. For example, you can choose to anonymize all the responses you get from a survey or allow public survey registration.
+
+For a complete description of the options, access our wiki section on [[Participant settings|survey participants handling]].
+
+=Notifications & data=
+
+
+If you would like to save response-related details into the responses tables, access this panel. You can save the referrer URL, IP address, timings, etc. that can help you produce more in-depth analyses. Moreover, LimeSurvey allows you to use the tracking ID from Google Analytics.
+
+For more explanations, read about [[Notifications & data|notifications and data management settings]].
+
+
+=Publication & access=
+
+
+This setting allows the survey administrator to choose the way in which the survey can be accessed by the survey participants (e.g., CAPTCHA codes can be used to increase the security of your survey). Moreover, you can also set up from here a start/expiry date/time.
+
+For more details on each option, read from our manual about [[Publication & access|Publication & access]].

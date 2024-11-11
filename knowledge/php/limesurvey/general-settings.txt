@@ -1,0 +1,64 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+The general settings panel of a survey allows you to edit basic survey information such as the survey owner, administrator's email, and the template used in the survey.
+
+
+To access General settings, click the '''Settings''' tab and click '''General settings'''.
+
+
+<center>[[File:Survey_settings_General_settings.png]]</center>
+
+=General settings panel=
+
+
+The following can be edited from the general settings panel:
+
+
+<center>[[File:Create a new survey - General settings.png]]</center>
+
+
+==Base language==
+The main language of the survey. The base language corresponds with the [[Global settings#Language|default site language]]. The latter can be changed from the global settings of your LimeSurvey installation by a super-administrator.
+
+==Additional languages==
+More languages can be added to your survey. This option is important when you want to create multilingual surveys. For example, if you wish to use English, German, and Romanian for your survey, add Romanian and German as additional languages (if English is already the default/base language). The list of available languages can be reduced by the LimeSurvey administrator in [[Global settings#Language|LimeSurvey global settings]].
+
+==Survey owner==
+When the survey administrator selects the survey owner, the survey owner has all the permissions associated with the respective survey: [[Manage_users#Set_permissions_for_a_single_survey|survey permissions]] (wiki link).
+
+==Administrator==
+The name of the administrator.
+
+==Admin email==
+The email of the survey administrator.
+
+{{Note|'''Administrator''' and '''admin email''' are utilized in the LimeSurvey [[Email templates|email templates]] system.}}
+<div class="simplebox">[[File:help.png]] Many hosting providers' SMTP servers will only accept emails whose "From:" address is on a local domain. Any emails that do not conform to this rule are discarded silently, without any visible error message. If this happens to you, ensure that you are using a provider-based email address in the "Admin email" field. You could also set up email forwarding on the provider's side, so that any messages sent there are relayed to your preferred address.</div>
+
+==Bounce email==
+This is the email address where the delivery error notification emails (bounced emails) will be sent to.
+<div class="simplebox">[[File:help.png]] A bounce email is an electronic email which is returned to the sender for various reasons (e.g., invalid address, temporary unavailable mail server, full recipient's mailbox, etc).</div>
+
+{{Note|The bounce email settings can be set up [[Email_bounce_tracking_system|locally]] and/or [[General_settings#Bounce_email|globally]].}}
+
+==Fax to==
+This field is used to provide a fax number on the "printable survey" - i.e., when you want to send someone a hard copy because he or she cannot use the online survey.
+
+==Group==
+Select the [[Surveys - introduction#Survey groups|survey group]]{{NewIn|3.0}} the newly created survey should be added to. 
+
+
+==Format==
+It allows you to choose the way the questions will be displayed to the survey respondents. Three options are available: 
+*''Question by Question'' : The questions will be displayed one by one (one question per page). If this option is selected, a separate "welcome" page and "end" page will be displayed when taking the survey.
+*''Group by Group'' : Each survey page will display a question group. Also, a separate "welcome" page and "end" page will still be displayed when taking the survey, as in the "Question by Question" surveys.
+*''All in one'' : If chosen, all the pages will be displayed on a single page. If you select this option, no separate pages exist for the "welcome" and "end" pages - they will all appear on the same page, together with the questions.
+
+==Template==
+You can select the desired template from the drop-down list. The default template is simple but functional. More information on creating your own templates is available [[Theme editor|here]].

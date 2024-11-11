@@ -1,0 +1,63 @@
+<languages /> 
+
+__TOC__
+
+
+=Introduction=
+
+
+Once a question was [[Questions_-_introduction|created]], more edits could be necessary in order to make it look properly for your survey respondents (e.g., adding subquestions, default answers or conditions). To check all the available options that correspond to the question type you have previously selected, click on the '''Structure tab''' located on the left side of the window and select the question you wish to apply further changes to:
+
+
+<center>[[File:Select question question bar.png]]</center>
+
+
+Question 'TestQ' is selected, which is an [[Question type - Array dual scale|array dual scale question type]].
+
+
+Once the question is accessed, the following window is shown: 
+
+
+<center>[[File:Top question bar.png]]</center>
+
+
+Three sections can be distinguished:
+
+*[[Question toolbar options#The question toolbar|The question toolbar]]
+
+*The question summary - it provides a short overview on:
+**Question Group - the [[Question_groups_-_introduction|question group]] it belongs to
+**Question ID/Code
+**Question text - the text that is displayed and read by your respondents;
+**Question type - For more details on the available LimeSurvey question types, click [[Question types|here]]; 
+***Warnings - whether it is the lack of subquestions or answers, a short warning will be immediately displayed below the question type row; 
+**Whether it is [[QS:Mandatory|mandatory]] or not;
+**Relevance equation - for complex question and survey customizations. For more details, check [[ExpressionScript - Presentation| the ExpressionScript wiki subsection]].
+
+*The question quick actions - only the add question to the group box is displayed. Once clicked, you will be redirected to the add [[Questions_-_introduction#Field_descriptions|question panel]].
+
+LimeSurvey provides you a menu bar that contains all the corresponding options that can help you edit a certain question type. 
+
+The options displayed on the top question toolbar.
+
+
+=The question toolbar=
+
+
+The following options can be accessed from this toolbar:
+
+*[[Preview function]] - it allows you to quickly preview either only the question, the question group or the whole survey;
+*[[Edit question]] - Click on this button if you wish to change the code of the question, its advanced settings, or the help/question text;
+*[[Check logic]] - in the case in which complex conditioning and expressions are used, check first the logic of the question to see whether LimeSurvey finds any error within your input;
+*[[Delete question]] - click this button if you wish to delete the question;
+*[[Export question]] - once clicked, a .lsq file can be saved into your computer;
+*[[Copy question]] - this function allows you to quickly copy the question under a different ID (it helps you by not being forced to recreate the more complex questions);
+*[[Setting conditions]] - each question may receive conditions. Once the condition is applied, the respective question will not be displayed unless the respective condition is met;
+*[[Adding answers or subquestions]] - certain questions need answers and subquestions to be displayed correctly. To check which ones make use of them, please read our wiki section on [[Question types|question types]];
+*[[Default answers]] - sometimes respondents leave the answer field empty. Therefore, if you wish to actually store a default answer within your database, type in here the default answer(s) you wish to be saved.
+
+
+<div class='simplebox'> [[File:Help.png]] To find out more about each option, please click on them to be redirected to their corresponding wiki subsection.</div>
+
+
+Please note that the available options slightly differ from one question to another. For example, the bar that corresponds to [[Question type - Long free text|the long free text question]] differs from the one that corresponds to the [[Question type - Array dual scale|array dual scale question type]] because it does not make use of answers or subquestions. For more details on each LimeSurvey question type, please continue reading the following [[Question types|wiki section]].

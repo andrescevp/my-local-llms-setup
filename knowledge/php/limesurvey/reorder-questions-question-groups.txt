@@ -1,0 +1,74 @@
+<languages /> 
+
+__TOC__
+
+
+{{Note|To see how to change the order of the questions and question groups in LimeSurvey 2 and in early releases of LimeSurvey 3, click on this [[Survey_structure#Reordering_questions_and_question_groups|link]] to access the subsection on question and question group reordering.}}
+
+
+=Introduction=
+
+
+To reorder questions and/or question groups, from the '''Settings''' tab click '''Reorder questions/question groups'''.
+
+Note: If the menu item is not visible, try to [https://manual.limesurvey.org/Menu_configuration reset your menu items] to the default state.
+
+<center>[[File:Reoreder_questions_panel_button.png]]</center>
+
+
+The '''''Organize question groups/questions''''' page will be displayed.
+
+
+<center>[[File:Save_when_reordering_questions.png]]</center>
+
+
+The question groups are displayed in the expanded mode by default.
+
+Remember to press '''save''/''save and close''' once you are done editing the order of the questions and question groups.
+
+{{Note|Please note that you can still reorder questions by using the drag-and-drop option on questions and question groups listed under the '''Structure''' tab. For more details, click [[Reorder questions and question groups#Alternative option to reorder question and question groups|here]].}}
+
+=Reordering Questions=
+
+
+To change the order of a question, click the question and drag it to the new location. It can be a placed either within the question group it already belongs to or within another question group. 
+
+
+<center>[[File:Reorder_question_1.png]]</center> 
+
+
+In this example, the position of question "Gender" was changed.
+
+
+<center>[[File:Reorder_question_2.png]]</center>
+
+
+{{Hint|Text=Use the '''Collapse all''' and '''Expand all''' buttons to better visualize survey questions. You may also use the arrow located next to the name of the question group to expand or collapse only certain question groups.}}
+
+=Reordering Question Groups=
+
+
+To reorder question groups, click the group and drag it to the desired position.
+
+
+<center>[[File:Reorder_qgroups_1.png]]</center> 
+
+
+In the example, the position of group "Single choice question" was changed:
+
+
+<center>[[File:Reorder qgroups 2.png]]</center>
+
+
+{{Hint|Text=Use the '''Collapse all''' button located next to the green tip box to better visualize the groups used within your survey.}}
+
+=Alternative Option to Reorder Questions and Question Groups=
+
+
+You can also change the order of the questions and question groups from '''Survey Structure''' located under the '''Structure''' tab. Click the three-lines symbol located in front of the question (group) name and start dragging it to the desired position.
+ 
+
+<center>[[File:Reorder-question.png]]</center>
+
+
+{{Alert|title=Attention|text=Questions are displayed according to the order you set from the "reordering panel". However, conditions might prevent the reordering of the questions. In this case, you will have to delete or change the respective conditions first.}}

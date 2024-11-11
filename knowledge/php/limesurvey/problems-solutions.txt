@@ -1,0 +1,87 @@
+<languages />
+
+__TOC__
+
+
+{{Note|In the case in which the solutions are not working or you found other workarounds to some common [[Export responses|export-]] and [[Import responses|import-related problems]], please edit the following wiki. '''Sharing is caring!'''}}
+
+
+=Excel=
+
+
+==Modifying responses in Excel prior to Import==
+
+
+In order to perform multiple changes to your document with responses, you may choose to Export and open a file in Excel. Make changes to the data (other than the top two lines!) and then save the document as a .txt file. If you save it as .csv, Excel uses comma-delimits by default which cannot be imported back into LimeSurvey. By saving it as a .txt file, Excel saves the edited document as a tab-delimited file which imports back into LimeSurvey.
+
+
+==Edit .csv with Excel==
+
+
+In general '''''we do not recommend to use Excel to edit the exported .csv files''''' because Excel does some changes to the internal data structure of the csv file which results in a failing import. If you still want to use Excel, you have to set the separator for Excel to a comma in System Control (Windows systems).
+
+If you do not know how to do it but you have already edited your document and save it as .csv, try the workaround suggested [[Import responses#Potential_issues_.26_solutions_with_the_VV_file|here]].
+
+
+==Excel - export limited to 255 columns==
+
+
+Due to limitations in Excel (versions lower and equal to 2003), LimeSurvey can export only 255 columns at the same time. Microsoft has proposed a [http://support.microsoft.com/kb/272729/en-us workaround as a VB macro].
+
+Although newer spreadsheets (Excel >= 2007, OpenOffice) can display more than 255 columns, the internal module used by LimeSurvey still cannot export more than 255 columns.
+
+Two workarounds are possible:
+* Either export to CSV and import the file into your spreadsheet software
+* Use multiple exports (selecting at most 250 columns at a time), then merge the exported results
+
+
+==Excel/.csv - export fails==
+
+
+If you are unable to export your data to excel or into a .csv file, please try to clear your browser cache and cookies.
+
+
+=CSV=
+
+
+==CSV defaults to 255 columns==
+
+
+When exporting large surveys, LimeSurvey limits the export to the first 255 columns by default. To work around this, simply mark all data sets for export.
+
+
+=SPSS export=
+
+
+==Possible error messages in SPSS==
+
+
+===ERROR. command name:Get Data===
+
+
+If you receive the error message ''ERROR. command name:Get Data. 2267 Unexpected Token missing.'', please edit the forth line of your syntax file so it points to the absolute path of the data file like
+
+<div class="simplebox">C:\spss\Data\limesurvey\SPSS\survey_35276_SPSS_data_file.dat</div>
+
+
+===Error: "Text value unmappable in the current server locale"===
+
+
+This error can happen if you try to open an exported syntax file in SPSS 16. The solution is to force SPSS to interpret the syntax file as unicode.
+
+<div class="simplebox">Open SPSS. Go to Edit > Options > Character encoding for data and syntax. Change the option to "unicode".</div>
+
+
+=Other problems and solutions=
+
+
+==Copying responses into a different survey (using tokens)== 
+
+
+# Create new survey, add a dummy response, export the response file, open in Excel. This creates the format for the new import file.
+# Export the responses from the old survey, including tokens, open in Excel.
+# Use this data to create an Excel worksheet for the standard token file import (eg. Firstname, Lastname, Token, Email address, Email status (OK), Language (En)). Save as .csv and import tokens to the new survey in LimeSurvey.
+# In Excel, copy the response fields from the old survey responses that you want in the new survey (including token) into the appropriate Excel column of the new survey format.
+# Save as .txt file.
+# Use VVImport to import the new data into the new survey.
+# Possible import errors include date format - some system date fields do not allow a NULL value, some do. If the date looks okay but gives an error, use the Excel cell format "2009-12-01".

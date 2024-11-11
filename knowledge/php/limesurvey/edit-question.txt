@@ -1,0 +1,20 @@
+<languages /> 
+
+=Edit question=
+
+
+To edit a question, select first the question you wish to modify from the structure tab and then click on the edit button located on the question bar:
+
+
+<center>[[File:Edit - question bar.png]]</center>
+
+
+Once clicked, you will get access to the question fields that can be edited:
+
+
+<center>[[File:Page_after_edit_question.png]]</center>
+
+
+'''To find out more about them, please read the following [[Questions_-_introduction#Field_descriptions|wiki section]].'''
+
+Please note that if your survey is active, you will not be able to edit/update all the available fields! We recommend you to do these changes before you decide to activate a survey or when it is inactive.

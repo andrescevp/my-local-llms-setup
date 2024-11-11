@@ -1,0 +1,131 @@
+<languages /> 
+
+=General=
+
+
+LimeSuvey has been supporting plugins since version 2.05. Some plugins are supported by the LimeSurvey GmbH team and are in [[Plugin manager#Core plugins|core]]. And some plugins are supported by others, outside the LimeSurvey team. If you would like to use them, check out the [https://www.limesurvey.org/index.php/community/extensions available plugins]. We hope you will also add your own plugin there!
+
+=Core plugins=
+
+
+To access the current available plugins that come with your LimeSurvey installation, click '''Configuration''', and select '''Plugin manager''':
+
+
+<center>[[File:Plugin manager.png]]</center>
+
+
+The following panel will be displayed:
+
+
+<center>[[File:Plugin Manager.png]]</center>
+
+
+'''[https://limesurvey.org LimeSurvey GmbH]''' supports at the moment the following plugins:
+*'''[[Plugin manager#Auditlog|Auditlog]]'''
+*'''[[Plugin manager#Export results to R|export results to R]]'''
+*'''[[Plugin manager#LDAP|LDAP]]'''
+*'''[[Plugin manager#LimeSurvey internal database|LimeSurvey internal database]]'''
+*'''[[Plugin manager#OldUrlCompat|OldUrlCompat]]'''
+*'''[[Plugin manager#STATA Export|STATA Export]]'''
+*'''[[Plugin manager#Webserver|Webserver]]'''
+
+
+{{Box|Feel free to contact the LimeSurvey team via [https://bugs.limesurvey.org the bug tracker], [https://discord.gg/DEjguXn LimeSurvey community chat on Discord] or [https://account.limesurvey.org/customer-support/contact-us ticket system] if any of the above plugins is not working properly.}}
+
+
+==Auditlog==
+
+
+The Auditlog plugin creates a log of '''administration''' events in a specific table called ''<DB prefix>auditlog_log''. 
+
+For more details about the plugin and its options, check the following [[Audit_log|wiki section]].
+
+
+==Export results to R==
+
+
+If enabled, you will be able to export your survey results to R.
+
+
+==LDAP== 
+
+
+By activating this plugin, you can perform basic authentication against an LDAP server. Make sure your PHP configuration has LDAP support enabled.
+
+
+'''Enabling and configuring settings for plugin AuthLDAP v2.05+''':
+#Enable LDAP in PHP.INI.
+#Verify that [http://php.net/manual/en/function.phpinfo.php phpinfo.php] shows that LDAP is enabled.
+#The location of LimeSurvey's built-in phpinfo.php is: Configuration -- Settings -- Global Settings -- Overview.  Then, below the table, you will have a link for "Show PHPInfo".
+#Go to LimeSurvey Plugin Manager.
+#Configure LDAP plugin.
+
+
+{{Note|Read our [[LDAP configuration examples]] for further help.}}
+
+
+==LimeSurvey internal database== 
+
+
+This plugin is activated by default and cannot be disabled. It uses the built-in LimeSurvey database. It is a fall-back mechanism so that you can always login to the installation when needed. 
+
+
+{{Note|For more details on authentication plugins, check the following [[Authentication_plugins|wiki section]].}}
+
+
+==OldUrlCompat==
+
+
+Old url (pre-2.0) compatible system.
+
+
+==STATA export==
+
+
+Activate it if you wish to export your survey results to a STATA .xml file.
+
+Hit the ''Configure'' button to choose whether you want the .xml file be compatible with Stata 8 - State 12, or with State 13 or later.
+ 
+
+==Webserver== 
+
+
+This plugin leaves authentication to the webserver and reads the result from a configurable server setting. This method has been around for a while, and was configured from config.php. If you used this authentication, you should enable the plugin in the plugins menu and move your configuration from config.php to the plugin's settings.
+
+=FAQs= 
+
+
+==How can I run third-party plugins?==
+
+
+There are three possibilities to run third-party plugins:
+
+* install LimeSurvey CE ([https://www.limesurvey.org/editions-and-prices/limesurvey-ce/editions-and-prices-community Community Edition]) on your own server - unlimited freedom to run any third-party plugin; 
+
+* contact our official partners (listed [https://www.limesurvey.com here]) and check whether they support and maintain third-party plugins you wish to use;
+
+* if you are a LimeSurvey Pro customer and wish to install third-party plugins, you have to become '''corporate''' customer. For more details about the '''corporate package''', write '''[https://limesurvey.org us]''' via our [https://www.limesurvey.org/customer-support/contact-us support page].
+
+
+{{Box|The '''corporate package''' was created for our customers who wish to use personalized professional packages (e.g., extra storage space, extra alias domains, third-party app plugins, and so on). Do not hesitate [https://www.limesurvey.org/customer-support/contact-us to write us] if you wish to find out more about this service and how we can personalize it for you.}}
+
+==How can I install a third-party plugins?==
+
+
+{{Note|To install your own third-party plugin, you need to have access to your server (e.g., run your own LimeSurvey CE installation).}}
+
+The standard procedure is to download the .zip file of the plugin, and extract it into the plugins folder of your LimeSurvey installation. Once done, it should be displayed in the Plugin Manager panel.
+
+Please note that certain third-party apps may require additional steps for a correct configuration. For further information, message the developer of the respective plugin.
+
+
+==Can I develop my own authentication plugin?==
+
+
+If you want to develop your own authentication plugin, please continue reading our wiki page on this topic - [[Authentication_plugin_development|authentication plugin development]].
+
+
+=Plugins - advanced=
+
+
+Click [[Plugins - advanced|here]] to find out more about plugins, how they work, and how new plugins can be integrated in LimeSurvey.

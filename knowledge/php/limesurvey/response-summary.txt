@@ -1,0 +1,95 @@
+<languages />
+<translate>
+
+
+<!--T:25-->
+__TOC__
+
+
+=Responses summary = <!--T:1-->
+
+
+<!--T:2-->
+The following section of LimeSurvey focuses on responses and statistics creation. Once accessed, the [[Responses & statistics#Responses summary|summary page]] is displayed by default:
+
+
+<!--T:3-->
+<center>[[File:response summary - info.png]]</center>
+
+
+<!--T:4-->
+The first table is called "''Response summary''" and displays the following:
+
+<!--T:5-->
+*'''Full responses''' - the number of surveys submitted by your respondents (by clicking the "Submit" button located on the last page of your survey
+
+<!--T:6-->
+*'''Incomplete responses''' - the number of surveys that have not been completely filled out by your respondents
+
+
+<!--T:27-->
+{{Note|In the [[Responses]] table, the incomplete answers are response records with no submission date. Such a record can occur when a participant uses the ''resume later'' function, or when an operator uses the data entry functionality to fill out a survey without submitting the answer, or when a participant fails to complete the survey because he/she just left.}}
+
+
+<!--T:7-->
+*'''Total responses''' - the aggregated number of complete/full and incomplete responses
+
+
+<!--T:8-->
+If you make use of the [[Survey participants|survey participants option]], then a summary of the survey participants-related data is displayed on this page below the "Response summary" table: 
+
+
+<!--T:9-->
+<center>[[File:Survey participants summary - responses.png]]</center>
+
+
+<!--T:10-->
+*'''Total invitations sent''' - the number of invitations sent to your participants from the survey participants table
+
+<!--T:11-->
+*'''Total surveys completed''' - shows the number of surveys that have been completed by your survey participants who have been allocated a token code
+
+<!--T:12-->
+*'''Total with no unique token''' - displays the number of survey participants without an assigned token code
+
+<!--T:13-->
+*'''Total records''' - the number of survey participants from the survey participants table
+
+=Toolbar options= <!--T:14--> 
+
+
+<!--T:15-->
+The following options are displayed on the top toolbar:
+
+<!--T:16-->
+*[[Responses & statistics#Responses summary|Summary]] - the page you land on after clicking the ''Responses & statistics'' button
+
+<!--T:17-->
+*[[Responses]] - redirects you to the survey response table
+
+<!--T:18-->
+*[[Data entry]] - used to manually introduce responses into the survey response table - mainly used when survey responses were collected offline
+
+<!--T:19-->
+*[[Statistics]] - provides simple and complex statistics, as well as the possibility to export your data outside LimeSurvey 
+**[[Statistics - simple mode]] - makes use of the in-built statistics function to generate simple graphs and charts
+**[[Statistics - expert mode]] - allows you do select certain data to be displayed in the statistics. In the case where the in-build expert mode is not sufficient for your needs, you can export the data in other formats to further analyse it by using other statistics-specialized software
+
+<!--T:26-->
+*[[Timing statistics]] - if [[Notifications_%26_data#Save_timings|timings]] is enabled, the timing statistics option will be shown in the toolbar. It displays time-related statistics such as the total time spent by your respondents filling out the survey, as well as each question group and question 
+
+<!--T:20-->
+*[[Export responses]] - used to export survey responses
+
+<!--T:21-->
+*[[Import responses]] - used to import responses gathered in other surveys
+
+<!--T:22-->
+*[[View saved but not submitted responses]] - under certain conditions users can resume the survey later to finish it. The respective answers can be seen by you with the help of this function
+
+<!--T:23-->
+*[[Iterate survey]] - used to launch the same survey to the same set of survey participants to analyse trends
+
+<!--T:24-->
+*[[Batch deletion]] - use this function to delete answers in batch
+</translate>

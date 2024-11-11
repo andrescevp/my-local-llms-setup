@@ -1,0 +1,56 @@
+<languages /> <translate>
+
+=Introduction= <!--T:1-->
+
+<!--T:2-->
+Since LimeSurvey 5.4.0 you can have your own translation for all strings in all included languages with direct access to your database.
+
+<!--T:3-->
+This system can be used if an existing translation is not compatible with your business needs.
+
+<!--T:4-->
+It should be reserved for specific cases, since text modifications in the heart of LimeSurvey will again require a modification of your database. 
+
+<!--T:5-->
+Furthermore, you can use this method for translating Survey Theme specific strings.
+
+=How database translations works= <!--T:6-->
+
+<!--T:7-->
+For database translations, LimeSurvey uses a method inspired by [https://www.yiiframework.com/doc/api/1.1/CDbMessageSource CDbMessageSource] from the Yii framework.
+
+<!--T:8-->
+# find the string in SourceMessage table lime_source_message->message, get the id : lime_source_message->id
+# if exists, find the related translation in Message table lime_message->translation for current language lime_message->language with current id lime_message->id
+
+<!--T:9-->
+LimeSurvey creates the array with translations from po file (see [[Translating LimeSurvey]] for information how to update this file), and afterwards merges it with all translations from the database. 
+
+<!--T:10-->
+Then the translations from the database are always returned if they exist.
+
+=Sample for “Submit” button in English and French= <!--T:11-->
+
+<!--T:12-->
+You want to show _Validate_ and not _Submit_ for the submit button in all of your surveys (with a specific theme). If you just update the theme and replace gT('Submit') by gT('Validate') : it always shows _Validate_ in all languages.
+
+==For all surveys with all themes== <!--T:13-->
+
+<!--T:14-->
+# Create the source message <code>INSERT INTO lime_source_message (id, category, message) VALUES (NULL, NULL, 'Submit');</code>
+# Check the ID (if it's the 1st : ID is 1) and use it for next instruction
+# Create the related translation : <code>INSERT INTO lime_message (id, language, translation) VALUES ('1', 'en', 'Validate'), ('1', 'fr', 'Valider'); </code>
+
+==Using your own theme (recommended solution)== <!--T:15-->
+
+<!--T:16-->
+This method uses a solution with your own template, it updates the default string for all other languages as well.
+
+<!--T:17-->
+# In [[Theme editor]] select the Navigation part
+# Search for <code>{{ gT("Submit") }}</code> (in navigator.twig)
+# Replace by <code>{{ gT("Validate") }}</code>
+# Create the source message <code>INSERT INTO lime_source_message (id, category, message) VALUES (NULL, NULL, 'Validate');</code>
+# Check the ID (if it's the 1st : ID is 1) and use it for next instruction
+# Create the related translation : <code>INSERT INTO lime_message (id, language, translation) VALUES ('1', 'fr', 'Valider'); </code>
+</translate>

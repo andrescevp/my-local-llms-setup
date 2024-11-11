@@ -1,0 +1,151 @@
+<languages />
+
+__TOC__
+
+<div class="simplebox"> Note: These installation instructions are for version 2.0 or later. Older instructions for 1.92 can be found [[Installation Version 1.92 or older|here]] and update instructions can be found [[Upgrading from a previous version|here]]. </div>
+
+==General==
+
+The LimeSurvey project provides two ways to install LimeSurvey:
+*On your webserver:<br />In this case, just follow the instructions on this page starting with step 1.
+
+*On your local Windows PC:<br />You usually only want to install LimeSurvey on your local PC if you want to create surveys locally (mainly for speed or development/test reasons) and upload them later to your live LimeSurvey installation on a web server. For this purpose, we have prepared a special LimeSurvey package which includes the web server, the database, the LimeSurvey application, and [[Installation of the LimeSurvey XAMPP package|instructions how to install it]].
+
+==Make sure you can use LimeSurvey on your website==
+
+Make sure your server meets the following additional requirements.
+
+{{Note|The minimum set of requirements will also be checked during the installation process!}}
+
+The minimum set of requirements for '''LimeSurvey 6.x''':
+* Minimum 250 MB disk space.
+* MariaDB 10.3.38 or later '''OR''' MySQL 8 or later '''OR''' Microsoft SQL Server 2008 or later '''OR''' Postgres 12 or later.
+* PHP version requirements: 
+** LS 6.x from PHP 7.4.x to 8.x
+** LS 5.x from PHP 7.2.5 to 8.0.x 
+** LS 3.x from PHP 5.5.9 to 7.4.x
+* php.ini `short_open_tag` setting should be set to `ON`
+* The following PHP modules/libraries should be enabled:
+** [[Installation FAQ#Requirements page#What is the mbstring (Multibyte String Functions) library|mbstring (Multibyte String Functions)]] extension library.
+** PDO database driver for MySQL (pdo_mysql or pdo_mysqli) or Postgres (pdo_pgsql) or MSSQL ([https://php.net/manual/en/ref.pdo-sqlsrv.php pdo_sqlsrv] for Windows and [http://www.php.net/manual/en/ref.pdo-dblib.php pdo_dblib] for Linux).
+** Also, we assume in general that all PHP default libraries are enabled 
+*** hash
+*** session
+*** openssl or mcrypt
+*** fileinfo
+*** SimpleXML
+*** etc …
+
+<div class="simplebox"> Note: If you are connecting from Linux to a MSSQL database on a Windows server using the dblib PDO driver, then the underlying FreeTDS needs to be set up correctly. Check out the [[Troubleshooting]] page for more information.</div>
+
+Optional PHP Extensions:
+* '''GD-Library''' '''with FreeType support''' installed is needed for captchas, nice charts in statistics or to upload images via the HTML editor - see [https://php.net/manual/image.setup.php PHP GD-Library Extension documentation]
+* '''IMAP''' (pretty standard) is needed for the [[Email bounce tracking system|email bounce tracking system]] - see [https://php.net/manual/imap.setup.php PHP IMAP Extension documentation]
+* '''LDAP''' installed is needed to import survey participants using LDAP - see [https://php.net/manual/en/book.ldap.php PHP LDAP Documentation]
+* '''Zip''' (pretty standard) is needed for template upload, import of .zip archived resources, and excel export - see [https://php.net/manual/zip.setup.php PHP Zip Extension documentation]
+* '''Zlib''' (pretty standard) is needed for the [[ComfortUpdate]] - see [https://php.net/manual/zlib.setup.php PHP Zlib Extension documentation]
+
+In most cases, your web server provider or system administrator will be able to help you out with these optional components.
+
+If you want to run Microsoft's IIS server, taking a look at [[Installation on XP with IIS]] might also help.
+
+===Browser compatibility===
+'''For the survey-taking side''', we currently support IE11 (intranet-mode excluded) and all newer comparable browsers like Edge, FF, Chrome, Opera etc. with activated JavaScript. 
+
+'''For the administration part''', we currently support Edge and all newer comparable browsers like FF, Chrome, Opera etc. with activated JavaScript. <u>We do not support any Internet Explorer versions in the administration part anymore.</u>
+
+====Screen sizes====
+We support any reasonable screen size for survey taking (360px x 640px and up).
+The minimum supported screen resolution for the LimeSurvey administration page is 1280px x 1024px.
+
+===Hosting for LimeSurvey===
+
+LimeSurvey should work with most hosting companies that provide PHP and MySQL. If you want a ready-installed version of LimeSurvey, you could try [https://www.limesurvey.org/editions-and-prices/limesurvey-pro/editions-and-prices-professional LimeSurvey Cloud], else check out our [[LimeSurvey-compatible hosting companies|list of LimeSurvey-compatible hosting companies]].
+
+==Download the LimeSurvey package==
+
+[https://community.limesurvey.org/downloads/ Download] the latest stable LimeSurvey zip package (there are also gzip, bz2 and 7zip packages available for your convenience) and save it to your local disk.
+
+==Unpack the LimeSurvey package==
+
+Uncompress the zip file into a dedicated directory/folder using your preferred compression software. When you uncompress the file make sure that you uncompress the directory structure with the files (this is default behavior for most compression programs). The path name for the installation directory should not include '(' or ')' special characters, but it may include the '''space''' character.
+
+==Collect information about your server==
+
+You will need to know the following things to install LimeSurvey on your web server correctly:
+*Your intended website URL where your scripts will reside (e.g. ''http://my.domain.com/limesurvey'').
+*The physical disk location on your server where your scripts will reside (e.g. ''/home/usr/htdocs/limesurvey'').
+*The IP/net location of your database server (i.e. ''localhost'').
+*If your database server uses a non-standard port, find out which port it is.
+*Your user name and password for your database server.
+*With most providers you can't let the script create the database, but have to do it yourself.  If you are using such a provider, please create a database (for example ''limesurvey'') yourself.
+
+==Upload the files to your web server==
+
+Using your FTP program (e.g. FileZilla), connect to your web server and create a directory to store your scripts. Then upload the files using the directory structure they are in. Make sure you '''upload the files in binary mode''' (check the settings of your FTP program). Please note that uploading in ASCII mode can lead to uncommon errors (e.g. 'class not found' error during installation), also images may not be uploaded correctly.
+
+==Set directory permissions==
+
+For the script to work properly it needs certain access to some directories - this applies especially to Linux/*nix systems.
+*The '''"/limesurvey/tmp"''' directory (and all its subdirectories and files) are used for imports & uploads and should be set to ''Read & Write'' for your webserver.
+*The '''"/limesurvey/upload/"''' directory (and all its subdirectories and files) must also have ''Read & Write'' for your webserver in order to enable picture and media files upload.
+*The '''"/limesurvey/application/config/"''' directory also needs ''Read & Write'' permissions for your webserver.
+*The other directories can be set to ''Read Only''. You may wish in Linux/Unix to set the permissions on each file within the /limesurvey/admin directory to ''Read Only''.
+
+{{Alert|If you are using Linux, then setting permissions depends on your webserver configuration. For example, if you use Apache HTTPD on CentOS, type '''chmod -R 755 <directory> ; chown -R apache <directory>'''. This will give everyone access to read, and your webserver will have the permission to write. Check the [https://www.linux.com/learn/tutorials/309527-understanding-linux-file-permissions following link] for more information on Linux permissions.}}
+
+==Create a database user==
+
+LimeSurvey will create a database and the tables inside it. To be able to do this, it will need the user name and password of a database user. We generally recommend creating a database user with the following permissions:
+
+- MySQL: SELECT, CREATE, INSERT, UPDATE, DELETE, ALTER, DROP, INDEX
+
+- PostgreSQL: SELECT, INSERT, UPDATE, DELETE, TRUNCATE, TRIGGER
+
+- Microsoft SQL Server: ''Unknown - if you can find out this information, please complete it''.
+
+==Run the installation script==
+
+'''Go to "example.org/limesurvey/admin"'''. If you configured everything correctly, the LimeSurvey installer should be starting - just follow the instructions. You will be asked whether you wish to create the database and/or create the tables inside the database. LimeSurvey will then create the needed tables in the database.
+
+==Connect to the administration script for the first time==
+
+You are done when the installation finishes! Open your browser and enter the URL to the LimeSurvey administration. Assuming you used 'limesurvey' as the directory name to store the files in, this will be something like "http://www.example.com/limesurvey/admin".
+
+You should get a login screen. The default login credentials (if they have not been changed during the installation) are:
+
+<syntaxhighlight lang='html'>
+
+User: admin
+Password: password
+
+</syntaxhighlight>
+
+You will be prompted to change the default password after you logged in. Have fun!
+
+==Further configuration==
+
+===Caching===
+
+LimeSurvey uses the Yii file cache by default, but it can be configured to use other cache engines. Possible other caches are:
+
+* Memcached
+* Redis
+* WinCache
+* XCache
+
+Please see the [https://www.yiiframework.com/doc/api/1.1/CCache Yii documentation] for full description.
+
+Since LimeSurvey 4.0.0 you also have the possibility to cache calculations in the ExpressionScript. This can provide a significant speed-up depending on survey complexity. To enable the emcache, add this in your config.php file (components array):
+
+<syntaxhighlight lang="php">
+'emcache' => array('class' => 'CFileCache'),
+</syntaxhighlight>
+
+As with the main Yii cache, other cache systems can be used.
+
+{{Note| The emcache is not compatible with randomized surveys, and will be automatically turned off in such cases.}}
+
+==What if I have problems...==
+
+Like all computer programs, most of the time things will work just like the instructions say, but sometimes they just won't. There are too many possible reasons for things not going according to plan to describe here. If you have trouble, first check out the [[Installation FAQ]]. If you don't find your answer there, please post your problem and any error messages in the [https://www.limesurvey.org/forum LimeSurvey forums], open a [https://www.limesurvey.org/contact-us support ticket] (only for customers using LimeSurvey Cloud), or join our [https://discord.gg/DEjguXn Discord channel].

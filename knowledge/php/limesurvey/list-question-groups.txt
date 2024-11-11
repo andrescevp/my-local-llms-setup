@@ -1,0 +1,48 @@
+<languages /> 
+
+=Introduction=
+To view all the question groups of a survey, from the '''Settings''' tab, select '''List question groups'''.
+
+
+https://manual.limesurvey.org/Survey_menu#List_question_groups
+
+
+<center>[[File:List_question_groups_access.png]]</center>
+
+
+The '''Question groups in this survey''' page will be displayed.
+
+
+<center>[[File:List_question_groups_panel.png]]</center>
+
+=Question Groups In This Survey=
+
+
+The search box at the top of the question groups table allows you to search for a group by name.
+
+
+The table columns are:
+
+*'''Group ID:''' The ID of the question group.
+
+*'''Group order:''' The order of the question groups.
+
+*'''Group name:''' The name of the group.
+
+*'''Description:''' The question group description.
+
+
+{{Note|'''Note:''' For more details on question groups, refer to the following [[Question groups - introduction|wiki subsection]].}}
+
+
+*'''Quick-action buttons:''' Four quick-action buttons are displayed:
+**''Add new question to group:'' Allows you to add a new question to the desired group.
+**''Edit group:'' Allows you to edit the question group. 
+**''Group summary:'' Redirects you to the summary page of the respective group. The summary includes the title and description of the question group. If enabled (the fields are not empty), [[Question_groups_-_introduction#Create_question_group|the randomization group and relevance equation attributes]] will also be listed.
+**''Delete group:'' Deletes a group. If clicked, a confirmation pop-up message will be displayed on the screen.
+
+
+From the bottom-right side of the table, you can select the number of rows (entries) you wish to be displayed per page. 
+
+
+{{Note| In comparison to the [[list questions|list questions panel]], no group-edit buttons are available since survey administrators could accidentally delete not only multiple question groups, but also their corresponding questions, answers, and subquestions they belong to. For more information on the LimeSurvey survey structure, click [[Survey structure|here]].}}

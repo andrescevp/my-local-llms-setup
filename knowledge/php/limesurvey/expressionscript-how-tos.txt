@@ -1,0 +1,354 @@
+<languages />
+__TOC__
+
+
+=Overview of what has been previously explained=
+
+
+If you have followed so far the structure of the LimeSurvey manual, it means that you already the [[ExpressionScript - Presentation#Key_Definitions|LimeSurvey terminology]]. Next, we covered expressions and variables in order to learn how to enhance our surveys. In the next part, we moved to the types and meanings of [[ExpressionScript - Presentation#Syntax Highlighting|syntax highlighting]] to learn how to correct syntax errors. 
+
+With these basic notions covered, we could move towards examples and explaining how expressions work within LimeSurvey. 
+
+
+=Syntax Highlighting=
+
+
+The following screenshots give examples, but do not show the values of the tooltips. A tooltip is an informative box which is displayed whenever you hover the mouse over any bold colored words.
+
+Because of this syntax highlighting, it is very easy to compose correct expressions, even the ones that are complicated. Although the LimeSurvey team plans to try to build an Expression Builder GUI, you can use the existing syntax-highlighting to quickly identify and fix typos. You can also use the tooltips to validate the accuracy of your expressions (e.g., confirm you have selected the desired variable(s)).
+
+In each of the examples, there are three columns:
+#Source - this is the raw text that you would enter into the LimeSurvey question field
+#Pretty Print - this is the syntax-highlighted equivalent of what you entered
+#*Note that Expressions are shown with a tan background, but not surrounded by curly braces in this highlighting.
+#*Since EM supports recursive substitution, showing curly braces in the highlighting would cause syntax errors
+#Result - this is the output generated when EM processes the source
+#*Everything that can be properly substituted is
+#*Expressions with errors are shown in-line, with syntax highlighting. Errors are surrounded by a red-lined box.
+
+
+==Proper Syntax==
+
+
+You may find below examples of proper syntax:
+#Values: shows that known variables are color coded according to whether are set on the current page. Old-style INSERTANS:xxxx gets its own color-coding style
+#Question Attributes: shows that dot notation can access some properties of questions
+#Math: shows that basic and complex calculations are supported
+#TextProcessing: shows some of the available text-processing functions
+#Dates: shows two of the available date-related functions
+#Conditional: shows the usage of the if() function. The choices can be nested.
+#Tailored paragraph: you can completely customize a report based upon prior values
+#EM processes within strings: shows that it can do substitutions within strings. This example generates a tailored image name.
+#EM doesn't process curly braces like these: shows that if the curly braces are escaped, or there is a white space between the expression and the curly braces, ES ignores the expression.
+
+
+<center>[[File:em-syntax-highlighting-1-v2.jpg]]</center>
+
+
+==EM Syntax Containing Errors==
+
+
+Here are examples of common errors when typing ES expressions. Note that the tooltips provide additional information.
+#Inline Javascript that forgot to add spaces after curly brace
+#*Since "document.write" appears right after a curly brace, EM thinks it is an expression, and red-boxes "document" and "write" since they are undefined variable and functions, respectively
+#Unknown/Misspelled variables, functions and operators
+#*Here we forgot that we are using the variable name "gender" instead of "sex", but EM catches that error. It also red-boxes '++', since that is not a supported operator.
+#Warns if use = instead of eq, or perform value assignments
+#*Note that the '=' and '+=' are in red text instead of black. If you hover the mouse over them, you will see warnings that you are assigning a value.
+#Wrong number of arguments for functions
+#*if() takes 3 arguments, but it has been given 4, so hovering over the red-boxed "if" will explain the error and show the supported syntax
+#*sum() takes an unlimited number of arguments, but we had a trailing comma before the closing parentheses, so that is red-boxed
+#Mismatched parentheses
+#*This is one of the most common errors when writing expressions.
+#*This shows two examples of missing closing parentheses, and one example of having one too many closing parentheses.
+#Unsuported syntax
+#*If you use an operator or punctuation that ES does not support, it will red-box it.
+#Invalid assignments
+#*Some variables are readWrite and can have their values changed. Others are read-only.
+#*If you try to change the value of a read-only variable, you can't. EM will red-box the attempt.
+#*If you try to assign a value to an equation or a string, you will also get an error
+
+
+<center>[[File:em-syntax-highlighting-errors-v2.jpg]]</center>
+
+
+=="Live" examples of Syntax Highlighting with active tooltips==
+
+
+<table border="1">
+ <tr><th>Source</th><th>Pretty Print</th><th>Result</th></tr><tr><td><b>Here is an example of OK syntax with tooltips</b><br>Hello {if(gender=='M','Mr.','Mrs.')} {surname}, it is now {date('g:i a',time())}.  Do you know where your {sum(numPets,numKids)} children and pets are?
+
+</td><td><b>Here is an example of OK syntax with tooltips</b><br>Hello <span style="background-color: #eee8aa;"><span title="Excel-style if(test,result_if_true,result_if_false); if(test,result_if_true,result_if_false)" style="color: blue; font-weight: bold">if</span>(<span title="[java61764X1X5][G:2][Q:110]: What is your gender (male/female)?; value=M" style="color: green; font-weight: bold">gender</span> == <span title="" style="color: gray">'M'</span>,<span title="" style="color: gray">'Mr.'</span>,<span title="" style="color: gray">'Mrs.'</span>)</span> <span style="background-color: #eee8aa;"><span title="[java61764X1X1][G:1][Q:20]: What is your last/surname?; value=Smith" style="color: green; font-weight: bold">surname</span></span>, it is now <span style="background-color: #eee8aa;"><span title="Format a local date/time; string date(format [, timestamp=time()])" style="color: blue; font-weight: bold">date</span>(<span title="" style="color: gray">'g:i a'</span>,<span title="Return current UNIX timestamp; number time()" style="color: blue; font-weight: bold">time</span>())</span>.  Do you know where your <span style="background-color: #eee8aa;"><span title="Calculate the sum of values in an array; number sum(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sum</span>(<span title="[java61764X1X4][G:2][Q:50]: How many pets do you have?; value=1" style="color: maroon; font-weight: bold">numPets</span>,<span title="[java61764X1X3][G:2][Q:40]: How many kids do you have?; value=2" style="color: green; font-weight: bold">numKids</span>)</span> children and pets are?
+
+</td><td><b>Here is an example of OK syntax with tooltips</b><br>Hello <span id="LEMtailor_Q_40_1">Mr.</span> <span id="LEMtailor_Q_40_2">Smith</span>, it is now 6:07 am.  Do you know where your <span id="LEMtailor_Q_40_4">3</span> children and pets are?
+</td></tr>
+<tr><td><b>Here are common errors so you can see the tooltips</b><br>Variables used before they are declared:  {notSetYet}<br>Unknown Function:  {iff(numPets&gt;numKids,1,2)}<br>Unknown Variable: {sum(age,num_pets,numKids)}<br>Wrong # parameters: {sprintf()},{if(1,2)},{date()}<br>Assign read-only-vars:{TOKEN:ATTRIBUTE_1+=10},{name='Sally'}<br>Unbalanced parentheses: {pow(3,4},{(pow(3,4)},{pow(3,4))}
+
+</td><td><b>Here are common errors so you can see the tooltips</b><br>Variables used before they are declared:  <span style="background-color: #eee8aa;"><span title="This variable is not declared until a later page; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="This variable is not declared until a later page; Not a valid expression; [java61764X3X6][G:3][Q:200]: Who will win the next election?; value=?" style="color: #FF00FF ; font-weight: bold">notSetYet</span></span></span><br>Unknown Function:  <span style="background-color: #eee8aa;"><span title="Undefined function" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Undefined function" style="color: blue; font-weight: bold">iff</span></span>(<span title="[java61764X1X4][G:2][Q:50]: How many pets do you have?; value=1" style="color: maroon; font-weight: bold">numPets</span> &gt; <span title="[java61764X1X3][G:2][Q:40]: How many kids do you have?; value=2" style="color: green; font-weight: bold">numKids</span>,1,2)</span><br>Unknown Variable: <span style="background-color: #eee8aa;"><span title="Calculate the sum of values in an array; number sum(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sum</span>(<span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span>,<span title="Undefined variable" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Undefined variable" style="color: red; font-weight: bold">num_pets</span></span>,<span title="[java61764X1X3][G:2][Q:40]: How many kids do you have?; value=2" style="color: green; font-weight: bold">numKids</span>)</span><br>Wrong # parameters: <span style="background-color: #eee8aa;"><span title="Function must have at least 1 argument(s); Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Function must have at least 1 argument(s); Not a valid expression; Return a formatted string; string sprintf(format, arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sprintf</span></span>()</span>,<span style="background-color: #eee8aa;"><span title="Function does not support that number of arguments:  2.  Function supports this many arguments, where -1=unlimited: 3; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Function does not support that number of arguments:  2.  Function supports this many arguments, where -1=unlimited: 3; Not a valid expression; Excel-style if(test,result_if_true,result_if_false); if(test,result_if_true,result_if_false)" style="color: blue; font-weight: bold">if</span></span>(1,2)</span>,<span style="background-color: #eee8aa;"><span title="Function does not support that number of arguments:  0.  Function supports this many arguments, where -1=unlimited: 1,2; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Function does not support that number of arguments:  0.  Function supports this many arguments, where -1=unlimited: 1,2; Not a valid expression; Format a local date/time; string date(format [, timestamp=time()])" style="color: blue; font-weight: bold">date</span></span>()</span><br>Assign read-only-vars:<span style="background-color: #eee8aa;"><span title="The value of this variable can not be changed; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="The value of this variable can not be changed; Not a valid expression; ; value=worker" style="color: #996600; font-weight: bold">TOKEN:ATTRIBUTE_1</span></span><span title="Assigning a new value to a variable" style="color: red; font-weight: bold">+=</span>10</span>,<span style="background-color: #eee8aa;"><span title="The value of this variable can not be changed; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="The value of this variable can not be changed; Not a valid expression; [java61764X1X1][G:1][Q:10]: What is your first/given name?; value=Peter" style="color: green; font-weight: bold">name</span></span><span title="Assigning a new value to a variable" style="color: red; font-weight: bold">=</span><span title="" style="color: gray">'Sally'</span></span><br>Unbalanced parentheses: <span style="background-color: #eee8aa;"><span title="Parentheses not balanced" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Parentheses not balanced; Exponential expression; number pow(base, exp)" style="color: blue; font-weight: bold">pow</span></span>(3,4</span>,<span style="background-color: #eee8aa;"><span title="Parentheses not balanced" style="border-style: solid; border-width: 2px; border-color: red;">(</span><span title="Exponential expression; number pow(base, exp)" style="color: blue; font-weight: bold">pow</span>(3,4)</span>,<span style="background-color: #eee8aa;"><span title="Exponential expression; number pow(base, exp)" style="color: blue; font-weight: bold">pow</span>(3,4)<span title="Extra right parentheses detected" style="border-style: solid; border-width: 2px; border-color: red;">)</span></span>
+
+</td><td><b>Here are common errors so you can see the tooltips</b><br>Variables used before they are declared:  <span id="LEMtailor_Q_40_5"><span style="background-color: #eee8aa;"><span title="This variable is not declared until a later page; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="This variable is not declared until a later page; Not a valid expression; [java61764X3X6][G:3][Q:200]: Who will win the next election?; value=?" style="color: #FF00FF ; font-weight: bold">notSetYet</span></span></span></span><br>Unknown Function:  <span style="background-color: #eee8aa;"><span title="Undefined function" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Undefined function" style="color: blue; font-weight: bold">iff</span></span>(<span title="[java61764X1X4][G:2][Q:50]: How many pets do you have?; value=1" style="color: maroon; font-weight: bold">numPets</span> &gt; <span title="[java61764X1X3][G:2][Q:40]: How many kids do you have?; value=2" style="color: green; font-weight: bold">numKids</span>,1,2)</span><br>Unknown Variable: <span style="background-color: #eee8aa;"><span title="Calculate the sum of values in an array; number sum(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sum</span>(<span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span>,<span title="Undefined variable" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Undefined variable" style="color: red; font-weight: bold">num_pets</span></span>,<span title="[java61764X1X3][G:2][Q:40]: How many kids do you have?; value=2" style="color: green; font-weight: bold">numKids</span>)</span><br>Wrong # parameters: <span style="background-color: #eee8aa;"><span title="Function must have at least 1 argument(s); Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Function must have at least 1 argument(s); Not a valid expression; Return a formatted string; string sprintf(format, arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sprintf</span></span>()</span>,<span style="background-color: #eee8aa;"><span title="Function does not support that number of arguments:  2.  Function supports this many arguments, where -1=unlimited: 3; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Function does not support that number of arguments:  2.  Function supports this many arguments, where -1=unlimited: 3; Not a valid expression; Excel-style if(test,result_if_true,result_if_false); if(test,result_if_true,result_if_false)" style="color: blue; font-weight: bold">if</span></span>(1,2)</span>,<span style="background-color: #eee8aa;"><span title="Function does not support that number of arguments:  0.  Function supports this many arguments, where -1=unlimited: 1,2; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Function does not support that number of arguments:  0.  Function supports this many arguments, where -1=unlimited: 1,2; Not a valid expression; Format a local date/time; string date(format [, timestamp=time()])" style="color: blue; font-weight: bold">date</span></span>()</span><br>Assign read-only-vars:<span style="background-color: #eee8aa;"><span title="The value of this variable can not be changed; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="The value of this variable can not be changed; Not a valid expression; ; value=worker" style="color: #996600; font-weight: bold">TOKEN:ATTRIBUTE_1</span></span><span title="Assigning a new value to a variable" style="color: red; font-weight: bold">+=</span>10</span>,<span id="LEMtailor_Q_40_12"><span style="background-color: #eee8aa;"><span title="The value of this variable can not be changed; Not a valid expression" style="border-style: solid; border-width: 2px; border-color: red;"><span title="The value of this variable can not be changed; Not a valid expression; [java61764X1X1][G:1][Q:10]: What is your first/given name?; value=Peter" style="color: green; font-weight: bold">name</span></span><span title="Assigning a new value to a variable" style="color: red; font-weight: bold">=</span><span title="" style="color: gray">'Sally'</span></span></span><br>Unbalanced parentheses: <span style="background-color: #eee8aa;"><span title="Parentheses not balanced" style="border-style: solid; border-width: 2px; border-color: red;"><span title="Parentheses not balanced; Exponential expression; number pow(base, exp)" style="color: blue; font-weight: bold">pow</span></span>(3,4</span>,<span style="background-color: #eee8aa;"><span title="Parentheses not balanced" style="border-style: solid; border-width: 2px; border-color: red;">(</span><span title="Exponential expression; number pow(base, exp)" style="color: blue; font-weight: bold">pow</span>(3,4)</span>,<span style="background-color: #eee8aa;"><span title="Exponential expression; number pow(base, exp)" style="color: blue; font-weight: bold">pow</span>(3,4)<span title="Extra right parentheses detected" style="border-style: solid; border-width: 2px; border-color: red;">)</span></span>
+
+</td></tr>
+<tr><td><b>Here is some of the unsupported syntax</b><br>No support for '++', '--', '%',';': {min(++age, --age,age % 2);}<br>Nor '|', '&amp;', '^': {(sum(2 | 3,3 &amp; 4,5 ^ 6)}}<br>Nor arrays: {name[2], name['mine']}
+</td><td><b>Here is some of the unsupported syntax</b><br>No support for '++', '--', '%',';': <span style="background-color: #eee8aa;"><span title="Find lowest value; number min(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">min</span>(<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ++ </span><span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span>,<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> -- </span><span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span>,<span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> % </span>2)<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ; </span></span><br>Nor '|', '&amp;', '^': <span style="background-color: #eee8aa;">(<span title="Calculate the sum of values in an array; number sum(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sum</span>(2<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> | </span>3,3<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> &amp; </span>4,5<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ^ </span>6)</span>}<br>Nor arrays: <span style="background-color: #eee8aa;"><span title="[java61764X1X1][G:1][Q:10]: What is your first/given name?; value=Peter" style="color: green; font-weight: bold">name</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> [ </span>2<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ] </span>,<span title="[java61764X1X1][G:1][Q:10]: What is your first/given name?; value=Peter" style="color: green; font-weight: bold">name</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> [ </span><span title="" style="color: gray">'mine'</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ] </span></span>
+
+</td><td><b>Here is some of the unsupported syntax</b><br>No support for '++', '--', '%',';': <span style="background-color: #eee8aa;"><span title="Find lowest value; number min(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">min</span>(<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ++ </span><span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span>,<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> -- </span><span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span>,<span title="[java61764X1X2][G:2][Q:30]: How old are you?; value=45" style="color: green; font-weight: bold">age</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> % </span>2)<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ; </span></span><br>Nor '|', '&amp;', '^': <span style="background-color: #eee8aa;">(<span title="Calculate the sum of values in an array; number sum(arg1, arg2, ... argN)" style="color: blue; font-weight: bold">sum</span>(2<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> | </span>3,3<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> &amp; </span>4,5<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ^ </span>6)</span>}<br>Nor arrays: <span style="background-color: #eee8aa;"><span title="[java61764X1X1][G:1][Q:10]: What is your first/given name?; value=Peter" style="color: green; font-weight: bold">name</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> [ </span>2<span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ] </span>,<span title="[java61764X1X1][G:1][Q:10]: What is your first/given name?; value=Peter" style="color: green; font-weight: bold">name</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> [ </span><span title="" style="color: gray">'mine'</span><span title="Unsupported syntax" style="border-style: solid; border-width: 2px; border-color: red;"> ] </span></span>
+
+</td></tr>
+</table>
+
+
+=Tailoring Examples (e.g. extending {INSERTANS:xxx})=
+
+
+=="Dear {Mr}/{Mrs} Smith..."==
+
+
+Use the if() function to conditionally choose whether to display 'Mr.' or 'Mrs.'.
+
+The syntax is if(test,do_if_true,do_if_false).
+
+{|
+|#||Code||Question||Type
+|-
+|1||gender||What is your gender?||Gender
+|-
+|2||example1||Dear {if(gender=='M','Mr.','Mrs.')} Smith, ...||Long free text
+|}
+
+
+<center>[[File:em-tailoring-q-ex1.jpg]]</center>
+
+
+As it can be observed below, "Mr" and "Mrs" are tailored to what the respondent selects as answer to question "gender".
+
+
+<center>[[File:em-tailoring-q-ex1-usage.jpg]]
+[[File:em-tailoring-q-ex2-usage.jpg]]</center>
+
+
+=="Dear {Mr}/{Mrs} Smith..." in invitation email==
+
+
+You can use the example above in the invitation email using attributes from the token table. Use the if() function to choose whether 'Mr.' or 'Mrs.' should be used in the email.
+
+
+The syntax is "if(test,do_if_true,do_if_false)".
+
+{|
+|#||attribute||value
+|-
+|1||Last name||Smith
+|-
+|2||Email address||test@test.com
+|-
+|3||ATTRIBUTE_2||M
+|}
+
+
+Text in invitation email:
+
+<syntaxhighlight lang="php">
+
+Dear {if(ATTRIBUTE_2=='M','Mr','Mrs')} {LASTNAME},
+
+you have been invited to participate in a survey:
+
+https:/...
+
+</syntaxhighlight>
+
+
+<center>[[File:emEx1mail.jpg]]</center>
+
+
+email View:
+
+
+<center>[[File:emEx1mailview.jpg]]</center>
+
+
+=Calculation / Assessment Examples=
+
+
+==Calculate assessment values at runtime and store the results in the survey data==
+
+
+This example uses all of EM's features, including Relevance, Tailoring, and the Equation question type.
+
+It also shows that all of them are JavaScript-enabled, so if you have these features on a page, it will dynamically change as people set and change their answers.
+
+{|
+|#||Code||Question||Type||Relevance
+|-
+|1||numKids||How many children do you have?||Numerical input||1
+|-
+|2||kid1||How old is your first child?||Numerical input||numKids >= 1
+|-
+|3||kid2||How old is your second child?||Numerical input||numKids >= 2
+|-
+|4||kid3||How old is your third child?||Numerical input||numKids >= 3
+|-
+|5||kid4||How old is your fourth child?||Numerical input||numKids >= 4
+|-
+|6||sumKidAges||{sum(kid1.NAOK,kid2.NAOK,kid3.NAOK,kid4.NAOK)}||Equation||1
+|-
+|7||kidSummary||You said that you have {numKids}. {if(numKids==1,'child','children')}. {if(numKids>1,implode(' ','The sum of ages of your first ',min(numKids,4),' kids is ',sumKidAges,'.'),' ')}||Text display||1
+|}
+
+
+To download this example, please click on the following link: [[Media:Assessments_survey_example.zip|Assessments_survey_example]].
+
+
+You may find below screenshots of representative questions. As you can see, EM syntax-highlights all fields that might contain tailoring. Here, you see examples of syntax-highlighting Relevance, the Equation question type, and substitutions within a question. You can also use substitutions within Help, Group header display, Welcome message, and End message.
+
+In the next example, since the relevance is {numKids >= 2), the question will only be visible if the respondent reports that she has at least two children.
+
+
+<center>[[File:em-tailoring2-q-kid2.jpg]]</center>
+
+
+Below, you may observe that each variable has the .NAOK suffix attached to it. This is because of how EM supports cascading relevance. If you did not have .NAOK, then the sum would only be computed if the person said she has 4 children (e.g., if all of the variables are relevant). The usage of .NAOK means that we want to compute the sum even if all or some of the variables are irrelevant (e.g., "Not Applicable" (NA) is alright (OK)).
+
+However, the .NAOK attribute only affects whether variables are passed into EM. If the respondent initially says she has 3 children, and enters ages for each, then changes her mind and says she has 2, we don't want to see the sum of the 3 entered values - since the third child is "not applicable" in our case anymore:
+
+
+<center>[[File:em-tailoring2-q-sumKidAges.jpg]]</center>
+
+
+Each separate Expression is color coded with a tan background. As you can see, there are three separate Expressions here. The last one contains a message that is conditionally shown only if the person has more than one child.
+
+
+<center>[[File:em-tailoring2-q-kidSummary.jpg]]</center>
+
+
+Now, here are screenshots of the survey in action.
+
+When you first visit the page, you see this. Note that is says "You have 0 '''children'''" instead of "You have 0 '''child'''".
+
+
+<center>[[File:em-tailoring2-s-0kids.jpg]]</center>
+
+
+If I change the value for number of children to 1, the display instantly changes to this, even though it is on the same page:
+
+
+<center>[[File:em-tailoring2-s-1kid.jpg]]</center>
+
+
+Now notice that the grammar is correct: "You have 1 '''child'''".
+
+Now I change the value for number of children to 3, and the display instantly changes to this.
+
+Notice that you now see the conditional message at the bottom:  "The sum of ages of your first 3 kids is 0.".
+
+
+</center>[[File:em-tailoring2-s-3kids.jpg]]</center>
+
+
+Now I'll enter ages for my imaginary children, and I get this display, summing up their ages:
+
+
+<center>[[File:em-tailoring2-s-3kids-sum.jpg]]</center>
+
+
+Again, the score and display updates instantly as I enter the values, so you can use this to show a running total of an Assessment Score.
+
+
+Now, I change the value for the number of children to 2. The display has changed to this:
+
+
+<center>[[File:em-tailoring2-s-2kids-sum.jpg]]</center>
+
+
+Notice that although I had entered a value of 5.5 for the third child, the report now only sums the values of my first 2 children.
+
+The reason for this is that the 3rd value is now irrelevant, and irrelevant values are actively ignored by EM.
+
+If I were to change the number of kids back to 3, I would see the value of 5.5 I entered again. So, I don't lose any information I enter on the page.
+
+However, if I navigate to the Next or Previous page, all irrelevant values will be NULLed out in the session and in the database. So, if I were to keep the value at 2, go to the next page, and then come back and state that I actually have 3 kids, I would no longer see the age of 5.5.
+
+
+==Enter data and see a dynamically changing report of what was entered on the same page==
+
+
+This example presents the Tailoring process within LimeSurvey.
+
+To download this example, click on the following link: [[Media:Dynamic_change_of_the_report_when_data_is_entered_on_the_same_page_survey.zip|Dynamic changes survey example]].
+
+Here is what the page looks like initially. You only see the question asking what city you live in:
+
+
+<center>[[File:em-on_page_report-usage-1.jpg]]</center>
+
+
+Once you start to enter an answer, the tailoring process is also starting:
+
+<center>[[File:em-on_page_report-usage-2.jpg]]</center>
+
+
+As you enter answers, the table at the bottom of the page is updated to show the answer codes and values of your responses.
+
+
+<center>[[File:em-on_page_report-usage-3.jpg]]</center>
+
+=Common Debugging Examples=
+
+
+==Nested if() Statements (Conditional Logic)==
+
+
+EM supports the function "if(test,do_if_true,do_if_false)" so that you can perform conditional logic or tailoring. This function can be nested to do the equivalent of "if { } else if { } else {  }". EM will let you know if the parentheses are not balanced (e.g., you are missing a closing right parenthesis), or if you have any extra right parentheses. You should try to count the parentheses as you compose long nested if statements, save it, check for syntax errors, and fix them if any are found. Let's check together the below example. 
+
+The group of questions used below can be accessed from here: [[Media:Example_tailoring_group11.zip|Tailoring survey example.lsg]]
+
+
+First, with nothing entered, you just see "Hello."
+
+
+<center>[[File:em-nested-if-blank.jpg]]</center>
+
+
+If you enter a name, it says, "Hello {name}."
+
+
+<center>[[File:em-nested-if-name.jpg]]</center>
+
+
+If you enter an age, you get a tailored message, depending upon whether you are a pre-school-age child or not:
+
+
+<center>[[File:em-nested-if-toddler.jpg]]</center>
+
+
+School aged, teenager, or adult. Here is a  teenager who wants to be anonymous:
+
+
+<center>[[File:em-nested-if-teenager.jpg]]</center>
+
+
+Here is the logic file of the group. As you can see in the "if-based" question, there are nested if statements based upon the person's age.
+
+
+<center>[[File:em-nested-if-logic-file.jpg]]</center>
+
+
+When you are originally editing this question, it is likely that at some point, you will have the wrong number of parentheses. Here's what happens if you have too few:
+
+
+<center>[[File:em-nested-if-missing-closing-paren.jpg]]</center>
+
+
+If you hover over the word "if", which is surrounded by a red box, it says "Parentheses not balanced". In this case, there should be four closing parentheses after "already an adult!", but there are only three.
+
+If, on the other hand, you have an extra right parenthesis, it will be surrounded by a red box, like this:
+
+
+<center>[[File:em-nestedd-if-extra-right-paren.jpg]]</center>
+
+
+When you are actually editing the question, the question looks like this:
+
+
+<center>[[File:em-nested-if-edit-screen.jpg]]</center>

@@ -1,0 +1,87 @@
+<languages />
+
+__TOC__
+
+
+=Quick introduction=
+
+
+The survey toolbar options will be displayed once you accessed one of the survey-related settings:
+
+
+<center>[[File:Survey_toolbar_options_-_access.png]]</center>
+
+
+In a nutshell, the toolbar contains the following options:
+
+
+<center>[[FIle:Overview toolbar.png]]</center>
+
+
+*'''Survey status:''' There are four types of buttons that you might see on the left part of the toolbar, depending on the status of your survey:
+**[[File:Button - activate this survey.png]] : It is displayed if the survey is inactive. Click on this button for activating the survey. To see the URL of the survey, check the ''Survey URL'' box located in the [[Overview#Survey summary|Survey summary section]];
+**[[File:Button - stop this survey.png]] : It shows up if the survey is active. Click on this button if you wish to stop the survey (it cannot be accessed anymore by the respondents);
+**[[File:Button - execute survey.png]]: If the survey is active, you can click on the '''Execute survey''' button to check and fill out the survey. The difference between this option and '''Preview survey''' is that the latter does not store your answers while the former does;
+**[[File:Button - expired survey.png]] : It is displayed if the survey has expired. To reactivate it, click on the button to access the [[Publication & access|publication and access control settings]] to change the start or expiry date/time of the survey. 
+*'''Preview survey:''' It allows you to preview the survey. The green arrow appears when your survey is multilingual. Click on each language to separately check the multilingual versions of your survey.
+*'''Tools:''' The following functionalities can be accessed from the '''tools''' menu:
+**''Delete survey:'' Use this button if you want to delete the survey;
+**''Quick-translation:'' Offers quick access to the translation menu. Please note that it is accessible only if your survey is multilingual - additional languages have been added besides the base language;
+**''Reset conditions:'' All the survey conditions will be removed;
+**''Survey logic file:'' It checks the logic of your survey. It is utilized when more advanced features are used in the survey. For more details, read [[Show_logic_file|our wiki section on survey logic]];
+**''Regenerate question codes:'' The users that have the permission to edit questions can allocate a unique ID to any survey question. However, if these IDs differ too much (the numbering is too messy), the '''Regenerate question codes''' function can be used to automatically rename the survey questions. The numbering can be:
+***''Straight:'' If this option is used, each question will be allocated a code that corresponds to their order from the [[Survey structure|survey structure]] (e.g. Q00001, Q0002, etc.);
+***''By question group:'' If this option is chosen, each question will be allocated a code that corresponds to the group each of them belongs to and their order within that question group: (G1Q00001, G1Q00002, G2Q00001, etc.).
+*'''Display/Export:''' For a comprehensive description of this functionality, check our wiki page on [[Display/Export survey|LimeSurvey export functionality]];
+*'''Survey participants:''' It is used when you would like to invite a group of people to be part of your survey and ensure that each person can only participate once. For further details, check the [[Survey_participants|survey participants wiki page]];
+*'''Responses:''' It offers the survey administrator access to menus that allows him/her to see the stored responses, enter new data, export or import answers, and view the partially saved but not submitted answers. By clicking on the arrow, three options will show up:
+**''Responses & Statistics:'' It displays a summary of all the stored survey responses and respondents;
+**''Data entry screen:'' It allows the survey administrator to enter new data into his/her response tables. It is a useful function when you first record the answers from the survey participants offline and then you want to analyse their answers via the functionalities provided by LimeSurvey;
+**''Partial (saved) responses:'' It displays the partially (but not submitted) saved responses.
+
+=Survey toolbar options - structure=
+
+
+For a more comprehensive view on the survey toolbar and its capabilities, check the following wiki section links:
+
+
+*[[Testing a survey]] - to test a survey, use the preview survey function and survey logic file (if you use expressions)
+
+*[[Activating a survey]] - activate it only when you finished testing it and once Once you are happy with its structure
+
+*[[Running a survey safely]] - certain options cannot be edited anymore once the survey is active in order to preserve the survey logic
+**[[Changing an active survey]] - it is not possible to change from the LimeSurvey user interface the main settings of your survey. However, this can still be done via certain tricks, even though we recommend a lot of caution if you decide to rely on them
+
+*[[Closing a survey]] - to close a survey, you can either choose to [[Closing_a_survey#Expiry|expire it]] or [[Closing_a_survey#Deactivation|deactivate it]]
+
+*[[Iterate survey]] - read the following wiki subsection to use the same survey structure for the same set of participants and compare previous responses of one participant to those given later by him or her
+
+*[[Tools]] - certain survey-related tools are available from this menu: 
+**[[Delete survey]] - deletes the current survey
+**[[Quick-translation]] - to quickly translate the groups, questions, subquestions and/or answers used within your survey, use the following function instead of accessing separately every survey component
+**[[Reset conditions]] - in the case in which you wish to reconstruct your survey or you wish to increase the complexity of your survey, use the following button to delete the current [[Setting conditions|conditions]]. Please also read the following [[ExpressionScript_-_Presentation#Can_I_mix_Conditions_and_Relevance_equations.3F|wiki subsection]] to see how you can use conditions and expressions within one survey
+**[[Show logic file|Survey logic file]] - this functionality is important when you use complex relevance, tailoring, and validation equations
+**[[Regenerate question codes]] - sometimes you can get lost in the question codes used across a long survey. To have the code names quickly reorganized, use this function to get all the question codes regenerated in a structured way
+
+*[[Display/Export survey]] - to display or export your current survey, use this function
+**[[QueXML PDF Export]] - the queXML PDF Export function allows for the export of the current survey in to a structured PDF file that is suitable for being processed using Optical Mark Recognition (OMR) software such as [https://quexf.sourceforge.net queXF]
+**[[Tab Separated Value survey structure]] - this option is important for those who wish to edit a survey via spreadsheet software such as Excel, LibreOffice or Google Docs
+
+*[[Survey participants]] - it is one of the most important functionalities provided by LimeSurvey. It allows you to invite a group of people to participate in your survey, keep track of who has completed the survey, and ensure that each person can only participate once
+
+*[[Responses (survey results)]] - all the response- and statistics-related functions are listed here:
+**[[Responses & statistics]] - focuses on the stored responses and statistics creation:
+***[[Responses & statistics#Responses summary|Response summary]] - provides a quick overview of the current submitted summary
+***[[Responses]] - it displays the response table;
+***[[Data entry]] - to manually introduce responses into the survey response table, use this function. This is mainly used when survey responses were collected offline
+***[[Statistics]] - provides simple and complex statistics, as well as the possibility to export your data outside LimeSurvey
+****[[Statistics - simple mode]] - it makes use of the in-built statistics function to generate simple graphs and charts
+****[[Statistics - expert mode]] -  it allows you do select certain data to be displayed in the statistics. In the case in which the in-build expert mode is not sufficient for your needs, you can export the data in other formats to further analyse it by using other statistics-specialised software 
+***[[Timing statistics]] - 
+***[[Export responses]] - used to export survey responses
+***[[Import responses]] - used to import responses gathered in other surveys
+***[[View saved but not submitted responses]]
+***[[Iterate survey]] - used to launch the same survey to the same set of survey participants to analyse trends
+***[[Batch deletion]] - use this function to delete answers in batch
+**[[Data entry]] - to manually introduce responses into the survey response table, use this function. This is mainly used when survey responses were collected offline
+**[[Partial (saved) responses]] - under certain conditions users can resume later the survey to finish filling it in. The respective answers can be seen by you with the help of this function

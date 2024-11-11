@@ -1,0 +1,6 @@
+<languages /> 
+=General=
+
+You can '''find the latest change log on [https://github.com/LimeSurvey/LimeSurvey/blob/master/docs/release_notes.txt Github]'''.
+
+The tagged releases are also available on [https://github.com/LimeSurvey/LimeSurvey/tags Github].

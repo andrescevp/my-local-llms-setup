@@ -1,0 +1,13 @@
+<languages /> 
+
+The following survey-related tools can be accessed from this menu:
+
+
+<center>[[File:Tools - menu.png]]</center>
+
+
+*[[Delete survey]] - deletes the current survey
+*[[Quick-translation]] - to quickly translate the groups, questions, subquestions and/or answers used within your survey, use the following function instead of accessing separately every survey component 
+*[[Reset conditions]] - in the case in which you wish to reconstruct your survey or you wish to increase the complexity of your survey, use the following button to delete the current [[Setting conditions|conditions]]. Please also read the following [[ExpressionScript - Presentation#Can_I_mix_Conditions_and_Relevance_equations.3F|wiki subsection]] to see how you can use conditions and expressions within a survey
+*[[Show logic file|Survey logic file]] - this functionality is important when you use complex relevance, tailoring, and validation equations
+*[[Regenerate question codes]] - sometimes you can get lost in the question codes used across a long survey. To have the code names quickly reorganized, use this function to get all the question codes regenerated in a structured way

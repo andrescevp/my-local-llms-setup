@@ -1,0 +1,82 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+The '''View and saved but not submitted response''' is displayed if setting [[Notifications_%26_data#Participant_may_save_and_resume_later|participants may save and resume later]] is enabled.
+
+
+<center>[[File:Paritcipant may save and resume later option.png]]</center>
+
+
+If enabled, click on [[Responses]] and access the list of users that decided to view and save but not submit their response:
+
+
+<center>[[File:View Saved but not submitted responses.png]]</center>
+
+
+{{Note|Please note that their responses, even though they are marked as not being saved, they are still stored in the response table as being ''incomplete''! Once the answer gets ''submitted'', the answer will be marked as being ''complete'' in the response table.}}
+
+
+Once loaded, the "saved responses" table will be loaded:
+
+
+<center>[[File:table_view_saved_but_not_submitted.png]]</center>
+
+
+The saved response table contains the following columns:
+
+*'''ID:''' the ID of the saved but not submitted response. Note that it is different from the one stored in the response table!
+
+*'''Actions:''' two actions can be performed:
+** ''Edit entry:'' if clicked, you will be redirected to the [[Data entry|entry data page]] that corresponds to the respective response
+** ''Delete entry:'' click on the red trash button to delete the response entry
+
+*'''Identifier:''' the user name the respondent used to save his/her response
+
+*'''IP address:''' this field is empty as long as the [[Notifications & data#Save IP address|IP address attribute]] is not enabled (it is disabled by default)
+
+*'''Date saved:''' the date when the respondent decided to save his/her response
+
+*'''Email address:''' not mandatory to be filled out by your respondents (useful when you work with [[Participant_settings#Anonymized_responses|anonymized responses]])! See the next section for more details.
+
+
+=How to save your response and submit it later=
+
+
+The '''Resume later''' button is located in the upper-right part of the screen during the completion of the survey by the respondent:
+
+
+<center>[[File:Location_resume_later.png]]</center>
+
+
+{{Note|Please note that the '''Resume later''' option works only in active surveys.}}
+
+
+Once clicked, the following page is displayed:
+
+
+<center>[[File:Resume_later_page.png]]</center>
+
+
+The following fields are displayed: '''name''', '''password''', '''repeat password''', and '''email address'''. Out of the four fields, only the "email address" does not have to be filled out (it is useful to ensure the anonymity of your respondents). But, if it is not filled out, the respondent will not receive any email with the data he filled out on this page (the user name and the password he used to save his response to be accessed later). Therefore, he has to either remember the name and the password he put in the boxes or to save the data locally on his machine before clicking the "save" button.
+
+Once done, you can close the page/browser.
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+To continue from where you left, access the survey link and look on the upper-right part of the screen for the '''Load unfinished survey''' button:
+
+
+<center>[[File:Load unfinished survey 1.png]]</center>
+
+
+Once clicked, you will be asked to introduce your credentials to continue to fill out the survey from where you left:
+
+
+<center>[[File:Load unfinished survey 2.png]]</center>

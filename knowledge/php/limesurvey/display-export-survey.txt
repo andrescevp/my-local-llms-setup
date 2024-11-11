@@ -1,0 +1,175 @@
+<languages />
+<translate>
+
+<!--T:28-->
+__TOC__
+
+
+=Introduction= <!--T:30-->
+
+
+<!--T:31-->
+Once a survey gets too complex, we recommend that you back up your work. There could also be situations in which you need to export the survey so that you can continue to edit it in a spreadsheet software. Or, perhaps you would like to print it and walk throughout the city and ask random people to fill it out, adding them later via the [[Data entry|data entry function]]. 
+
+<!--T:32-->
+There are two ways to export your survey. The quick version has been described in our introduction to [[Surveys - introduction#Export a survey|surveys]].
+
+<!--T:33-->
+For more export-related features, the export process must be done within the survey. Access any [[Survey settings|survey-related setting]], look on the top toolbar for '''Display/Export''' to see the available export options from the dropdown menu:
+
+
+<!--T:34-->
+<center>[[File:Display and Export location.png]]</center>
+
+
+<!--T:35-->
+*[[Display/Export survey#Export survey structure (.lss)|Survey structure (.lss)]]: .lss exports the structure of the whole survey (groups, questions, subquestions, answers, and conditions) into a XML file.
+*[[Display/Export survey#Export survey archive (.lsa)|Survey archive (.lsa)]]: This option is used when you wish to create a complete backup of your survey, including the already-stored responses.
+*[[Display/Export survey#Export queXML format (*.xml)|queXML format (*.xml)]]: The *.xml option is used if you wish to have your respondents fill in your survey ''offline''. If selected, please note that not all the question exports can be exported. A .zip file can be downloaded if clicked. The files within it can be used to create a PDF to be printed for your offline respondents.
+*[[Display/Export survey#Export queXML PDF|queXML PDF export]]: This is similar to the option described above. The only difference is that LimeSurvey helps you create the PDF within the software, easing the process of PDF creation.
+*[[Display/Export survey#Export tab-separated-values format (.txt)|Tab-separated-values format (*.txt)]]: This option is used when authors want to perform bulk editing of their surveys - useful especially if we discuss about large surveys. In a spreadsheet software, such as Microsoft Excel or LibreOffice, actions such as find-replace, bulk-reordering, looping, and testing are faster.
+*[[Display/Export survey#Export printable survey (*.html)|Printable survey (*.html)]]: To create a HTML-based survey, click on this option. A .zip file can be downloaded that will contain all the stylesheets necessary to put the survey on any HTML-ready devices or browsers. 
+*[[Display/Export survey#Export printable survey|Printable survey]]: If this option is selected, LimeSurvey automatically prepares the HTML-based version of your survey - useful to quickly print your survey.
+
+
+<!--T:36-->
+{{Alert|title=Warning|text=Before selecting one of the above options, please make sure that you read the more detailed explanations of an option from below to better understand the pros and cons of each method! A short summary of each of them is also displayed when selecting any option from the export menu:
+
+
+<!--T:37-->
+<center>[[File:Display and export - types.png]]</center>}}
+
+=Display/Export options= <!--T:38-->
+ 
+
+==Export survey structure (.lss)== <!--T:4-->
+
+
+<!--T:5-->
+Naturally, once you've finished a small masterpiece of a survey, with branching, hundreds of questions that has taken you five days to create you'll want to make a backup. This export will dump all the groups, questions, answers and conditions for your survey into a .lss file (which is basically an XML file). This dump file can be used with the 'Import survey' feature when creating a new survey.
+
+<!--T:6-->
+Please note: '''This file does not contain any collected responses.'''
+
+<!--T:7-->
+Also if you have made a specific template for your survey you have to export that separately. A survey which uses a custom template will import fine, but the template it refers to will not exist on the new server. Go to the template editor on the original server and export the template as a zip file. Import this template on the new server and things should work fine.
+
+
+==Export survey archive (.lsa)== <!--T:22-->
+
+
+<!--T:23-->
+This export is intended to create a complete backup of an active survey for archival purposes. It will include the following data in a .zip file.
+*[[Survey structure|Survey structure]]
+*[[Responses|Response data]]  
+*[[Survey participants|Survey participants data]] (if [[Participant settings|activated]])
+*[[Notifications_%26_data|Timings]] (if activated)
+
+
+<!--T:39-->
+{{Alert|title=Warning|text=The response data that corresponds to fileupload-questions is currently not exported!}}
+
+
+<!--T:24-->
+The goal of this format is to be able to check out results of a past survey by re-importing it into LimeSurvey again.
+
+
+==Export queXML format (*.xml)== <!--T:12-->
+
+
+<!--T:13-->
+[https://quexml.acspri.org.au/ queXML] is an XML description of a questionnaire. It is not suitable for backing up your work done so far in LimeSurvey as it cannot [[Setting conditions|export conditions]], or all question types. Exporting a questionnaire to [https://quexml.acspri.org.au/ queXML] allows you to create PDF documents that can be printed, filled then scanned and processed using [https://quexf.acspri.org.au/ queXF] software.
+
+<!--T:14-->
+It currently exports the following [[Question types]]:
+
+<!--T:25-->
+*'''Arrays'''
+**Array 5 point choice (A)
+**Array 10 point choice (B)
+**Array Yes/Uncertain/No (C)
+**Array Increase/Same/Decrease (E)
+**Array flexible row format (F)
+**Array flexible column format (H)
+**Array (flexible Labels) Dual Scale (1)
+**Array (Multi Flexible) (Numbers) (:)
+**Array (Multi Flexible) (Text) (;)
+
+<!--T:16-->
+*'''Mask questions'''
+**Date (D)
+**Gender drop down list (G)
+**Numerical question type (N) - defaults to width of 10
+**Multiple Numerical Input (K)
+**Boilerplate (X)
+**Yes/no radio buttons (Y)
+
+<!--T:17-->
+*'''Multiple choice questions'''
+**Multiple options checkbox (M)
+
+<!--T:18-->
+*'''Single choice question'''s
+**Drop down list (!)
+**5 point choice (5)
+**Drop down/radio button list (L)
+**Drop down list (W)
+**List with comment (O)
+
+<!--T:20-->
+*'''Text questions'''
+**Multiple short text (Q)
+**Short free text (S) - defaults to text input width of 240 "boxes"
+**Long free text (T) - defaults to longtext field with 1024 display rows
+**Huge free text (U) - defaults to longtext field with 2048 display rows
+
+<!--T:21-->
+*'''Not yet implemented:'''
+**Ranking style (R)
+**Slider control (^)
+**Multiple options with comments (P)
+
+
+==Export queXML PDF== <!--T:40-->
+
+
+<!--T:41-->
+It has the same advantages and disadvantages as the as the [[Display/Export survey#Export queXML format (*.xml)|Export queXML]] format option. The difference is about the possibility this option gives to the survey administrators to edit the pdf before exporting it. Once the option is selected, the following default options will be loaded:
+
+
+<!--T:42-->
+<center>[[File:export quexml customization.png]]</center>
+
+
+<!--T:43-->
+<div class="simplebox">[[File:help.png]] Notes:
+# To learn more about the available options in LimeSurvey, access the following wiki section: [[QueXML_PDF_Export|queXML PDF export]].
+# To learn more about queXML, please click on the following [https://quexml.acspri.org.au/ external link].</div>
+
+==Export tab-separated-values format (.txt)== <!--T:8-->
+
+
+<!--T:10-->
+This feature is designed to make it easy to use Spreadsheet editors to author and edit surveys. It completely eliminates the dependence upon SGQA codes.
+
+<!--T:11-->
+It also makes it easy to do bulk editing of your survey, such as find-replace, bulk-reordering, looping (repeating groups), and testing (such as temporarily disabling mandatory or validation criteria).
+Check out the [[Excel Survey Structure|dedicated documentation for this format.]]
+
+
+==Export printable survey (*.html)== <!--T:26-->
+
+
+<!--T:27-->
+The questionnaire can also be exported in two printable formats. The first one gives you the possibility to download the .zip file containing the survey in all your [[General settings|selected languages]]. The .zip file contains the necessary stylesheets to put it up on any HTML-ready devices or browsers. 
+
+<!--T:44-->
+Please not that it will not contain any logic or [[ExpressionScript_Engine_-_Quick_start_guide|ES-functionality]]! You'll have to take that into account yourself when designing/editing the questionnaire.
+
+==Export printable survey== <!--T:45-->
+
+
+<!--T:46-->
+In comparison to the [[Display/Export survey#Export printable survey (*.html)|previous option]], all necessary styles will be loaded. Therefore, just press Ctrl/Cmd+p or select print from your browser menu to print the document. As the above *.html option, this one also does not contain any logic or [[ExpressionScript_Engine_-_Quick_start_guide|ES-functionality]], you'll have to take that into account yourself.
+
+</translate>

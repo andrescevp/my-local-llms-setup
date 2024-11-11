@@ -1,0 +1,37 @@
+<languages />
+
+
+=Changing an active survey=
+
+While a survey is active, it is not possible to add questions, remove questions or answers or change the question type. However, it is still possible to:
+
+* Modify the text of a question (for example to correct typos)
+* Modify the attributes of a question (for example to include it in the public statistics or insist on a particular number of answers for a multiple options question).
+
+To make more complicated changes, you need to use the [[Surveys_-_introduction#Import_a_survey|import]] and [[Display/Export survey|export]] functionality described in the next section.
+
+=Changing an active survey by import and export=
+
+
+If you need to add or remove questions or answers (or both), LimeSurvey has functions called [[Import responses#Import a VV survey file|"VV-Import"]] and [[Export responses#VVExport|"VV-Export"]] that can be used to move all the results from one survey to another survey.
+
+
+Exporting the survey structure is done from the survey toolbar. The VV-Import and VV-Export buttons are found on the main toolbar of the [[Responses]] page.
+
+
+<center>[[File:Import and Export VV - location.png]]</center>
+
+
+VV-Import and VV-Export can also be used to combine survey results when the same survey has been run on more than one server.
+
+Following are the steps for using VV-Import and VV-Export:
+
+* Create a new survey and copy the structure of the original. If necessary, modify this new survey so it has the changes you want.
+* Activate the new survey.
+* Perform a VV-Export from the _old_ survey.
+* Perform the VV-Import into the _new_ survey.
+
+=Tips=
+* When '''rearranging columns''' switch column ids (row 2) instead of all content columns (3-end).
+* '''Rename vv files''' as .txt and excel will open them correctly (save as unicode and rename).
+* To '''change the survey title''', access the [[Text elements]] panel of your survey settings.

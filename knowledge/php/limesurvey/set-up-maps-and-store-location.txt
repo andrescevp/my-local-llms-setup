@@ -1,0 +1,197 @@
+<languages /> <translate>
+
+<!--T:1-->
+__TOC__
+
+=Short description= <!--T:2-->
+
+<!--T:3-->
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+<!--T:4-->
+This question type collects a single line of text input.
+
+<!--T:52-->
+<center>[[File:S_ST.jpg]]</center>
+
+
+<!--T:71-->
+'''Example:''' [[Media:Short free text question.zip|Short_free_text_question.zip]]
+
+<!--T:5-->
+}}</onlyinclude>
+
+<!--T:72-->
+----
+
+<!--T:53-->
+'''Note: On MySQL database the maximum number of characters can be unlimited. On Postgres and MSSQL the maximum number of characters that can be entered is 255.'''
+
+=General options= <!--T:6-->
+
+<!--T:7-->
+{{QS:mandatory}}
+
+<!--T:8-->
+If the map is enabled as a google map, and the question is set to '''mandatory''', the survey user must move the red point, or enter the Lat/Long text box.  The user may not merely rely on the default, and hit the "NEXT" button.  It is recommended that you so advise in the substance of the question text.
+
+<!--T:12-->
+{{QS:relevance}}
+
+<!--T:9-->
+{{QS:preg_validation}}
+
+
+=Display= <!--T:55-->
+
+<!--T:14-->
+{{QS:Prefix}}
+
+<!--T:15-->
+{{QS:suffix}}
+
+<!--T:16-->
+{{QS:display_rows}}
+
+<!--T:56-->
+{{QS:Hide_tip}}
+
+<!--T:57-->
+{{QS:Text_input_width}}
+
+<!--T:58-->
+{{QS:Input_box_size}}
+
+<!--T:59-->
+{{QS:Question theme}}
+
+<!--T:60-->
+{{QS:Hidden}}
+
+<!--T:61-->
+{{QS:CSS Class}}
+
+=Input= <!--T:62-->
+
+<!--T:19-->
+{{QS:maximum_chars}}
+
+=Location= <!--T:63-->
+
+
+<!--T:73-->
+The following question type allows you to create "map" questions where the survey respondents are asked to pinpoint a specific location on the openstreet/google map. Furthermore, a series of data can be stored within the database such as: postal code, country, region, and city. Default coordinates can also be provided.
+
+
+<!--T:74-->
+For more personalized solutions, we recommend LimeSurvey users to visit our forum to see the customizations done by our community members. For example, user Hulotte proposed the following customized script: [https://www.limesurvey.org/forum/can-i-do-this-with-limesurvey/117780-determine-geographical-administrative-info-by-address-data-google-maps#181594 forum link]. Other solutions can be found by typing in "maps" in the search query of [https://www.limesurvey.org/search?searchword=maps&searchphrase=all limesurvey.org].
+
+<!--T:75-->
+In case you are looking for professional help, please get in touch with one of our official partners: https://limesurvey.com.
+
+
+<!--T:21-->
+{{QS:location_mapservice}}
+
+<!--T:22-->
+{{QS:location_nodefaultfromip}}
+
+<!--T:26-->
+{{QS:location_postal}}
+
+<!--T:24-->
+{{QS:location_city}}
+
+<!--T:25-->
+{{QS:location_state}}
+
+<!--T:23-->
+{{QS:location_country}}
+
+<!--T:28-->
+{{QS:location_mapzoom}}
+
+<!--T:27-->
+{{QS:location_defaultcoordinates}}
+
+<!--T:29-->
+{{QS:location_mapwidth}}
+
+<!--T:30-->
+{{QS:location_mapheight}}
+
+=Logic= <!--T:64-->
+
+<!--T:20-->
+{{QS:Random_group}}
+
+<!--T:47-->
+{{QS:em_validation_q}}
+
+<!--T:48-->
+{{QS:em_validation_q_tip}}
+
+=Other= <!--T:65-->
+
+<!--T:32-->
+{{QS:Page_break}}
+
+<!--T:31-->
+{{QS:numbers_only}}
+
+=Statistics= <!--T:66-->
+
+
+<!--T:67-->
+{{QS:Display map}}
+
+<!--T:68-->
+{{QS:Display chart}}
+
+<!--T:69-->
+{{QS:Chart type}}
+
+=Timer= <!--T:70-->
+
+<!--T:33-->
+{{QS:time_limit}}
+
+<!--T:34-->
+{{QS:time_limit_action}}
+
+<!--T:35-->
+{{QS:time_limit_disable_next}}
+
+<!--T:36-->
+{{QS:time_limit_disable_prev}}
+
+<!--T:37-->
+{{QS:time_limit_countdown_message}}
+
+<!--T:38-->
+{{QS:time_limit_timer_style}}
+
+<!--T:39-->
+{{QS:time_limit_message_delay}}
+
+<!--T:40-->
+{{QS:time_limit_message}}
+
+<!--T:41-->
+{{QS:time_limit_message_style}}
+
+<!--T:42-->
+{{QS:time_limit_warning}}
+
+<!--T:43-->
+{{QS:time_limit_warning_display_time}}
+
+<!--T:44-->
+{{QS:time_limit_warning_message}}
+
+<!--T:45-->
+{{QS:time_limit_warning_style}}
+
+<!--T:51-->
+[[Category:Question types]][[Category:Text questions]]
+</translate>

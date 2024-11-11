@@ -1,0 +1,642 @@
+
+__TOC__
+
+=Introduction=
+
+LimeSurvey RemoteControl 2 is a XML-RPC/JSON-RPC based web service available in LimeSurvey 2.0 or more recent which offers '''various [https://api.limesurvey.org/classes/remotecontrol-handle.html API functions]'''.
+
+LSRC2 makes it possible for developers to control specific functionality of LimeSurvey from any other application, without being restricted to PHP as a programming language.
+
+The following features are planned:
+* start a predefined survey (change titles and things)
+* add predefined groups or questions
+* activate the survey, restrict it to start and endtime
+* make it closed,
+* add participant data/tokens when you need them
+* return the unused tokens to the main application
+* get a fieldmap for a survey,
+* invite or remind the participants of your survey
+
+...and much more
+
+==Requirements==
+* libXML installed
+
+=Setup=
+
+== How to configure LSRC2==
+
+
+In a default LimeSurvey installation LSRC2 is disabled. In order to use LSRC2 you must first enable the service, and then adjust the settings to suit your needs. To enable LSRC2 login to the LimeSurvey administration, go to [[Global settings]], choose the tab 'Interfaces' and select one of the two RPC services (XML-RPC or JSON-RPC) service.
+
+
+{{Alert|'''Do not forget''' to activate the LimeSurvey API first! To do this, access your global configuration, click on [[Global_settings#Interfaces|Interfaces]] and enable the API setting.}}
+
+== Security==
+
+LSRC2 uses the same security measures as the normal administration login. That means that the permission set of the used username and password is the same as if you would login in the administration with that user/password. Also LSRC2 is protected against brute-force password cracking - like the normal administration login.
+
+=How to use LSRC2=
+
+The LSRC2 URL are shown on [[Global_settings#Interfaces|global settings]], it was adapted to your current configuration.
+
+LSRC2 fully complies to the [http://www.xmlrpc.com/ XML-RPC specification] and [https://www.jsonrpc.org/specification_v1 JSON-RPC version 1] specifications. We recommend in general to use JSON-RPC because it is well tested and has a much smaller footprint than XML-RPC.
+
+LSRC2 offers a lot of functions. Please check the automatically generated [http://api.limesurvey.org/classes/remotecontrol_handle.html API Documentation].
+LSRC2 offers the following functions:
+
+== Sessions ==
+
+=== get_session_key ===
+
+Using this function you can create a new XML/JSON-RPC session key. This is mandatory for all following LSRC2 function calls.
+
+<source lang=php>
+function get_session_key(string $username, string $password, string $plugin = 'Authdb')
+</source>
+
+{| class="wikitable"
+! Parameter !! Description
+|-
+| username || The username used for connexion
+|-
+| password || The password used for connexion
+|-
+| plugin {{NewIn|3.2.0}} || The Auth plugin to be used
+|-
+|}
+
+'''Return on success''': (string) session key.
+
+'''Return on error''':  for protocol-level errors (invalid format etc), an error message. For invalid username and password, returns a null error and the result body contains a 'status' name-value pair with the error message.
+
+=== release_session_key ===
+
+Using this function you can close a previously opened XML-RPC/JSON-RPC session.
+
+<source lang=php>
+function release_session_key(string $sSessionKey)
+</source>
+
+{| class="wikitable"
+! Parameter !! Description
+|-
+| sSessionKey || Auth credentials
+|-
+|}
+
+'''Return''': Always 'OK' (string)
+
+== List of functions ==
+
+'''All functions including descriptions can be found at our developers [http://api.limesurvey.org/classes/remotecontrol-handle.html RemoteControl functions API page].'''
+
+
+Also, you can publish your API (check out global settings) and look at it directly.
+
+
+{{Alert|The parameter structure uses arrays of values - you *must* send the values in the API expected order (see [https://www.jsonrpc.org/specification_v1#a1.1Requestmethodinvocation jsonrpc specification]).}}
+
+= Example and helper =
+
+== PHP Example ==
+
+To include JSON-RPC in your application, you can write an application using the light-weight jsonRPCClient from the [https://github.com/weberhofer/jsonrpcphp jsonrpcphp Github repository]. The library can also get included [https://getcomposer.org/download/ by composer calling]
+
+<source lang=bash>
+composer require weberhofer/jsonrpcphp
+</source>
+
+or by inclusion of the following lines in your composer.json file:
+
+<source lang=javascript>
+{
+    "require": {
+        "weberhofer/jsonrpcphp": "~2"
+    }
+}
+</source>
+
+This is an example how to connect to limesurvey:
+
+<source lang="php">
+<?php
+
+// without composer this line can be used
+// require_once 'path/to/your/rpcclient/jsonRPCClient.php';
+// with composer support just add the autoloader
+include_once 'vendor/autoload.php';
+
+define( 'LS_RPCURL', 'https://localhost/limesurvey/admin/remotecontrol');  // adjust this one to your actual Remote Control URL
+define( 'LS_USER', 'rpcuser' );
+define( 'LS_PASSWORD', 'mypassword' );
+
+// the survey to process
+$survey_id=374699;
+
+// instantiate a new client
+$myJSONRPCClient = new \org\jsonrpcphp\JsonRPCClient( LS_RPCURL );
+
+// receive session key
+$sessionKey= $myJSONRPCClient->get_session_key( LS_USER, LS_PASSWORD );
+
+// receive surveys list current user can read
+$groups = $myJSONRPCClient->list_surveys( $sessionKey );
+print_r($groups, null );
+
+// release the session key
+$myJSONRPCClient->release_session_key( $sessionKey );
+
+</source>
+
+See a [https://gitlab.com/SondagesPro/coreAndTools/twigExtendByPlugins/snippets/1729193 snippet example of list_surveys]
+
+== JAVA example ==
+To decode and code your json calls you can use the library gson as you can see in the following example:
+
+<syntaxhighlight lang="java">
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
+
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+
+public class TestHttpClient {
+
+    public static String parse(String jsonLine) {
+	 JsonElement jelement = new JsonParser().parse(jsonLine);
+	 JsonObject  jobject = jelement.getAsJsonObject();
+	 String result = jobject.get("result").getAsString();
+	 return result;
+	}
+
+
+    public static void main(String[] args) throws UnsupportedEncodingException {
+      DefaultHttpClient client = new DefaultHttpClient();
+
+      HttpPost post = new HttpPost("https://PATH_OF_YOUR_SERVER/index.php/admin/remotecontrol");
+      post.setHeader("Content-type", "application/json");
+      post.setEntity( new StringEntity("{\"method\": \"get_session_key\", \"params\": [\"YOUR_USERNAME\", \"YOUR_PASSWORD\" ], \"id\": 1}"));
+      try {
+        HttpResponse response = client.execute(post);
+        if(response.getStatusLine().getStatusCode() == 200){
+            HttpEntity entity = response.getEntity();
+            String sessionKey = parse(EntityUtils.toString(entity));
+            post.setEntity( new StringEntity("{\"method\": \"list_groups\", \"params\": [ \""+sessionKey+"\", \"ID_SURVEY\" ], \"id\": 1}"));
+            response = client.execute(post);
+            if(response.getStatusLine().getStatusCode() == 200){
+                entity = response.getEntity();
+                System.out.println(EntityUtils.toString(entity));
+                }
+           }
+
+
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }}
+
+
+</syntaxhighlight>
+
+== Python example and glue ==
+
+* [https://github.com/TaiSHiNet/lime-py-api LimeSurvey API - Python 2 glue]
+* [https://github.com/lindsay-stevens/limesurveyrc2api LimeSurvey API - Basic client library in Python 3]. Includes tests. Listed on Pypi: pip install limesurveyrc2api
+
+The following code runs with Python 2 and requires some adaptation to work with Python 3.
+
+<syntaxhighlight lang="python">
+import urllib
+import urllib2
+import json
+import sys
+# There is an generic json-rpc implemantation in Python but it dose not work for me in this case so I worte Some functions
+
+
+
+def get_session_key():
+    req = urllib2.Request(url='https://myurl/index.php/admin/remotecontrol',\
+                          data='{\"method\":\"get_session_key\",\"params\":[\"admin\",\"mypassword\"],\"id\":1}')
+    req.add_header('content-type', 'application/json')
+    req.add_header('connection', 'Keep-Alive')
+    try:
+        f = urllib2.urlopen(req)
+        myretun = f.read()
+        #print myretun
+        j=json.loads(myretun)
+        return j['result']
+    except :
+        e = sys.exc_info()[0]
+        print ( "<p>Error: %s</p>" % e )
+
+def get_question_properties(skey,QuestionID):
+    req = urllib2.Request(url='https://myurl/index.php/admin/remotecontrol',\
+                          data='{\"method\":\"get_question_properties\",\"params\":[\"'+skey+'\",'+QuestionID
+                                    +',[\"gid\",\"type\",\"help\",\"language\",\"sid\",\"question_order\",\"question\",\"subquestions\"]],\"id\": 1}')
+
+    req.add_header('content-type', 'application/json')
+    req.add_header('connection', 'Keep-Alive')
+    try:
+        f = urllib2.urlopen(req)
+        myretun = f.read()
+        #print myretun
+        j=json.loads(myretun)
+        return j['result']
+    except :
+        e = sys.exc_info()[0]
+        print ( "<p>Error: %s</p>" % e )
+
+
+def release_session_key(relkey):
+    req = urllib2.Request(url='https://myurl/index.php/admin/remotecontrol',\
+                          data='{\"method\":\"release_session_key\",\"params\":[\"'+relkey+'\"],\"id\":1}')
+    req.add_header('content-type', 'application/json')
+    req.add_header('connection', 'Keep-Alive')
+    try:
+        f = urllib2.urlopen(req)
+        myretun = f.read()
+        #print myretun
+        j=json.loads(myretun)
+        return j['result']
+    except :
+        e = sys.exc_info()[0]
+        print ( "<p>Error: %s</p>" % e )
+
+
+def export_responses2(skey,sid):
+    req = urllib2.Request(url='https://myurl/index.php/admin/remotecontrol',\
+                          data='{\"method\":\"export_responses\",\"params\":[\"'+skey+'\",\"'+sid+'\",\"csv\",\"de\",\"full\"],\
+"id\": 1}')
+    req.add_header('content-type', 'application/json')
+    req.add_header('connection', 'Keep-Alive')
+    try:
+        f = urllib2.urlopen(req)
+        myretun = f.read()
+        #print myretun
+        j=json.loads(myretun)
+        return j['result']
+    except :
+        e = sys.exc_info()[0]
+        print ( "<p>Error: %s</p>" % e )
+
+
+mykey=get_session_key()
+print export_responses2(mykey,'566237').decode('base64')
+get_question_properties(mykey,'574')
+print release_session_key(mykey)
+</syntaxhighlight>
+
+== NodeJS example ==
+
+This script require request, you can include easily with the command
+<source lang=bash>
+npm install request
+</source>
+
+This is a example how to connect to limesurvey:
+
+<source lang="javascript">
+var request = require('request');
+
+//******GLOBAL***************
+var SESSIONKEY="";
+var options = {
+  url: "https://xxxxxxxxxxxxxxxx/index.php/admin/remotecontrol",
+  method: "POST",
+  headers: {
+    'user-agent': 'Apache-HttpClient/4.2.2 (java 1.5)',
+    'host': 'xxxxxxxxxxxxxxxx',
+    'path': '/index.php/admin/remotecontrol',
+    'connection': 'keep-alive',
+    'content-type': 'application/json'
+  }
+};
+
+//*******AUTHENTIFICATION*******
+options.body = JSON.stringify({method:'get_session_key',params:['myusername','mypassword'],id:1});
+
+request(options, function(error, response, body){
+  if (!error && response.statusCode == 200) {
+      body = JSON.parse(body);
+
+    //*********KEEP THE KEY*********
+    if(SESSIONKEY==="") {
+      console.log("NEW KEY -->"+body.result);
+      SESSIONKEY=body.result;
+      nextFonction();
+    }
+  }
+  else console.log("ERROR -->"+body);
+});
+
+</source>
+
+== R example and helper ==
+
+The easiest way to use lsrc2 is by means of the limer package, See https://github.com/cloudyr/limer
+
+Example of usage of this client
+<source lang=R>
+# first limer (check version: must be recent) must be installed
+if(!require("devtools")) {
+  install.packages("devtools")
+  library("devtools")
+}
+install_github("cloudyr/limer")
+#############################################################
+
+library(limer)
+
+#change the next options (website, user, password)
+options
+(lime_api = 'https://www.XXX.nl/index.php/admin/remotecontrol')
+options(lime_username = 'user')
+options(lime_password = 'password')
+#############################################################
+
+
+# first get a session access key
+get_session_key()
+
+# list all surveys. A dataframe is returned
+survey_df<-call_limer(method='list_surveys')
+print(survey_df)
+#    sid           surveyls_title startdate             expires active
+#1  999999  XXXX               NA 2016-03-08 15:20:30      Y
+#2  999998  XXXX               NA   <NA>      Y
+
+#Read the data of the first survey (sid=999999) into a data.frame.
+#Notice that the default sLanguageCode = en, so maybe you have to
+#specify another language (here: All languages)
+data<- get_responses(iSurveyID= 999999, sLanguageCode= '', sResponseType='short')
+
+</source>
+
+== C# (Copy & Paste from Forum) ==
+
+https://www.limesurvey.org/forum/development/99633-c-client-for-ls-remotecontrol2
+
+I have written a small json-rpc client in c#. It is a small one but enough for my purposes. You can use it in your wiki as example or maybe it helps here other people.
+It is tested and works in my environment but it is possible that i havent found all bugs.
+You need from nuget package manager Newtonsoft JSON.
+
+RPCclient.cs
+<source lang="c#">
+using System;
+using System.IO;
+using System.Net;
+using System.Text;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
+namespace JsonRPCclient {
+
+  public class JsonRPCclient {
+
+    private int id = 0;
+    /// <summary>
+    /// Set JSON-RPC webservice URL
+    /// </summary>
+    public string URL { set; get; }
+    /// <summary>
+    /// Set JSON-RPC method
+    /// </summary>
+    public string Method { set; get; }
+    /// <summary>
+    /// Add JSON-RPC params
+    /// </summary>
+    public JObject Parameters { set; get; }
+
+    /// <summary>
+    /// Results of the request
+    /// </summary>
+    public JsonRPCresponse Response { set; get; }
+
+
+    /// <summary>
+    /// Create a new object of RPCclient
+    /// </summary>
+    public JsonRPCclient() {
+      Parameters = new JObject();
+      Response = null;
+    }
+
+    /// <summary>
+    /// Create a new object of RPCclient
+    /// </summary>
+    /// <param name="URL"></param>
+    public JsonRPCclient(string URL) {
+      this.URL = URL;
+      Parameters = new JObject();
+      Response = null;
+    }
+
+    /// <summary>
+    /// POST the request and returns server response
+    /// </summary>
+    /// <returns></returns>
+    public string Post() {
+      try {
+        JObject jobject = new JObject();
+        jobject.Add(new JProperty("jsonrpc", "2.0"));
+        jobject.Add(new JProperty("id", ++id));
+        jobject.Add(new JProperty("method", Method));
+        jobject.Add(new JProperty("params", Parameters));
+
+        string PostData = JsonConvert.SerializeObject(jobject);
+        UTF8Encoding encoding = new UTF8Encoding();
+        byte[] bytes = encoding.GetBytes(PostData);
+
+        HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+        request.Method = "POST";
+        request.ContentType = "application/json";
+        request.KeepAlive = true;
+        request.ContentLength = bytes.Length;
+
+        Stream writeStream = request.GetRequestStream();
+        writeStream.Write(bytes, 0, bytes.Length);
+        writeStream.Close();
+
+        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+        Stream responseStream = response.GetResponseStream();
+        StreamReader readStream = new StreamReader(responseStream, Encoding.UTF8);
+
+        Response = new JsonRPCresponse();
+        Response = JsonConvert.DeserializeObject<JsonRPCresponse>(readStream.ReadToEnd());
+        Response.StatusCode = response.StatusCode;
+
+        return Response.ToString();
+      }
+      catch (Exception e) {
+        return e.ToString();
+      }
+    }
+
+    public void ClearParameters() {
+      this.Parameters = new JObject();
+    }
+
+
+  }
+
+  public class JsonRPCresponse {
+    public int id { set; get; }
+    public object result { set; get; }
+    public string error { set; get; }
+    public HttpStatusCode StatusCode { set; get; }
+
+    public JsonRPCresponse() { }
+
+    public override string ToString() {
+      return "{\"id\":" + id.ToString() + ",\"result\":\"" + result.ToString() + "\",\"error\":" + error + ((String.IsNullOrEmpty(error)) ? "null" : "\"" + error + "\"") + "}";
+    }
+  }
+
+}
+</source>
+
+programm.cs
+<source lang="c#">
+      string Baseurl = "http://localhost/limesurvey/index.php?r=admin/remotecontrol";
+      JsonRPCclient client = new JsonRPCclient(Baseurl);
+      client.Method = "get_session_key";
+      client.Parameters.Add("username", "admin");
+      client.Parameters.Add("password", "mypassword");
+      client.Post();
+      string SessionKey = client.Response.result.ToString();
+
+      client.ClearParameters();
+
+      if(client.Response.StatusCode == System.Net.HttpStatusCode.OK){
+        client.Method = "import_survey";
+        client.Parameters.Add("sSessionKey", SessionKey);
+        client.Parameters.Add("sImportData", Base64Encode(yourImportDataString));
+        client.Parameters.Add("sImportDataType", "lss");
+        //client.Parameters.Add("sNewSurveyName", "test");
+        //client.Parameters.Add("DestSurveyID", 1);
+        client.Post();
+      }
+
+      client.ClearParameters();
+
+      Console.WriteLine("new survey id:" + client.Response.result.ToString());
+      Console.ReadLine();
+</source>
+
+
+== VBA for Excel ==
+
+To ‘automaticaly’ export the answers of a survey to an Excel sheet you can use this code.
+
+Source: https://www.limesurvey.org/community/forums/development/120876-vba-for-remotecontrol2-json-rpc
+
+<source lang="vb">
+' -----------------------------------------------------------------------
+' JSON RPC CONNECTIVITY SETTINGS
+' -----------------------------------------------------------------------
+' This file will contain the settings needed to access json RPC with vba.
+'
+' This VBA code use two different modules:
+' VBA JSON tools: https://github.com/VBA-tools/VBA-JSON
+' Base64 Deconding: http://www.vbforums.com/showthread.php?379072-VB-Fast-Base64-Encoding-and-Decoding&p=2539878&viewfull=1#post2539878
+'
+' I used the script made by vkuzmin as a base:
+' https://www.limesurvey.org/community/forums/can-i-do-this-with-limesurvey/114846-export-answers-to-excel-in-semi-realtime
+'
+Sub export_limesurvey()
+Dim key As String
+Dim limeuser As String, limepass As String, limeurl As String, URL As String
+Dim jsonText As String, jsonObject As Object
+Dim SurveyID As String, DocumentType As String
+Dim export64 As String, export64Decoded As String
+
+limeurl = "https://www.website.com/index.php"
+limeuser = "user"
+limepass = "pasword"
+SurveyID = "id"
+DocumentType = "csv"
+
+'Clear page
+Cells.Clear
+
+'Initalization
+Set objHTTP = CreateObject("WinHttp.WinHttpRequest.5.1")
+URL = limeurl + "/admin/remotecontrol"
+objHTTP.Open "POST", URL, False
+objHTTP.setRequestHeader "User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)"
+objHTTP.setRequestHeader "Content-type", "application/json"
+
+'Get key
+sendtext = "{""method"":""get_session_key"",""params"": [""" + limeuser + """,""" + limepass + """],""id"": 1}"
+objHTTP.Send (sendtext)
+jsonText = objHTTP.responseText
+Set jsonObject = JsonConverter.ParseJson(jsonText)
+key = jsonObject("result")
+
+'Export answers
+sendtext = "{""method"":""export_responses"",""params"": [""" + key + """,""" + SurveyID + """,""" + DocumentType + """],""id"": 1}"
+objHTTP.Send (sendtext)
+jsonText = objHTTP.responseText
+Set jsonObject = JsonConverter.ParseJson(jsonText)
+export64 = jsonObject("result")
+
+'Decode answers
+export64Decoded = Decode64(export64)
+
+'Close session
+sendtext = "{""method"":""release_session_key"",""params"": [""" + key + """],""id"": 1}"
+objHTTP.Send (sendtext)
+
+'Divide the respond in multiple lines, otherwise evrything is in one cell
+s = export64Decoded
+i = 0
+While Split(s, Chr(13) + Chr(10))(i) <> ""
+   Cells(i + 1, 1) = Split(s, Chr(13) + Chr(10))(i)
+   i = i + 1
+Wend
+
+'Convert CSV
+Columns("A:A").TextToColumns Destination:=Range("A1"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=False, _
+        Semicolon:=True, Comma:=False, Space:=False, Other:=False, TrailingMinusNumbers:=True
+
+Cells.WrapText = False
+
+End Sub
+</source>
+
+
+= JSON-RPC notes =
+
+The content-type of the HTTP request '''must be application/json'''.  Most formatting errors are a failure to set the content-type header.  This will result in a null response from the server (not a JSON response).  Below is an example of a valid request and response pair.
+
+<syntaxhighlight lang="php">Request:
+
+ HTTP headers:
+
+   content-type=application/json
+
+   connection=Keep-Alive
+
+   host=mylimesurveyhost.com
+
+   content-length=67
+
+   user-agent=Apache-HttpClient/4.2.2 (java 1.5)
+
+ Post body:
+
+   {"method":"get_session_key","params":["admin","mypassword"],"id":1}
+
+Response body:
+
+ {"id":1,"result":"6htqat38fyr4v7iu72nqgv7xgavkvfcz","error":null}</syntaxhighlight>

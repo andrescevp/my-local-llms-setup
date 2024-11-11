@@ -1,0 +1,45 @@
+<languages />
+
+
+To open access the data entry panel, access one of the [[Survey settings|survey-related settings]], select the '''Responses''' menu entry and click the '''Data entry screen''' button. 
+
+
+<center>[[File:Data entry screen button location.png]]</center>
+
+
+{{Note|This function is not intended to be available to your participants. When LimeSurvey was first developed, it was intended as a data entry system for paper-based surveys. The Data Entry screen is intended to be used when entering returned surveys on a mass basis. Later it has been designed to allow for keyboard based entry (using tabs, space bar, arrow keys, number pad, and keystrokes).}}
+
+
+Once accessed, a data-entry panel should look like this:
+
+
+<center>[[File:dataentry.png]]</center>
+
+
+{{Note|Keyboard shortcuts that can be used while adding your data into the response table: tabulator key (move to the next question) and shift key + tabulator key (move to the previous question).}}
+
+If you scroll down to the bottom of the page, two options can be selected:
+* '''Finalize response submission''':
+** adds a submit date entry to the record making it available as a full response when browsing responses or computing statistics
+** marking the token code as used (if the survey uses a [[Survey participants|survey participants table]])
+
+{{Note|If the "Finalize response submission" checkbox is not checked, then the answer will be considered as "not completely filled out", no submission date will be added to the record, and the token will remain available to the participant.}}
+
+* '''Save for further completion by survey user:''' it will be displayed as a saved but not submitted answer. This option is used in the case in which you wish to prefill some of the question answers for your respondent and then allow him or her to fill out the rest of the survey. The following options need to be filled in:
+**''Identifier'' - it has to be unique
+**''Password'' - the password that will be used by the participant to "sign in" on the survey to continue to fill it in 
+**''Confirm password'' - retype the above password
+**''Email'' - the email where the to-be-filled-out survey URL is sent to  
+**''Start language'' - displayed only if additional languages are used.
+
+
+<center>[[File:Continue to fill out the survey - identifier.png]]</center>
+
+
+Once saved, your respondent will receive an email that looks like this:
+
+
+<center>[[File:Continue to fill in the survey.png]]</center>
+
+
+To continue filling out the survey, the respondent has to click on the link from the email. When asked for credentials, the name and password from the email have to be used.

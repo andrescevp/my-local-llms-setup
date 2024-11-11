@@ -1,0 +1,103 @@
+<languages />
+
+
+=Introduction=
+
+
+When you open a survey, a survey overview is displayed showing the main survey-related settings and functionalities. The overview panel is divided into two parts:
+
+*[[Overview#Overview toolbar|Overview toolbar]]
+*[[Overview#Survey summary|Survey summary]]
+
+<div class="simplebox">[[File:help.png]] '''Note:''' The survey quick actions have been removed since version 3.6.1.</div>
+
+
+The '''Overview''' option can also be found under the '''Settings''' tab, below the '''survey settings''':
+
+
+<center>[[File:Survey settings Overview.png]]</center>
+
+=Overview toolbar=
+
+
+This toolbar contains the following options:
+
+
+<center>[[FIle:Overview toolbar.png]]</center>
+
+
+*'''Survey status:''' Four buttons may be displayed on the left part of the toolbar, depending on the status of your survey:
+**[[File:Button - activate this survey.png]] : It is displayed if the survey is inactive. Click this button for activating the survey. To see the URL of the survey, check the ''Survey URL'' box located in the [[Overview#Survey summary|Survey summary section]];
+**[[File:Button - stop this survey.png]] : Is displayed if the survey is active. Click this button if you wish to stop the survey.  Survey participants will no longer be able to access the survey.  
+**[[File:Button - execute survey.png]]: If the survey is active, you can click the '''Execute survey''' button to check and fill out the survey. The difference between this option and '''Preview survey''' is that the latter does not store your answers while the former does;
+**[[File:Button - expired survey.png]] : Displayed if the survey has expired. To reactivate it, click the button to access the [[Publication & access|publication and access control settings]] to change the start or expiry date/time of the survey. 
+*'''Preview survey:''' Allows you to preview the survey. The green arrow appears when your survey is multilingual. Click each language to separately check the multilingual versions of your survey.
+*'''Tools:''' The following functionalities can be accessed from the '''tools''' menu:
+**''Delete survey:'' Use this button if you want to delete the survey.
+**''Quick-translation:'' Offers quick access to the translation menu. Please note that it is accessible only if your survey is multilingual - additional languages have been added besides the base language.
+**''Reset conditions:'' All the survey conditions will be removed.
+**''Survey logic file:'' Checks the logic of your survey. It is utilized when more advanced features are used in the survey. For more details, read [[Show_logic_file|our wiki section on survey logic]].
+**''Regenerate question codes:'' The users that have the permission to edit questions can allocate a unique ID to any survey question. However, if these IDs differ too much (the numbering is too messy), the '''Regenerate question codes''' function can be used to automatically rename the survey questions. The numbering can be:
+***''Straight:'' If this option is used, each question will be allocated a code that corresponds to their order from the [[Survey structure|survey structure]] (e.g. Q00001, Q0002, etc.).
+***''By question group:'' If this option is chosen, each question will be allocated a code that corresponds to the group each of them belongs to and their order within that question group: (G1Q00001, G1Q00002, G2Q00001, etc.).
+*'''Display/Export:''' For a comprehensive description of this functionality, check our wiki page on [[Display/Export survey |LimeSurvey export functionality]].
+*'''Survey participants:''' Used when you would like to invite a group of people to be part of your survey and ensure that each person can only participate once. For further details, check the [[Survey_participants|survey participants wiki page]];
+*'''Responses:''' Offers the survey administrator access to menus that allows him/her to see the stored responses, enter new data, export or import answers, and view the partially saved but not submitted answers. By clicking the arrow will display three options:
+**''Responses & Statistics:'' Displays a summary of all the stored survey responses and respondents.
+**''Data entry screen:'' Allows the survey administrator to enter new data into his/her response tables. It is a useful function when you first record the answers from the survey participants offline and then you want to analyse their answers via the functionalities provided by LimeSurvey.
+**''Partial (saved) responses:'' Displays the partially (but not submitted) saved responses.
+
+=Survey summary=
+
+
+The bottom part of the Overview section offers some general information about your survey:
+
+
+<center>[[File:Overview Survey Summary.png]]</center>
+
+
+*'''Survey URLs:''' It displays the URLs used within your survey: 
+**''English (Base language):'' The first survey URL is in your base language (English in our case). Therefore, if you share this link, the respondents will fill out the English version of the survey;
+**''Romanian:'' All the additional survey languages are listed below the base language. In our example, Romanian is the only selected additional language. Access the following [[General_settings#General_settings_panel|wiki section]] for more information on additional languages.
+**''End URL:'' You have the possibility to redirect respondents to another page once they are done filling out the questionnaire. For more details, check the [[Text elements|Survey text elements]] wiki.
+**''Number of questions/groups'': It displays the total number of questions and question groups within the survey. If you would like to add/edit/delete them, read first about [[Survey structure|the survey structure of a LimeSurvey questionnaire]];
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+*'''Survey general settings:''' The following settings can be revised from [[General_settings#General_settings_panel|here]]:
+**'''Administrator:''' It shows the user that is the administrator of the survey;
+**'''Fax to:''' It is used when you want to give a fax number on the "printable survey". For more details, check our wiki page on [[General settings|general settings]];
+**'''Theme:''' It allows you to quickly edit the survey theme. Two shortcuts are located on the same row:
+***''Open the theme options'' ([[File:Edit template options.png]]);
+***''Open the theme editor in a new window'' ([[File:Open template editor in a new window.png]]).
+
+<div class="simplebox">[[File:help.png]] '''Note:''' For further details on the two options, check our wiki section on the usage of LimeSurvey [[Theme_editor|theme editor]].</div>
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+*'''Text elements:''' These options can be edited from the [[Text elements|survey text elements]] panel:
+**'''Description:''' A general survey description;
+**'''Welcome:''' It displays the welcome message that is shown to the survey participants when they access the survey;
+**'''End message:''' It displays the end message that is shown to the survey participants when they finish filling out the survey.
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+*'''Publication and access settings:''' The below options can be edited from the [[Publication_%26_access|publication and access control settings]] panel:
+**'''Start date/time:''' It shows the start date and time of your survey. Even if the survey participants have access to the URL, they will not be able to start completing it till the start date.
+**'''Expiration date/time:''' It shows the expiration date and time of your survey. After the expiration date/time, no more responses are recorded.
+**'''Listed publicly''': If turned on, your survey will be listed in the "available surveys" portal from where it can be accessed by anyone; 
+
+
+{{Box|Text=All the options presented in the survey summary can be edited from the [[Survey settings|settings menu]].}}
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+*'''Survey settings:''' A short description on which options (the most important ones) are enabled within the survey.

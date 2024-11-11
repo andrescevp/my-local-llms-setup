@@ -1,0 +1,160 @@
+<languages />
+<translate>
+<!--T:1-->
+Contents:
+
+=Installation on your computer= <!--T:125-->
+
+<!--T:126-->
+LimeSurvey can be installed on your computer with MAMP/XAMPP or any other system. Bear in mind that your computer is not a web server - it's not accessible via web to any other user. 
+
+<!--T:127-->
+In order to make your survey reachable to other users via the web, you need to either: 
+
+<!--T:128-->
+* own a server or a web space from a host provider
+* or find a LimeSurvey-specialized host provider
+
+=Starting installation= <!--T:2-->
+
+==How can I create a database and a user in MySQL with command-line access?== <!--T:3-->
+
+<!--T:4-->
+You have to enter the commands below in your MySQL:
+
+<!--T:5-->
+*<code>create database '''<your_database_name>''';</code>
+
+<!--T:6-->
+*<code>create user '''<your_database_username>''';</code>
+
+<!--T:7-->
+*<code>create user '''<your_database_username>'''@localhost;</code>
+
+<!--T:8-->
+*<code>set password for '''<your_database_username>''' = PASSWORD(''''<your_database_password>'''');</code>
+
+<!--T:9-->
+*<code>set password for '''<your_database_username>'''@localhost = PASSWORD(''''<your_database_password>'''');</code>
+
+<!--T:10-->
+*<code>grant all on '''<your_database_name>'''.* to ''''<your_database_username>'''';</code>
+
+<!--T:11-->
+*<code>grant all on '''<your_database_name>'''.* to ''''<your_database_username>''''@'localhost';</code>
+
+<!--T:12-->
+In terminal, <code>'''<your_database_name>'''</code>, <code>'''<your_database_username>'''</code>, and <code>'''<your_database_password>'''</code> have to be replaced with the according/desired values.
+
+==What if I can't create a database through a script?== <!--T:13-->
+
+<!--T:14-->
+Normally, the script creates a new database, and then the table structure. However, if your server/ISP doesn't give you admin rights to create a new database in MySQL, you will need to contact your server administrator to get the necessary database created (or create it yourself if you receive the required permissions). The newly created blank database should include the appropriate access rights (i.e.: read/write/create). Then, you should be able start the LimeSurvey installation, which will create the tables within the newly created database.
+
+==Blank page when accessing the install page== <!--T:26-->
+
+<!--T:27-->
+This problem doesn't occur within the LimeSurvey installation but within the PHP installation.
+*Verify you have the MySQL PHP module (php-mysql) installed.
+*Verify your PHP install is loading the PHP.ini file your are modifying and not parsing other PHP.INI files on your system.
+*Verify the location and permissions of the following setting in your PHP.ini:
+
+<!--T:28-->
+<syntaxhighlight lang="c">upload_tmp_dir="/temp"
+
+<!--T:29-->
+session.save_path="/temp"</syntaxhighlight>
+*Verify that your server runs a suitable PHP version.
+
+==Error messages due to non-existing resources== <!--T:30-->
+
+<!--T:31-->
+Sometimes, files are not uploaded correctly or are broken during the upload process. This leads to several different error messages. Most of them refer to a file or function within a file which can't be found.
+
+<!--T:32-->
+'''Solution:''' Re-upload all files using the binary mode of your FTP programme.
+
+=Requirements page= <!--T:130-->
+
+==What is the mbstring (Multibyte String Functions) library?== <!--T:15-->
+
+<!--T:16-->
+The mbstring library is a PHP library that can convert char sets from one language to another. You need it if you want to run LimeSurvey. To check if it is already installed, open the URL from a web browser: 
+
+ <!--T:132-->
+<nowiki>http://<your_server>/<your_limesurvey_directory>/admin/install/phpinfo.php</nowiki>
+
+<!--T:18-->
+A lot of information will be shown. Search for the string 'mbstring' in the '''Configuration''' section. If you find the mbstring section, then all should be well and you can continue with your LimeSurvey installation!
+
+<!--T:20-->
+'''If you don't find the mbstring section''', you might have a problem on your hands. There are three possible scenarios:
+*If it's your host provider's server, ask for the activation of that extension in PHP or for further information on how you can activate it - if you have a good administration panel for your server, you may be able to activate it yourself
+*If it's your own '''Linux''' server, you may have to re-compile PHP and include the mbstring library. Ask the Linux experts how to do that. However, you can install it using your Linux package manager, which is mostly available in all the Linux distributions nowadays
+**If you are using a version of Linux that supports 'yum' (CentOS, RedHat, Fedora)...
+***...use the terminal (as a super user) and type: '''yum install php-mbstring'''
+***...make sure to update /etc/php.ini and uncomment the various mbstring params
+***...make sure to restart apache after installing it: '''/etc/init.d/httpd restart'''
+*If it's your own '''Windows''' server, search for php.ini on your system, open it with an editor, and search for mbstring. Most probably, the line that contains the string is commented out with a semicolon. Remove the semicolon, save and restart your web server
+
+== Stuck at checking file system permissions == <!--T:131-->
+If SELinux is activated (primarily on CentOS), then you might get an error that the file system permissions are not correct, even if the list of directories is empty. SELinux prevents writing even though the permissions are for example on 777 or 755. To configure SELinux correctly for your server - check out the [https://wiki.centos.org/HowTos/SELinux SELinux documentation].
+
+=After database creation= <!--T:35-->
+
+==Blank page after database creation== <!--T:36-->
+
+===Symptoms=== <!--T:37-->
+* LimeSurvey is installed correctly and the database was created, but instead of the admin page, you get an empty page
+* Web server log shows ''"Fatal error: Call to a member function on a non-object in /path/to/limesurvey/admin/login_check.php on line 69"''
+
+===Fix=== <!--T:38-->
+
+<!--T:39-->
+This is probably related to an incorrect setting for <code>$rooturl</code> or <code>$rootdir</code> in config.php. The file config.php attempts to set <code>$rootdir</code> correctly by calling <code><nowiki>dirname('''FILE''')</nowiki></code>. While this usually works, it can be upset when LimeSurvey is installed in a user's home or public_html directory and the home directory is mounted over NFS. To set up the <code>$rootdir</code> manually, (your shell or pwd command may show you a path like /disks/hostname/home/username/public_html/limesurvey), try using /home/username/public_html/limesurvey.
+
+==When accessing the admin page, the browser keeps running and will eventually fail to show it== <!--T:40-->
+
+===Symptoms=== <!--T:41-->
+* LimeSurvey is installed correctly and the database was created. However, when you access the admin page, the browser keeps running and will eventually fail to show the page
+* When you check the web server access log, its size has become quite big (in some cases, more than 2 GB)
+* Inside the access log, you get this message filling the log:
+
+<!--T:42-->
+{{Alert|title=Warning|text=''fread() [function.fread]: Length parameter must be greater than 0 in /limesurvey/classes/php-gettext/streams.php on line 120.}}'' 
+
+<!--T:43-->
+{{Note|The line number may be different depending on your LimeSurvey version.}}
+
+===Fix=== <!--T:44-->
+
+<!--T:45-->
+This may be caused by the mbstring.func_overload setting. Change the following setting in the php.ini file:
+<syntaxhighlight lang="php" enclose="pre">
+mbstring.func_overload = 0
+</syntaxhighlight>
+
+<!--T:47-->
+{{Note|This means no function overloading. See the PHP manual for this setting: [http://us3.php.net/manual/en/mbstring.overload.php Function Overloading Feature].}}
+
+==When accessing the admin page, the browser reports Fatal error: Call to a member function gT() on a non-object in login_check.php on line 76== <!--T:48-->
+
+===Symptoms=== <!--T:49-->
+* LimeSurvey is installed correctly and the database was created. But when redirected to the admin page, the browser displayed the listed error.
+* <code>$rootdir</code> and <code>$rooturl</code> are correctly set in config.php.
+* The disk path name for limesurvey installation directory includes one of the following characters: '(',')' or '+'.
+
+<!--T:50-->
+{{Alert|title=Attention|text=Other characters may also induce the same behavior.}}
+
+===Fix=== <!--T:51-->
+
+<!--T:52-->
+Move/rename the LimeSurvey installation directory so that the path name includes non of the following characters: '(',')' or '+' characters.
+
+=After installation= <!--T:123--> 
+
+<!--T:124-->
+For all the other issues that may occur after a successful installation, please refer to the [[Troubleshooting|troubleshooting page]].
+
+</translate>

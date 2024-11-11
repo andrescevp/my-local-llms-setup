@@ -1,0 +1,99 @@
+<languages />
+
+
+__TOC__
+
+
+{{Alert|title=Attention| Please note that this tutorial uses explanations and screenshots that are applicable to LimeSurvey 3.xx.}}
+
+
+=Introduction=
+
+
+When you access a survey, the [[Survey settings|Survey Settings menu]] is selected by default. To access the '''Survey Structure''', click the '''Structure''' tab next to the '''Settings''' tab:
+
+
+<center>[[File:Survey structure basics.png]]</center>
+
+
+The current structure of your survey will be displayed. As you can see in the screenshot above, there are three question groups and four questions.
+
+To better order them, you can use the '''regenerate question codes''' function of LimeSurvey. This will automatically renumber your questions and question groups:
+
+
+<center>[[File:Regenerate question codes - example.png]]</center>
+
+
+{{Note| For more details about this function, continue reading the following [[Overview#Overview toolbar|wiki section]].}}
+
+
+You can add from the '''Survey Structure''' menu [[Question groups - introduction|question groups]] and [[Questions - introduction|questions]]. To find out more information about these options, continue reading the next [[Survey structure#The structure of a survey|wiki section]].
+
+=The structure of a survey=
+
+
+'''A survey consists of questions and question groups'''  that represent the backbone of a survey. Besides questions and question groups, a survey may also contain:
+* the main and additional survey languages
+* question attributes
+* answers
+* subquestions
+* default answers
+* assessments
+* quotas
+* quota members
+* quota language settings 
+* survey users and their permissions
+* survey-specific settings
+
+
+Everything mentioned above is included in a .lsa and/or .lss file. These file types allow users to easily import and export surveys into/from their LimeSurvey installation.
+
+Different settings such as themes, survey participants tables, resources or label sets have to be separately exported and then imported into another survey.
+
+
+{{Alert|title=Attention|text=Please note that every question is attached to a question group.  This means that in order to add questions to your survey, you need to add a question group first}}
+
+=Question groups=
+
+
+Before you add questions to a survey, you need to create at least one question group. Then, all your new questions will be added to this question group.
+
+To find out more about question groups, read our [[Question groups - introduction|introduction on question groups]].
+
+=Questions=
+
+
+Once you create a question group, you can start adding questions. To quickly check the question types that you can use in a survey, continue reading the following [[Question types|wiki page]].
+
+If you want to learn more about question fields, read our [[Questions - introduction|introduction on questions]]
+
+=Reordering questions and question groups=
+
+
+The system through which you change the order of the questions and question groups changed slightly in LimeSurvey 3.
+
+In LimeSurvey 2, you have to click the '''Survey''' button to access the home page of the survey and select the '''Question organizer''' option. Then, the following page will be loaded:
+
+
+<center>[[FIle:Reorder-questions-ls2.png]]</center>
+
+
+You can update the order of all your questions and question groups from here or move some questions from one group to another.  To start reordering questions and/or question groups, click and drag each of them to the desired position.
+
+
+<hr width="50%" style="margin:auto">  
+
+
+In LimeSurvey 3 (early releases), you can change the order of the questions and question groups from the '''Survey Structure''' menu. Once accessed, click the three-lines symbol located in front of the question (group) name and drag it to the desired position.
+ 
+
+<center>[[File:Reorder-question.png]]</center>
+
+
+{{Alert|title=Attention|text=Questions are displayed according to the order you set from the "reordering panel". However, conditions might prevent the reordering of the questions. In this case, you will have to delete or change the respective conditions first.}}
+
+
+<hr width="50%" style="margin:auto">  
+
+
+In the later releases of LimeSurvey, more options were added under the '''Settings tab'''. Now, you can get a better perspective on your questions and questions group by accessing the '''[[Reorder questions and question groups]]''' panel. A similar drag-and-drop system as described above allows you to change the question and group order.

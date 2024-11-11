@@ -1,0 +1,15 @@
+<languages />
+
+</br>
+</br>
+
+Access any [[Survey settings|survey-related setting]], look on the top toolbar for Display/Export to see the available export options from the dropdown menu: 
+
+
+<center>[[File:Responses-options-screen.png]]</center>
+
+
+* [[Responses & statistics]]: if clicked, you will be redirected to LimeSurvey responses & statistics panel. Options related to statistics, import and export of data, data entry, etc. can be accessed from there. These options are useful in the later stages of your survey when you need to analyse and interpret the collected survey data.
+* [[Data entry]]: it provides you the opportunity to add the responses into the online response table. It can also be accessed from [[Responses & statistics|Responses & statistics panel]].
+* [[Partial (saved) responses]]: this function is useful to check which answers are incomplete or partially saved. Depending on the type of study you run, certain entries might have to be deleted. It can also be accessed from the [[Responses & statistics|Responses & statistics panel]].
+* [[NULL, empty string and values]]

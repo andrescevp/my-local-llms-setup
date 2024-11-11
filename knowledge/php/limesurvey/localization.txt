@@ -1,0 +1,45 @@
+
+<languages /> <translate>
+
+=General= <!--T:1-->
+
+<!--T:15-->
+There are two places where language specific localization is defined and stored.
+
+<!--T:2-->
+One is in the installation directory where built-in messages to the PHP code are stored in language specific files. These must be translated and installed by the system administrator. Only then is the language available for the administrative interface, for some basic buttons, and built-in messages seen by survey participants. Normally, a survey developer would not have access to edit these translations, but only select them.
+
+<!--T:3-->
+The other source of language specific localization is in the surveys themselves. These translations for each survey consist of the survey title, overview, question group, question, answer and label set text. All these translations are stored in SQL database tables. Normally, a survey developer must define all the desired translations beside the base language.
+
+=== Languages for administration interface and built-in messages for survey participants=== <!--T:4-->
+
+<!--T:5-->
+The public survey screens and the admin interface can be localized so that built-in messages and text appear in your preferred language. For example "yes" and "no" would appear as "ja" and "nein" in the German language version. LimeSurvey has more than 50 different languages of built-in messages already translated. To see the translation status for these languages please select your LimeSurvey version from the link:
+
+<!--T:6-->
+[https://translate.limesurvey.org/projects/ LimeSurvey - Translations Status]
+
+<!--T:7-->
+You can create/update your own translation locally by using these instructions: 
+
+<!--T:8-->
+[[How to translate LimeSurvey]]
+
+<!--T:9-->
+If you want to update an existing translation, please consider contributing it for future releases (Read: [https://www.limesurvey.org/en/community-services/contribute/translations-status Translations status]). If you only update your version, remember to take care of this when you upgrade later.
+
+<!--T:10-->
+<div class="simplebox">'''Note:''' The template files are not currently localized and thus are language independent. Try to avoid putting text directly into the template files. Instead, put the text in other objects (e.g. questions and/or question groups) that are localized.</div>
+
+<!--T:11-->
+So far, we only discussed translating the built-in text of the administration interface that the survey participants and developers see; the part that is independent of any survey. Each survey can have one or more languages associated with it. The language of the survey can be independent of the one used in the interface. So care must be taken to offer the appropriate translations there as well.
+
+=== Languages for surveys themselves=== <!--T:12-->
+
+<!--T:13-->
+If more than one language is defined for a survey, when editing that survey (or each question, answer or label set within it), you need to make sure to add all the language translations desired. Otherwise, the default language of the survey will appear if no translation is available. This is available when editing a survey, group, question, answer set or label set.
+
+<!--T:14-->
+<div class="simplebox">'''Note:''' If you do not have the permission to edit label sets, you will not be able to provide the translation of that label set either. Talk to your survey administrator about either giving you the permission to edit the label set or providing the label set translation in your desired language.</div>
+</translate>

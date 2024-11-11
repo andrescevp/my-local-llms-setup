@@ -1,0 +1,82 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type allows you to present your survey participants a list of possible answers/options, which they may then rank according to their preferences.
+
+
+<center>[[File:ranking_example.jpg]]</center>
+
+
+'''Example:''' [[Media:Question_type_ranking.zip|Question type ranking.zip]].
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{Alert|Enabling the '''mandatory''' attribute in a ranking question type forces your respondents to assess all the answer options. If you wish to make your respondents rank a minimum and/or maximum number answer options, use the [[Question type - Ranking#Minimum answers (min_answers)|minimum answers]] and [[Question type - Ranking#Maximum answers (max_answers)|maximum answers]] question attributes to set the lower and upper limits.}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Question_theme}}
+
+{{QS:Hide_tip}}
+
+{{QS:Answer_order}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:showpopups}}
+
+{{QS:samechoiceheight}}
+
+{{QS:samelistheight}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:max_subquestions}}
+
+{{QS:array_filter}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:array_filter_style}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:Choice_header}}
+
+{{QS:Rank_header}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Mask questions]]

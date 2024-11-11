@@ -1,0 +1,1225 @@
+<languages /> 
+==Introduction==
+
+LimeSurvey has an advanced theme and style system providing to developers an efficient way to customize the survey appearance. Since LS3, the term '''"templates"''' has been replaces with the term '''"themes"'''. '''Themes''' allow control over the style of the pages of a survey. A survey administrator can select a default theme that will be used for each survey to further personalize it. '''Themes'''  comes with options that provide an admin without coding skill a simple way to add a logo on the welcome page, change the background colors, select a font, etc.
+
+
+LimeSurvey comes with 3 themes.  These initial themes are defined by directories located in the LimeSurvey installation "themes/survey/" directory. Each theme has its own directory. Within the main directory of a theme you will find a configuration file in XML, and numerous directories containing the views '''themes (.twig)''', '''cascading style sheets (.css)''', '''scripts''',  '''images''' ('''.jpg''' or '''.png'''), and maybe others. 
+
+
+Since LimeSurvey 2.50, the theme engine uses [http://getbootstrap.com/docs/3.3/ Bootstrap 3]  as CSS framework. Since Bootstrap 3 is a standard framework, developers will find a lot of documentation, tutorials and forum threads about it on the internet. 
+
+
+Since LimeSurvey 3, the theme engine uses [https://twig.symfony.com Twig], so the theme developers can change the logic of the survey rendering in a safe and easy way. Twig replace the old system of replacement keywords that was used in the previous versions. The logic that was used to generate the HTML of the keywords is now available inside the theme's views. 
+
+
+Snippet from Vanilla Theme:
+
+<syntaxhighlight lang="twig">
+<div class="{{ aSurveyInfo.class.answercontainer }} col-xs-12" {{ aSurveyInfo.attr.answercontainer }}>
+    {# NOTE: If you want to customize the question rendering, use a question theme #}
+    {{ aQuestion.answer | raw }}
+</div>
+</syntaxhighlight>
+
+Themes, being HTML and Twig code, tend to define the positioning and type of text to be displayed and similar structural features of the page. They often reference or include other files. Most of them reference a common cascading style sheets (CSS) file that defines the font style, color, size, background, and similar parameters common to all pages in the survey. Style sheets reference HTML '''class''' parameters that are associated with the various types of objects in the HTML code. This allows the style sheet to define how to display each of the many types of text or other objects that may appear in multiple places. There are unique classes for each question type in LimeSurvey and thus giving detailed control over the appearance of each. Image files, like logos or special progress-bar constructors, may be referenced as well in the Theme file. Finally, special keywords in curly braces are replaced with text defined in the survey for each language translation correspondent (for example, the 'Survey Title' or 'Question Text' for each language defined).
+
+If you create a new custom theme, please consider contributing it back to the LimeSurvey community and make it available to others. With your help, we can grow our repository of themes, surveys, and other add-ons to make LimeSurvey even better! 
+See our [https://www.limesurvey.org/index.php?option=com_sobipro&sid=55:Templates&Itemid=729 LimeSurvey template repository] where you can share your templates.
+
+==Creating a new theme==
+
+To be able to create a new theme (or edit an existing theme), you need [[Manage users#Set global permissions for a user|Template Editing user permission]] in LimeSurvey as well as permission to manipulate the files in the underlying operating system hosting your LimeSurvey installation.
+
+<div class="simplebox"><span style='color:red'>'''Note of Warning:'''</span>  If you change themes, you could also affect all the pre-existing surveys from your LimeSurvey installation. Themes are an advanced feature that require experience and HTML knowledge.</div>
+
+The preferred way to create a new theme is through the '''Theme Editor''' (see below), which is located under '''Configuration''' on the top toolbar. Some users prefer to work directly with theme files so that they can use their favorite text editor instead of the web interface. In this case, still use the Theme Editor to first create your new theme. This will create a new base theme with all the files you need in the ''LimeSurvey_web_root/upload/themes/survey/your_new_template'' directory. From there you can use your text editor to manually adjust the template files.
+
+<div class="simplebox">'''Permissions Note:''' on unix/linux systems, these theme files will be owned by the group and user where the web server is running (may be "www" for some systems). So, make sure you have the proper permisisons to edit these files, When you save them, make sure they don't change ownership! This way, you can still use the web Theme Editing interface if needed.</div><br />
+
+A number of 'public' elements of LimeSurvey can be adjusted by a series of themes. The next section provides a very brief explanation of these templates.
+
+{{Note|Themes files are a complex feature.  Besides HTML, you should also be familiar with CSS, Twig, and JavaScript.}}
+
+=The LimeSurvey theme editor=
+
+'''Theme Editor''': '''Configuration''' > '''Themes'''> '''Theme Editor'''
+The Theme Editor is only available to users [[Manage users#Set global permissions for a user|with the Templates permission]] and to superadministrators. 
+
+
+{{Alert|title=Attention|text=A theme that is not correctly constructed can cause a survey (that uses the respective template) to become inoperable. }}
+
+
+The LimeSurvey theme editor allows you to edit the contents of your themes online. To start the Theme Editor: click '''Themes''' in the '''Configuration''' menu, and then click the '''Theme editor'''  button next of the theme you want to edit or extend. 
+
+
+[[File:Themes menu.png]]
+[[File:Theme editor button.png|''The button to access the theme editor for Bootswatch theme'']]
+
+
+The template editor page allows you to select the template you would like to edit/view. 
+
+
+[[File:Template-editor-2013-7-10_11_38_16.png|center]]
+
+
+The following options are available:
+
+
+*'''Create''': Allows you to create a new template. In order not to start from scratch, the template 'default' is copied.
+*'''Import''': Allows you to import a template from a ZIP file.
+*'''Export''': Allows you to export the current template to a ZIP file.
+*'''Copy''': Allows you to make a new template by copying the current one.
+*'''Rename''': Allows you to change the name of the template. It is generally used after copying or importing a template.
+*'''Template''': A drop-down list that shows all the available templates that are located in your LimeSurvey installation.
+
+*'''Screen''': A drop-down list which allows you to choose which particular survey page of that template you want to view.
+*'''Return to admin panel'''.
+
+===Import/Export/Copy a template===
+
+When you '''export '''a template, a ZIP-file archive with all template files your will be created (.pstpl files, images, css files, ...). You can '''import''' the exported zip-file into another LimeSurvey installation by using the import feature or you can manually copy the archive into another LimeSurvey installation and extract it into the corresponding [[Theme editor#Template files location|template directory there]]. 
+
+However, it is best to use the LimeSurvey template import/export/copy functions in the template editor.
+
+===Page structure / Template use===
+*'''The Welcome Page:''' startpage.pstpl, welcome.pstpl, privacy.pstpl,  navigator.pstpl, endpage.pstpl
+*'''The Questions Pages:''' startpage.pstpl, survey.pstpl, startgroup.pstpl, groupdescription.pstpl, question.pstpl, endgroup.pstpl, endpage.pstpl
+*'''The Final Page:''' startpage.pstpl, assessment.pstpl, completed.pstpl, endpage.pstpl
+
+===Template files===
+
+The following template files are used to produce your public survey and must exist in any new template folder you create:
+*'''startpage.pstpl:''' Produces the start of each html page. It starts at the "<head>" tag, and should not contain the "<html>" tag. This 'very beginning' of a standard html page is written by the scripts. Please ensure that your startpage.pstpl files contains a <body> tag. Even though many browsers do not require strict adherence to the W3 HTML standards, the LimeSurvey script needs to find a <body> tag to run certain javascript elements. It is not common to see many 'keywords' used in the startpage.pstpl file. However, you may wish to put the {SURVEYNAME} into the title. The startpage.pstpl file can contain code that ends in the corresponding endpage.pstpl file. For example, you can start a table in this file and close the table in the endpage.pstpl file. The startpage.pstpl and endpage.pstpl files wrap around every possible page used by LimeSurvey.
+*'''survey.pstpl:''' This template is the second used on most pages and provides a space to put the survey name and description. This template does not have a corresponding 'closing' template, and subsequently you should close all tags opened in this template file (i.e.: don't leave a table open here because there is nowhere else to close it).
+*'''welcome.pstpl:''' This template is only used in the welcome screen (which is also on the main page for 'all in one' surveys). You can use this to print out the welcome text, and other information that should be provided in the introduction. Like the 'survey.pstpl' file, there is no corresponding 'closing' template, so all tags opened in this template file should be closed as well.
+*'''startgroup.pstpl:''' This template can provide a 'summary' wrap around for questions within a group. It has a matching 'endgroup.pstpl' template that can be used to close any opened tags in this file, so you can open a table within this.
+*'''groupdescription.pstpl:''' This template file is used to display a description of a group. Please note that in the survey settings (access the ''Presentation & navigation settings'' by clicking the '''Presentation''' tab) you can set if the group description should be shown or not. If not, then this file is not included at all.
+*'''question.pstpl:''' This file contains the question, answer, and help text sections of your survey. In the "group by group" and "all in one" surveys, this template is cycled repeatedly with each question. There is no corresponding closing file for this and all tags should be closed.
+*'''question_start.pstpl:''' This file contains the individual elements found at the start of a question. It is included within 'question.pstpl' via the {QUESTION} keyword. It is intended to allow template designers more control over the layout of a question. This template sits outside the normal templating system and '''was superseeded (as of LimeSurvey 1.87)'''. All keywords from this template are now available directly in question.pstpl. 
+*'''completed.pstpl:''' This page is displayed as the final page when the survey responses have been saved and the survey is over. It can be used to display a "forwarding link" as set in the survey setup.
+*'''endgroup.pstpl:''' This file closes the group, and can be used to close off any tags opened in the startgroup.pstpl file
+*'''navigator.pstpl:''' This file contains the buttons that navigate through the survey, "next", "prev", "last", "submit", "save so far"  and the "clear all" link. It is used in all pages except the completed page.
+*'''printanswers.pstpl:''' This file has the HTML wrapper necessary for the print version of the survey.
+*'''print_group.pstpl:''' This file is the same as startgroup.pstpl and endgroup.pstpl, but for the print version of the survey.
+*'''print_question.pstpl:''' This file is the same as question.pstpl, but for the print version of the survey.
+*'''print_survey.pstpl:''' This file is the same as survey.pstpl, but for the print version of the survey.
+
+=== CSS and Javascript===
+
+Two files that are always used in a template are template.css (for CSS) and template.js (for Javascript).
+*'''{TEMPLATECSS}:''' Add lines for default css, template.css, and template-rtl.css for rtl language.
+*'''{TEMPLATEJS}:''' Add lines for default javascript files, template.js, and all js files needed for LimeSurvey.
+
+=== Using Bootstrap===
+LimeSurvey has Bootstrap 3 embedded, so you can style all your templates with the well documented Bootstrap classes.
+For more information please refer to the [https://getbootstrap.com Bootstrap documentation].
+
+The [https://github.com/flatlogic/awesome-bootstrap-checkbox Awesome-Bootstrap-Checkbox] plugin is also included. With it, you can use the typical Bootstrap color-classes (info,warning,danger,etc.) also with the suffix "-checkbox" or "-radio", though styling checkboxes and radios as you prefer.
+
+==== Replacing default CSS or Javascript====
+
+Some questions use specific files for Javascript or CSS. If you need to replace a function, use a cascading system. For javascript function, the last function read is the function used.
+
+===Other template files===
+
+The '''privacy.pstpl''', '''invitationemail.pstpl''', '''reminderemail.pstpl''', and '''confirmationemail.pstpl''' are no longer used by LimeSurvey and defaults are instead set in the applicable language files. The email messages can now be edited on a survey by survey basis.
+
+===Standard pages===
+
+There are ten standard pages that a survey participant may see in the course of taking or accessing the LimeSurvey application.  Each is constructed from a number of common '''Template''' files from the '''Template''' specified in the settings of the survey. The table below indicates which template files are used in constructing each of these pages.
+
+{| class="wikitable"
+!  '''Survey Pages/'''<br />'''Template Files'''!!Survey<br />List!!Welcome!!Question!!Completed!!Clear All!!Register!!Load!!Save!!Print<br />Answers!!Print<br />Survey
+|-
+|SurveyList||align="center" | [[File:check.gif]]|| || || || || || || || ||
+|-
+|Welcome|| ||align="center" | [[File:check.gif]]|| || || || || || || ||
+|-
+|Privacy|| ||align="center" | [[File:check.gif]]|| || || || || || || ||
+|-
+|Navigator|| ||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]|| || || || || || ||
+|-
+|Survey|| || ||align="center" | [[File:check.gif]]|| || ||align="center" | [[File:check.gif]]|| || || ||
+|-
+|StartGroup|| || ||align="center" | [[File:check.gif]]|| || || || || || ||
+|-
+|GroupDescription|| || ||align="center" | [[File:check.gif]]|| || || || || || ||
+|-
+|Question<span style='color:red'>'''*'''</span>|| || ||align="center" | [[File:check.gif]]|| || || || || || ||
+|-
+|EndGroup|| || ||align="center" | [[File:check.gif]]|| || || || || || ||
+|-
+|Assessment|| || || ||align="center" | [[File:check.gif]]|| || || || || ||
+|-
+|Completed|| || || ||align="center" | [[File:check.gif]]|| || || || || ||
+|-
+|ClearAll|| || || || ||align="center" | [[File:check.gif]]|| || || || ||
+|-
+|Register|| || || || || ||align="center" | [[File:check.gif]]|| || || ||
+|-
+|Load|| || || || || || ||align="center" | [[File:check.gif]]|| || ||
+|-
+|Save|| || || || || || || ||align="center" | [[File:check.gif]]|| ||
+|-
+|PrintAnswers|| || || || || || || || ||align="center" | [[File:check.gif]]||
+|-
+|Print Survey || || || || || || || || || ||align="center" | [[File:check.gif]]
+|-
+|Print Group || || || || || || || || || ||align="center" | [[File:check.gif]]
+|-
+|Print Question || || || || || || || || || ||align="center" | [[File:check.gif]]
+|-
+|StartPage<br />EndPage<br />Template.css||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]||align="center" | [[File:check.gif]]|| 
+|}
+
+<span style='color:red'>'''*'''</span>NOTE: In version 1.90+, this replaces question.pstpl AND question_start.pstpl. If you are using an old custom template, you need to add the following line to the beginning of question.pstpl:<syntaxhighlight lang="php"><div {QUESTION_ESSENTIALS} class="{QUESTION_CLASS}{QUESTION_MAN_CLASS}{QUESTION_INPUT_ERROR_CLASS}"></syntaxhighlight>And then add the corresponding closing tag to the end of question.pstpl:<syntaxhighlight lang="php"></div></syntaxhighlight>
+
+<span style='color:red'>'''*'''</span>NOTE: In version 1.91 and earlier, LimeSurvey js files are not included in the template. In version 2, '''you have to use {TEMPLATEJS} in one of your template file''' to add the link to the js file. You can add it in startpage.pstpl or in endpage.pstpl. You can remove the {TEMPLATEURL}/template.js line and you have to replace with {TEMPLATEJS} to update a personal template.
+
+===The file control section===
+
+In the "file control" window on the left, you can click one of the template files that is used to compile the page. You can see the ''Screen part'', JavaScript, and CSS files. The HTML code for that file will then appear in the "Now editing" window in the center. If the template is editable (determined by directory permissions) you can then make any changes and save them.
+
+<center>[[File:File Control Section.png|center]]</center>
+
+
+The "Other files" window shows a list of all other files from the template directory. You can use the right side to '''upload and select image files (your pics, logos,...) or other files needed to create your template'''. 
+
+
+Instead of using a link for each picture, utilize the field string {TEMPLATEURL}. So, instead of:
+
+<syntaxhighlight lang="html4strict">img src='/limesurvey/templates/yourtemplate/files/mypicture.jpg'</syntaxhighlight> 
+You can use {{NewIn|2.50}}:
+<syntaxhighlight lang="html4strict">img src='{TEMPLATEURL}files/mypicture.jpg'</syntaxhighlight>
+
+In LimeSurvey versions before 2.50 use:
+<syntaxhighlight lang="html4strict">img src='{TEMPLATEURL}mypicture.jpg'</syntaxhighlight>
+
+A "sample" of the template page you are editing will be visible in the bottom of the screen. There is no way to delete a template from the template editor. This must be done by accessing the underlying directory and deleting manually the files from there. You also have the possibility to select different screen resolutions in order to better evaluate the feel and look of the template.
+
+<div class="simplebox">'''Note:''' The shipped templates cannot be edited using the template editor. If you want to modify them, create a copy first and edit the copy.</div>
+
+===Template files location===
+
+LimeSurvey stores each of the 'standard' templates in their own distinct sub-directory within the ''/templates'' directory that is kept in the public directory with the other LimeSurvey public files. Customized user templates are stored in the ''/upload/templates'' directory.
+
+There should '''ALWAYS''' be a "default" directory in the templates directory. This template is used by default and as a fall-back if a template folder doesn't exist, or can't be found. It comes installed by default.
+
+You can use any image files that you upload into the template management area with the help of this syntax:
+
+<syntaxhighlight lang="php">{TEMPLATEURL}filename.xyz</syntaxhighlight>
+
+==Styling questions with CSS==
+
+Styling of questions in CSS has become much easier. Each question type has now a unique class. The mandatory questions have an additional mandatory class. For example, for a non-mandatory question:
+
+<syntaxhighlight lang="html4strict"><div id="question5" class="gender">
+...
+</div></syntaxhighlight>
+
+and if the question is mandatory:
+
+<syntaxhighlight lang="html4strict"><div id="question5" class="gender mandatory">
+...
+</div></syntaxhighlight>
+
+and if the question is mandatory, but the user didn't answer it or if there is validation on a question:
+
+<syntaxhighlight lang="html4strict"><div id="question5" class="gender mandatory input-error">
+...
+</div></syntaxhighlight>
+
+and if the question has validation applied, but the user hasn't answered correctly:
+
+<syntaxhighlight lang="html4strict"><div id="question6" class="text-short input-error">
+...
+</div></syntaxhighlight>
+
+==Global classes for question part==
+
+These classes are used for each question type. Some question types use only one or two classes, while others may use much more.
+
+{| class="wikitable alternance"
+|+ Global classes
+|-
+! scope="col" | Class name
+! scope="col" | Part
+! scope="col" | Question type
+! scope="col" | Examples
+! scope="col" | Note
+|-
+! scope="row" | .question {{ObsoleteIn|3.0}}
+| All question block
+| All question type
+|&lt;p class="question">, &lt;ul class="question">, &lt;table class="question">
+| 
+|-
+! scope="row" | .ls-answers {{NewIn|3.0}}
+| All question block
+| All question type
+|&lt;div class="ls-answers ">, &lt;ul class="ls-answers ">, &lt;table class="ls-answers">
+| 
+|-
+! scope="row" | .subquestions-list
+| List of subquestion
+| Multi choice question, array question type
+| &lt;ul class="subquestions-list">, &lt;table class="subquestions-list">
+| .questions-list is used too
+|-
+! scope="row" | .answers-list
+| List of answers
+| Single choice question, array question type, Multi input text question
+| &lt;ul class="answers-list">, &lt;table class="answers-list">
+| 
+|-
+! scope="row" | .answer-item
+| The answer part: one answer
+| Single choice question, array question type, Multi input text question
+| &lt;li class="answer-item">, &lt;td class="answer-item">
+|
+|-
+! scope="row" | .noanswer-item
+| The answer part for no answer
+| Single choice question, array question type
+| &lt;li class="noanswer-item">, &lt;td class="noanswer-item">
+| No answer is an answer too, then have double class noanswer-item and answer-item
+|-
+! scope="row" | .question-item
+| The question part: one question
+| Multi text question, array question type
+| &lt;li class="question-item">, &lt;tr class="question-item">
+| Some answers are questions too. Then we have a lot of class="question-item answer-item"
+|-
+! scope="row" | .button-list
+| A list of button
+| Yes no and Gender question
+| &lt;ul class="button-list">
+| 
+|-
+! scope="row" | .button-item
+| The answer part with a button
+| Yes no and Gender question
+| &lt;li class="button-item">
+|
+|-
+! scope="row" | .checkbox-list
+| A list of checkbox
+| Multi choice question, array number (checkbox) question type
+| &lt;ul class="checkbox-list">, &lt;tr class="checkbox-list">
+| Some question types use multi-list class, like checkbox with comment: class="checkbox-list text-list"
+|-
+! scope="row" | .checkbox-array  {{NewIn|3.0}}
+| A array of checkbox
+| Array (numbers) with checkbox option
+| &lt;table class="checkbox-list">
+| 
+|-
+! scope="row" | .checkbox-item
+| The answer part with a checkbox
+| Multi choice question, array number (checkbox) question type
+| &lt;li class="checkbox-item">, &lt;td class="checkbox-item">
+|
+|-
+! scope="row" | .radio-list
+| A list of radio item
+| Single choice question, array question type (each row)
+| &lt;ul class="radio-list">, &lt;tr class="radio-list">
+|
+|-
+! scope="row" | .radio-array {{NewIn|3.0}}
+| A array of radio item
+| Array question type
+| &lt;table class="radio-array">
+|
+|-
+! scope="row" | .radio-item
+| The answer part with a radio
+| Single choice question, array question type
+| &lt;li class="radio-item">, <td class="radio-item">
+|
+|-
+! scope="row" | .text-list
+| A list of text input
+| Multi text question type, array of text
+| &lt;ul class="text-list">, &lt;tr class="text-list">
+|
+|-
+! scope="row" | .text-item
+| The answer part of a text input
+| Multi text question type, array of text
+| &lt;li class="text-item">, <td class="text-item">
+|
+|-
+! scope="row" | .numeric-list
+| A list of text input with numeric only answer
+| Multi numeric question type, array of number
+| &lt;ul class="text-list numeric-list">, &lt;tr class="text-list numeric-list">
+|
+|-
+! scope="row" | .number-list
+| A list of text input with numeric only answer (each row)
+| Multi numeric question type, array of number
+| &lt;ul class="text-list numeric-list">, &lt;tr class="text-list numeric-list">
+|
+|-
+! scope="row" | .number-array  {{NewIn|3.0}}
+| The answer part of a numeric input
+| Array of number
+| &lt;table class="number-array">
+|
+|-
+! scope="row" | .select-list  {{ObsoleteIn|2.50}}
+| A list of select
+| Array numbers, Dual scale array (select)
+| &lt;table class="select-list">
+|
+|-
+! scope="row" | .dropdown-list  {{NewIn|2.50}}
+| A list of select
+| Array numbers, Dual scale array (select) (each row)
+| &lt;table class="dropdown-list">
+|
+|-
+! scope="row" | .dropdown-array  {{NewIn|3.0}}
+| A array of dropdown
+| Array numbers, Dual scale array (select)
+| &lt;table class="dropdown-array">
+|
+|-
+! scope="row" | .select-item  {{ObsoleteIn|2.50}}
+| The answer part of a select
+| Array numbers, Dual scale array (select), single choice with select
+| &lt;p class="select-item">, &lt;td class="select-item">
+|
+|-
+! scope="row" | .dropdown-item  {{NewIn|2.50}}
+| The answer part of a select
+| Array numbers, Dual scale array (select), single choice with select
+| &lt;p class="dropdown-item">, &lt;td class="dropdown-item">
+|
+|-
+! scope="row" | .hide  {{ObsoleteIn|3.0}}
+| Used for accessibility: hidden with css but read by screenreader, since 2.50 : you can use sr-only from bootstrap
+| Short text question
+| &lt;label class="hide">
+| Can be used for other purposes
+|-
+! scope="row" | .ls-js-hidden {{NewIn|3.0}}
+| Used for part to be hidden if javascript is activated
+| Button for example
+| &lt;div class="ls-js-hidden">
+| LimeSurvey core used it, but you can use it too in your template
+|-
+! scope="row" | .ls-js-hidden-sr {{NewIn|3.0}}
+| Used for accessibility: hide it if js is activated, but always show if user use a screenreader
+| Button for example
+| &lt;a class="ls-js-hidden-sr">
+| Button
+|-
+! scope="row" | .ls-no-js-hidden {{NewIn|3.0}}
+| Used for part to be hidden if javascript is not activated
+| Link
+| &lt;a class="ls-no-js-hidden">
+| LimeSurvey core used it for inactive link if javascript is not activated
+|-
+! scope="row" | .ls-label-xs-visibility {{NewIn|3.0}}
+|  Label to be hidden in big screen, but show with little screen (with no more table) and to screenreader
+| label
+| &lt;label class="ls-no-js-hidden">
+| Used for label inside table cell of array question type
+|-
+! scope="row" | .ls-input-group-extra {{NewIn|3.0}}
+| Same usage of boostrap input-group-addon, but without the border and the background.
+| right suffix
+| &lt;div class="ls-input-group-extra">
+| Used for right and left suffix (global)
+|-
+! scope="row" | .checkbox {{ObsoleteIn|3.0}}
+| input[type=checkbox]
+| Question with checkbox
+| &lt;input type="checkbox" class="checkbox">
+| With modern browser: not needed, but some old browser need this
+|-
+! scope="row" | .radio {{ObsoleteIn|3.0}}
+| input[type=radio]
+| Question with radio
+| &lt;input type="radio" class="radio">
+| With modern browser: not needed, but some old browser need this
+|-
+! scope="row" | .text
+| input[type=text]
+| Question with input text, or textarea
+| &lt;textarea class="text">
+|
+|-
+! scope="row" | .answertext
+| Array question type
+| Answer part of array question type
+| &lt;th class="answertext">
+|
+|-
+! scope="row" | .col-answers
+| Array question type
+| Column of answers
+| &lt;col class="col-answers">
+|
+|-
+! scope="row" | .odd .even {{ObsoleteIn|2.50}}
+| Array question type
+| Alternation for column
+| &lt;col class="odd">
+|
+|-
+! scope="row" | .array1 .array2  {{ObsoleteIn|3.0}}
+| Array question type
+| Alternation for line
+| &lt;tr class="array1">
+|
+|-
+! scope="row" | .ls-odd .ls-even  {{NewIn|3.0}}
+| Array question type
+| Alternation for subquestion and Y axis
+| &lt;tr class="ls-odd">
+|
+|}
+
+==== Some examples of question part with classes====
+
+'''Text-short question type:'''<source lang="html4strict">
+<p class="question answer-item text-item ">
+<label class="hide label" for="answerSGQA">Answer</label><input type="text" value="" id="answerSGQA" name="SGQA" size="50" class="text  empty">
+</p>
+</source>
+'''Multiple short text'''<source lang="html4strict">
+<ul class="subquestions-list questions-list text-list">
+  <li class="question-item answer-item text-item" id="javatbdSGQA">
+    <label for="answerSGQA">Some example subquestion</label>
+     <span><input type="text" value="" id="answerSGQA" name="SGQA" size="20" class="text empty"></span>
+  </li>
+</ul>
+</source>
+'''Array question type'''<source lang="html4strict">
+<table class="question subquestion-list questions-list ">
+	<caption class="hide read">Some explanation for accessibility.</caption>
+	<colgroup class="col-responses">
+		<col width="50%" class="col-answers">
+		<col width="25%" class="odd">
+		<col width="13.3%" class="col-no-answer even">
+	</colgroup>
+	<thead>
+		<tr class="array1 dontread">
+			<td>&nbsp;</td>
+			<th>1</th>
+			<th>No answer</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="array2 answers-list radio-list" id="javatbdSGQ">
+			<th width="20%" class="answertext">Some example subquestion
+			</th>
+			<td class="answer_cell_001 answer-item radio-item">
+				<label for="answerSGQA" class="hide read">1</label>
+				<input type="radio" value="1" id="answerSGQA" name="SGQA" class="radio">
+			</td>
+			<td class="answer-item radio-item noanswer-item">
+				<label for="answerSGQA" class="hide read">No answer</label>
+				<input type="radio" value="" id="answerSGQA" name="SGQA" class="radio">
+			</td>
+		</tr>
+	</tbody>
+</table>
+</source>
+===The full list of question classes===
+
+{|
+|'''Question Type'''||'''Question Class'''||'''Question ID'''
+|-
+|5 point choice||.choice-5-pt-radio||5
+|-
+|Array (10 point choice)||.array-10-pt||B
+|-
+|Array (5 point choice)||.array-5-pt||A
+|-
+|Array (Flexible Labels) dual scale||.array-flexible-duel-scale ||1
+|-
+|Array (Increase, Same, Decrease)||.array-increase-same-decrease||E
+|-
+|Array (Multi Flexible) (Numbers)||.array-multi-flexi ||:
+|-
+|Array (Multi Flexible) (Text)||.array-multi-flexi-text||;
+|-
+|Array (Yes/No/Uncertain)||.array-yes-uncertain-no||C
+|-
+|Array (flexible labels)||.array-flexible-row ||F
+|-
+|Array (flexible labels) by column||.array-flexible-column||H
+|-
+|Boilerplate question||.boilerplate||X
+|-
+|Date||.date||D
+|-
+|Equation||.equation||*
+|-
+|Gender||.gender||G
+|-
+|Huge free text||.text-huge||U
+|-
+|Language switch||.language||I
+|-
+|List (dropdown)||.list-dropdown||!
+|-
+|List (radio)||.list-radio||L
+|-
+|List with comment||.list-with-comment||O
+|-
+|Long free text||.text-long||T
+|-
+|Multiple numerical input||.numeric-multi||K
+|-
+|Multiple options||.multiple-opt||M
+|-
+|Multiple options with comments||.multiple-opt-comments||P
+|-
+|Multiple short text||.multiple-short-txt||Q
+|-
+|Numerical input||.numeric||N
+|-
+|Ranking||.ranking||R
+|-
+|Short free text||.text-short||S
+|-
+|Yes/No||.yes-no||Y
+|-
+|
+|}
+
+===The full list of validation classes===
+
+<div class="simplebox">Note:  Prior to 1.92, only .mandatory and .input-error classes were available.</div>
+
+These apply to the help and/or validation tip messages so that each type can be individually styled.
+
+The .hide-tip option and .input-error options interact by default so that you can have validation tips hidden. However, they do appear when there are validation errors and disappear again when those errors are rectified.
+
+All of these are designed to eliminate the need for pop-up alert messages. Instead, tips can appear/disappear as needed and are color-coded to indicate whether the answers pass the validation criteria.
+
+Furthermore, when you first visit a page that has unmet validation criteria, you can color-code the tips in a pleasing color to show which validation criteria have not been met yet; then re-display the page using a harsher color if the person submits the page with lingering validation errors.
+
+{|
+|'''Purpose'''||'''CSS Class'''||'''Description'''
+|-
+|Mandatory||.mandatory||the question is mandatory
+|-
+|User input error||.input-error||the question had at least one validation error
+|-
+|Hide Tip||.hide-tip||added if you use the hide_tip option
+|-
+|defrault type||.em_default||for default tip set ( numeric value etc …)
+|-
+|Num answers||.em_num_answers||for for min_answers and max_answers
+|-
+|Value range||.em_value_range||for min/max_num_value_n and multiflexible_min/max
+|-
+|Sum range||.em_sum_range||for min/max/equals_num_value
+|-
+|Regex validation||.em_regex_validation||for regular-expression validation of the question
+|-
+|Question-level validation function||.em_q_fn_validation||for the em_validation_q option
+|-
+|Subquestion-level validation function||.em_sq_fn_validation||for the em_validation_sq option
+|-
+|Other comment mandatory||.em_other_comment_mandatory||for other_comment_mandatory option - shows when "other" is selected but associated comment is missing.
+|-
+|
+|}
+
+===Importing styles into your custom template===
+
+The custom question styles are near the bottom of each template's CSS file and start with:<syntaxhighlight lang="php">/* --------------------------- START: Question styles  ------------------------------ */</syntaxhighlight>
+
+If you're styling your own custom template, you should be able to copy everything after the above one from ''templates/default/template.css'' (for table-based layouts) or ''/templates/limespired/template.css'' (for CSS-based layouts) into your own style sheet without any impact on your other styles.
+
+===Internet Explorer Conditional Style Sheets===
+
+Because of the marked discrepancies in rendering between IE6 & IE7 and the other browsers, there are special IE conditional style sheets included for each template.
+
+<source lang="html4strict">
+<!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}IE_fix_all-versions.css" />
+<![endif]-->
+<!--[if lt IE 7]>
+  <link rel="stylesheet" type="text/css" href="{TEMPLATEURL}IE_fix_older-than-7.css" />
+<![endif]-->
+<!--[if IE 8]>
+		<link rel="stylesheet" type="text/css" href="{TEMPLATEURL}ie_fix_8.css" />
+<![endif]-->
+</source>
+
+You should include the above code within your '''startpage.pstpl''' and copies of both the IE style sheets from either ''/templates/default/'' or ''/templates/limespired'' for Tables base layout and CSS based layout respectively.
+
+<div class="simplebox">'''Note:''' If you copy the styles into your own style sheet you will almost certainly need to tweak them.</div>
+
+====Alternative solution for internet explorer====
+
+You can put a conditional class for body in startpage.pstpl and use this class in your template.css. This method is used in the citronade template{{ObsoleteIn|2.06}}. Adding a js / no-js class to have javascript / no javascript system.
+
+<source lang="html4strict"><!--[if lt IE 7 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie6 ielt7 ielt8 ielt9 no-js"> <![endif]-->
+<!--[if IE 7 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie7 ielt8 ielt9 no-js"> <![endif]-->
+<!--[if IE 8 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie8 ielt9  no-js"> <![endif]-->
+<!--[if IE 9 ]> <body class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} ie ie9 no-js"> <![endif]-->
+<!--[if gt IE 9]><!--><body id="body" class="lang-{SURVEYLANGUAGE} {SURVEYFORMAT} no-js"><!--<![endif]-->
+<script type='text/javascript'>/*<![CDATA[*/(function(H){ H.className=H.className.replace(/\bno-js\b/,'js') })(document.getElementsByTagName('body')[0]);/*]]>*/</script></source>
+
+And in template.css use:
+
+<source lang="css">.ie6{/*specific for internet explorer 6*/}
+.ielt8{/*specific for internet explorer 6 and 7*/}
+.ie{/*specific for all internet explorer */}</source>
+
+=== Right-to-Left (RTL) languages and justify===
+
+The text editor within LimeSurvey is able to format RTL text. However, the editor itself shows the RTL language in a left to right format when justified. This is just an editor display issue. The RTL and justified question or text will display correctly from right to left, even when justified, in your survey or on preview.
+
+===Keywords===
+
+{{Deprecated|3.0}} 
+
+Keywords within a template file get replaced by the current survey information. They are surrounded by curly brackets, for example: {SURVEYNAME}.
+
+The following strings will be replaced by LimeSurvey when parsing the template file and presenting it to survey users. These field strings will work on almost every template except for the 'Completed Page'. (Most of these strings can be found in the common.php file. If it's not there, look in the index.php file.)
+
+{|class=wikitable
+!'''Keyword'''!!'''Template files'''!!'''Description'''
+|-
+|{SURVEYNAME}||All Files||The survey title
+|-
+|{SURVEYDESCRIPTION}||All Files||The survey description
+|-
+|{WELCOME}||All files (mainly for welcome.pstpl)||The survey 'welcome' text
+|-
+|{PERCENTCOMPLETE}||survey.pstpl||A small graph showing the percentage of the survey completed
+|-
+|{GROUPNAME}||startgroup.pstpl, groupdescription.pstpl, endgroup.pstpl||Displays the current group name
+|-
+|{GROUPDESCRIPTION}||startgroup.pstpl, groupdescription.pstpl, endgroup.pstpl||Displays the current group description
+|-
+|{NUMBEROFQUESTIONS}||welcome.pstpl||Displays the total number of questions in the survey (just the number)
+|-
+|{THEREAREXQUESTIONS}||welcome.pstpl||Displays the sentence "There are X questions in this survey" - from the relevant language file. The X is replaced with the number of questions. Note that this will also work appropriately for singular or plural. If there is only 1 question, it will print "There is 1 question in this survey".
+|-
+|{CHECKJAVASCRIPT}||All files (mainly for welcome.pstpl)||Warning message when end-user browser have javascript disabled
+|-
+|{QUESTION}||Question.pstpl||('''Has been superseeded as of LS1.87''') Displays the current question text (The format of {QUESTION} can customised by editing 'question_start.pstpl') Use the following: {QUESTION_TEXT}, {QUESTION_MANDATORY}, {QUESTION_HELP}, {QUESTION_MAN_MESSAGE}, {QUESTION_VALID_MESSAGE}, {QUESTION_INPUT_ERROR_CLASS}, and appropriate wrapping HTML instead of {QUESTION}
+|-
+|{ANSWER}||question.pstpl, print_question.pstpl||presents the answer form for the current question
+|-
+|{SGQ}||question.pstpl, question text||Can be used in the question text itself to reference the input field of the question dynamically by displaying the Survey-Group-Question id for the current question. (as of svn build 9755)
+|-
+|{QUESTIONHELP}||question.pstpl, print_question.pstpl||Displays help text (predefined tip for question type) for the current question
+|-
+|{QUESTION_CLASS}||question.pstpl, print_question.pstpl||unique class for each question type. (To be included in the question's wrapping tag.)
+|-
+|{QUESTION_CODE}||question.pstpl, print_question.pstpl||Displays the current question code
+|-
+|{QUESTION_ESSENTIALS}||question.pstpl||the question ID and (if a question is conditional), 'style="display:none;"'. (To be included in the question's wrapping tag.)
+|-
+|{QUESTION_HELP}||question.pstp, question_start.pstpl||Displays the user defined help text for the current question
+|-
+|{QUESTION_TYPE_HELP}||print_question.pstp||Displays the user defined help text for the current question
+|-
+|{QUESTION_INPUT_ERROR_CLASS}||question.pstp, question_start.pstpl||Provides a class if there was user input error
+|-
+|{QUESTION_ID}||print_question.pstp||Provides a unique ID for each question to allow styling for specific questions
+|-
+|{QUESTION_TEXT}||question.pstp, print_question.pstp, question_start.pstpl||Displays the text for the current question
+|-
+|{QUESTION_MANDATORY}||question.pstp, print_question.pstp, question_start.pstpl||Displays the translated 'Mandatory' text for the current question
+|-
+|{QUESTION_MAN_CLASS}||question.pstpl, print_question.pstpl||class if a question is mandatory. (To be included in the question's wrapping tag.)
+|-
+|{QUESTION_MAN_MESSAGE}||question.pstp, print_question.pstp, question_start.pstpl||Displays the translated 'Mandatory' help message text for the current question
+|-
+|{QUESTION_NUMBER}||print_question.pstpl||Incremental count of questions.
+|-
+|{QUESTION_VALID_MESSAGE}||question.pstp, print_question.pstp, question_start.pstpl||Displays the translated valid help message text for the current question
+|-
+|{QUESTION_SCENARIO}||print_question.pstp||Prints out the 'scenario' text for conditional questions.
+|-
+|{NAVIGATOR}||navigator.pstpl||Displays navigation buttons (next, prev, last)
+|-
+|{CLEARALL}||All files (but intended for navigator.pstpl)||Displays the "Exit and Clear Results" link
+|-
+|{COMPLETED}||completed.pstpl||Displays the 'completed' message for registering, will change depending on whether the attribute_1 and attribute_2 fields are set.
+|-
+|{URL}||completed.pstpl||Displays the survey 'url' and 'url text'
+|-
+|{PRIVACYMESSAGE}||privacy.pstpl||The privacy message is shown if you set your survey to be anonymous. [[Translating LimeSurvey|The text can be edited/translated]] in the language files. This can also be changed manually by editing the privacy.pstpl template you wish to use.
+|-
+|{TEMPLATEURL}||All Files||The URL to the current template location (useful for referencing image files in your template)
+|-
+|{SURVEYRESOURCESURL}||All Files||The URL to the current uploaded files for this survey location (useful for referencing image files in your question, group, ....)
+|-
+|{SUBMITCOMPLETE}||endpage.pstpl||The statement (from the language files) that tells the user they have completed the survey, and to press the "Submit" button
+|-
+|{SUBMITREVIEW}||survey.pstpl||The statement (from the language files) that tells the user they can review/change the answers they have made by clicking "<< prev"
+|-
+|{SAVEDID}||All Files||Displays 'Response ID' of user
+|-
+|-
+|{QUEXMLPDF}||All Files||Displays button to export the queXML PDF of questionnaire including answers entered up until the point that has been completed in the survey.
+|-
+|{TOKEN:FIRSTNAME}||All Files||***If survey answers are NOT ANONYMOUS - gets replaced with the users first name from the tokens table
+|-
+|{TOKEN:LASTNAME}||All Files||***If survey answers are NOT ANONYMOUS - gets replaced with the users last name from the tokens table***
+|-
+|{TOKEN:EMAIL}||All Files||***If survey answers are NOT ANONYMOUS - gets replaced with the users email from the tokens table***
+|-
+|{TOKEN:ATTRIBUTE_1}||All Files||***If survey answers are NOT ANONYMOUS - gets replaced with the users attribute_1 from the tokens table***
+|-
+|{TOKEN:ATTRIBUTE_2}||All Files||***If survey answers are NOT ANONYMOUS - gets replaced with the users attribute_2 from the tokens table***
+|-
+|{ANSWERSCLEARED}||Preferably in navigator.pstpl||The "Answers Cleared" statement from the language files
+|-
+|{RESTART}||clearall.pstpl||URL to restart the survey
+|-
+|{REGISTERERROR}||register.pstpl||Shows any error messages in the register page (ie: "You must include an email address")
+|-
+|{REGISTERMESSAGE1}||register.pstpl||The statement "You must be registered to complete this survey" from the language files
+|-
+|{REGISTERMESSAGE2}||register.pstpl||Details about registering from the language files
+|-
+|{REGISTERFORM}||register.pstpl||The actual form for registering, will change depending on whether the attribute_1 and attribute_2 fields are set.
+|-
+|{SAVE}||Works suitable on navigator.pstpl||Displays the 'Save your responses so far' button to offer the user to save and come back later to continue the survey. If the Save option is deactivated in the survey properties the tag will not be shown and ignored.
+|-
+|{LANGUAGECHANGER}||survey.pstpl||Displays a switch in multilingual surveys to change the question.
+|}
+
+===Input/Buttons===
+
+Each "input" type in a survey has been given its own class name, so that you can add CSS to your "startpage.pstpl" file and have some control over the appearance of form buttons and inputs. These class names are as follows:
+*'''submit''' (Submit Buttons)
+*'''text''' (Text Inputs - for short free text, date, and numerical type)
+*'''answertext''' (Text of answers)
+*'''radio''' (Radio Buttons)
+*'''checkbox''' (Check Boxes)
+*'''select''' (Select / List Boxes)
+*'''textarea''' (Large text inputs - for long free text)
+*'''clearall''' (The "Exit and Clear Survey" link)
+*'''rank''' (The rank style question. Doesn't set the colour of the select box or the text boxes, but it does allow the changing of background colour, text colour, size etc., for the rest of the ranking question)
+*'''graph''' (The "percentage completed" graph table)
+*'''innergraph''' (The table inside the graph table - this contains the 0% and 100% text. Use this for changing the size of this text)
+*'''question''' (General settings for any question that is displayed within a table. Generally, you should use this to make sure that their font size and color is the same as you have used elsewhere as a default)
+*'''mandatory'''  (Mandatory questions)
+*'''input-error''' (User input error - for if a user has made a mistake with a mandatory question or question with validation)
+*'''array1''' and '''array2''' (These two styles are cycled when presenting the range of answers for an array type question. This allows you to set an alternating background color for these question types. '''Array1''' is also used for the column headings in these question types)
+*'''errormandatory''' (Sets the color and style of the "This question is mandatory" error message)
+*'''warningjs''' (Sets the color and style of the warning message displayed if the participant's browser has javascript disabled)
+
+There are also some elements that can be accessed using the ID of the element ('''#ID''' in CSS):
+*'''surveycontact''' (The contact message shown on the start page)
+*'''tokenmessage''' (used for messages inside the survey, e.g. the session expired error message)
+
+Because you can edit all the HTML aspects, there's no reason to surround your templates with a 
+<syntaxhighlight lang="php"><div class='new_name'></div></syntaxhighlight>
+and then define a css for that new_name class.
+
+==Styling the progress bar==
+
+The progress bar appearance can be modified with CSS.
+
+To change the background color of the bar, add something like the following to the end of your custom.css file (example for fruity theme):
+
+<syntaxhighlight lang="php">.fruity .progress-bar {
+ background-color: #3300FF;
+}</syntaxhighlight>
+
+To change the border color of the bar, add something like the following to the end of your custom.css file (example for fruity theme):
+
+<syntaxhighlight lang="php">.fruity .progress-bar {
+ border: 1px solid #FF0000;
+}</syntaxhighlight>
+
+==Advanced features available to developers==
+
+LimeSurvey has integrated some user-made patches that permits some special changes. These very advanced features (generally) require changes to the underlying code base of LimeSurvey and should be done carefully in order not to introduce security holes.
+
+====Support for your own Javascript functions====
+
+Some users may need to run Javascript on the survey pages, but calling '''checkconditions()''' in the BODY element made it impossible to do so. This call has been replaced with a small JavaScript function in the HEAD that sniffs for the existence of '''checkconditions()''' and '''template_onload()''' before calling them. In this way, a template author can create his or her own '''template_onload()''' function in the HEAD that replaces the default one.
+
+*Disable XSS filter - in Global settings -> Security, set "Filter HTML for XSS" to No.
+*Enter your script in the source of a question or group description.
+
+{{Note|For further details, see the [[Workarounds: Manipulating a survey at runtime using Javascript#How to use Script (eg. JavaScript etc.) in LimeSurvey|workaround section]].}}
+
+
+==Tips & tricks==
+
+===Language specific element===
+
+If you want to have a language specific sentence in a survey, for example help at the end of each page, you can add a .pstl file a sentence and hide it for the other language. If we hide it in the template.css, we can use the pseudo selector :lang, but we use some class for better compatibility.
+
+Below, there are two help sentences, in French and English. Put this on endpage.pstpl:
+
+<syntaxhighlight lang="php"><div class="fr" lang="fr">Pour de l'aide en direct appelez le 000000</div>
+<div class="en" lang="en">For some help, please call 000000</div></syntaxhighlight>
+
+and in template.css:
+
+<syntaxhighlight lang="php">.lang-fr .en{display:none}
+.lang-en .fr{display:none}</syntaxhighlight>
+
+===Change the layout of the survey page===
+
+After editing and saving a template, it applies to a survey list page only if it is selected from the settings of the survey. To make it the default template, go under the '''General tab''' located in the '''Global settings''' of your LimeSurvey installation and choose the desired template. From this point on, all the templates that use the "default" option as template, plus the ones that are going to be newly created, will use the newly selected default template.
+
+To use your current template for this page, you must change the appropriate setting from '''Global settings'''. In older versions, this change can be done by editing the $defaulttemplate setting from the config file: copy this setting from config-defaults.php to config.php which overrides config-defaults.php and edit this setting to <code lang="html">$defaulttemplate = 'yourtemplatename';</code>.
+
+===Import/Export of templates: Mac users===
+
+<u>Mac users</u>, please note that the Mac OSX default archive utility may have problems with zip folders "generated on the fly".
+
+A workaround is to unix'es unzip from the command line:
+
+$ unzip template.zip -d template
+
+Archive: template.zip
+
+ inflating: template/startpage
+
+ inflating: ...
+
+Another workaround is to use scripts in their mac-compiled counterparts.
+
+===Use the same template with different logos===
+
+If you want to use the same template for all surveys and just want to change the logo for each survey, you can use the {SID} placeholder in the template .pstpl file and thereby refer to different images:
+
+<syntaxhighlight lang="php"><img src="{TEMPLATEURL}files/logoImage-{SID}.png"></syntaxhighlight>
+
+=== Display custom favicon===
+
+A favicon is the little icon you see in the browser's address bar, list of bookmarks or tab. You can display your own icon as follows:
+#Create a favicon - You can use Google to find lots of free favicon generators.
+#Name your new favicon "favicon.ico" and place it in your template /files directory.
+#Add the following code to your '''startpage.pstpl''' before the </head> tag.
+
+<syntaxhighlight lang="html4strict"><link rel="shortcut icon" href="{TEMPLATEURL}files/favicon.ico" type="image/x-icon">
+<link rel="icon" href="{TEMPLATEURL}files/favicon.ico" type="image/x-icon"></syntaxhighlight>
+
+=== Different appearance for survey-/question-pages===
+
+If you want LimeSurvey to change the appearance of every second page (i.e., even and odd survey pages), you can use '''.page-odd''' class in your CSS file to change the appearance of odd pages.
+
+An example from default template of LimeSurvey 1.91+:
+
+<syntaxhighlight lang="php">
+.page-odd table.question-group {
+ background-color: #D2F2D3;
+}</syntaxhighlight>
+
+If you do '''not''' want differentiate even and odd pages, find all instances of ''.page-odd'' in template.css and remove those styles.
+
+===Create a vertical separator border for dual scale array===
+
+To create a vertical separator border for a dual scale array, you can add the following lines to your '''template.css'''-file.
+
+<syntaxhighlight lang="php">
+table.question thead td.header_separator,
+table.question tbody td.dual_scale_separator
+{
+   border-right:solid 1px #00A8E1;
+}
+</syntaxhighlight>
+
+''header_separator'' is used to adress the separator for the header "td". The "dual_scale_separator" is used to address the separator column in the dual scale array.
+
+===Adding your own logo to the survey list=== 
+
+# First please open the theme editor for the theme you like to use. [[File:OpenThemeEditor.jpg]]
+# We recommend to use fruity, it is our best theme currently. 
+# Then extend the theme and give it a name you will recognize. [[File:ExtendTheme.jpg]]
+# In the following view you may upload the logo you want to use. [[File:UploadFileTheme.jpg]]
+# Select the editor screen `Survey List´ in the Screen dropdown in the top right corner. [[File:OpenScreenSurveyList.jpg]]
+# Then select `layout_survey_list.twig´ in the left side menu. [[File:EditLayoutSurveyListTwig.jpg]]
+# In the editor scroll to line 126 and change the marked part to the filename of the image you uploaded to the theme before. [[File:ChangeSurveyListHeaderImageEditor.jpg]]
+# Save your file. [[File:ThemeEditorSaveChanges.jpg]]
+# Change default theme to your extended theme. [[File:ChangeDefaultTheme.jpg]]
+
+=== Align logo to the centre of the survey page===
+This example is for the "extends_fruity" template. For other templates the required CSS may be different.
+# Login to the LimeSurvey admin area
+# Browse to the theme editor: Configuration > Themes
+# Find "LimeSurvey Fruity Theme" in the list and click the "Theme Editor" button
+# Click "custom.css" in the files list on the left at near the bottom of the page
+# Copy the following CSS into that file and press "Save Changes"
+
+<syntaxhighlight lang="css">
+.navbar-fixed-top > div.navbar-header {
+    width: 100% !important;
+}
+
+.navbar-fixed-top > div.navbar-header > div {
+    width: 100% !important;
+}
+
+.navbar-fixed-top > div.navbar-header > div > img {
+    margin: 0 auto 0 auto !important;
+}
+</syntaxhighlight>
+
+
+
+==Custom question views {{NewIn|3.0}}== 
+
+<div class="simplebox">'''Note:''' This is a temporary feature to be replaced in the future by question object (it will be very easy to move custom views to question object). It is disabled by default.</div>
+
+As of version 2.5, you can create template-specific custom views for questions and some of their incorporated elements. This is useful if you want to modify the HTML layout of a particular question type for one or more surveys.
+
+*In application/config/config.php, find 'config'=>array and add this line to the array : 'allow_templates_to_overwrite_views'=>1
+*In /{your_template}/config.xml, set "overwrite_question_views" to true
+*Copy application/views/survey/* to template/{your_view_directory}/survey/
+*Note that you only need to copy the files that you intend to modify but the file structure must remain the same as in application/views/survey/
+
+==Insert custom CSS or JavaScript files for template== 
+
+As of version 2.50, you can use the config.xml File to Automatically Load Plugin Files.
+
+*Upload your files to the template /css or /scripts folder
+*In /{your_template}/config.xml, add the file paths to the <css> or <js> blocks, something like this:<syntaxhighlight lang="xml"><css>
+	<filename>css/jquery-ui-custom.css</filename>
+	<filename>css/bootstrap-slider.css</filename>
+
+	<filename>css/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css</filename>
+	<filename>css/flat_and_modern.css</filename>
+
+	<filename>css/template.css</filename>
+
+	<filename>css/myCustomPlugin.css</filename>
+</css>
+<js>
+	<filename>scripts/template.js</filename>
+	<filename>scripts/bootstrap-slider.js</filename>
+
+	<filename>scripts/myCustomPlugin.js</filename>
+</js>
+</syntaxhighlight>
+
+==Class definitions (for Developers)==
+
+===answer-list===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|arrays/5point || A || tr
+|-
+|arrays/10point|| B|| tr
+|-
+|arrays/array || F || tr
+|-
+|arrays/column || H || tr and col
+|-
+|arrays/dualscale || 1 || tr
+|-
+|arrays/increasesamedecrease || E || tr
+|-
+|arrays/yesnouncertain || C || tr
+|-
+|gender || G || div and ul
+|-
+|list_with_comment || O || div
+|-
+|ranking || R || ul and div
+|-
+|yesno || Y || ul and div
+|-
+|ranking_advanced || R || ul and div
+|-
+|listradio || L || div
+|-
+|5pointchoice || 5 || ul
+|-
+|multiplechoice || M || div
+|-
+|}
+
+
+===radio-list===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+| yesno || Y || ul
+|-
+|gender || G || ul
+|-
+|arrays/yesnouncertain || C || tr
+|-
+|arrays/increasesamedecrease || E || tr
+|-
+|arrays/dualscale || 1 || tr
+|-
+|arrays/5point || A || table and tr
+|-
+|arrays/10point || B || tr
+|-
+|arrays/array || F || tr
+|-
+|arrays/column || H || col
+|-
+|listradio || L || div
+|-
+|list_with_comment || O || div followed by ul
+|-
+|}
+
+===radio-item===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|arrays/yesnouncertain || C || td
+|-
+|5pointchoice || 5 || li
+|-
+|arrays/10point || B || td
+|-
+|arrays/5point || A || td
+|-
+|arrays/array || F || td
+|-
+|arrays/column || H || td
+|-
+|arrays/dualscale || 1 || td
+|-
+|arrays/increasesamedecrease || E || td
+|-
+|gender || G || li
+|-
+|listradio || L || li
+|-
+|yesno || Y || li
+|-
+|listradio || L || li and div
+|-
+|image_select-listradio || L || li and div
+|-
+|list_with_comment || 0 || li
+|-
+|}
+
+===list-group===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|yesno || Y || ul
+|-
+|5pointchoice || 5 || ul
+|-
+|gender || G || ul
+|-
+|ranking || R || ul
+|-
+|ranking_advanced || R || ul and div
+|-
+|question_index_group_buttons ||  || div
+|-
+|question_index_questions_buttons ||  || div
+|-
+|}
+
+===list-group-horizontal===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|yesno || Y || ul
+|-
+|5pointchoice || 5 || ul
+|-
+|gender || G || ul
+|-
+|}
+
+===list-unstyled===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|list_with_comment || 0 || ul
+|-
+|listradio|| L || ul
+|-
+|multiplechoice|| M || ul
+|-
+|multiplechoice_with_comments|| P || ul
+|-
+|multiplenumeric|| K || ul
+|-
+|multipleshorttext|| Q || ul
+|-
+|ranking|| R || ul
+|-
+|ranking_advanced|| R || ul
+|-
+|bootstrap_buttons_multi|| M || ul
+|-
+|image_select-multiplechoice|| M || ul
+|-
+|inputondemand/multipleshorttext || Q || ul
+|-
+|register_error||  || ul
+|-
+|register_message||  || ul
+|-
+|layout_survey_list ||  || ul
+|-
+|load||  || ul
+|-
+|save||  || ul
+|-
+|captcha||  || ul
+|-
+|}
+
+===select-list===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|ranking|| R || ul
+|-
+|ranking_advanced|| R || ul
+|-
+|}
+
+===checkbox-item===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|multiflexi (Array numbers)|| : || td
+|-
+|multiplechoice|| M || li
+|-
+|multiplechoice_with_comments|| P || div
+|-
+|image_select-listradio|| L || li
+|-
+|image_select-multiplechoice|| M || li and div
+|-
+|navigator||  || span
+|-
+|}
+
+===checkbox-text-item===
+{|class=wikitable 
+!'''Question'''!!'''Question Type'''!!'''elements''' 
+|-
+|multiplechoice_with_comments|| P || li
+|-
+|multiplechoice|| M || li
+|-
+|image_select-multiplechoice|| M || li
+|-
+
+|}
+
+[[Category:Theme]]
+[[Category:Twig]]

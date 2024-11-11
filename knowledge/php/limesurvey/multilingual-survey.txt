@@ -1,0 +1,205 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+LimeSurvey contains a built-in facility that enables quick and easy translation of surveys. This facility is designed to make it easy for a human translator to translate a survey from the base language into any specified target language.
+
+This wiki section quickly covers how a multilingual survey can be created. The guide covers topics such as:
+
+* [[Multilingual survey#Adding additional languages|the addition of a second language]]
+
+* [[Multilingual survey#Translating strings|string translation]]
+
+* [[Multilingual survey#Quick-translation tool|quick-translation tool]]
+
+* [[Multilingual survey#Multilingual survey overview|multilingual survey overview]]
+
+
+The example analysed throughout the wiki section can be downloaded from here: [[Media:Ls3 sample survey multilingual fr de en it.zip|LS3 multilingual survey sample]]. Unzip it and [[Surveys_-_introduction#Import_a_survey|import]] the .lss file into your LimeSurvey instance.
+
+
+==Adding additional languages==
+
+
+The default language of the survey is the one you selected in the [[General_settings#Base_language|base language field]]. By default, it is the language configured in the [[Global_settings#Language|global settings]] of your instance.
+
+To check which language is the base one, access the [[General settings|general survey settings panel]] and look for the base language field. In our example, the base language is "English". To start adding new languages in which you wish to translate the survey into, see the additional languages field. In our example, three other languages have been selected: French, German, and Italian.
+
+
+<center>[[File:Multilinguar survey - add additional language.png]]</center>
+
+
+Once done, do not forget to click on the '''"Save"''' button located in the upper right side of the screen.
+
+Now, if you check the top toolbar, you can observe that a small arrow appeared next to "Preview survey". This means that the survey can be previewed in different languages:
+
+
+<center>[[File:Multilingual survey - preview.png]]</center>
+
+
+If you access the [[Overview#Introduction|overview]] panel, four extra survey links are displayed. They correspond to the recently added languages:
+
+
+<center>[[File:Multilingual survey - four links.png]]</center>
+
+==Translating strings==
+
+
+To start translating strings, access the editor panel of each of your question. You can observe in the below screenshot that three additional languages are displayed above the question code field:
+
+
+<center>[[File:Multilingual survey - languages bar .png]]</center>
+
+
+Click on any of them and start translating the question field.
+
+The same type of "language bar" is located in many other places such as in the text elements and data policy settings panels, answer and subquestion text fields, and so on. However, translating fields using this method can get tricky if your survey is long and you wish not to miss anything. That is why we heavily recommend our users to use the quick translation tool. To access it, click on any survey-related setting (such as "Overview") -> [[Tools]] -> [[Quick-translation]]
+
+
+<center>[[File:Quick-translation tool - location.png]]</center>
+
+
+===Quick-translation tool===
+
+
+The quick-translation tool has been specifically designed for those that work with multilingual surveys. Once accessed, the following panel will be loaded:
+
+
+<center>[[File:Multilingual survey - translate survey.png]]</center>
+
+
+The first option, '''translate to''', gives you the possibility to select the language you wish to translate into from your base language.
+
+The next options refer to the translation of your survey content. They refer to:
+
+*[[Text_elements#Survey_title|Survey title]] and [[Text_elements#Description|description]]
+*[[Text_elements#Welcome_message|Welcome and end texts]]
+*[[Question groups - introduction|Question groups]]
+*[[Questions - introduction|Questions]]
+*[[Adding_answers_or_subquestions#Specific_for_subquestions|Subquestions]]
+*[[Adding_answers_or_subquestions#Specific_for_Answers|Answer options]]
+*[[Email_templates#Invitation|Invitation email subject]]
+*[[Email_templates#Reminder|Reminder email subject]]
+*[[Email_templates#Confirmation|Confirmation email subject]]
+*[[Email_templates#Registration|Registration email subject]]
+
+{{Note|Please note that at the moment of writing this section (LimeSurvey 3.16.0), the following sections are translatable but not displayed in this panel:
+
+*[[Data policy settings|Data policy text]]
+*[[Assessments|Assessment text]]
+*[[Survey quotas|Quota text]]
+
+To translate them, please access each option and follow the steps described in the previous wiki subsection.}}
+
+
+Once you are done translating these fields, do not forget to click on the '''"Save"''' button located in the upper right part of the panel.
+
+
+==Multilingual survey overview==
+
+
+To check your work, use the preview button. The welcome page will look like this:
+
+
+<center>[[File:Multilingual survey - Italian.png]]</center>
+
+
+Two language switcher can be observed once the welcome page is loaded. LimeSurvey offers the possibility to your respondents to change the language of instructions even though you shared with them the corresponding link for a specific language. A language switcher will also be located on the top right-side of your survey. 
+
+In the case in which you wish to hide the two "language switcher" buttons, edit the theme of your survey. For more details, see the [[Multilingual survey#Hints & tips|hints & tips wiki subsection]].
+
+
+{{Note|In the case in which a string is not translated, the respective string will be displayed in the base language of your survey.}}
+
+
+=Hints & tips=
+
+
+* If you wish to grant users translation permissions to access the quick-translation tool, check the following [[Quick-translation#Requirements|wiki subsection]].
+
+* The "Auto-translate" feature makes use of the Google translate web service for automatic translation of a survey. You must enter your Google Translate API Key under global settings to access this feature. Google currently charges $20 US per 1 million characters submitted for translation.
+
+
+==How to hide the language switcher from the welcome page==
+
+
+In the case in which you decide to launch a multilingual survey, you will observe on the welcome page a drop-down menu that permits your respondents to select the language in which they wish to fill in your survey:
+
+
+<center>[[File:Language switcher show languages.png]]</center>
+ 
+
+However, in certain scenarios you wish to hide the respective option. There are many ways in which you can hide the language switcher. The '''"twig"''' way is displayed below.
+
+Access [[Themes]] from the global [[Administering LimeSurvey|Configuration menu]]:
+
+
+<center>[[File:Language switcher themes.png]]</center>
+
+
+Click on the '''Theme editor''' button to edit the desired theme:
+
+
+<center>[[File:Language switcher theme editor.png]]</center>
+
+
+{{Note|LimeSurvey does not allow you to edit the standard themes! If you wish to add changes to a standard theme, click on the '''Extend''' button located on the top bar to create an editable copy of it.}}
+
+
+Look on the left side of the screen for the '''language_changer.twig''' file.
+
+
+<center>[[File:Location language switcher twig.png]]</center>
+
+
+Go to the line that contains the following function: 
+
+<syntaxhighlight lang="php">
+{% if aSurveyInfo.alanguageChanger.show == true %}
+</syntaxhighlight>
+
+Comment it out (replace "%" with "#") and copy the following line below it:
+
+<syntaxhighlight lang="php">
+{% if false == true %}
+</syntaxhighlight>
+
+
+The line should look like this in the end:
+
+
+<center>[[File:Language switcher code replacement.png]]</center>
+
+
+Click on "Copy to local theme and save changes".
+
+
+Access your survey and select the edited theme from the [[General settings|general settings]] panel. Now, the welcome page should look like this:
+
+
+<center>[[File:Hide language switcher twig.png]]</center>
+
+
+==How to hide the language switcher located on the top menu==
+
+
+To hide the top language switcher, we will follow pretty much the same steps as described above. We just have to access the right twig file to edit it. Access again the theme you wish to change, and then go to '''Screen''' which is located in the upper-right part of the window and select '''Navigation''' from the dropdown list. Now, look on the left side of the window for "language_changer_top_menu.twig". Click on it and comment out:
+
+<syntaxhighlight lang="php">
+{% if aSurveyInfo.alanguageChanger.show == true %}
+</syntaxhighlight>
+
+Add the following line below it:
+
+<syntaxhighlight lang="php">
+{% if false == true %}
+</syntaxhighlight>
+
+No language switcher will be displayed on the right side of the screen:
+
+
+<center>[[File:Language switcher hide top menu.png]]</center>

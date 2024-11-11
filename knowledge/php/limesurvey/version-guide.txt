@@ -1,0 +1,59 @@
+<languages />
+
+__TOC__
+
+
+=Version Numbering=
+
+
+To understand the version numbering, remember that version 2.06 was preceded by 1.92, 2.00, and 2.05. LimeSurvey 2.06 is our "starting point" as it is the moment in which a LTS version started to be developed too. Therefore, we have now a(n):
+
+*LTS version: 2.06LTS. It was later renamed to 2.6.x on October 24, 2016. This version will be supported until the launch of the next LTS version. According to this [https://www.limesurvey.org/about-limesurvey/surveyhelp/2137-limesurvey-version-lifecycle link], the next LTS version is LimeSurvey 3.x. 
+*up-to-date version. The first up-to-date version after 2.06 was 2.50, which was released on February 2, 2016. Since then, new features have been added with the releases of LimeSurvey 2.6x.x and 2.7x.x. After the last 2.7x release, LimeSurvey 3 was launched on December 22, 2017.
+
+
+==Differences==
+
+
+All three major LimeSurvey versions described below use different template engines. This means that a template created for LimeSurvey 2.06 cannot be used in LimeSurvey 2.73 or LimeSurvey 3, and a template created in 2.73 cannot be used in LimeSurvey 3.
+
+''Why did you change the template engines and make them incompatible?''
+
+# LimeSurvey 2.50 (now 2.73) introduced responsive default templates, and we had to change the HTML to support this addition.
+# LimeSurvey 3 introduced a Twig template system and a template inheritance system which are not compatible with older HTML-based templates.
+
+{{Note|Please note that the '''Template editor''' was renamed in LimeSurvey 3, being called now '''Themes'''.}}
+
+You can also observe in the screenshots from below the GUI (Graphical User Interface) changes that took place along the time.
+
+==2.06 and 2.6==
+
+
+<center>[[File:LimeSurvey 2.06 survey overview.png]]</center>
+
+
+== 2.73 ==
+
+
+<center>[[File:LimeSurvey 2.73 x survey overview.png]]</center>
+
+
+== 3.x ==
+
+
+<center>[[File:LimeSurvey 3x survey overview.png]]</center>
+
+= How to upgrade=
+
+If you wish to upgrade your installation, you can either upgrade it [[Upgrading_from_a_previous_version|manually]] or use the [[ComfortUpdate]].
+
+
+=Long-term support (LTS)=
+
+
+{{Note|'''What does LTS mean for LimeSurvey?'''
+If a version is marked as being LTS, then the respective version is eligible to receive bugfixes and security updates.}}
+
+
+At the moment, LimeSurvey 3 is a LTS release. There will not be any new features added. 
+Check out the [[LimeSurvey_roadmap|LimeSurvey Roadmap]] for information about support timelines.

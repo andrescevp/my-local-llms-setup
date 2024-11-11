@@ -1,0 +1,117 @@
+<languages />
+
+__TOC__
+
+{{Alert|text=Under construction}}
+
+{{Box|The wiki is incomplete. More details have to be provided. If you would like to, you can contribute to this wiki.}}
+
+=General= 
+
+To access the Menu entries table, click '''Configuration''' and then '''Menu entries configuration'''.
+
+
+<center>[[File:Menu Entries Configuration.png|Menu Entries Configuration.png]]</center>
+
+
+This function allows you to create, edit or delete menu entries. To be visible/displayed, these entries have to be added into a [[Menu configuration|menu]].
+
+=Menu entries configuration=
+
+
+[[File:Menu Entries List.png|center]]
+
+
+The following actions are available:
+*[[Menu entries configuration#Create a menu entry|Create a menu entry]]
+*[[Menu entries configuration#Edit menu entry|Edit menu entry]]
+*[[Menu entries configuration#Delete menu entry|Delete menu entry]]
+*[[Menu entries configuration#Reorder menu entries|Reorder menu entries]]
+*[[Menu entries configuration#Reset menu entries to the default values|Reset menu entries to the default values]]
+
+
+==Create a menu entry==
+
+To create a new menu entry, click the '''+ New''' button located on the top-left side of the window. The following menu options will be displayed:
+*'''Menu''': Select the menu where the new entry will be located ([[Menu configuration#Create a menu|read our wiki on how to create menus here]]);
+*'''Name''': Type in the name of the menu entry;
+*'''Title''': The title of the respective entry which will be displayed in the menu or under certain tabs (e.g., under the survey settings tab)
+*'''Ordering''': If more menu entries are added to a menu, use this function to order them.
+*'''Menu title''':On a tab or a menu entry, the menu title will be displayed on the first line. For example, if you click '''Overview''', located under the '''Survey settings''' tab, the overview panel will be displayed with the ''(menu) title'': Survey overview 
+*'''Menu name''': Displayed when you hover the mouse over the respective entry. For example, if you hover the mouse over '''Theme options''', the following message will show up: ''Edit theme options for this survey''. 
+*'''Menu icon''': All the used icons are fontawesome icons by default. To find other available icons, check the following [https://www.w3schools.com/icons/fontawesome_icons_text.asp link]. Introduce in the box the string located after "fa fa-". E.g., for a floppy disk, we have "fa fa-floppy-o". To use it as an icon for a menu entry, type in this box only "floppy-o".
+*'''Menu icon types''': It depends on the ones used within your current theme. For further details, check the following [[Themes|wiki section]].
+*'''Menu class''':
+*'''Menu link''': Link the menu entry to the URL of that function
+*'''Permission''':
+*'''Permission grade''':
+
+{{Note|[[Menu entries configuration#Advanced options - menu entries|See the last section of this page]] for information on advanced options.}}
+
+==Edit menu entry==
+
+To change the details of an already existing menu entry, click the green button located in the '''Action''' column. The respective menu will get selected and you can do the edits.
+
+==Delete menu entry==
+ 
+To delete a menu entry, click the red trash button that corresponds to that respective menu entry (located in the '''Action''' column).
+
+==Reorder menu entries==
+
+The ordering process takes first into account the '''menu''' an entry belongs to, and then it orders the entries according to the value from the '''order field'''. Once you change these values, click the '''reorder''' button to get the entries rearranged in the table.
+
+
+<center>[[File:Reorder survey menu entries.png]]</center>
+
+==Reset menu entries to the default values==
+
+To reset all the values of the survey menu entries to their default values, click the '''reset''' button located in the upper right part of the screen. A message will be displayed asking you to confirm the action. Please note that once you confirm the action, all the custom menu entries will be lost.
+
+
+{{Alert|title=Attention|text=Please note that in order to backup your survey menu entries configuration, create a [[Backup entire database|LimeSurvey database backup]]. A separate option will be introduced in the near future to facilitate only the backup of the survey menus.}}
+
+=Examples=
+
+==Add a new menu entry to the default survey menu==
+
+This example demonstrates how to add a [[Label sets]] menu entry to the default survey menu.
+
+First, click the '''+ New''' button located on the top left side of the screen and start completing the fields:
+*''Menu'': Select from the dropdown list the menu you wish to add to the menu entry.
+*''Name'': labelsets.
+*''Order'': 20.
+*''Menu title'': Label sets.
+*''Menu name'': "Click here to edit the available sets."
+*''Menu icon'': Check out the following [https://www.w3schools.com/icons/fontawesome_icons_text.asp link] to find the right icon for the new menu entry. In the screenshot from above, I used "fa fa-battery-three-quarters".
+*''Menu icon type'': Select from the dropdown box the "Fontawesome icon" option.
+*''Menu link'': Find the URL of the option you wish to link the entry to, and copy everything after the website name (admin/labels/sa/view in our case): 
+
+<center>[[File:Link menu entry example.png]]</center>
+
+
+Click the create button to verify that the new survey menu entry was added:
+
+
+<center>[[File:Example menu entry label Sets.png]]</center>
+
+
+Check the survey menu to verify that the survey menu entry is functional:
+
+
+<center>[[File:Example label sets new entry.png]]</center>
+
+
+{{Alert|title=Attention|text=Do not forget to check the LimeSurvey installation permissions to see which users can access and edit label sets. For more details, check the [[Manage_users|following wiki section]].}}
+
+=Advanced options - menu entries=
+
+When creating or editing a menu entry, you may find in the lower right part of the dialog the '''Toggle advanced options''' button. The following extra fields will be shown once you click it:
+*'''Action'''
+*'''Template'''
+*'''Partial'''
+*'''Classes'''
+*'''Data'''
+*'''Get data method'''
+*'''Language'''
+
+Once the edits are done, do not forget to click '''Save'''.

@@ -1,0 +1,11 @@
+<languages />
+<translate>
+<!--T:1-->
+Table of contents:
+
+<!--T:2-->
+*[[First login - your user preferences|First Login]]
+*[[First login - your user preferences#Change your password|Change your password]]
+*[[First login - your user preferences#Your account preferences|Your account preferences]]
+
+</translate>

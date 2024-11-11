@@ -1,0 +1,138 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type collects a single line of text input.
+
+<center>[[File:S_ST.jpg]]</center>
+
+
+'''Example:''' [[Media:Short free text question.zip|Short_free_text_question.zip]]
+
+}}</onlyinclude>
+
+----
+
+'''Note: On MySQL database the maximum number of characters can be unlimited. On Postgres and MSSQL the maximum number of characters that can be entered is 255.'''
+
+=General options=
+
+{{QS:mandatory}}
+
+If the map is enabled as a google map, and the question is set to '''mandatory''', the survey user must move the red point, or enter the Lat/Long text box.  The user may not merely rely on the default, and hit the "NEXT" button.  It is recommended that you so advise in the substance of the question text.
+
+{{QS:relevance}}
+
+{{QS:preg_validation}}
+
+
+=Display=
+
+{{QS:Prefix}}
+
+{{QS:suffix}}
+
+{{QS:display_rows}}
+
+{{QS:Hide_tip}}
+
+{{QS:Text_input_width}}
+
+{{QS:Input_box_size}}
+
+{{QS:Question theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS Class}}
+
+=Input=
+
+{{QS:maximum_chars}}
+
+=Location=
+
+
+The following question type allows you to create "map" questions where the survey respondents are asked to pinpoint a specific location on the openstreet/google map. Furthermore, a series of data can be stored within the database such as: postal code, country, region, and city. Default coordinates can also be provided.
+
+
+For more personalized solutions, we recommend LimeSurvey users to visit our forum to see the customizations done by our community members. For example, user Hulotte proposed the following customized script: [https://www.limesurvey.org/forum/can-i-do-this-with-limesurvey/117780-determine-geographical-administrative-info-by-address-data-google-maps#181594 forum link]. Other solutions can be found by typing in "maps" in the search query of [https://www.limesurvey.org/search?searchword=maps&searchphrase=all limesurvey.org].
+
+In case you are looking for professional help, please get in touch with one of our official partners: https://limesurvey.com.
+
+
+{{QS:location_mapservice}}
+
+{{QS:location_nodefaultfromip}}
+
+{{QS:location_postal}}
+
+{{QS:location_city}}
+
+{{QS:location_state}}
+
+{{QS:location_country}}
+
+{{QS:location_mapzoom}}
+
+{{QS:location_defaultcoordinates}}
+
+{{QS:location_mapwidth}}
+
+{{QS:location_mapheight}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:numbers_only}}
+
+=Statistics=
+
+
+{{QS:Display map}}
+
+{{QS:Display chart}}
+
+{{QS:Chart type}}
+
+=Timer=
+
+{{QS:time_limit}}
+
+{{QS:time_limit_action}}
+
+{{QS:time_limit_disable_next}}
+
+{{QS:time_limit_disable_prev}}
+
+{{QS:time_limit_countdown_message}}
+
+{{QS:time_limit_timer_style}}
+
+{{QS:time_limit_message_delay}}
+
+{{QS:time_limit_message}}
+
+{{QS:time_limit_message_style}}
+
+{{QS:time_limit_warning}}
+
+{{QS:time_limit_warning_display_time}}
+
+{{QS:time_limit_warning_message}}
+
+{{QS:time_limit_warning_style}}
+
+[[Category:Question types]][[Category:Text questions]]

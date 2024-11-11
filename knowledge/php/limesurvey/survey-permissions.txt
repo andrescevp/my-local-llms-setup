@@ -1,0 +1,12 @@
+<languages />
+
+
+In some cases, the administrator might not want to give a user (e.g., a single-survey translator) global permissions because they would then be able to access all the surveys. For this purpose, the survey permissions panel was created - to facilitate the allocation of permissions to different users without the need of using the [[Manage users|global system of permissions]]. As a result, the translator can be allocated certain permissions that would allow them to edit only certain surveys.
+
+To use the survey-restricted permissions system, click the '''Survey permissions''' button located on the '''Settings menu'''.
+
+
+<center>[[File:LimeSurveySurveyPermissions.jpg]]</center>
+
+
+<div class="simplebox">[[File:help.png]] <b>To find out more about the survey permissions functionality, read the [[Manage users#Set permissions for a single survey|following wiki section]]. We recommend reading the [[Manage users|whole wiki page]] to better grasp the LimeSurvey permissions system.</b></div>

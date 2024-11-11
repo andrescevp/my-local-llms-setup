@@ -1,0 +1,183 @@
+<languages />
+__TOC__
+
+
+=Introduction=
+
+
+The email bounce tracking system is capable of tracking down and marking the emails that were not delivered to the recipients (survey participants). The system relies on the "email delivery notification failure report". Therefore, it needs an email address where the emails can be sent to in order to track the bounces. Along with the address of the account, the credentials of the account are also required as well as the connection details.
+
+{{Box|Most email and hosting providers offer SMTP to send emails. The only thing for you to find out is the SMTP details that allow you to use that email address as a bounce email address.}}
+
+
+=Requirements=
+
+
+The <u>php5-imap</u> module must be installed on your server. You can check if this is the case by looking at the '''Show PHPinfo''' button, found on the [[Global settings|global settings]] page of your LimeSurvey installation, under the [[Global settings#Overview|Overview]] tab:
+
+
+<center>[[File:Show php info general settings.png]]</center>
+
+
+Next, look for an imap section (use control+F for a quick search). If an imap section is shown, you are good to go:
+
+
+<center>[[File:phpinfo_imap.png]]</center>
+
+
+If you don't have php5-imap installed and you have root access to the server, you can install it following the procedure specific to your distribution. For example, check [http://www.electrictoolbox.com/install-php-imap-debian/ this link] if you use Debian. Just remember to restart your web server once it is installed (e.g. run "apache/usr/sbin/apache2ctl restart" in terminal).
+
+
+=How it works=
+
+
+The basic idea behind the development of the system was to reduce the manual work and reduce the possible human errors that might arise from manually editing every field.
+
+The basic idea behind this system is that when sending the email, the email bounce tracking system automatically adds a survey-id and token-id to the email header without the notice of the administrator.
+
+
+<center>[[File:Header.png]]</center>
+
+
+These headers (also known as custom headers) are added to each invitation email sent via LimeSurvey to the survey participants.
+
+When the email is bounced back, the original header along with the ''delivery notification header'' is received. The system then checks for new emails and parses the emails that have these custom headers. It changes the font color of the wrong email addresses from the [[Survey_participants|survey participants table]] in red.
+
+
+=Setting up the system=
+
+
+The system is capable of working globally (for all the surveys) or locally (only for a specific survey), thus the settings can be saved accordingly. The bounce global settings can be saved under '''Global Settings''' -> '''Bounce Settings'''. The following options will be displayed:
+
+
+<center>[[File:limesurvey_index_php_admin_globalsettings_bouncesettings.png]]</center>
+
+
+*'''Default site bounce email:''' This is the email address where bounced emails will be sent to. For a faster processing of the bounced emails, we recommend the usage of an email address that is used only for the LimeSurvey email bounce tracking system.
+
+*'''Server type:''' If set to "Off", no bounce processing functions will be available. Choose either "POP" or "IMAP" to make use of LimeSurvey email bounce tracking system.
+
+*'''Server name & port:''' Name of the server and (if needed) the port separated by a colon. The port number isn't typically needed unless the email host uses a non-standard port.
+
+{{Box|If your hostname is 'smtp.server.net' and the port is 143, then write 'smtp.server.net:143' as hostname. For security reasons we currently only allow the following ports numbers: 110, 143, 587, 993 and 995.}}
+
+*'''User name:''' The user name for the POP/IMAP account.
+*'''Password:''' The password for the POP/IMAP account.
+*'''Encryption type:''' If encryption is used, please set the right one here (SSL or TLS).
+
+
+<hr width="50%" style="margin:auto">
+
+
+If you want to apply bounce settings only to a single survey, access the desired survey -> go to the survey menu and click on the [[Survey participants|Survey participants]] tab -> check the main toolbar of the page and click on [[Survey participants#Invitations & reminders|Invitations & reminders]] option -> click on '''Bounce settings'''. The following page will be loaded:
+
+
+<center>[[File:limesurvey_admin_tokens_bouncesettings.png]]</center>
+
+
+The additional option is represented by the '''Used bounce settings'''. Here, you can choose whether you use:
+*no bounce settings;
+*the local bounce settings. If picked up, you will have to fill out the rest of the local bounce settings fields;  
+*the global bounce settings. In this case, the bounce settings of your LimeSurvey installation will be used.
+
+<div class="simplebox">[[File:help.png]] '''Note:''' LimeSurvey will initialize the SMTP connection from the IP address of your LimeSurvey installation. Just ping the URL of the LimeSurvey installation to find out which one it is. In case you have your SMTP server locked down you will need to add this IP address as an exception to your SMTP configuration/firewall.</div>
+
+
+===Using LimeSurvey Cloud email server===
+
+
+If you are using the LimeSurvey Cloud email server, all your emails will have the sender address "noreply@limesurvey.org". However, these emails will have a Reply-to header with your email address. So, in case someone tries to reply, they can write to you directly.
+
+'''Bounces are automatically processed if you are using the LimeSurvey Cloud server. You don't need to set up anything, and you don't need to start the bounce processing at all, just leave the default settings untouched. It all happens magically in the background.'''
+Please note that it might take 10-15 minutes until a bounced email is processed, and the related entry is marked.
+
+{{Alert|Attention|text=Please don't abuse LimeSurvey Cloud for spam or we will have to lock your account. Make sure that you have the consent of people you want to send invitations to.}}
+
+==Starting Bounce Processing==
+
+Before starting the bounce processing, do not forget to first send the email invitations to your survey participants.
+
+In version 3.0+, once the email bounce tracking system has been set up, you can start '''bounce processing''' by accessing the survey home page -> click on the '''Survey participants''' tab from the survey menu -> click on '''Invitations & reminders''' (located on the toolbar) -> '''Start bounce processing'''.
+
+
+<center>[[File:Survey Startbounceprocessing.png]]</center>
+
+
+After selecting this option, a progress indicator will be displayed during the process, followed by a final processing status summary.
+
+<!--100-->
+The sent email invitations will start to be examined. The scan results will be shown on the [[Survey participants#Display participants|Survey participants table]] (you may have to manually refresh the page to actualize it). All the entries whose invitations were bounced will have their email addresses marked in red font. Also, their '''Email status''' is changed from "OK" to "bounced".
+
+
+<center>[[File:Red bounced email addresses.png]]</center>
+
+== Starting Bounce Processing in v2.5 ==
+
+In version 2.50+, once the bounce processing system has been set up, you can start '''bounce processing'''. from the survey home page: '''Invitations & reminders''' -> '''Start bounce processing'''.
+
+
+<center>[[File:WikiBounceProcessing2.5.png]]</center>
+
+
+After selecting this option, a progress indicator will be displayed during the process, followed by a final processing status summary.
+
+<!--100-->
+The sent email invitations will start to be examined. The scan results will be shown on the [[Survey participants#Display participants|Survey participants table]] (you may have to manually refresh the page to actualize it). All the entries whose invitations were bounced will have their email addresses marked in red font. Also, their '''Email status''' is changed from "OK" to "bounced".
+
+{{Alert|title=Attention|text=Some releases of v2.50+ do not correctly display this menu choice and the issue was fixed in build 160714 released on July 14, 2016.}}
+
+
+=Example=
+
+
+To better understand how the LimeSurvey email bounce tracking system is working, check the below example:
+
+{{Box|The following example is based on LimeSurvey 2.06+. Most of the steps and screenshots coincide with the steps you have to follow in LimeSurvey 3.0+ in order to make use of the email bounce tracking system.}}
+
+1. Introduce your respondents to the survey participants table. Make sure that each of them has an assigned token and email address.
+
+
+2. Select the respondents to whom you wish to send the survey invitation:
+
+
+<center>[[File:Send survey invitations - example.png]]</center>
+
+
+Click on the '''Selected participant(s)...''' button, and choose the '''send email invitations''' option.
+
+
+3. Wait for some moments in order to make sure that the emails were sent to the survey respondents.
+
+
+4. Now, you can make use of LimeSurvey email bounce tracking system. Click on '''Invitations & reminders''' and fill in the bounce email settings fields with the connection and account details of your personal email account:
+
+
+<center>[[File:Bounce email settings local survey - example.png]]</center>
+
+
+You could also leave the fields empty. The bounce processing will still work, only that you will not get any bounce-processing-related email. However, the email status of the entries from the [[Survey participants|survey participants]] table will get updated.
+
+''As you may observe below, we use the email bounce tracking system with the help of a free Gmail account. To find out about the Gmail-related connection settings, access the following [https://support.google.com/mail/answer/7126229?hl=en link]. Also, do not forget to enable IMAP/POP from the settings of your Gmail account.''
+
+
+<center>[[File:Complete local survey bounce settings - example.png]]</center>
+
+
+{{Alert|Attention|text=Gmail might treat the connection to your LimeSurvey account as an insecure one. To let LimeSurvey connect to your Gmail account, you [https://support.google.com/accounts/answer/6010255?hl=en will then need to allow less secure apps to use your account].}}
+
+Fill in the fields. Select the desired server and encryption settings. Once done, click on the '''Save''' button located on the upper-right part of the screen.
+
+
+5. Now, you can click on '''start bounce processing''' button: 
+
+
+<center>[[File:Start bounce processing - example.png]]</center>
+
+
+The email bounce tracking system will start to look for the survey-id, token-id, and delivery notification which are attached to the email header of each bounced email. If these custom headers exist, the system will change the font color of the wrong email addresses from the survey participants table in red. Also, the email status of the respective entries will be switched from ''OK'' to ''bounced''.
+
+
+<center>[[File:Results bounce processing - example.png]]</center>
+
+
+{{Note|If further questions arise, join us on [https://www.limesurvey.org/forum our forums] or [irc://irc.freenode.net/limesurvey  IRC channel].}}

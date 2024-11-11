@@ -1,0 +1,46 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+Once you click on a question from the structure tab, the following window will be displayed:
+
+
+<center>[[File:Question top bar.png]]</center>
+
+
+If we look at the top question toolbar, the three buttons offer the possibility to preview our work. You can choose to:
+*[[Testing_a_survey|preview your survey]]
+*[[Question_groups_-_introduction#Preview_question_group|preview the question group your current question is located in]]
+*[[Preview function#Preview question - general|preview the current question]]
+
+=Preview question - general=
+
+
+A question can be previewed in each language the survey is available in (just click on the preview question tab and select the language you wish to preview in). 
+
+There are different ways through which you can preview a question. The two most common ways are from the survey structure menu and from the top toolbar located in the question panel.
+
+{{Note|When preview a question, the relevance of this question is forced to be true.}}
+
+{{Hint|Text=You can add [[URL_fields#Prefilling_a_survey_using_GET_parameters|GET params in URL]] to set some previous question answer used in [[Adding_answers_or_subquestions#Specific_for_subquestions|relevance equation of subquestions]].}}
+
+=Preview question - survey structure menu=
+
+
+To a preview a question, click on the ''Structure'' tab, select the desired question, and click on the '''preview question''' button located on the top bar:
+
+
+<center>[[File:Preview question survey structure.png]]</center>
+
+
+=Preview question - question panel=
+
+
+When you edit or create a new question, you can preview it to check from time to time how it would be seen by your respondents. To do that, click on the '''Preview''' button located on the top bar of the question panel: 
+
+
+<center>[[File:Preview question - question panel.png]]</center>

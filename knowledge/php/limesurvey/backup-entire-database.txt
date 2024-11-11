@@ -1,0 +1,18 @@
+<languages />
+=General= 
+
+If you would like to upgrade your LimeSurvey installation or transfer it to another location/server, we highly recommend that you back up all your data (questions, participants, responses, etc.). You can use the '''Backup entire database''' function for this purpose.
+
+
+<center>[[File:Backup entire database configuration.png]]</center>
+
+
+After you click '''Backup entire database''', a window will displayed, asking you where you would like to save the .sql database backup.
+
+This backup is recommended when you wish to:
+* [[Transferring an installation|transfer your LimeSurvey application]] to another server;
+* [[Upgrading from a previous version|upgrade your LimeSurvey application]] (non-ComfortUpdate solution).
+
+<div class="simplebox">[[File:help.png]] '''Note:''' If you use the [[ComfortUpdate#Using_ComfortUpdate|ComfortUpdate]] functionality, a database backup is automatically created in the /tmp folder.</div>
+
+This option is also used when changes on different settings (e.g. in the code) are done. In this way, you secure your data in case there are issues with the application.

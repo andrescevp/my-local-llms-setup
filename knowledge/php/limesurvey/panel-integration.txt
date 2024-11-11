@@ -1,0 +1,151 @@
+<languages />
+
+__TOC__
+
+
+<div class="simplebox">[[File:help.png]] The following examples and explanations are based entirely on our users' contributions. Feel free to contribute if you want to help to expand our open knowledge about panel integration.</div>
+
+
+=Introduction=
+
+
+From this tab you can define the URL parameters that will be accepted by your survey.  (These parameters will be attached to the general survey start URL). This option is important if you want to integrate your survey with a professional survey panel provider that provides the participants for you. The latter usually provides the unique ID of every survey participant and you will need to save these unique IDs for further reference.
+
+
+{{Alert|title=Attention|text=With some providers, the unique ID of the participant that will be omitted due to a quota limitation or when finishing the survey, needs to be sent back to the panel provider in the survey end URL or quota URL.}}
+
+
+Survey's panel integration: '''Survey menu''' > '''Survey menu''' > '''Panel integration''' 
+
+<center>[[File:Panel integration - tab.png]]</center>
+
+=Survey panel integration=
+
+
+An empty table will be displayed with the option that allows you ''to add an URL parameter''.
+
+
+<center>[[File:Add URL parameter button.png]]</center>
+
+
+Two fields need to be filled out:
+
+<center>[[File:Add URL parameter.png]]</center>
+
+*'''Parameter:''' Type in this field the name of the new parameter.
+*'''Target question:'''. The value of the parameter is always saved in the survey session, even if you don't set a target question here. Here, you can select a question of type 'Sort text' or 'Multiple texts'.
+
+<div class="simplebox">[[File:help.png]] If you do not save the value of the URL parameter, you will still be able to use this parameter in the end URL. For further documentation, continue reading the [[URL_fields#Passthrough_fields|End-URL]] wiki section.</div> 
+
+==How to use the panel integration function==
+
+
+A [https://www.limesurvey.org/forum/design-issues/95878-how-to-use-the-panel-integration-fuction simple example] is presented below to explain how to use the panel integration function. 
+
+
+1) First, create a '''short/long free text question''' and name it what ever you want (we will use "LS" for the '''Question code''' field). Then, enable the '''always hide this question''' option, located under the '''Display''' tab within the menu of the question.
+
+2) Go to the panel integration tab, and click the "Add URL parameter".
+
+Select the short/long text question you created in the first step. The participants that come from the respective professional panel provider will land on the '''target question'''. It can be hidden so that the participants can start completing the survey.
+
+
+<center>[[File:Example - add URL parameter.png]]</center>
+
+
+The name you pick for the parameter will have to be included in the entry link that you will later supply to your panel provider. It will be named "LSid" in our example. Don't forget to click the '''Save''' button located in the upper right part of the table!
+
+
+3) Now, you have to set up the entry link that you will send to the your panel provider. To get your survey URL link, click the '''Preview survey''' buttons.
+
+
+<center>[[File:Find the URL - panel integration.png]]</center>
+
+
+Copy the URL you accessed from the address bar:
+
+
+<center>[[File:URL preview question - panel integration.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] '''Hint''': The "newtest" parameter is used to reset the session. This is useful when you wish to test locally the panel integration or when you know that your participants are using the same device/browser to fill out the survey. Therefore, adding "newtest=Y" in the survey URL creates new answers in the responses table by forcing the creation of a new session regardless of the used device/browser..</div>
+
+
+Add at the end the newly added parameter: &LSid="xxxxxx".  The link should look like this:
+
+<code>
+<nowiki>http://localhost/index.php/369498?newtest=Y&lang=en&LSid="xxxxxx"</nowiki>
+</code>
+
+<div class="simplebox">[[File:help.png]] '''Hint''': The GET parameters use "?" for the first parameter and "&" for the rest of them. If you already have "?" in your URL, you must use "&" to add other GET parameters. Read about [[URL_fields#Prefilling_a_survey_using_GET_parameters|the GET parameters and their usage here]].</div>
+
+
+What ever you replace the "xxxxxx" with will be stored in the short/long free text question when your respondent lands on that page. For example, I sent to a user the following link: 
+
+<code>
+<nowiki>http://localhost/index.php/369498?newtest=Y&lang=en&LSid=ABCD5</nowiki>
+</code>
+
+The string after LSid was stored as an answer to the short/long text question.
+
+
+<center>[[File:ABCD5 - panel integration.png]]</center>
+
+
+{{Note|Read the [[URL fields]] wiki section  for more information on URL customization.}}
+
+=Examples= 
+
+
+The following examples were created to help you add:
+
+*[[Panel integration#The complete link|Redirects if the respondents have finished filling out the survey]];
+*[[Panel integration#The screenout link|Redirects if the respondents were screened out due to a quota]];
+*[[Panel integration#The quota-full|Redirects link if the quota limit was reached]].
+
+<div class="simplebox">[[File:help.png]] '''Note:''' parametername={PASSTHRU:parametername}" provides the panel provider the id of the participant.</div>
+
+
+{{Alert|title=Attention|text=The solutions provided below make use of the [[URL_fields#Passthrough_fields|'''passthrough fields''']]. Please note that besides "'''parametername={PASSTHRU:parametername}'''", everything else has to be provided by your panel provider!}}
+
+
+==The complete link==
+
+
+The complete link must be inserted into [[Text elements|the end URL field]] that also has [[Presentation#Presentation_panel|to be loaded automatically]] for everyone who successfully completes the whole survey.
+
+The URL you have to send back to the panel provider should look like this:
+
+<code>
+<nowiki>https://panelproviderwebsite.com/?return=complete&parametername={PASSTHRU:parametername}</nowiki>
+</code>
+
+==The screenout link==
+
+
+A screenout prevents the participants from continuing the survey because he or she is not a member of your survey target group. For screenouts, you have to set the quota limit field to "0" (zero) and allow the quota URL to be automatically loaded once it was triggered. 
+
+Then, add the following link into the quota URL field:
+
+<code>
+<nowiki>https://panelproviderwebsite.com/?return=screenout&parametername={PASSTHRU:parametername}</nowiki>
+</code>
+
+<div class="simplebox">[[File:help.png]] '''Note:''' Read the following wiki section to find out more about the [[Survey quotas|LimeSurvey quota system and its usage.]]</div>
+
+==The quotafull link== 
+
+
+A quotafull excludes participants from continuing the survey, because a certain quota has been exceeded.
+<code>
+<nowiki>https://panelproviderwebsite.com/?return=quotafull&parametername={PASSTHRU:parametername}</nowiki>
+</code>
+
+<div class="simplebox">[[File:help.png]] '''Note:''' Read the following wiki section to find out more about the [[Survey quotas|LimeSurvey quota system and its usage.]]</div>
+
+
+{{Box|This is not the only solution you can use to implement quotafull, complete and screenout redirects to your panel provider! For example, the [[ExpressionScript - Presentation]], the [[SGQA_identifier|SQGA indentifiers]], and the [[URL fields]] offer you different workarounds to complete the same tasks (and even the more complex ones). For additional help, check also the [https://www.limesurvey.org/forum LimeSurvey forum].}}
+
+=Survey panel integration via expressions=
+
+{{Note|Under construction}}

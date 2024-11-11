@@ -1,0 +1,101 @@
+<languages />
+
+__TOC__
+
+<div class="simplebox">[[File:help.png]] '''LimeSurvey 3''' introduces a new template engine system, based on [https://twig.symfony.com/ Twig 1.29] and [https://getbootstrap.com/ Bootstrap] that allows template inheritance and different template options.</div>
+
+
+{{Box|Install Limesurvey 3.0+ to get access to the survey '''theme options''' feature. This option will '''not''' be made available in the older LimeSurvey versions!}}
+
+
+=Introduction=
+
+'''Theme Options''' offers a set of tools that allow survey administrators to quickly and easily change the themes-related settings of their surveys..
+
+=Theme options panel=
+
+Access the '''theme options''' feature from [[Survey settings|survey settings]]:
+
+
+<center>[[File:Survey menu - theme options.png]]</center>
+
+
+The toolbar of the panel contains two tabs: the '''simple options''' tab  and '''advanced options''' tab.
+
+
+==Simple options==
+
+The following is displayed on the Themes options page:
+
+
+<center>[[File:Simple & advanced options.png]]</center>
+
+
+{{Alert|Title=Attention|text=Please note that each theme comes with certain options that can be changed from the '''survey theme''' options. In this wiki section, the default LimeSurvey theme '''fruity''' is used to show how quick and easy, yet powerful changes can be implemented to a theme by users without any prior knowledge in HTML, php, and/or CSS.}}
+
+The '''simple options tab''' is preselected. The most important survey theme settings can be changed from here:
+
+* '''Inherit everything:''' If the ''yes'' button is selected, all the theme configurations will be inherited from the global [[Themes|configuration level]]. If you click ''no'' and click the '''Save''' button located in the upper right part of the screen, more theme configuration options will be displayed. Each of these options can be set to:
+** inherit the survey group theme configurations - ''inherit'' (unless unchanged, your survey theme will inherit the global theme configuration);
+** not inherit any global theme configuration - ''no''; 
+** or enable another configuration - ''yes''. The theme settings can be configured as you wish if this option is chosen. You can observe that each theme setting allows you to select the ''inherit'' value.
+
+{{Box|The inheritance system is applied on three levels:
+* '''at the global level''' (accessible from the template list). The other two levels inherit the global theme settings;
+* '''at the survey group level''' (accessible from the survey setting panel). The theme settings at the survey group level inherit the global theme settings; 
+* '''at the survey level'''. The survey theme settings inherit the survey group theme settings.}}
+
+* '''Theme fonts:''' Select the font you wish to use for your theme;
+* '''Theme variations:''' Select one of the available theme variations from the dropdown list. It changes the font and the icons colour.
+
+
+===No inheritance===
+
+As mentioned above, you can choose from the survey settings menu '''not to inherit''' the [[Themes|global theme configuration]]. Once you click the '''Save''' button, more options will be displayed:
+
+
+<center>[[File:No inheritance - options.png]]</center>
+
+
+{{Box|To show the power of this feature, the following explanations will be based on the '''fruity''' theme. Please note that each theme comes with its own customizable options.}}
+
+*'''Ajax mode:''' If enabled, the survey page will be loaded faster via ajax (''recommended for the average LimeSurvey user''). If disabled, the page will be loaded via page reload, which is better for debugging purposes;
+*'''Survey container:''' If ''yes'' is selected, the survey will be displayed in a container - its width is limited. This option is useful if your survey participants complete your survey from their mobile phones or tablets because the survey width is controlled. Therefore, it is more comfortable for your respondents because they will not have to scroll right anymore to read the whole question or to see all the answer options. If the survey is embedded in a blog and/or forum, you can also deactivate this option since they already use a certain width. 
+*'''Question borders:''' If enabled, each question will be shown within a border. If set to ''no'', the questions will not be contained in a box (so you can use large array question types that are bigger than the screen width);
+*'''Question shadow:''' If enabled, a shadow will be displayed around the in(visible) question borders.
+
+<hr width="50%" style="margin:auto"> 
+
+*'''Background color:''' Select the background colour of the whole question, including the answers;
+*'''Font color:''' Change the font color by selecting from the popup menu the desired color.
+*'''Question background color:'''  Change the question background color by selecting from the popup menu the desired color.
+*'''Check icon:''' This setting allows you to select the desired check icon when multiple choice question types are employed.
+
+<hr width="50%" style="margin:auto"> 
+
+*'''Background image:''' If set to ''no'', you may select a different background image from the one used within your survey group and/or global theme settings. You may also '''upload''' a personalised survey background image by clicking on the '''upload''' button located in the bottom of the theme settings panel and selecting the desired image from your computer;
+*'''Brand logo:''' If set to ''no'', the name of the survey will be shown in the top bar, or, you can select one of the pictures inside the file directory to be used as logo picture.
+
+<hr width="50%" style="margin:auto"> 
+
+*'''Animate body:''' If set to ''yes'', you can choose one of the animations to apply when the "body" of the survey is loaded;
+*'''Animate question:''' If set to ''yes'', you choose one of the animations to apply to your survey questions when they are loaded.
+*'''Animate alert:''' If set to ''yes'', your survey alerts (when the survey data is not recorded or the wrong token is typed in) will be animated according to the selected animation option.
+*'''Animate checkbox:''' If set to ''yes'', anytime you check an answer option, the animation is triggered. 
+*'''Animate radio buttons:''' If set to ''yes'', anytime you select an option from a radio-type question, the animation is triggered.
+
+{{Box|The library used for animations is [https://daneden.github.io/animate.css/ animate.css]. You can either use the default or add your own animation library.}}
+
+{{Note|Type a number in the duration field. If you type ten (10), the animation will last for 10 seconds.}}
+
+<hr width="50%" style="margin:auto"> 
+
+*'''Fruity fonts:''' Select the font you wish to use for your theme;
+*'''Fruity variations:'''Select one of the available theme variations from the dropdown list. It changes the font and the icons colour.
+
+<hr width="50%" style="margin:auto"> 
+
+*'''Upload:''' Browse your computer to upload an image to be used as logo or background image for your theme. Writing permissions might be requested on the "/themes/survey/fruity/files" folder - the location where the uploaded images will be stored in your LimeSurvey installation.
+
+==Advanced options==
+{{QS:Theme editor - advanced options}}

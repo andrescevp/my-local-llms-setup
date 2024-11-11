@@ -1,0 +1,131 @@
+<languages /> 
+__TOC__
+
+==General==
+
+LimeSurvey relies on its own security, which is activated by default. The authors of this software take no responsibility and makes no claims regarding the appropriateness or security level of this software. However, we take security issues very seriously and react quickly. Therefore, if you know of any security problems within LimeSurvey, please let us know either by sending us an email to [mailto:info@limesurvey.org info@limesurvey.org] or by opening a bug report in our [http://bugs.limesurvey.org bug tracker] (please mark it as private).
+
+==Web server restriction==
+
+If you use apache, LimeSurvey include different htaccess file for restriction. verify you alow included htaccess with <code>AllowOverride</code>.
+
+With other webserver or if you want to use <code>AllowOverride None</code> : you must
+
+* (option) disable access to all files in application, protected, framework and themes/*/views
+* disable access to file uploade by user /upload/surveys/.*/fu_[a-z0-9]
+* (option) disable access on executable file in upload directory
+
+You can find a sample for nginx on our [[General_FAQ#With_nginx_webserver|General Faq]]
+
+==Linux file permissions==
+
+If you are using a Linux server, setting file permissions accordingly is required to secure your LimeSurey installation.
+
+===Basic facts about Linux/*nix file permissions===
+
+A Linux/*nix operating system is multi-user. This means that, apart from your personal account, other user accounts may exist on the system and you should take care of what permissions you give to other users.
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' setting file permissions is especially important in order to secure configuration files holding critical data such as passwords.</div>
+
+'''Bear in mind that the 'root' account will always be granted permission to access your files (no matter what file permissions you set) as it is the super-admin user.'''
+
+The web server (which runs LimeSurvey) is also running under a given identity (user). On Linux, this is usually the 'www', 'www-data' (on Debian/Ubuntu), 'apache' or 'nobody' user. However, some hosting companies use systems (such as suexec) that make it possible to run LimeSurvey scripts with your personal user. Of course, the web server user must have the right to read LimeSurvey files. However, only a small subset of LimeSurvey sub-directories must be writable by the web server user.
+
+<div class="simplebox">[[File:help.png]] '''Hint''': it is very valuable to revoke write permission for the web server user to these LimeSurvey sub-directories that do not require it. Indeed, even if a LimeSurvey vulnerability might be discovered, the main files will still be protected from an illicit modification thanks to the file system permissions.</div>
+
+===Setting file permissions on a self-managed Linux system===
+
+If you're managing your web server and operating system configuration (you are the owner of the physical server or are renting a virtual server on which you have root access), you may consider the following recommendations from below.
+
+You can first set the owner and group of your LimeSurvey files so that it will ease the file permissions setup. A possible strategy is to set the owner of the LimeSurvey files to your personal username, and the group of the LimeSurvey files to the web server group. Usually, this web server group only contains the web server account (and possibly another webmaster account). For instance, if your username is 'myaccount' and the webserver user is 'apache' in the 'apache' group, then, from a shell access, you can use the following command: <code>$ chown -R myaccount:apache limesurvey/</code>. Subsequently, set the file and sub-directories permissions.
+
+For the script to work properly, the write access to some directories is needed:
+*The /limesurvey/application/config directory requires ''Read & Write'' for saving the application configuration settings
+*The /limesurvey/tmp directory and its sub-directories are used for imports/uploads and should be set to ''Read & Write'' for your web server
+*The upload/directory and all its sub-directories must also have set ''Read & Write'' permissions in order to enable pictures and media files upload
+* All other directories and files can be set to ''Read Only''
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' supposing you've followed the recommendations above on owner/group, these settings can be applied by the following commands:
+
+<code>$ chmod -R o-r-w-x limesurvey/</code>
+
+<code>$ chmod -R -w limesurvey/</code>
+
+<code>$ chmod -R 770 limesurvey/application/config</code>
+
+<code>$ chmod -R 770 limesurvey/tmp</code>
+
+<code>$ chmod -R 770 limesurvey/upload</code>
+
+</div>
+
+===Setting file permissions on a hosted web server===
+
+Giving the difficulty of a standard procedure to secure a web application on a hosted environment, it is rather difficult because hosted environments differ in many ways.
+
+In the managed server case, the server needs write access to some directories in order for the script to work properly:
+*The /limesurvey/tmp directory is used for imports/uploads and should be set to ''Read & Write'' for your web server
+*The upload/directory and all its sub-directories must also have ''Read & Write'' for your web server in order to enable pictures and media files upload
+* The other directories and files should be set to ''Read Only''
+
+<div class="simplebox">[[File:help.png]] '''Hint:'''
+* Depending on your web server configuration, you will have to chmod the rights on the writable folders to 755 or 777 to make it writable for the web server. Try 755 first, if it does not work, 'upgrade' to 777
+* You can also try to remove other users' read access to config.php by setting this file's permissions to 750 - if it does not work, 'upgrade' to 755</div>
+
+==Windows file permissions==
+
+If you are using a Windows server, your should ensure that the admin folder allows the owner of the web server process to write files to this directory, The rest of the files can be set to read-only and execute.
+
+==Other security issues==
+
+The following are recommendations only. LimeSurvey in general is very safe without these additional measures. If you however collect extremely sensitive data, a little additional security can help:
+
+===SSL usage===
+We generally recommend the usage of SSL for sensitive survey data. You usually enable SSL by configuring your web server correctly and using a SSQL certificate. If you have enabled SSL, you should enforce SSL all the time from the [[Global_settings|global settings]] of LimeSurvey. Additionally, you could only set to use 'secure' cookies by editing the [[Optional_settings|respective option]] in config.php.
+
+=== The access to the config.php file ===
+
+{{Alert| You must update application/config/'''config.php''' only after the first installation is done and it works.}} 
+
+The /application/config/config.php file contains a user name and password for your database server. This poses certain security issues, particularly if you are using a login that has high level administrative access to your database. In the event of some error returning the content of this PHP file to a user's browser, your database password and other details could be compromised (however, this is a very unlikely scenario). The best way to minimize risk is to set up a specific login that has specific rights only to your LimeSurvey database.
+
+Another way to secure this information can be to put the information from the /application/config/config.php file in a non-web directory, i.e. for Apache users this is the directory above the htdocs (also known as public_html or www) folder. Basically, you will use config.php, but have one line in it - a line that includes the file with ACTUAL configuration information (ex: <code><?php return include("/home/hostfolder/safedata/configreal.php"); ?></code>). Remove all actual configuration information from /application/config/config.php and paste it into the other file (configreal.php) that is mentioned in the /application/config/'''config.php''' file. This other file should be located in a non-web directory. Then, /application/config/config.php will not contain database passwords etc. - just the name of the file that '''DOES''' contain the database info. 
+
+This avoids having to change all the other files that include /application/config/config.php, since config.php 're-directs them' towards the configuration file that is located in a non-web directory which includes all the real configuration information. However, you will need to edit configreal.php and change the follow parameters to use absolute directory paths to work properly:
+
+<syntaxhighlight lang="php">
+
+'basePath' => dirname(dirname('''FILE''')),
+'runtimePath' => dirname(dirname(dirname('''FILE'''))).DIRECTORY_SEPARATOR.'tmp'.DIRECTORY_SEPARATOR.'runtime',
+[...]
+
+'urlManager' => array(
+   [...]
+   'rules' => require('routes.php'),
+   [...]
+);
+</syntaxhighlight>
+
+Example:
+
+<syntaxhighlight lang="php">
+'basePath' => '/var/www/htdocs/limesurvey',
+'runtimePath' => '/var/www/htdocs/limesurvey/tmp/runtime',
+[...]
+
+'urlManager' => array(
+   [...]
+   'rules' => require('/var/www/htdocs/limesurvey/config/routes.php'),
+   [...]
+);
+</syntaxhighlight>
+
+Also, '''don't use "admin" as the default user'''. Go to your MySQL database (or the one in which you installed LimeSurvey) and change default user name "admin" to whatever you prefer (e.g. "admin_xyz"). It will now be much harder to guess the administrator's new user name. Remember, this is one of the two variables intruders can use to gain access. The admin password is the other variable. So choose both of them with extreme caution.
+
+
+=== Content Security Policy (CSP) ===
+
+'''DISCLAIMER - The CSP provided here is an example only and is not meant to used verbatim. It is meant as a starting point and you MUST adapt it to your needs and test it thoroughly.'''
+ <nowiki><IfModule mod_headers.c>
+        Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; base-uri 'none'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests" "expr=%{CONTENT_TYPE} =~ m#text\/(html|javascript)|application\/pdf|xml#i"
+</IfModule></nowiki>

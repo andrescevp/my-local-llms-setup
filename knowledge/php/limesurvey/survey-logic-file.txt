@@ -1,0 +1,211 @@
+<languages />
+__TOC__
+
+
+=General=
+
+
+An important option that helps you create and easily maintain complex surveys is '''Check Survey Logic'''.
+
+Throughout development and testing of the survey, and before activating it, it is very important to validate the survey logic. This is especially true when you use complex relevance, tailoring, and validation equations - you need to be sure that nothing will break when you run the survey. 
+
+This feature lets you quickly validate the accuracy of your survey, group(s), and question(s). It can be accessed from the top bar menu options located under the survey-related settings. It is available via the '''Tools''' menu:
+
+
+[[File:show_logic_file.jpg]]
+
+
+As you can observe above, you can run this option four times, for each language used within a survey.
+
+=Description=
+
+
+The '''Check Survey Logic''' option shows everything that you specified for each question and group (e.g., name, text, help, conditions/relevance, validation rules, defaults, subquestions, answers) in a convenient tabular format. It highlights the errors, and lets you click on the question and group IDs (or variables used within equations) to open new browser tabs to edit those questions or groups. This makes it easy to quickly edit any errors and refresh the logic check page to confirm the accuracy of the survey before activating it.
+
+The display is also designed to be be readable by researchers and study sponsors so that they can validate the accuracy of the survey design and logic. Checking the survey logic updates the cache for all expressions used within an active survey.
+
+It includes the following columns:
+
+*'''#''' - shows the Group and Question sequence counts, starting from 0.
+
+*'''Name <nowiki>[</nowiki>ID]''' - shows the question code for the group/question/subquestion. These codes can be used as variables within [[ExpressionScript - Presentation|expressions]]. '''ID''' is the question id (QID), or group id (GID). This field also shows the [[ExpressionScript - Presentation#Qcode_variable_naming|question type]] (e.g., Multiple choice [M])).
+
+
+{{Note|To find out more about which variables can be used within expressions, read the following [[ExpressionScript - Presentation#Access_to_Variables|wiki subsection]].}}
+
+
+*'''Relevance <nowiki>[</nowiki>Validation] (Default)''' - shows the following:
+**''Relevance'' - the syntax-highlighted [[ExpressionScript - Presentation|relevance equation]] for the question or group. If it is always true (to be shown in any scenario), the value will be '''1'''.
+**''Validation'' - ExpressionScript automatically generates the [[ExpressionScript_Engine_-_Quick_start_guide#Validation|validation equation]] based upon the selected question attributes (e.g., min/max number of answers, min/max/equals sum values, min/max individual values or regular expression validation). This section shows the generated validation equation so that you can detect if there are any errors (such as undefined variables).
+***Question-level validation shows the equation needed to verify the above-described question attributes
+***Subquestion-level validation shows the equation needed to implement [[QS:Array_filter|array_filter]], [[QS:Array_filter_exclude|array_filter_exclude]], and [[QS:Exclusive_option|exclusive_option]]
+**''Default'' - if the question has a default value, it is shown here, syntax-highlighted (since the default could be an expression).
+
+*'''Text <nowiki>[</nowiki>Help] (Tip)''' - shows the following:
+**''Text'' - the text of the group, question, subquestion, or answer. It is syntax-highlighted to show any embedded [[ExpressionScript - Presentation#Tailoring.2FPiping|tailoring]], thus letting you verify that you have declared all the variables you plan to use in the tailoring.
+**''Help'' - this shows the help text for the question, also syntax-highlighted.
+**''Tip'' - this shows the internally generated validation tip, based upon the question attributes. This same tip is used in all survey styles, plus in the printable survey and data entry screens.
+**''Question Attributes'' - this shows a table of all relevant question attributes for this question. Attributes that might be equations are syntax-highlighted so that you can validate their accuracy.
+
+Rows are color coded as follows:
+*'''Groups''' - are shown with a light grey background
+*'''Questions''' - are shown with a light green background
+*'''Subquestions''' - are shown with a pale yellow background
+*'''Answers''' - are shown with a plain white background
+
+Answers have an additional attribute in the '''Relevance''' column:
+*'''Value''' - this is the default internal value used by calculations. If you are using [[Assessments]], this will be the assessment value. Otherwise, this will be the same as the answer name.
+
+
+{{Note|The survey description, welcome and end messages, end URL, Survey data policy notice and label are listed within the Cgeck survey Logic (above the table) if their corresponding fields are not empty!}}
+
+=Usage=
+
+
+At the top of the page, there is a summary message. If all is well, it will say "No syntax errors detected in this survey", or "This group" or "This question", "by itself, does not contain any syntax errors". If the opposite is true, it will say "X questions have syntax errors that need to be corrected".
+
+Each question that has syntax errors gets the background of its leftmost column (i.e. '''#''') color-coded red. Also, a warning stating the number of minimum errors of a question will be displayed under the '''Name [ID]''' column. The following errors are common:
+
+*[[Check survey logic - Advanced#Undefined variable|Undefined variable]] - if you have not defined all of your variables, or mistyped array_filter (or different sets of answer options for array_filter), then some of your validation questions will show errors. Undefined variables are shown in red text, boxed with a red line.
+
+*[[Check survey logic - Advanced#Bad syntax|Bad syntax]] - as you start to use relevance equations, you may use too many or too few parentheses. Such syntax problems are highlighted and boxed in red. If you hover the mouse over any such red-boxed text, a tool-tip will describe the error.
+
+== Colors in ExpressScript syntax ==
+Conditions and equations are syntaxhighlighted to easier figure out what you are looking at:
+# Green / Light Blue: A variable that references a question earlier in the survey
+# Blue: A function
+# Grey: A string expression
+# Brown: A TOKEN expression (participant data)
+# Black: Operator
+Things to check:
+# Purple: A variable that references a question later in the survey. Usually this is an error and needs to be checked.
+# Red or red frame: A non-existing variable or reference to an earlier question or a syntax error - usually needs to be checked.
+
+
+==Undefined Variables==
+
+
+If undefined variables are used, the respective variable name will be color-coded in red and surrounded by a red line. If you hover your mouse over the variable name, it will say "undefined variable":
+
+
+<center>[[File:undefined_varaible.jpg]]</center>
+
+
+{{Alert|title=Attention|text=Please note that LimeSurvey does not allow survey administrators to create questions that use the same question code. However, it could happen to have similar question codes within a survey if you import a question group or a question that uses the same question code as one of your already-defined questions. The question can still be imported because the question ids are different. However, if you wish to export the survey results to further explore the [[Exporting_results|survey results]] (R or SPSS), be careful because the question code is seen as a variable!}}
+
+
+<center>[[File:same_code_name_not_recommended.png]]</center>}}
+
+==Bad syntax==
+
+
+Most of the expression-related mistakes are related to bad syntax. This is related to the fact that survey administrators usually miss to add a curly bracket, to properly make use of parentheses, or they use expressions wrongly:
+
+
+<center>[[File:Syntax_highlighting_parantheses.png]]</center>
+
+<center>[[File:Syntax_highlighting_extra_comma.png]]</center>
+
+
+Here are many good examples on the usage of [[ExpressionScript How-tos#Syntax_Highlighting|syntax highlighting]].
+
+
+===Bad custom JavaScript===
+
+
+The JavaScript errors will also be highlighted in the survey logic check:
+
+
+<center>[[File:javascript_error.jpg]]</center>
+
+=Speeding editing and validation=
+
+
+All of the syntax-highlighted text has tooltips embedded, which are clickable:
+#Tooltips
+#*Functions - hovering the mouse lets you see the purpose and syntax definition of the function;
+#*Variable Names - hovering the mouse lets you see the position (group, question sequence), question text, and allowable answers for the question.
+#Actions
+#*Variable Names - clicking on the variable name opens a new window that allows you to edit the question. This makes it easy to navigate and verify logic - simply keep clicking on variable names of relevance or validation criteria for the question to see where they come from and how they are used.
+
+
+=Examples=
+
+
+The following examples are taken from the [[ExpressionScript sample surveys|ExpressionScript sample surveys]]. You can find screenshots of running surveys, explanations, and downloads on that page.
+
+
+==Body Mass Index==
+
+
+Here are [[ExpressionScript sample surveys#Screenshots|screenshots]] of this example.
+
+This is the question-reorder view of the Body Mass Index calculation. You can see the relevance equations for weight, height, and BMI under the ''Question'' column:
+
+
+<center>[[File:BMI_reorder.jpg]]</center>
+
+
+For a better survey overview, check the survey logic page:
+
+
+<center>[[File:BMI_logic1.jpg]]</center>
+
+
+This survey example is also a good example of nested if() statements to generate the "weightstatus".
+
+
+<center>[[File:BMI_logic2.jpg]]</center>
+
+==Cascading logic==
+
+
+Here are [[ExpressionScript sample surveys#Cascading Array Filters|screenshots]] of this example.
+
+It shows the subquestion validation logic that is automatically generated when you use [[QS:Array_filter|array_filter]] and [[QS:Array_filter_exclude|array_filter_exclude]]. This example also shows how you can substitute the tailored "Other" value (the answer for Q02_other is Q01_other).
+
+
+<center>[[File:cascading_logic1.jpg]]</center>
+
+
+Q05 in this example shows simultaneous use of array_filter and array_filter_exclude on Q01 and Q02, respectively. This example demonstrates cascading array_filter capabilities. Note that one of the main reasons for showing the question and subquestion level '''validation''' criteria is to help ensure you have not made any typos in specifying the array_filter or array_filter_exclude variable names (or in case you use different variable names for your list of filtered subquestions). If you have such typos, all the invalid variable names will appear in red indicating that they are undefined, letting you quickly fix the problem.
+
+
+<center>[[File:cascading_logic2.jpg]]</center>
+
+
+==Dynamic relevance==
+
+
+This example demonstrates dynamic cascading relevance logic to control display of question visibility. You can download this example [[ExpressionScript sample surveys#Download|here]].
+
+Also note that questions are displayed only if certain validation criteria are met. For example, if a person states that she has 2 kids, certain questions have to be filled in by the respondent (kid1 and kid2).
+
+
+<center>[[File:dynamic_relevance_logic1.jpg]]</center>
+
+==Group-level relevance==
+
+
+This example shows how group-level relevance appears in the logic check. Here are [[ExpressionScript sample surveys#Sample Census|screenshots]] of the example described below.
+
+As you can see, the group-level relevance equation (cohabs > 1 && p1_rel != "") appear in the grey Person 2 row for G-2.
+
+You may also notice that all of the questions are mandatory. However, if the group is irrelevant, so are all its questions. As a result, those questions are only truly mandatory if the group is relevant.
+
+You may also note that certain questions are displayed only if the answer to the previous question is not empty. You may see below that if p2_sex is not filled in, p2_name is not going to be displayed, even though it is a mandatory questions. The mandatory question p2_age is also not going to be displayed if p2_name is not filled in. These questions can be considered "conditionally mandatory". 
+
+Additionally, note that the '''tip''' messages are also automatically created for you. They are organized by value range (min/max), sum value range (min/max/equals), number of answers (min/max), etc (it depends on the used question type and active attributes). Sometimes you want to validate an answer range but don't want to display what might appear to be silly validation tips to the user. In such cases, you can use the [[QS:Hide_tip|hide_tip]] question option (as in this case, to avoid telling the user that the age must be between 0 and 115 unless they try to enter a bad value - see p2_age).
+
+
+<center>[[File:person2_logic.jpg]]</center>
+
+==Comma as radix (decimal) separator==
+
+
+Although LimeSurvey fully supports the use of comma as radix (decimal) separator at run-time, you must still use a decimal as the radix separator at the design-time (e.g., when specifying min/max values in advanced question attributes). The working example can be [[ExpressionScript sample surveys#Using Comma as Radix Separator (Decimal Point)|found here]].
+
+Also, remember that the '''validation''' logic is created for you automatically from the enabled question attributes. The equations may look overwhelming, but you don't need to worry about them.
+
+
+<center>[[File:radix_logic1.jpg]]</center>

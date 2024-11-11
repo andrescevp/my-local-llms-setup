@@ -1,0 +1,119 @@
+<languages /> <div style="float:right;"><div class="simplebox">Additional pages:{toc}</div></div>__TOC__
+
+=Before you start...=
+
+<span style='color:#FF0000'>... read this because it is very important: '''Always backup the files and the database of your current installation!'''</span>
+
+You can do this using a database administration tool like [https://www.phpmyadmin.net phpMyAdmin] and a file manager! 
+If you don't know how to do this, you should not proceed further and ask someone who knows.
+
+==Recommendation to use ComfortUpdate==
+'''The easiest/safest way to upgrade is to use our [[ComfortUpdate]] service.'''
+
+=Upgrade instructions (from 2.x or newer to any later version)=
+
+Please follow these instructions:
+*Backup your files and database ([[Upgrading from a previous version#Before you start...|did we already mention that?]]).
+*Delete all the old files/folders except for:
+**/application/config/security.php -'''Important!! This is the key to all encrypted data in LimeSurvey (version 4 and later)'''
+**/application/config/config.php;
+**/upload directory
+
+<div class="simplebox">[[File:help.png]]'''Note:''' If you have any customized templates in /upload/templates, make sure you 'refresh' those with any changes that come with the new LimeSurvey version. The easiest way to check for such changes is to file-compare your old template with the new version of the default template. If you see any differences other than your customizations, a refresh is needed.</div>
+*Copy the new files from the new LimeSurvey package to the existing location.
+*Open the admin page in your browser (e.g. https://www.example.com/limesurvey/admin) and check if a database scheme upgrade is necessary.
+*After the upgrade: '''Clear your browser cache and cookies!'''
+
+=Instructions for older versions=
+
+Unfortunately, there are a couple of things to consider, so please read the following instructions carefully.
+
+==Upgrading from version 1.50 or later to any later 2.xx version==
+*[https://www.limesurvey.org/about-limesurvey/download Download] the latest version of LimeSurvey
+*Backup your files and database ([[Upgrading from a previous version#Before you start...|did we already mention that?]]).
+* Replace all the installation directory files
+** Delete all old files in the existing installation directory
+** Upload and unpack the new files of the new version into the same installation directory
+** If your previous version is older than 1.90, copy any customized templates to /upload/templates - you will also need to rename each template directory whose name matches an existing template in /templates
+** Copy your /upload directory back to the old location
+** Double-check the '''permissions''' set on the directories (write access to '''/tmp''', '''/upload''', and their subdirectories is required) as described in the [[Installation#Set directory permissions|installation wiki]]
+** Open http://<yourdomain>/<yourlimesurveydir>/admin in your browser and follow the instructions (You will find the database data in the old config.php). The existing database will be automatically detected and if necessary, upgraded after confirmation.
+* Check if any special manual checks apply as listed below
+* '''Now, clear your browser cache and cookies''' and you are good to go
+
+{{Alert|title=Attention|text=Please note that the template structure has changed with the update from 2.0x to 2.50 or later. Your old templates will not be working anymore as the template system is now using responsive templates.}}
+
+<div class="simplebox">'''Special checks after an upgrade''':
+*'''from any earlier version to 2.xx''': Proper question codes are mandatory now. After upgrading the installation, check the survey logic of all surveys and correct the codes where necessary
+*'''from a version earlier than v1.53''': When upgrading from a version before v1.53 to the latest version, please check the '''global user rights''' of each user. There was a new '''superadmin''' right introduced in v1.53 that can give a user the same privilege as the master administration account created during the installation. The upgrade script is guessing to whom this permission should be given in the older versions.  As this is not perfect, it should be carefully checked.
+*'''from any earlier version to v2.06''': From 2.05 to 2.06, some unused permissions when editing global permissions for 'surveys' were activated. For example, if a user had only the 'create' permission in 2.05, the other permissions located to the right of 'create' would also get activated with the update to 2.06 (View/read, Update, Delete, Import, Export). Please check whether the admin users got any other global permissions besides the 'original' ones after the update. If yes, please edit them accordingly.
+</div>
+
+==Upgrading from version 1.50 or later to any later 1.xx version==
+*[https://www.limesurvey.org/about-limesurvey/download Download] the desired version of LimeSurvey
+* Backup your files and database ([[Upgrading from a previous version#Before you start...|did we already mention that?]]).
+* Replace all the installation directory files
+** Delete all old files in the existing installation directory
+** Upload and unpack the new code version into the same installation directory
+** Edit or replace the '''config.php''' file:
+*** If your previous version was < 1.70: Edit the new '''config.php''' in order to reflect the changes from the backup '''config.php''' file. '''Do not just overwrite the new '''config.php''' with your old one!'''
+*** If your previous version was >= 1.70: Simply replace the new '''config.php''' with your backup '''config.php''' file (as the file format has not changed)
+** If your previous version was older than 1.90: Copy any customized templates to /upload/templates - you will also need to rename each template directory whose name matches an existing template in /templates
+** Copy your /upload directory back to the old location
+** Double-check the '''permissions''' set on the directories of LimeSurvey (write access to '''/tmp''', '''/upload''', and to their subdirectories is required) as described in the [[Installation#Set Directory permissions|installation wiki]]
+* Finish the installation/upgrade process
+** Once you open the URL to your LimeSurvey administration, the database tables will be updated after confirmation
+** Remove or rename the /admin/install directory as/if instructed by the installation script
+** Check if any special manual checks apply (as listed below)
+
+<div class="simplebox">'''Special checks after an upgrade''':
+*'''From a version earlier than v1.53''': When upgrading from a version before v1.53 to the latest version, please check the '''global user rights''' of each user. There was a new '''superadmin''' right introduced in v1.53 that can give a user the same privilege as the master administration account created during the install. The upgrade script is guessing to whom this permission should be given in the older versions.  As this is not perfect, it should be carefully checked.
+</div>
+
+==Upgrading from a version earlier than v1.50 (v1.0 through v1.44)==
+
+Since the data structure and a lot of other things were changed, '''upgrading from any version previous to v1.50 is <u>NOT</u> possible'''. If you have old survey structure files with an *.sql extension, the only way to get these into a newer version is to install [http://www.limesurvey.org/en/archived-releases/289-limesurvey150zip version 1.50], import the .sql file(s) there, then upgrade that version to the most recent LimeSurvey version. Check the page related to [[Transferring an installation|how an installation can be transferred]] for more details.
+
+= Upgrading using CLI =
+
+You can upgrade the database via the PHP CLI: <code>php application/commands/console.php updatedb</code>. This allows you to set up an auto-upgrade system via command line (for example, in a crontab), although it is not recommended.
+
+= Failed database upgrade after manual update/ComfortUpdate=
+Sometimes, even though you did everything correct, things don't work out they are supposed to during database upgrade.
+That may happen because of various reasons: Different database versions, unexpected data formats or contents, unusual configurations or anything else that did not show up in our tests (yes, we test a lot!)
+
+If you have an error during database update and your LimeSurvey instance ends up in an unusable state, you want to go back to the previous version.
+This assumes that you still have the database and file backup, either from your regular backup or the one created by Comfortupdate.
+
+Please execute the following steps:
+
+*Backup the existing LimeSurvey directory and database (yes, again - we will call this the 2nd backup)
+*Restore files to the existing directory (just overwriting them is fine) from the original (1st) backup.
+*Delete the old database and restore the database from the original (1st) backup.
+
+That's it. Everything should be back to normal.
+
+'''A note about reporting this issue:'''
+
+If you run into a problem like this, please always report this in our bug tracker at https://bugs.limesurvey.org
+
+A bug not reported is a bug not fixed. Please don't just rely on other people reporting it. If you see that the bug is already reported, you can also help to raise the bug priority by marking it as 'Yes, this bug affects me' in the bug tracker.
+
+=FAQ=
+
+==Can I upgrade even if I have active surveys?==
+
+Yes, you can. Exceptions may be mentioned in the thorough instructions above. We strongly advise to test your surveys after upgrade to check if your design templates still work alright.
+
+==How to convert *.sql/*.csv survey structure files to the latest LimeSurvey version?==
+
+Install version 1.50, import the file, and export the survey structure to the newer .csv format. Then install the latest Version 2.x and import the .csv format and export it to the current .lss format.
+
+==Survey theme incompatibility==
+With certain major version updates any custom survey themes will not be compatible, anymore:
+
+* Update from LimeSurvey 2.6 or lower to LimeSurvey 2.50
+* Update from LimeSurvey 5.x or lower to LimeSurvey 6.x
+
+==Error "Multiple primary key defined" when updating MySQL database==
+If you encounter this error, please check the setting ''sql_generate_invisible_primary_key'' in your MySQL server variables. This is most likely set to ''ON'', but should be set to ''OFF''. Then restore your database from the backup (as explained above) and try again.

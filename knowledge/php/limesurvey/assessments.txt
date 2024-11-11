@@ -1,0 +1,261 @@
+<languages /> __TOC__
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' You can create more sophisticated assessments and reports using the [[ExpressionScript - Presentation|ExpressionScript]]. It lets you access all variable types and easily generate tailored reports at any point in the survey (not only at the end). Using the new ''Equation'' question type, LimeSurvey can automatically save your assessment calculations and/or report to the database.</div>
+
+
+=Introduction=
+
+
+LimeSurvey contains a feature that allows survey administrators to create survey "''assessments''" for survey participants - even for multilingual surveys. Assessments are rules which evaluate the responses to a survey immediately after it is submitted, displaying text blocks to the survey participant (based on that evaluation). 
+
+In order to use LimeSurvey's assessment feature, from the '''Survey menu''' click the '''Assessments''' tab.
+
+
+<center>[[File:Assessments - location.png]]</center>
+
+
+You can then ''activate'' the assessment mode.
+
+
+<center>[[File:LS3 - enable assessments.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] To create and edit assessments in the older versions of LimeSurvey (e.g., 2.x), access the survey settings and enable the assessment mode from the '''Notification & data management''' tab. Additional fields where you can introduce assessment values will be displayed when editing answers.</div>
+
+=How Do Assessments Work?=
+
+
+The following is an example that will hopefully help you better understand how '''assessment mode''' is designed to work. 
+
+Imagine you have two questions in your survey, the first question asks if the user smokes: "Do you smoke?". The question has 3 possible answers, "Yes, more than 10 per day" with a value of "10", "Yes, but less than 10 per day" with a value of "5", and "No, I don't smoke at all" with an assessment value of "1".
+
+The second question "Do you exercise?" has three possible answers: "Yes, I exercise for at least half an hour three times a week" with a value of "1", "Yes, I exercise occasionally " with a value of "5" and "No, I do not exercise" with an answer code/value of "10".
+
+If we were to add the totals of the values for each possible answer at the end of the survey, we would get a good indication of the general health of the respondent. Someone who smokes and doesn't ever do any exercises will score 10 points for each answer, getting a total score of 20 when we add the two values. Someone who doesn't smoke and exercise will score 1 for each answer, obtaining, in the end, a total score of 2.
+
+
+{{Box|A sample survey demonstrating the use of assessments is available for download. You can import this survey into your own LimeSurvey installation via the [[Surveys_-_introduction#Import_a_survey|import function]]: [[File:Limesurvey_sample_survey_Assessment.lss]].}}
+
+=Assessments=
+
+
+Assessments page:
+
+
+<center>[[File:Assessments panel 1.png]]</center>
+
+
+To create new assessments rules complete the fields located below the '''Assessment rules''' table. The following options are available:
+
+*'''Scope:''' You can choose either ''Total'' or ''Group''. The first will create an assessment based on the sum of all the submitted answers in the entire survey. The latter will create an assessment based on the sum of all the submitted answers from a question group;
+*'''Group:''' The dropdown list allows you to choose the question group you wish to assess.
+
+
+{{Box|If you selected ''Total'' before, then the '''Group''' field will not influence the assessment of the survey answers - important when the '''{PERC}''' placeholder is used.}}
+*'''Minimum:''' The minimum score to which this assessment will apply.
+*'''Maximum:''' The maximum score of answers to which this assessment will apply;
+
+
+{{Box|Let's take again the example presented [[Assessments#How do assessments work|above]]. If a participant scored between 1 (minimum) and 10 (maximum), then the assessment feature would display a message telling the respondent that he or she has a good health condition. If he or she scored between 11 (minimum) and 20 (maximum), then the assessment feature would display on the last page a message related to the not-so-good health condition of the participant.}} 
+*'''Heading:''' The heading of the assessment that will appear if the assessment is going to be displayed;
+*'''Message:''' The text message of the assessment - displayed at the end of the survey to the participants. You can use placeholders such as '''{PERC}''' and/or '''{TOTAL}''' to emphasize the scores of each survey question group or the total survey score. Click the green pencil button to access the HTML-editor and enhance the final message of the assessment by adding colours, tables, images, etc.
+
+You can create as many assessments as you like, and you can create more than one assessment to display for a given score.
+
+After adding some assessments, the possible assessments actions will be displayed under the '''Actions''' column in the '''Assessments rules''' table. From there, you can either edit or delete an assessment rule:
+
+
+<center>[[File:Assessments panel 2.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] It is important to note that if you use assessments, you must ensure that you have not enabled the '''autoload the URL''' option. If it is enabled, no end page with the text of the assessment rule will be displayed anymore and LimeSurvey will automatically load the URL field from the [[Presentation]]. You can disable it from the same tab.</div>
+
+
+==How Question Types Are Evaluated==
+
+
+There are certain [[question types]] which can not be assessed or have to be assessed in a special way. Some of the questions cannot be used with the assessment feature. However, they can be replaced with question types that can be used with this feature. For example, a 5-point choice question can be replaced with a simple list (radio) question type. 
+
+The following question types '''can always be assessed''':
+*Array dual scale
+*Array 
+*Array by column
+*List (Dropdown)
+*List (Radio)
+*List with comment
+*Multiple options
+*Multiple options with comments
+
+<hr width="50%" style="margin:auto">
+
+
+The following list contains question types that '''cannot be assessed''':
+* 5 point choice
+* Array (5 point choice)
+* Array (10 point choice)
+* Array (Increase, Same, Decrease)
+* Array (Text)
+* Array (Yes/No/Uncertain)
+* Array (Numbers)
+* Text display
+* Date
+* Gender
+* Huge free text
+* Language switch
+* Long free text
+* Multiple numerical input
+* Numerical input
+* Ranking
+* Short free text
+* Yes/No
+
+==Set Assessment Values For Each Answer/Label==
+
+
+If enabled, the assessment mode will add an additional field between the answer code and answer option name for all the questions to be assessed.
+
+
+<center>[[File:Assesment_value_set.png]]</center>
+
+
+You can also use label sets as answers options for your set of questions. Just click the '''Predefined label sets...''' button located under the answers matrix and select your predefined label set.
+
+If you decide to use label sets, assessment values can be added to all your labels from the moment they are first created. This allows the survey administrator to quickly use predefined label sets with assessment values as answers for multiple sets of questions.
+
+
+<center>[[File:Labels table.png]]</center>
+
+
+This process is less time-consuming and more practical. You can create a plan in the early stages of your survey to use only one set of label sets with predefined assessment values for multiple questions. This way, you will not have to manually add assessment values to all the answers of the questions used in your survey to be assessed.
+
+{{Note|To find out more about the label sets and their usage, read the following [[Label sets|wiki section]].}}
+
+==Assessment Placeholders==
+
+
+When using assessments the following placeholders are available:
+* '''{PERC}''': Displays the score of a question group. '''It can be used only in the message field of the assessment rule!'''
+* '''{TOTAL}''': Displays the total score. '''It can be used only in the message field of the assessment rule!'''
+* '''{ASSESSMENT_CURRENT_TOTAL}''': This placeholder can be used within a survey to display the current total score. Keep in mind that the score is only updated when the respondent clicks the "Next" button. Therefore, it is useless in an ''all-in-one'' survey. Also, its use requires the existence of at least one assessment rule. Otherwise, the placeholder will not display any value.
+
+If your survey is '''not''' anonymous,  the following placeholders are available.
+* '''{TOKEN:EMAIL}''': Displays the email of the respondent from the survey participants table
+* '''{TOKEN:FIRSTNAME}''': Displays the first name of the respondent from the survey participants table
+* '''{TOKEN:LASTNAME}''': Displays the last name of the respondent from the survey participants table
+* '''{TOKEN}''': Displays the token code of the respondent from the survey participants table
+
+=Tips & Tricks=
+
+== Save Assessment Value in Data ==
+
+To save assessment value in data and have it in an export : you can create a [[Question_type_-_Equation]] and put '''{ASSESSMENT_CURRENT_TOTAL}''' in the equation setting.
+
+== Use {ASSESSMENT_CURRENT_TOTAL} Without Assessment Message == 
+
+If you choose not to add an assessment message, then no assessment message is shown.
+
+=How to Disable the Assessment Mode=
+
+
+To deactivate assessment mode, go to the '''Survey menu''' and click the '''Data management''' tab. The '''Notification and data management''' panel will be displayed. Click the '''Enable assessment mode''' option and disabled  it for the respective survey.
+
+
+<center>[[File:Disable assessment mode - picture.png]]</center>
+
+=Examples=
+
+
+==How To Use the Assessment Mode==
+
+
+Let's recreate the [[Assessments#How do assessments work|example presented above]] to better understand the steps you have to pursue in order to correctly use the assessment feature.
+
+{{Note|If you are unsure of how to create a survey, refer to the [[Quick start guide#Create a survey|quick start guide.]]}}
+
+1) [[Surveys_-_introduction#Create_a_new_survey|Create the survey]]
+
+2) [[Assessments#Introduction|Activate the assessments]]. Go to the settings menu of the survey and click the '''Assessments''' tab. Once there, activate the feature:
+
+
+<center>[[File:LS3 - enable assessments.png]]</center>
+
+
+3) [[Question_groups_-_introduction|Create a question group]] and [[Questions - introduction|start adding the questions]]. Your survey structure should look like this:
+
+
+<center>[[File:Example assessment - question group.png]]</center>
+
+
+{{Alert|title=Attention|text=Do not forget to check whether the questions are the types that can be assessed! Otherwise, no assessment value field will be displayed in the edit answer options panel.}}
+
+
+4) [[Adding_answers_or_subquestions|Add answers]] for each question created above. While adding/editing the answers, complete also the assessment value field for each answer:
+
+
+<center>[[File:Example assessment - edit answers.png]]</center>
+
+
+5) Now that you know the assessment values, access the '''Assessments''' panel and start [[Assessments#Assessments|adding assessment rules]]. Two rules were created for this example: 
+
+
+<center>[[File:Assessments_example_-_assessment_rules.png]]</center>
+
+
+The text message of the first assessment rule (''You should start exercising!'') will be displayed if the respondent scores between 1 and 10 points. The text message of the second assessment rule (''Well, that's what I call being healthy!'') will be shown if the respondent scores between 11 and 21 points.
+
+6) Now, preview the survey and see if the assessment mode is active. At the end of the survey, a text message will be displayed based on the score obtained by the respondent. 
+
+
+<div class="simplebox">[[File:help.png]] '''Note:''' The score is not displayed in this example! If you would like to have it displayed in your assessment, create more assessment rules (for each possible scenario) or use assessment placeholders.</div>
+
+
+<center>[[File:Assessment results.png]]</center>
+
+==How To Use the Assessment Placeholders==
+
+
+As mentioned in [[Assessments#Assessment placeholders|the previous subsection]], three assessment-related placeholders can be used: '''{PERC}''', '''{TOTAL}''', and '''{ASSESSMENT_CURRENT_TOTAL}'''. 
+
+In the previous example, the following result was obtained: ''"Well, that's what I call being healthy!"''. However, no score was displayed. 
+
+There are different ways to have the score displayed. You can either create 6 assessment rules to emphasize each possible score/result or use assessment placeholders. The below example explains the latter option.
+
+[[Assessments#Assessment placeholders|As mentioned above]], '''{PERC}''' and '''{TOTAL}''' can be used in the message text box of the assessment rule to emphasize the score of the current group and the total score, respectively. Let's take a look at the following two screenshots to understand their usage.
+
+
+<center>[[File:Example perc - assessments - part 1.png]]</center>
+
+
+In the first screenshot, {PERC} and {TOTAL} were added into the message text box of the assessment rule.
+
+
+<center>[[File:Example perc - assessments - part 2.png]]</center>
+
+  
+
+In the second screenshot, you can see how the assessment rule looks to correctly use both placeholders. Because '''{PERC}''' is used, the '''scope''' of the assessment rule must be switched from ''Total'' to ''Group'' to correctly display the score of the question group selected from the '''Question group''' dropdown list:
+
+
+<center>[[File:Example assessment - right question group.png]]</center>
+
+
+After completing the survey and depending on their answers, the participants should receive the following assessment message at the end:
+
+
+<center>[[File:Assessment results - perc and total.png]]</center>
+
+
+
+<hr width="50%" style="margin:auto">
+
+
+
+'''{ASSESSMENT_CURRENT_TOTAL}''' can be used only inside a survey. You can use it after each question or question group from a quiz. This way you could show each participant his or her current quiz/survey score. To use it, you could add, for example, at the beginning of every question or question group a message like: "You have accumulated till now  '''{ASSESSMENT_CURRENT_TOTAL}''' points".
+
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' Check the [https://www.youtube.com/watch?v=s5OOzDoPjIU following YouTube video] to see other situations where you can use placeholders.</div>
+
+=Video tutorial=
+
+
+To understand the basics of the LimeSurvey assessments feature, watch the following [https://www.youtube.com/watch?v=aeb93vAe7R4 video].

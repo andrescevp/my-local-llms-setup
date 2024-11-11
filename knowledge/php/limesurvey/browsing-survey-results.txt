@@ -1,0 +1,56 @@
+<languages /> __TOC__
+
+=General=
+
+Once a survey has been activated, and survey responses have been submitted, you will want to be able to view those responses, maybe edit some of them (or possibly delete some), export them, get some information about the responses received so far, and so on. All of this is done through the "Browse responses" function.
+
+=How to get there=
+
+When your survey is active, make sure your survey is selected. Then click on the 'Responses' button [[File:Responses.png]] and in the appearing dropdown menu the 'Responses & statistics' menu entry in the survey tool bar.
+
+=Functionality=
+
+The main screen (Response Summary), which is the entry screen for this section, will show you the following information:
+*The number of full responses 
+*The number of incomplete responses 
+*The total number of responses (which is a total of full and incomplete responses)
+
+If your survey is also using tokens to restrict survey access then some information for the tokens is shown here too:
+*Total invitations sent
+*Total surveys completed	
+*Total with no unique token
+*Total records in the token table
+
+<div class="simplebox">''Incomplete answers are response records with no ''submission date'': such a record can occur when a participant uses the 'saved so far but do not submit survey' function, or when an operator uses the data entry facility to fill out a survey without 'Finalizing the submit', or even when a participant fails to complete the survey because he/she just left.''</div>
+
+The other options in this screen are described below:
+*Return to survey administration: Return to the main admin screen for this survey
+*Show summary information: The responses main screen
+*Display responses: Display all the results to the survey. The browse shows full descriptive question names, but only abbreviated answers. See section below (editing and deleting responses).
+*Display last 50: Display the last 50 responses to the survey, ordered from most recent to least recent.
+
+*[[Data entry]]: Go to the data entry screen to add a new response (this option is also available from the admin screen)
+*[[Statistics]]: A simple method for filtering and getting summaries of responses.
+*[[Exporting results|Export results]]: Export all the responses to this survey to different formats like Word, Excel, CSV, SPSS, R and more.
+
+=View survey results by participant=
+
+When you are browsing responses (by clicking either the ''Display responses'' or ''Display last 50 responses'') the first row shows you a number of small icons for each link. Clicking on the ''View response details'' icon [[File:Token viewanswer.png]] allows you to view that specific response on an individual basis. From here you can also edit, delete or export that specific response. See section below (editing and deleting responses).
+
+Participants can be identified either by token, name, or IP address.
+
+=Editing and deleting responses=
+
+When viewing your responses, you will be able to view a specific response by clicking on the id number. From this point you can choose to "Edit" or "Delete" this response.
+
+==Editing a response==
+
+Editing the response is also fairly self-explanatory. It will take you to a 'data-entry' screen with the responses provided, and allow you to make and save any modifications. Again, in a survey you generally don't want to make changes to the responses made by the participants - but hey - it's your survey. Do what you want!
+
+==Deleting a response==
+
+Deleting the responses is, of course, fairly self-explanatory - and as anyone who regularly runs surveys would know, is not recommended, unless you've got a pretty good reason (ie: a doubled up entry, or some sufficiently serious reason as to why it should be deleted). Don't click on this button thinking it will give you a second chance. If you click "Delete", the entry will be deleted with no second guessing or second checks.
+
+==Exporting a response==
+
+At the "Browse responses for this survey" section you can click on "Display responses" and the id number you want to export in the left column. Then you can click on "Export this survey" above the data.

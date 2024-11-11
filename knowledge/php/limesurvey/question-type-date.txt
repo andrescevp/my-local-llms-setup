@@ -1,0 +1,86 @@
+<languages />
+
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+
+This question type can be used to ask for a certain date, time or a combination of both date and time. The values can be selected by the participants either from a popup calendar or from [[Question type - Date#Display dropdown boxes (dropdown_dates)|dropdown boxes]]. [[Question type - Date#Question validation equation (em_validation_q)|Validation]], [[Question type - Date #Minimum date (date_min)|minimum]], and/or [[Question type - Date#Maximum date (date_max)|maximum dates]] can be chosen by the survey administrator. Various date and time formats [[Question_type_-_Date#Date/Time format|are supported]].
+
+<center>[[File:timepicker.jpg]][[File:D_Date_DD.jpg]]
+[[File:datetime.jpg]]
+</center>
+
+'''Example:''' [[Media:Example_Date_Time.zip|Example_Date_Time.zip]]
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:dropdown_dates}}
+
+{{QS:hide_tip}}
+
+{{QS:Month_display_style}}
+
+{{QS:Reverse}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:date_min}}
+
+{{QS:date_max}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Input=
+
+{{QS:date_time_format}}
+
+{{QS:Minute_step_interval}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+=Statistics=
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+
+=Dates and ExpressionScript: Advanced validation and calculation=
+
+Limesurvey (versions 2.05+ and above) makes it fairly easy to validate dates using the [[Question type - Date#Minimum date (date_min)|date_min]] and [[Question type - Date#Maximum date (date_max)|date_max]] fields (see above). Use these whenever possible. If you need to do more advanced validation, you may be able to work (and calculate) with dates using the [[ExpressionScript - Presentation|ExpressionScript]] and the function strtotime(). It calculates the number of seconds from the 1st January 1970 to a given date. 
+
+
+'''Example:''' if you want to display in a question text the number of days that have passed since a departure date (asked in a previous question) and today, you can can use the expression {(strtotime("now")-strtotime(departure))/60/60/24}.
+
+
+Please be aware that strtotime() works with a lot of different formats, but with not all of them! For example, Limesurvey's default date format (MM-DD-YYYY) does '''NOT''' work with strtotime(). Please set your survey to use one of the following date formats to avoid problems: YYYY-MM-DD, YYYY/MM/DD, DD.MM.YYYY, MM/DD/YYYY or DD-MM-YYYY.
+
+{{Alert||text=Dates in Limesurvey are saved as a string (text format). The [[ExpressionScript - Presentation|ExpressionScript]] converts all dates part of an expression into the standard format "yyyy-mm-dd HH:MM:SS". This makes it much easier to compare dates in an expression (e.g. "date1>date2"). If you need a datestring in the format it was asked in the question, use the ".shown" attribute (e.g.: You were born on the {birthdate.shown}.)}} 
+
+
+[[Category:Question types]][[Category:Mask questions]]

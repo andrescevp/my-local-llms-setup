@@ -1,0 +1,473 @@
+<languages />
+__TOC__
+
+{{Note| '''Please help extending this article''' by adding your own examples. This will help others getting started using the Expression Script.}}
+
+
+=Structure=
+
+
+The first part of the article will describe what Expressions can be used for and where to find/add an Expression. The second part provides examples on how to use Expression.
+
+
+=Categories of Expressions=
+
+
+LimeSurvey uses Expressions for the following purposes:
+* [[ExpressionScript_examples#Relevance|Relevance]]
+* [[ExpressionScript_examples#Validation|Validation]]
+* [[ExpressionScript_examples#Text output|Text output]]
+* [[ExpressionScript_examples#Answers storing|Answers storing]] 
+
+
+==Relevance==
+
+
+'''Purpose: Hiding question groups/questions'''
+
+Relevance controls whether a question group or question is shown or hidden. If the result of the Expression is "true" (i.e. 1), the element will be shown. Otherwise (if the result of the Expression is "false" (i.e. 0)), the element will be hidden.
+
+{|class="wikitable"
+!Type!!Shows/hides!!Where to find!!Screenshot
+|-
+|Question group Relevance||question group||Create/Edit question group -> "Relevance equation:"||[[File:Group relevance equation screenshot.png|30px]]
+|-
+|Question Relevance||question||Create/Edit question -> "Relevance equation:"||[[File:Question relevance equation screenshot.png|30px]]
+|-
+|Subquestion Relevance||subquestion||Edit subquestions -> "Relevance equation:"||[[File:Subquestion relevance equation screenshot.png|30px]]
+|-
+|}
+
+
+==Validation==
+
+
+'''Purpose: Validate input/actions on questions/subquestions/answers'''
+
+Validation controls whether the respondent's input into a question or action is valid or not. If the result of the expression is "true" (i.e. 1), the "good" class will be applied to the element and validation message. Otherwise, if the result of the expression is "false" (i.e. 0)), the "error" class will be apllied to the element and validation message. You can declare a style for these classes in the '''template.css'''.
+
+{|class="wikitable"
+!Type!!Validates!!Where to find!!Screenshot
+|-
+|Question Validation||question||Create/Edit question -> "Logic tab" -> "Question validation equation"||[[File:Question validation equation.png|30px]]
+|-
+|Subquestion Validation||subquestions||Create/Edit question -> "Logic tab" -> "Subquestion validation equation"||[[File:Subquestion validation screenshot.png|30px]] ‎
+|}
+
+==Text output==
+
+
+'''Purposes: (Do something) and write out some text'''
+
+An expression can be used to write out some text. For example, you can test or calculate something and specify the output depending on the result of the test or calculation. It can also be used to insert the question text, answers, question types, ... of a question used before the Expression is used. Text output can be used everywhere where a text is shown and can return every kind of results.
+
+{|class="wikitable"
+!Use Case!!Description
+|-
+|Micro tailoring||Adjust a text, e.g., write "Mr" or "Mrs" depending on a gender question asked before
+|-
+|Calculation||Calculate a value and write it out, e.g., "Your family income is xxx"
+|-
+|Reference||Insert a text from an element, e.g., "Your name is xxx. How old are you?"
+|}
+
+
+==Answers storing==
+
+
+'''Purposes: (Do something,) (write out some text) and store something in the database'''
+
+[[Question type - Equation|The Equation Question Type]] can be used to store something in the database. You can do something with an Expression, show the Equation question (which is similar to a [[Question type - Text display|text display]]) and store the result of the Expression in the database. It stores the answer into the responses table. Then, the result can be used within the statistics feature or it can also be imported into one of the formats provided by the LimeSurvey export functionality.
+
+=Examples for Expressions=
+
+
+==Insert an answer from a previous question==
+
+
+{| class="wikitable"
+|Purpose||Insert an answer from a previous question
+|-
+|Type||Reference
+|-
+|Example||Question one (question code "Q00"): What city do you live in? <br /> Question two (question code "Q01") How long have you lived in CITY? <br /> To do: The answer from question one should be used instead of "CITY" from the second question.
+|-
+|Expression||{QOO}
+|-
+|Description|| The answer provided in Q00 replaces the Q00 field from the second question
+|-
+|Steps||Create/Edit question two <br /> Insert "How long have you lived in {QOO} (years)?" into the question text field
+|-
+|colspan="2" align="center"|[[File:Simple expression city name.png]]
+|}
+
+==Using hidden equation question to autofill an answer==
+
+
+'''Problem:'''
+Imagine you have two questions Q1 and Q2. Q1 asks respondents for their age. Q2 divides respondents into three groups: age is below 20 years, age is 20, age is greater than 20. 
+So, Q2 should make use of the values "1", "2", "3", which correspond to the above conditions. Also, we should not forget to make Q2 invisible (the question will not be displayed in the survey, but the values will be via the "background process" within the responses table).
+
+'''To fill in the database using the Equation question type:'''
+* First, create a question with code Q1 as a numerical input question.
+* Then create another question with code Q2 as an equation question.
+* In the "Display settings" tab chapter of Q2:
+** set "Always hide this question" field as "On"
+** type in "Equation" field the expression:
+<pre>{if(Q1.NAOK < 20, "1", if(Q1.NAOK > 20, "3", "2"))}</pre>
+
+==Create a summary page using placeholders==
+
+
+This tutorial demonstrates how you can create an overview at the end of the survey, listing all questions and answers via [http://manual.limesurvey.org/ExpressionScript_-_Presentation#Access_to_variables ExpressionScript placeholders].
+It also shows how to limit such an overview to answered questions only.
+
+Our example can be downloaded from here: [[Media:Limesurvey_Expression_Manager_Placeholder_Demo_Survey.lss|Survey placeholders survey example]].
+
+
+'''''Question types being used here:'''''
+
+'''1. Single choice questions / single text/numeric questions'''
+*List (dropdown)
+*List (radio) [L]
+*Yes/No [Y]
+*Long free text [T]
+*Short free text [S]
+*Numerical input [N]
+*Equation [*]
+
+
+'''2. Question with subquestions'''
+*Multiple short text [Q]
+*Multiple choice [M]
+*Array [F]
+*Array (Yes/No/Uncertain) [C]
+*Array (10 point choice) [B]
+
+
+'''3. Questions with 2 scales'''
+*Array dual scale [1]
+
+
+'''4. Questions with X and Y scales'''
+*Array (Numbers) [:]
+
+
+'''5. Mask questions'''
+*Text display [X]
+
+
+In this simple example, our overview will be a simple list with:
+
+- ''Question text:'' User's answer
+
+
+===Single choice questions / single text/numeric questions===
+
+
+For all these question types, Limesurvey will store a single response:
+
+*List (dropdown)
+*List (radio)
+*List with comment
+*5 point choice
+*Yes/No
+*Short free text
+*Long free text
+*Huge free text
+*Numerical input
+*Equation
+*Date
+*Gender
+
+Assuming the question code of the question is q1, we can reference the question text and answer using:
+
+- {q1.question}: {q1.shown}
+
+Example:
+
+- How old are you?: 25
+
+
+If you want to check whether that question was answered you can put an IF statement around your output:
+
+<pre>{if(!is_empty(q1),join("- ",q1.question,": ",q1.shown),"")}</pre>
+
+This "translates" to: IF question with code q1 is not empty, output "- " AND the question text AND ": " AND the answer text (the join() function joins elements as a new string; ELSE: output nothing ("" means empty string).
+
+===Question with subquestions===
+
+
+For all these question types LimeSurvey uses subquestions:
+
+*Multiple short text
+*Multiple choice
+*Multiple choice with comments
+*Array
+*Array (5 point choice)
+*Array (10 point choice)
+*Array (Yes/No/Uncertain)
+*Array (Increase/Same/Decrease)
+*Array by column
+
+Assuming the question code of the question is q2 and the subquestions are numbered SQ001, SQ002, (auto-numbering done by LimeSurvey), we can reference the question text and answer using:
+
+- {q2_SQ001.question}: {q2_SQ001.shown}
+
+- {q2_SQ002.question}: {q2_SQ002.shown}
+
+For multiple choice questions it makes sense to now show the text of the ticked subquestion but to show a Y for each selected option:
+
+- {q2_SQ001.question}: {q2_SQ001}
+
+- {q2_SQ002.question}: {q2_SQ002}
+
+...
+
+Note that currently it is not possible to output the question text of questions with subquestions, see [http://bugs.limesurvey.org/view.php?id=8858 this feature request].
+
+
+====Example 1 (assuming question type is multiple choice)====
+
+
+- Do you know these car brands?
+
+-- Mercedes: Y
+
+-- Audi: N
+
+-- Volvo: Y
+
+
+If you want to output checked items only you can put an IF statement around your output and check for the checkbox value:
+
+<pre>{ if( q2_SQ001=="Y", join( "- ", q2_SQ001.question, ": ", q2_SQ001.shown ), "" ) }</pre>
+
+
+Use the <i>listifop</i> function if you want to output a list of only the selected items, eg: Mercedes, Volvo
+
+<pre>{ listifop( 'value', '==', 'Y', 'question', ', ', that.q2.sgqa ) }</pre>
+
+
+Where &nbsp;<small>that.q2</small>&nbsp; expands to all of q2's subquestions. See [[ExpressionScript - Presentation#The_reserved_.22this.22.2C_.22self.22.2C_and_.22that.22_variables|self, this and that]] for more detail.
+
+</br>
+
+====Example 2 (assuming question type is Array (10 point choice))====
+
+
+- Please rate the quality of the car brands below on a scale from 1=very bad to 10=very good?
+
+-- Mercedes: 7
+
+-- Audi: 9
+
+-- Volvo: 9
+
+
+If you want to output rated items only you can put an IF statement around your output and check if the current sub question was answered by using:
+
+<pre>{ if( ! is_empty( q3_SQ001 ), join( "- ", q3_SQ001.question, ": ", q3_SQ001.shown ), "" ) }</pre>
+
+
+Use the <i>listifop</i> function if for example you want to only output a list of the selected items greater than eight, eg: Audi / Volvo
+
+<pre>{ listifop( 'value', '>', 8, 'question', ' / ', that.q3.sgqa ) }</pre>
+
+</br>
+
+===Question with two scales===
+
+
+{{Note|This applies to the dual scale question type only.}}
+
+
+Let's assume that the following codes are being used:
+*Question code: q4
+*Subquestion codes: SQ001, SQ002, ...
+*Answer codes scale 1: A1, A2, ...
+*Answer codes scale 2: B1, B2, ...
+
+
+{{Note|To refer to the result of a certain subquestion on a certain scale, you need to use QuestionCode . '_' . SubQuestionCode . '_' . ScaleID. '''Note that "ScaleID" is 0 for the first scale and 1 for the other!'''</br> Example for referring to the answer of the third subquestion and second scale: q4_SQ003_1 - Question 4, subquestion 3, second scale.}}
+
+
+Let's output the results for both scales and the first two subquestions:
+
+- {q4_SQ001_0.question}: {q4_SQ001_0.shown} / {q4_SQ001_1.shown}
+
+- {q4_SQ002_0.question}: {q4_SQ002_0.shown} / {q4_SQ002_1.shown}
+
+To output the subquestion text, you need to add the scale ID to the placeholder (though the texts are the same for both scales). So instead of {q4_SQ001.question} we have to use {q4_SQ001_0.question} or {q4_SQ001_1.question}.
+
+If you want to export/display the results of subquestions with at least one answer only, use this syntax for each subquestion:
+
+<pre>{if(count(q4_SQ001_0,q4_SQ001_1)>0,join("- ",q4_SQ001_0.question,": ",q4_SQ001_0.shown," / ",q4_SQ001_1.shown),"")}</pre>
+
+===Question with X and Y scales===
+
+
+This applies to all matrix questions which allow an answer for every cell (not just every row as shown previously):
+*Array Texts
+*Array Numbers
+
+
+Assumed codes used:
+*Question code: q5
+*Subquestion codes: SQ001, SQ002, ...
+*Answer codes: A1, A2, ...
+
+To refer to the result of a certain subquestion from a certain column, you need to use QuestionCode . '_' . SubQuestionCode . '_' . AnswerCode. Example for referring to the answer of the third subquestion and second column: q5_SQ003_A2.
+
+Let's output the results for columns 1-3 of the first two subquestions:
+
+- {q5_SQ001_A1.question}: {q5_SQ001_A1.shown} | {q5_SQ001_A2.shown} | {q5_SQ001_A3.shown}
+
+- {q5_SQ002_A1.question}: {q5_SQ002_A1.shown} | {q5_SQ002_A2.shown} | {q5_SQ002_A3.shown}
+
+
+Since for these question types each cell (combination of X axes and Y axes) equals one answer option, a test for existing data needs to be done for each cell. Example:
+
+<pre>{if(!is_empty(q5_SQ001_A1),join("- ",q5_SQ001_A1.question,": ",q5_SQ001_A1.shown),"")}</pre>
+
+
+{{Note|To output the subquestion text you need to add the answer code to the placeholder (though the texts are the same for all answer options). So instead of {q5_SQ001.question} we have to use {q5_SQ001_A1.question} or {q5_SQ001_A2.question}.}}
+
+==Hide question if answer from previous question is empty==
+
+
+{|class="wikitable"
+|Purpose||Hide question if answer from previous question is empty
+|-
+|Type||Question Relevance
+|-
+|Example||Question one: question code "name", question text "What's your name?" <br /> Question two: question text "{name}, how old are you?" <br /> To do: Hide question two if the textfield of question one is empty
+|-
+|Expression||!is_empty(name)
+|-
+|Description||is_empty() determines whether a variable is considered to be empty. The "!" negates the result. So if the variable is not empty the Expression will be true and the question is shown
+|-
+|Steps||Create/edit question two <br /> Insert "!is_empty(name)" into "Relevance equation:"
+|-
+|Sample File||[[Media:Hide_question_if_empty_question_group.zip|Hide_question_if_empty_question_group.zip]]
+|-
+|colspan="2" align="center"|[[File:Hide question if empty 1.png]][[File:Hide question if empty 2.png]]
+|}
+
+
+==Hide question group if answer from previous question is Yes or No==
+
+
+{|class="wikitable"
+|Purpose||Hide question group if answer from previous question is Yes or No
+|-
+|Type||Question group Relevance
+|-
+|Example||Page one, Question Group one, Question one: question code "PET", question text "Do you have a pet?" -Yes -No <br /> Page two, Question Group two: Title "About your pet(s)" <br /> To do: Show/Hide question group two if answer from question one is Yes/No
+|-
+|Expression||PET == "Y"
+|-
+|Description||PET is the question code for the question you want to check the answer. If you don't use a suffix EM will use "Qcode.code". So you compare the answer code from the PET question to the value "Y". If the participant answers "Yes" the Expression is true and the question group "About your pet(s)" will be shown.
+|-
+|Steps||Create/edit question group two <br /> Insert "PET == "Y"" into "Relevance equation:"
+|-
+|Sample File||[[Media:Hide question group if answer from previous question is Yes or No.zip|Hide_question group_if_answer_from_previous_question_is_Yes_or_No.zip]]
+|-
+|colspan="2" align="center"|[[File:Hide question group if answer from previous question is Yes or No 1.png]][[File:Hide question group if answer from previous question is Yes or No 2.png]]
+|}
+
+
+==Display value of a multiple answer input question field==
+
+
+{|class="wikitable"
+|Purpose||Display value of a multiple answer input question field
+|-
+|Type||Reference
+|-
+|Example||Question one: question code "AskChildAge", question text "How old are your children?". Subquestions codes -Child1 -Child2 -Child3 - ChildXXX <br /> Question two: question code "ReportChildAge" question text "About your first child: - CHILD1 is AGE1."
+|-
+|Expression||{AskChildAge_Child1.question}, {AskChildAge_Child1.value}
+|-
+|Description||You want to use the value of a subquestion in a following question. You can access the subquestion value with this kind of expression: QcodeQuestion_QcodeSubquestion.value
+|-
+|Steps||Create/edit the second question <br /> Insert this text in the description: "About your first child: - {AskChildAge_Child1.question} is {AskChildAge_Child1.value}."
+|-
+|Sample File||[[Media:Display_value_of_a_multiple_answer_input_question_field.zip|Display_value_of_a_multiple_answer_input_question_field.zip]]
+|-
+|colspan="2" align="center"|[[File:Display value of a multiple answer input question field 1.png]]
+|}
+
+==Validate number of boxes ticked per row for an "Array (Numbers) Checkbox" question==
+
+
+{|class="wikitable"
+|Purpose||Validate number of boxes ticked per row
+|-
+|Type||Validation
+|-
+|Example||Question of type "Array Numbers (Checkbox Layout)"
+|-
+|Expression||sum(...)
+|-
+|Description||(sum(Test_A_1, Test_A_2, Test_A_3, Test_A_4, Test_A_5) <= X) determines whether at least X checkboxes in row A are checked. <br />If you want to check all three rows (A, B, C), you can connect the expression using "&&": <br />(sum(Test_A_1, Test_A_2, Test_A_3, Test_A_4, Test_A_5) <= X) <br />&& (sum(Test_B_1, Test_B_2, Test_B_3, Test_B_4, Test_B_5) <= X) <br />&& (sum(Test_C_1, Test_C_2, Test_C_3, Test_C_4, Test_C_5) <= X)
+|-
+|Steps||Create/edit question of type "Array Numbers (Checkbox Layout)".<br /> Insert the above expression into "Question validation equation" at the advanced question settings (you might have to adjust variable namings!).
+|-
+|Sample File||[[Media:limesurvey_survey_53654.lss|Validate number of boxes ticker per row for an Array (Numbers) Checkbox.lss]]
+|-
+|colspan="2" align="center"|[[File:Validate number of boxes ticker per row for an Array (Numbers) Checkbox 05.png]][[File:Validate number of boxes ticker per row for an Array (Numbers) Checkbox 1.png]]
+|}
+
+==Calculate difference between two dates==
+
+
+{| class="wikitable"
+|Purpose||Calculate difference between two dates
+|-
+|Type||Relevance / Equation question type / Validation
+|-
+|Example||Question one (date/time, code: DOB): What is your date of birth? <br /> Question two (date/time, code: datetoday): What is the date today? <br /> Question three (boilerplate): You are XXXX days old. <br /> To do: Calculate and display the number of days between the date given in question 1 and the question 2.
+|-
+|Expression||{(strtotime(datetoday)-strtotime(DOB))/60/60/24}<br>
+|-
+|Description|| strtotime calculates the number of seconds between the 1st of January 1970 and the given date. The above expression calculates the number of seconds between the two given dates. The term "/60/60/24" just calculates the number of days from the number of seconds.  <br /> Instead of asking for the "datetoday", you can also use strtotime('now') or simply time(), which directly returns the number of seconds from January 1970 until now (i.e. the time the survey was taken).  Thus you could quickly figure out the age of a person in years with  the equation {(time() - strtotime(DOB)) / 60 / 60 / 24 / 365.25}  In any of these cases, it is critical that the date is entered in a proper format, otherwise the strtotime() function will not work right.  
+|-
+|Steps||Create two date questions (for the date of birth and for today's date) and a boilerplate question. <br /> In the question text of the boilerplate question insert: "On {datetoday} you were {(strtotime(today)-strtotime(dob))/60/60/24} days days old." <br /><br /> Please note: The function strtotime can work with MANY but not all date formats. If you run into problems set your survey's date format to mm/dd/yyyy or yyyy-mm-dd or dd.mm.yyyy"
+|-
+|Sample File||[[Media:TestSurvey_Working_with_Dates.zip|Date_difference.zip]]
+|-
+|colspan="2" align="center"|[[File:Date_difference_example.png]]
+|}
+
+==Using ExpressionScript for Assessments==
+
+
+Here comes another example on how to use the ExpressionScript with [[Question type - Array|Array type questions]] and assessments:</ br>
+
+Let's say you have 2 array questions and you want to save the results of the calculation data to your database. It is actually simple, you will need to create and test your arrays and submit a dummy response to see if it works and gives you the results in the completed page.
+
+
+'''Implementation details:'''
+*add a question of type equation
+*add the following line assuming that Q1 is your array question code while Q2 is the second one:
+** <pre>{sum(Q1_SQ001.value,Q2_SQ001.value)}</pre>
+
+Note that SQ001 is the default code for any subquestion. If you change the subquestion code, adjust the equation above accordingly.
+
+
+==Using em_validation_q in array==
+
+
+You can use the [[QS:Em_validation_q|question validation equation]] to control an array with any condition.
+
+
+'''Implementation details:'''
+* for the first array : array of single choice
+** Question code is ARRAY
+** Sub question code are SQ01,SQ02,SQ03 and SQ04
+** update the Whole question validation equation and put <pre>!is_empty(ARRAY_SQ01) and !is_empty(ARRAY_SQ03) </pre>
+* for the second array : array of text
+** Question code is ARRAYTEXT
+** Sub question at Y axis code are SY01,SY02,SY03, and SY04
+** Update the Whole question validation equation and put <pre>count(self.sq_SY01 >= 1) and count(self.sq_SY03 >= 3)</pre>

@@ -1,0 +1,82 @@
+<languages /> <translate>
+
+
+=General= <!--T:11--> 
+
+
+<!--T:2-->
+In certain scenarios you may want to have a recurring survey - using the same survey structure for the same set of participants to compare the previous responses of one participant to those submitted at different times. This method is useful in analysing trends.
+
+<!--T:3-->
+For example, in a satisfaction survey intended for customers that recently bought a car, you could run the survey one month after the purchase, again 1 year after, and compare the answers.
+
+<!--T:4-->
+For such recurring surveys, you may find it convenient to have the participant see the survey pre-filled with their previous answers when they participate for the second time in the survey.
+
+<!--T:5-->
+Follow the steps below to make use of the "''Iterate survey''" functionality of LimeSurvey:
+
+=Prerequisites= <!--T:12-->
+
+
+<!--T:6-->
+Prerequisites:
+* the survey uses a [[Survey_participants|survey participants table]] (closed-access survey)
+
+<!--T:14-->
+* survey is '''not''' using [[Participant settings|anonymous answers]]
+
+<!--T:15-->
+* survey is using [[Participant settings|token-based response persistence]]
+
+
+<!--T:16-->
+{{Note|Please note that all conditions above must be met in order to see the ''Reiterate survey'' button displayed in the '''[[Responses & statistics|responses and statistics]]''' panel!}}
+
+=How to run it= <!--T:13-->
+
+
+<!--T:17-->
+Activate the survey and collect the answers from your participants.
+
+<!--T:10-->
+To run the same survey for the second time:
+* Do not deactivate the survey after the first set of responses are recorded
+* Click the '''Responses''' menu and then '''Responses & statistics''':
+
+
+<!--T:18-->
+<center>[[File:iterate survey - select responses menu.png]]</center>
+
+
+<!--T:19-->
+* Click the [[Responses|Display responses]] option (located on the main toolbar) to access the response table
+* Select all the submitted responses and export them so that you will be able to compare them to the new ones later:
+
+
+<!--T:20-->
+<center>[[File:Iterate survey - export stored responses.png]]</center>
+
+
+<!--T:21-->
+* Once you have saved your responses, click the ''Iterate survey'' button located on the top toolbar:
+
+
+<!--T:22-->
+<center>[[File:iterate survey - location.png]]</center>
+
+
+<!--T:23-->
+<center>[[File:Iterate survey - final step.png]]</center>
+
+
+<!--T:24-->
+* This will: 
+** Reset all tokens statuses to "not used",
+** Reset all responses statuses to "not submitted".
+
+
+
+
+
+</translate>

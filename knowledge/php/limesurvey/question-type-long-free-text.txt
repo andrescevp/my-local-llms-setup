@@ -1,0 +1,98 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+
+This question type collects multiple lines of text input.
+
+
+<center>[[File:T_LT.jpg]]</center>
+
+
+'''Example:''' [[Media:Long free text example.zip|Long_free_text_example.zip]]
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+{{QS:preg_validation}}
+
+=Display=
+
+{{QS:Display_rows}}
+
+{{QS:Hide tip}}
+
+{{QS:text_input_width}}
+
+{{QS:input_box_size}}
+
+{{QS:Question theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS Class}}
+
+=Input=
+
+{{QS:maximum_chars}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+{{QS:em_validation_sq}}
+
+{{QS:em_validation_sq_tip}}
+
+
+=Other=
+
+{{QS:Page_break}}
+
+=Statistics=
+
+{{QS:Display chart}}
+
+{{QS:Chart type}}
+
+=Timer=
+
+{{QS:time_limit}}
+
+{{QS:time_limit_action}}
+
+{{QS:time_limit_disable_next}}
+
+{{QS:time_limit_disable_prev}}
+
+{{QS:time_limit_countdown_message}}
+
+{{QS:time_limit_timer_style}}
+
+{{QS:time_limit_message_delay}}
+
+{{QS:time_limit_message}}
+
+{{QS:time_limit_message_style}}
+
+{{QS:time_limit_warning}}
+
+{{QS:time_limit_warning_display_time}}
+
+{{QS:time_limit_warning_message}}
+
+{{QS:time_limit_warning_style}}
+
+[[Category:Question types]][[Category:Text questions]]

@@ -1,0 +1,157 @@
+<languages /> 
+__TOC__
+
+=General description=
+
+To access global settings options: '''Configuration''' ⇒ '''Settings''' ⇒ '''Global settings'''
+
+
+<center>[[File:global.png]]</center> 
+
+
+The global settings can only be changed by those administration users with the [[Manage_users#Setting_global_permissions_for_a_user|Settings & Plugins permission]]. It can be used to adjust certain settings of LimeSurvey in a global context. Once you enter the global settings dialog and save your desired configuration, the previous LimeSurvey values will be overwritten.
+
+=Settings and their explanation=
+
+
+<center>[[File:Global Settings Tabs.png]]</center>
+
+
+==Overview==
+*'''Overview''': provides the following general information about your LimeSurvey installation:
+**'''Users''': shows the number of users that can access the LimeSurvey installation via the internal database authentication system
+**'''Surveys''': shows the total number of (active & inactive) surveys
+**'''Active surveys''': shows the total number of active surveys (that can be accessed by other users via the web)
+**'''Deactivated result tables''': at some point, you might want to change some questions during the survey runtime. If you do this, all the prior answers associated with the respective survey will be dissociated from the newly edited survey. The data that was previously collected will be stored in 'deactivated result tables'
+**'''Active survey participants tables''': shows the number of active survey participants tables (that have a corresponding active survey)
+**'''Deactivated survey participants tables''': shows the number of deactivated survey participants tables
+
+{{Note|Check our [[Survey_participants#Introduction|wiki on survey participants tables]] for more information.}}
+
+{{Note|For debug purposes, you can also find a button that shows your PHP information.}}
+
+==General==
+*'''Site name''': is your survey site name. This name will appear in the survey list overview and in the administration header
+*'''Default template''': This setting specifies the default design template used for the 'public list' of surveys and for new surveys or surveys using a non-existing template. If you would like to use a personalized template, read about how you can use the LimeSurvey's [https://manual.limesurvey.org/The_template_editor template editor]
+{{Note|The templates are stored in '/limesurvey/templates/'.}} 
+*'''Create example question group and question''': This setting specifies if an example question group and question should be created automatically after creating a new survey.
+*'''Administration template''': This setting specifies the default design template used for the LimeSurvey administration. To use a customized template, add it in '/limesurvey/upload/admintheme/'
+*'''Time difference (in hours)''': If your web server is in a different time zone to the location where your surveys will be based, put the difference between your server and your home time zone here. For example, I live in Australia, but I got a US web server. The web server is 14 hours behind my local time zone. So, my setting here is "+14". In other words, it adds 14 hours to the time of the web server. This setting is particularly important when surveys timestamp the responses.
+
+*'''Session lifetime (seconds)''' (''only available with database sessions''): Defines the time in seconds after which a survey session expires (provided there is no action from the participant). When using regular, file-based sessions, it is up to the system administrator to define the right values for 'session.gc_maxlifetime', 'session.save_path', etc., in the PHP configuration. Not only the web server settings but also the other similar settings of other applications may overwrite the setting for file-based sessions when editing it locally via the application. The maximum value that can be introduced is 65000 (seconds). It is recommendable to use a reasonable value. Bear in mind that, when using database sessions, check whether the MySQL setting called '''max_allowed_packet''' is set to a large value because some surveys generate over 2 MB of session data
+*'''IP Info DB API Key''': Allows integration with the [https://ipinfodb.com IP-Info-DB service], which lets you determine the geographic location of survey takers based on their IP. To use a key, you need to [http://ipinfodb.com/register.php register] for the API
+
+*'''Google Maps API Key''': Allows for integration with Google Maps
+*'''Google Analytics Tracking ID''': Allows for integration with Google Analytics. Surveys can override this site-level value. The tracking ID can be inserted into templates using {GOOGLE_ANALYTICS_API_KEY}. The full JavaScript that Google Analytics expects to find (including the key) can be included in templates via {GOOGLE_ANALYTICS_JAVASCRIPT}
+{{Note|For further details on how to use Google's API with LimeSurvey, check our [[Google API how-to]] page.}}
+*'''Google Translate API Key''':  The Auto-Translate feature uses version 2 of Google Translate's API. Google charges for this service. In order for the Auto-Translate feature to work, get an API key from [https://code.google.com/apis/console/?api=translate this site], and then enter the key in this field
+*'''Character set for file import/export''': You can specify the character set most suiting you and your system, if you experience problems with the exporting/importing functions
+*'''Show LimeSurvey branding in survey''': Enable or disable LimeSurvey branding on your Surveys. 
+:This setting is available in LimeSurvey Cloud only. 
+
+:By default LimeSurvey Cloud displays branding on your surveys. This includes a button at the bottom of the survey page with the text "Made in LimeSurvey" and also a message at the end of the survey with the text "Thank you for taking this survey powered by LimeSurvey".
+
+:It is possible to remove branding from the Expert plan and above. If you have a Free or Basic plan you will first need to upgrade your plan to access this setting.
+
+
+*'''Side-menu behavior'''{{ObsoleteIn|3.0}}: How the side-menu should behave while editing surveys. The default value is 'Adaptive', meaning that the side-menu can be changed when and how the users want. The other values are 'Always open' and 'Always closed'
+
+* '''Clear assets cache:''' Reset the css and js assets url, be sure to have all new css and js file updated.
+
+*'''Default HTML editor mode:''' Sets the default mode for integrated HTML editor. The valid settings are:
+** ''inline'' (default): Inline replacement of fields by an HTML editor. Slow, but convenient and user-friendly
+** ''popup'' : Adds an icon that opens a popup window with the HTML editor. Faster, but the HTML code is displayed on the form
+** ''HTML source'' : No HTML editor used, just the plain HTML source
+
+*'''Question type selector''': Choose 'Full selector' to get a question type selector with preview and 'Simple' to get a plain select box
+
+*'''Template editor''': Choose 'Full template editor' to get an enhanced editor (with syntax-highlighting) when editing survey templates and 'Simple template editor' to get a plain editor field
+
+{{Alert|title=Attention|text=You will observe that some options can be found in your user's preferences, under [[First_login_-_your_user_preferences#Your_account_preferences#Your_personal_settings|Your personal settings tab]]. If you change the respective options from the global settings of your LimeSurvey installation, the 'default' option from the drop-down list of each option that is located under 'Your personal settings' tab will inherit the global settings values. For example, if you, as a user with [[Manage users#Set permissions for a single survey|Settings & Plugins permissions]], change the HTML editor mode to the 'popup' mode, all the other users who have chosen the 'default value' option from the HTML editor mode in their personal settings will also use the popup option.}}
+
+==Email settings==
+*'''Default site admin email''': This is the default email address of the site administrator, and it is used for system messages and contact options
+*'''Administrator name''': The real name of the site administrator
+*'''Email method''': This determines how emails are being sent. The following options are available:
+**''PHP'' (default value): Use internal [https://php.net/manual/function.mail.php PHP mail function]
+**''Sendmail'': Use Sendmail mailer
+**''SMTP'': based on SMTP relaying. Use this setting when you are running LimeSurvey on a host that is not your mail server
+***Make sure that you are using your SMTP configured email (Global settings ⇒ Email settings) if you use SMTP; otherwise there might be a chance that the following error is displayed: 'SMTP -> ERROR: RCPT not accepted from server: 553 5.7.1 : Sender address rejected: not owned by user'
+**''Qmail'': Set this if you are running the Qmail mailer
+**''Plugin'': Using this you can select a custom email plugin to use.*'''SMTP host''': If you use 'SMTP' as email method, then you have to put your SMTP server here. If you are using a different port than port 25 (standard for SMTP), then you have to add the port number separated be a colon (example: 'smtp.gmail.com:465')
+*'''SMTP username''': If your SMTP-server needs authentication, set this to your username; otherwise it must be blank
+*'''SMTP password''': If your SMTP-server needs authentication, set this to your password; otherwise it must be blank
+*'''SMTP encryption''': Three options are available:
+**''Off'' (default value)
+**''SSL''
+**''TLS''{{Note|Check the [https://en.wikipedia.org/wiki/Transport_Layer_Security following link] for further details about SSL/TLS.}}
+*'''SMTP debug mode''': It comes with three options:
+**''Off'' (default value): The user wants this activated only in the case in which the SMTP relay does not work, and further details are needed to remedy the technical problem
+**''On errors'': A detailed connection log and error message will be given if an error occurs
+**''Always'': It provides valuable information on how an SMTP relay works. If an error occurs, further details are provided
+ {{Note|Debug part is shown when [[Survey_participants#Send_email_invitation|sending email to participant]].}}
+* '''Email plugin''': If you choose 'Plugin' as sending method you can set here which plugin should be used. Currently there are two bundled email plugins in LimeSurvey. If the plugin cannot be found, check if it is activated.
+**'''[[AzureOAuthSMTP_Plugin|AzureOAuthSMTP]]''': Use this to send emails using Azure/Microsoft and OAuth over SMTP
+**'''GoogleOAuthSMTP''': Use this to send emails using google and OAuth over SMTP*'''Email batch size''': When sending invitations or reminders to survey participants, this setting helps the administrator determine how many emails can be sent in one bunch. Different web servers have different email capacities, and if your script takes too long to send many emails, the script could time out and cause errors. Most web servers can send 100 emails in one go within the default 30 second time limit for a PHP script. If you get script timeout errors when sending large numbers of emails, reduce the email batch size using this setting. Clicking the 'send email invitation' button that is located on the survey participant toolbar sends one batch of invitations, displaying a list of the addresses to which the email was already delivered and a warning that ''"There are more emails pending than could be sent in one batch. Continue sending emails by clicking below. There are ### emails still to be sent."'' and provides a "Continue" button to proceed with the next batch. So, the user determines when to send the next batch after each batch gets emailed. It is not necessary to wait with this screen active. The admin could log off and come back at a later time to send the next batch of invitations.
+* '''Email sending rate''': This setting determines the number of seconds until the next batch is automatically sent in the interface.
+
+==Bounce settings==
+*'''Default site bounce email''': This is the email address where bounced emails will be sent to. For faster bounce back processing, the email address box should be limited to bounce back only
+*'''Server type''': If set to 'Off', no bounce processing functions will be available. To activate the bounce processing function at a global level, set this to 'POP' or 'IMAP' – think of whether you wish the bounced emails to be kept on your email server (IMAP) or not (POP) after reading them. For further details on its usage, check the following [[Email_bounce_tracking_system|wiki section]]*'''Server name & port''': Name of the server and (if needed) the port separated by a colon. The port number isn't typically needed unless the email host uses a non-standard port
+*'''User name''': The user name for the POP/IMAP account
+*'''Password''': The password for the POP/IMAP account
+*'''Encryption type''': If encryption is used, please set the right type here (SSL or TLS)
+
+==Security==
+*'''Survey preview only for administration users''': By default, the preview of inactive surveys is restricted only to authenticated. If you set this to 'No', any person can test your survey using the survey URL – without logging in to the administration and without having to activate the survey first
+*'''Filter HTML for XSS''': It is turned 'on' by default. They will not be authorized to use dangerous HTML tags in their survey/group/question/labels texts (JavaScript code, for instance). The idea behind this is to prevent a survey operator to add a malicious script to get his permissions raised on your system. '''However, if you want to use any JavaScript in your surveys, you will need to switch this off''' (specific scripts for video hosting platforms can be used). 
+{{Hint|Text=The super admins never have their HTML filtered when saved or on public survey view. To see the effects of XSS filtering, it is advised to use a regular user account.}}
+{{Alert|title=Warning|text=With XSS enabled, some parts of the expression manager system cannot be used: see [[ExpressionScript_-_Presentation#XSS security|XSS and ExpressionScript]].}}
+*'''Disable question script for XSS restricted user''' {{NewIn|4.1.0}}: Set to 'on' by default, this mean simple user cannot add or update scripts in question editor. they can see it but don't update it. If you disable XSS protection, then this setting is not used. If you set it to 'off', then even with XSS filtering active, any user can add or update the script in question.
+*'''Group member can only see own group''': By default, non-admin users defined in the LimeSurvey management interface will only be able to see other users if they belong to at least one common group. If the administrator sets this to 'No', then the users can see all the users defined in the LimeSurvey [[Manage users|User Control panel]], regardless of the group they belong to
+*'''IFrame embedding allowed''': This option can be used to indicate whether a browser should be allowed to render the survey page in a <frame>, <iframe> or <object>. You can use this to avoid clickjacking attacks, by ensuring that your survey is not embedded into other sites. If you set it to 'Allow' (the default value), there is no restriction. Setting this to 'Same origin' will make the content to be loaded only if the survey runs on the same domain and port as the including <frame>, <iframe> or <object>
+{{Alert|title=Attention|text=You need to update config.php file to really allow cookies to be used in iframe. See [[Optional_settings#Allow_usage_of_session_and_Csrf_Validation_in_iFrame_.28New_in_3.24.3_.29|Allow usage of session and CSRF Validation in iFrame]]}}
+{{Hint|Text=When set to Same Origin : LimeSurvey add header<code>X-Frame-Options: SAMEORIGIN</code>, else LimeSurvey don't add any X-Frame-Options. You can restrict yourself X-Frame-Options with server settings. [https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options More information on X-Frame-Options] }}
+{{Hint|Text=Theoretically, it is working. However, this function might not work when it is enabled because it heavily depends on the used web browser and whether it allows iframes or not. Some server configuration restrict iframe embedded by default. }}  
+*'''Force HTTPS''': This is set by default to "Don't force on/off". Switch the setting to "On" to force the connection to use HTTPS
+{{Alert|title=Attention|text=If your server doesn't support HTTPS properly, you can lock yourself from the system! Therefore, click on the '''"check if this link works"''' located below the option. If the link does not work and you turn on HTTPS, LimeSurvey will break and you won't be able to access it.}} 
+{{Hint|Text=If you activate HTTPS mistakenly, you can deactivate it in application/config/config.php file, changing the value of  ssl_emergency_override to 1.}}
+*'''IP whitelist for login or token access''': This option can be used to exclude specific IPs from "max login attempts" checks done on the login screen as well as on the token access screen, so requests from those IPs are not blocked.
+
+==Presentation==
+*'''Show question number and/or question code''': What to be shown to the survey participants – the question number and/or the question code, both or none. There is also a fifth option in which this option can be selected by the survey admin. The question code is shown next to each question from the survey
+*'''Repeating headings in array questions every X subquestions''': If you use array type questions, you'll often have a lot of subquestions, which - when displayed on screen - take up more than one page. The repeat-headers setting lets you decide how many answers should be displayed before repeating the header information for the question. A good setting for this is around 25. If you don't want the headings to repeat at all, set this to 0*'''Show "There are X questions in this survey"''': It shows the number of questions the survey contains to the user participants. The number of the questions right from the start of the survey. 
+*'''Font size of PDFs''': 9 is the default size for normal text. The group title font size is the value introduced in this box plus two, while the font size of the survey's title is the value introduced in this box plus four. In the default case scenario, the PDF uses a font size of 9 for normal text, of 11 for group titles, and of 13 for the title of the survey
+*'''Width of PDF header logo''': the 'dimension' of the PDF header logo. ''The logo appears only on the PDF file that includes the answers of the survey participants to a survey – a survey participant may wish to export his answers after completing the survey.''
+*'''PDF header title''': If it is left empty, the site name will be used. ''The PDF header title appears only on the PDF file that is the result of the survey participant's wish to export his answers after completing a survey.''
+*'''PDF header string''': If empty, the survey name will be used. ''The PDF header string appears only on the PDF file that is the result of the survey participant's wish to export his answers after completing a survey.''*'''Show question group title and/or description''': It works in the same manner as the '''Show question number and/or question code''' function. 
+*'''Show 'no answer' option for non-mandatory questions''': When a radio button/select type question that contains editable answers (i.e.: List & array questions) is not mandatory and the "show 'no answer'" is also enabled (default), an additional entry "No answer" is shown for each subquestion - so that survey respondents may choose not to answer the question. You can select from the global settings one of the following options:
+**''Selectable'' : If the LimeSurvey administrator selects it, a survey administrator can choose whether his/her own survey displays the "no answer" option for non-mandatory questions or not (see the [[Presentation]] wiki section for more details)
+**''On'' (default value): If this option is chosen, all non-mandatory questions will contain the "no answer" option - this cannot be changed by the survey administrator because the global settings trump [[Survey settings|survey settings]]
+**''Off'' : If off, the non-mandatory questions will not display any "no answer" option - this cannot be changed by the survey administrator because the global settings trump the [[Survey settings|survey settings]]*'''Show header in answers export PDFs''': Turn it off (default) if you would like to see nothing in the header of the PDF that contains the answers of the respondents. If it is turned on, the following information will be displayed in the header of the PDF that contains the respondents' answers
+*'''Add gray background to questions in PDF''': It is turned 'On' by default. ''This function refers to export-responses PDFs.''
+*'''PDF questions in bold''': It is turned 'Off' by default. ''This functions refer to export-responses PDFs.
+*'''Borders around questions in PDF''': It is turned "On" by default. ''This function refers to export-responses PDFs.''
+*'''Borders around responses in PDF''': It is turned "On" by default. ''This function refers to export-responses PDFs.'
+
+==Data Policy==
+*'''Show data policy on the surveylist page::''' Whether to display the "data policy" button on the survey list. On click this will display a button that shows a popup box(modal) with the "data policy" message.
+*'''Show legal notice on the surveylist page:''' Whether to display the "legal notice" button on the survey list. On click this will display a button that shows a popup box(modal) with the "legal notice".
+*'''Data policy:''' Fill in the text box to add all the information related to your legal notice (e.g., rights, duties obligations).
+*'''Legal notice:''' Fill in the text box to add all the information related to your survey data policy (e.g., where the data is stored, for how long, and so on).
+
+<div class="simplebox">[[File:help.png]] All the options from above influence '''only''' the parameters of the PDF which contain the answers/responses to a survey/questionnaire. Therefore, the options mentioned above influence only the PDF result of the 'answers export PDF' function. </div>
+<div class="simplebox">[[File:help.png]] LimeSurvey also allows questionnaires to be printed and to be completed offline, but the export questionnaire PDF function is an experimental option and the output is far from being perfect. Its parameters can be modified either from the 'Style' from the [https://manual.limesurvey.org/Exporting_a_survey_structure/en queXML PDF export page] or from the [https://manual.limesurvey.org/Optional_settings#Statistics_and_response_browsing config.php file].</div>
+
+==Language==
+*'''Default site language''': The default language that is used in your administration panel can be selected via this option. It also gives the default language for the public survey list if none is given
+*'''Available languages''': If you don't want all languages to be available in the 'default site language' box, just remove them from the left box. This restricts the available language in survey by administrator.
+
+==Interfaces==
+*'''RPC interface enabled''': Using this feature you can activate/deactivate the LimeSurvey [[RemoteControl 2 API|RemoteControl2]] interface API, either using JSON-RPC (recommended) or XML-RPC
+
+*'''URL''': http://<your_domain>/<your_limesurvey_dir>/index.php/admin/remotecontrol
+
+*'''Publish API on /admin/remotecontrol''': If you activate this option, then under the specified URL a brief description of the API functions will be available. Usually, you should not need to activate it and should only be activated for debug purposes in general.
+
+<div class='simplebox'>[[File:help.png]] '''Note:''' Please note that the remote control functionality is generally used by developers to access LimeSurvey from other applications (in this way, you are not restricted only to PHP). It is only recommended for advanced users. For more details on its usage, check the following [[RemoteControl 2 API|wiki section]] or join the [https://www.limesurvey.org/community/forums LimeSurvey forums].</div>

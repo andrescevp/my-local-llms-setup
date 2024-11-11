@@ -1,0 +1,8 @@
+<languages /> 
+=Export question=
+
+
+To export a question (.lsq format) together with its settings (advanced settings, answer options, subquestions, and default answers) to later import it into another LimeSurvey installation, use the export question functionality:
+
+
+<center>[[File:Export a question.png]]</center>

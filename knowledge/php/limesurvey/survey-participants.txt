@@ -1,0 +1,523 @@
+<languages /> __TOC__
+
+=Introduction=
+
+
+The Survey Participants  functionality allows you to invite a group of people to participate in your survey, keep track of who has completed the survey, and ensure that each person can only participate once. The survey participants table feature allows you to do the following:
+*Import a list of names and email addresses for participants from a [[Survey_participants#Import participants from a CSV file|CSV]] file or a [[Survey_participants#Import participants from an LDAP query|LDAP query]];
+*Generate a unique token code for each participant (invitation code);
+*Send an email invitation to each person on your list (by group or individually);
+*Send a reminder email to each person on your list who has not yet responded (by group or individually);
+*Track who has responded from your survey participants list;
+*Restrict access for people who have not received a token, and those with a token who have already responded;
+*Edit/change any details in your list;
+*Create email templates for invitations & reminders.
+
+Once the survey is switched to ''Closed-access'' mode '''only the people that provide a unique token code (that has not been already used) can access the survey'''. (You need to create a survey participants table first for the respective survey).
+
+If you enable the [[Participant settings|Allow public registration]] option from the '''Survey participants table''' panel, the survey participants will be able to register for your survey by receiving an automatically generated token code.
+
+{{Note|Some tokens-related settings are stored in the [[Participant settings|participant settings]] panel.}}
+
+=How to create a survey participants table=
+
+
+to ''initialize'' a survey participants table: '''Settings''' > '''Survey menu''' > '''Survey participants''':
+
+
+<center>[[File:Survey_participants_settings_tab.png]]</center> 
+
+
+The following message will be displayed:
+
+
+<center>[[File:Switch-to-closed-access-mode-2.png]]</center>
+
+
+If you ''initialize a participant table'', the survey will be accessible only to those participants who provide a token code in the registration process (either manually or by URL).  This way, the survey will be switched to closed-access mode.
+
+Once initialized, a window will be displayed confirming the creation of the survey participants table.
+
+
+==Reactivate a survey participants table==
+
+
+When you delete a survey participants table, a backup is created. It can later be reactivated if you wish to use that specific survey participants table in another survey.
+
+
+<center>[[File:Restore old token tables.png]]</center>
+
+=The survey participants table management tools=
+
+
+A ''survey participant summary'' will be displayed if the survey participants table was previously created. This is the default screen:
+
+
+<center>[[File:Survey participant summary.png]]</center>
+
+
+*'''Total records:''' The number of survey participants from the survey participants table;
+*'''Total with no unique token:''' Displays the number of users without an assigned token code;
+*'''Total invitations sent:''' Shows the number of invitations that have been sent to your survey participants from the '''Survey participants''' table by using the Invitations option from the [[Survey participants#Invitations & reminders|Invitations & reminders]] menu; 
+*'''Total opted out:''' Displays the total number of survey participants that have decided [[Email_templates#Participant opt-out|to opt out]] from the survey;
+*'''Total screened out:'''  Used to screen and exclude potential participants who do not match certain criteria.
+*'''Total surveys completed:''' Shows the number of the surveys that have been completed by those users who have been allocated a token code. 
+
+
+Above the '''Survey participant summary''' table, you will find the '''survey participants table management tools''':
+
+
+<center>[[File:token-menu2.png]]</center>
+
+
+*[[Survey participants#Display participants|Display participants]]: Displays a survey participants table with all the current participants. From the browse screen you can edit or delete individual entries from the table as well as perform a number of other useful functions (see the [[Survey participants#Display participants|Display participants wiki]] section below for more details);
+*[[Survey participants#Create...|Create...]]: Allows the survey administrator to add respondents into the survey participants table either via the '''Add participant''' option or via the '''Import participants''' function;
+*[[Survey participants#Manage attributes|Manage attributes]]: Allows the survey administrator to add additional fields to the survey participants table to store custom participant data;
+*[[Survey participants#Export|Export]]: To export the token tables and use them in other surveys, use this function. The file will be saved in the .CSV format;
+*[[Survey participants#Invitations & reminders|Survey participants]]: Allows you to invite or remind your participants from the survey participants table to fill out your online survey;
+*[[Survey participants#Generate tokens|Generate tokens]]: Allows the survey administrator to quickly allocate a random unique token code to each user from the survey participants table that does not have one;
+*[[Survey participants#View in CPDB|View in CPDB]]: Provides quick access to your LimeSurvey installation [[Central Participant Database|central participant database]] (CPDB). From there you can allocate CPDB users as survey participants to any survey.
+
+
+==Display participants==
+
+
+Shows the entries list from the survey participants table and allows the user to:
+*[[Survey participants#Sort the survey participants|sort the survey participants]];
+*[[Survey participants#Filter the survey participants|filter the survey participants]];
+*[[Survey participants#Perform certain actions to an individual entry|perform certain actions to an individual entry]];
+*[[Survey participants#Perform a specific action to more than one entry|perform certain actions to more than one entry]]. 
+
+
+<center>[[File:token-actions.png]]</center>
+
+
+===Sort survey participants===
+
+
+The second row of the table includes various criteria that can help the survey administrator sort the entries. If you click on any of the columns/criteria from the table, the screen will be refreshed, showing the survey participants ordered in accordance to the criterion you just clicked on. Click twice on it to get the results displayed in a descending order.
+
+
+<center>[[File:Display participants - sort.png]]</center>
+
+
+===Filter survey participants===
+
+
+To filter survey participants, choose the column that you want to filter.  Then type in the values/strings that you want to filter on in the empty box below the desired column.
+
+
+<center>[[File:Display participants - filter.png]]</center>
+
+
+For example, type "OK" in the email status field to return only those participants that have a valid email address.
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' You can also use operators when filtering the survey participants (e.g.,: >, <, >=, <=, = ). </div>
+
+{{Alert|title=Attention|text=To filter "invitation sent", "reminder sent", and "survey completed" columns, use "=N" or "<>N", meaning "equal No" and "not equal No", respectively.}}
+
+===Perform a specific action to an individual entry===
+
+
+The '''Action''' column is where you can find all the actions that are available for each individual entry from the survey participants table. The possible actions that can be performed are:
+
+
+<center>[[File:Display participants - participant action.png]]</center>
+
+
+*'''View response details:''' If the survey is a "tracked" (i.e., not anonymous) survey, another button will appear, allowing you to view the response from this individual entry;
+*'''Launch the survey with this token:''' Used to execute a survey by using the generated token code; 
+*'''Send email invitation:''' Use this option to send an email invitation to the respective participant to complete the survey;
+*'''Edit the survey participant:''' Click to change survey participant data;
+*'''Delete survey participant:''' Click to delete that particular entry;
+*'''View this person in the central participant database''': An icon will be displayed if the respective entry can also be found in the central participant database.
+
+===Perform a specific action to more than one entry===
+
+
+On the bottom-left part of the table, you will find the '''Selected participant(s)...''' button that allows you to perform certain actions at a macro level:
+
+
+<center>[[File:Display participants - participants actions.png]]</center>
+
+
+*'''Send email invitations:''' Send email invitations to the selected survey participants;
+*'''Send email reminder:''' Send email reminders to the selected survey participants;
+*'''Add participants to central database:''' To use some of the token entries in another survey, add the selected participants to the [[Central Participant Database|central participant database]]. From there, you have the option to add the participants to any survey you wish. For more details, continue reading the [[Central_Participant_Database#Share_this_participant|Share this participant]] wiki page.
+
+
+{{Box|Before executing any of the functions mentioned above, do not forget to select the survey participants upon which the action will be performed.}}
+
+==Create...==
+
+
+To have more participants listed in the survey participants table, you can add new ones or import them from a CSV file or LDAP query. 
+
+
+<center>[[File:Survey participants - Create....png]]</center>
+
+
+===Add participant===
+
+
+A typical token entry contains the following fields:
+
+
+<center>[[File:token_editing2.png]]</center>
+
+
+*'''ID:''' An integer that is automatically assigned to each survey participant;
+*'''Completed?''': Disabled by default. If enabled, it would contain the date when the survey was completed. No invitations or reminders are sent to the respective users if this is enabled. It is automatically enabled if the respective survey participant completed the survey using his or her assigned token code; 
+*'''First name:''' The first name of the survey participant;
+*'''Last name:''' The last name of the survey participant;
+*'''Token:''' This is the invitation code. It can be manually or automatically generated (via the '''Generate tokens''' button);
+*'''Language:''' Here you can select the default language of the survey for the respective participant;
+*'''Email:''' The email address of the participant;
+*'''Email status:''' This field helps you track invalid email addresses. For instance, if the survey administrator received email error notifications from this email, then they can set this field to anything other than "OK" (for instance "user unknown" or "mailbox quota exceeded"). Marking this field with an email status other than "OK" will help skip this entry when sending invitation or reminder emails. Note that this is completely manual, unless you decide to implement a script which updates this field automatically;
+*'''Invitation sent?:''' If enabled, contains the date when the invitation email was sent;
+*'''Reminder sent?:''' If enabled, contains the date when the reminder email was sent;
+*'''Uses left:''' Counts the number of times the token can be used. ''Note:'' When increasing this value (default = 1) for a user who has already filled out the survey (which sets uses left to 0), you also have to switch the '''Completed''' field from "Yes" to "No";
+*'''Valid from:''' & '''Until:'''You can set a date/time range for when this token can be used. You can leave these empty if you don't want to limit the participation time frame for certain users. If the user is answering the survey and the participation time ends, then the user is locked out immediately and won't be able to finish the survey.
+
+Note that the '''Add survey participant''' panel has two tabs: the '''General tab''' and the '''Additional attributes''' tab. The additional attributes tab offers you access to your custom attributes - read the following [[Survey participants#Manage attributes|wiki section]] for more details.
+
+
+===Create dummy participants===
+
+
+A dummy participant can be used when you do not want to send tokens by email to survey participants, but give them token codes by other means. For example, students doing class evaluations could be given a paper with an invitation code to be entered at the beginning of the online survey.  This way, the likelihood of receiving more responses and feedback increases.
+
+Click '''''Create dummy participants''''' and the following page will be displayed:
+
+
+
+<center>[[File:Survey participants - create a dummy participant.png]]</center>
+
+
+The ''Number of participants'' field allows you to enter the number of dummy participants you want to add to your survey participants table. The explanation of the other fields can be found in the [[Survey participants#Add participant|Add participant]] wiki subsection.
+
+After completing the fields, press '''Save''' located in the upper-right part of the screen.
+
+
+To check whether they were added or not, check the Survey participants table:
+
+
+<center>[[File:Dummy variables - simple example.png]]</center>
+
+===Import participants from a CSV file===
+
+
+The import function allows you to import information from a [[Survey participants#Import participants from a CSV file|CSV file]] or [[Survey participants#Import participants from a LDAP query|LDAP query]].
+
+
+<center>[[File:survey participants - import csv.png]]</center>
+
+
+*'''Choose the CSV file to upload:''' Pick the CSV file you wish to import. To eliminate any possible errors, we recommend that you import a standard CSV (comma delimited) file with optional double quotes around values (default for OpenOffice and Excel). 
+
+'''The first line must contain the field names'''. It <u>must</u> also contain the following fields: ''firstname, lastname, email''. 
+
+They have to contain at least one character. Simply adding double quotes and no characters between them will not work! 
+
+The other fields are optional: ''emailstatus, token, language, validfrom, validuntil, attribute_1, attribute_2, attribute_3, usesleft, ... .''
+
+
+{{Hint|Text=To obtain a full list of token field names, [[Survey participants#Export|export an existing survey participants table]].}} 
+
+{{Hint|Text=The date format for the "validfrom" and "validuntil" fields in the CSV token inport file is "YYYY-MM-DD HH:MM".}}
+
+*'''Character set of the file:''' Select the option that fits the characters used in the CSV file;
+*'''Separator used:''' You can let LimeSurvey automatically discover the used separator in your CSV or select either the ''comma'' separator or the ''semicolon'' one;
+*'''Filter blank email addresses:''' If enabled, the survey participants without an email address will not be imported into your survey participants table;
+*'''Allow invalid email addresses:''' If disabled, this function will look into the email addresses fields and check whether the addresses have the structure of an email or not (e.g.: a@a.net); 
+*'''Display attribute warnings:''' If enabled, after the importing process warnings will be displayed in case there is something wrong with the fields. For example. you might get an attribute warning if nothing is provided in any of the mandatory fields or if an email is incorrectly introduced in the CSV file.
+
+*'''Filter duplicate records:''' If enabled, you can set which fields are used to identify duplicates. By default First name, Last name & Email-address are preselected. If a duplicate is found while importing, the related line is omitted.
+
+*'''Duplicates are determined by:''' Select the fields that you want to filter on for duplicates.
+
+
+You can also import customized attributes when importing a CSV file. You will have to define what attributes will be added. You can do it like this:
+
+
+    <code>email,attribute_1 <Casenr>, token, attribute_2 <Title>, attribute_3 <destination>, lastname,firstname,attribute_4 <Sender></code>
+
+
+Once you are done choosing the desired importing settings, do not forget to click on the '''Upload''' button.
+
+
+====Troubleshooting the import of survey participants====
+
+
+A common error when users try to import tokens is an invalid CSV file. This is often caused by Microsoft Excel. Many users have a list of email addresses saved as an XLS document. A file can be saved as CSV in Excel.  However, depending on the locale of the OS, Microsoft Excel may use semi-colons (;) as comma separator, while a standard CSV file uses commas (,) as separators. If you do not know which one you use, open the file with a standard text editor and verify which separator was used. 
+
+Recommended free raw text editors are: [http://www.pspad.com/ PSPad], [http://www.flos-freeware.ch/notepad2.html NotePad2] or [http://notepad-plus-plus.org/ Notepad++] for Windows, and [http://www.barebones.com/products/textwrangler/ TextWrangler] for Macintosh.
+
+
+{{Box|LimeSurvey should also detect semicolons as separators. However, in case the import process is not properly working, replace the semicolons with commas. Double quotes should also be added around values.}}
+
+===Import participants from a LDAP query===
+
+{{Alert|title=Attention|text=This option is recommended only to those users with advanced knowledge in LDAP queries.}}
+
+This import function allows you to import information from a LDAP query (tested on openLdap, but should work in any LDAP compliant directory including ActiveDirectory). The following options are available on the ''Import survey participants from LDAP'' page:
+
+
+<center>[[File:Import survey participants from LDAP.png]]</center>
+
+* Queries are manually defined by the system administrator in the config-ldap.php file.
+* Duplicates are identified by First Name, Last Name & Email-Address. If a duplicate is found while importing, the related line is omitted (unless you have unchecked the ''Filter Duplicates'' checkbox).
+
+{{Note|For more details about the LDAP settings in LimeSurvey, read the [[LDAP settings|following wiki page]].}}
+
+==Manage attributes==
+
+This option allows you to add/edit the additional fields of your survey participants table. The extra fields are used to store custom survey participants data.
+
+
+<center>[[File:Survey participants - Add attributes.png]]</center>
+
+
+Type in the number of new attribute fields you want to add to your survey participants table. Click the '''Add fields''' button. The following page will be displayed:
+
+
+<center>[[File:token_manage.png]]</center>
+
+
+The attribute fields table contains the following fields:
+*'''Attribute field:''' The value typed here can be used when you want to perform different operations with the respective custom attribute field such as applying [[Setting conditions|conditions]] based on attribute fields or when exporting results for non-anonymous surveys.
+*'''Field description:''' Used to replace the '''attribute field''' name. By giving a custom name to each attribute field, they will look nicer in the administration panel, when you browse tokens, when creating conditions based on attribute fields or when you export results for non-anonymous surveys.
+*'''Mandatory?:''' If enabled, the respective attribute field must be filled in by the survey administrator. Otherwise, the respondent cannot be registered into the survey participants table.
+*'''Show during registration?:''' If the survey participants have to register before completing a survey, certain details will be requested from them. If disabled, the respective attribute field won't appear on the survey registration page. 
+*'''Field caption:''' Use this fields to add more details about the role/usage of the respective attribute field.
+*'''CPDB mapping:''' Maps the attribute in order to connect it to its corresponding attribute from the central participant database.
+*'''Example data:''' Contains string examples from different fields. For example, if you want to ask for the gender of the survey participant, then you will see in the '''Example data''' field examples such as male, female, no answer etc.
+
+
+Once you have finished filling in the boxes, do not forget to click the '''Save''' button located in the bottom-left part of the screen.
+
+<div class="simplebox">[[File:help.png]] Detailed instructions on how to add additional attribute fields and use conditions based on these values can be found on this blog post: "[http://www.limesurvey-consulting.com/limesurvey-conditions-based-on-token-attributes/ Conditions based on token attributes]".</div>
+
+To add more fields, go to the bottom of the page, and type in the '''Number of attribute fields to add''' box the desired number and click the '''Add fields''' button.
+
+If you want to delete a custom attribute, go to the bottom of the page and select from the drop-down list situated under the '''Delete this attribute''' field the attribute you want to delete. Once selected, click '''Delete attribute''' and confirm the deletion.
+
+==Export==
+
+
+To export a survey participants table, click the "Export" button located on the token management tools toolbar. Before exporting the survey participants list, select the desired export options.
+
+
+<center>[[File:Survey participants - export.png]]</center>
+
+
+*'''Survey status:'''
+**''All tokens:'' Exports all survey participants from the survey participants table;
+**''Completed:'' Exports only those survey participants that have completed the survey;
+**''Not completed:'' Exports survey participants that have not yet completed the survey;
+**''Not started:'' Exports the survey participants that have not yet started the survey;
+**''Started but not yet completed:'' Exports survey participants that have already started the survey, but have not completed it.
+*'''Invitation status:''' Exports participants according to the invitation status: ''all'', ''invited'', and ''not invited'';
+*'''Reminder status:''' Exports participants according to the reminder status: ''all'', ''Reminder(s) sent'', ''No reminder(s) sent'';
+*'''Filter by language:''' When you create a survey, you can add additional languages besides the base language. Those additional languages can be used to export survey participants according to the language they are assigned to; 
+*'''Filter by email address:''' Exports entries which contain the string in the respective email address. For example, you can use it if some of your survey participants use the work email addresses from "Company A". Type ''@companya.com'' and export only the users that have received a work email address from the respective company;
+*'''Delete exported participants:''' If enabled, the exported users will be deleted from your survey participants table.
+
+Once you have selected the exporting options, click the '''Download CSV file''' button located in the upper right part of the screen.
+
+<div class="simplebox">
+When you export your survey participants, the fields are exported in the following order:
+<code>tid,firstname,lastname,email,emailstatus,token,language code,attribute_1,attribute_2,...</code></div>
+
+==Invitations & reminders==
+
+''Invitations & Reminders'' allows you to manage the LimeSurvey invitations system. You can send invitations or reminders to participants displayed in your [[Survey participants#Display participants|survey participants table]]. An [[Email bounce tracking system|email bounce tracking system]] can be used to help you track and mark the emails that were not delivered to the recipients (survey participants).
+
+
+===Send email invitation===
+
+
+From the survey participants table you can send email invitations in bulk to all participants who have not been sent one.
+
+
+
+<center>[[File:token-invite.png]]</center>
+
+
+You can skip survey participants who have an email status that is not "OK" by enabling the '''Bypass token with failing email addresses''' option.
+
+To overcome the [[Survey_participants#Add_participant|validity settings]] of all of your entries, enable the '''Bypass date control before sending email''' function. This way, the LimeSurvey email function will not take into account the date/time range when a token would be allowed to be used. 
+
+
+==== Resending invitations====
+
+
+Use this functionality to send invitations again to certain survey participants. When you use the '''send invitations''' function, only an email address that ''has not previously received an invitation'' will get one. This means that if you add new email addresses to the survey participants list after the first invitations are sent, only these new addresses will receive an invitation the second time you send invitations.
+
+This means that you can also edit an email address in a particular table entry that you received a bounced email from and then send it only to this edited address. Do this by turning off the '''Invitation sent''' field and then click '''send invitations''' again.
+
+===Send email reminder===
+
+Sends bulk email reminders to all participants from the survey participants table who have not yet responded, but have been sent their first invitation.
+
+
+<center>[[File:token-remind.png]]</center>
+
+
+When sending reminders you can:
+* '''Bypass tokens with failing email addresses:''' those entries with a failing email address will be skipped - they will not receive an email;
+* '''Min days between reminders:''' skip tokens if a reminder has been "recently" sent;
+* '''Max reminders:''' skip tokens if a given number of reminders have already been sent;
+* '''Bypass date control before sending email:''' skip those entries that are not within the time-frame that they can be used.
+
+<div class="simplebox">[[File:help.png]] '''Note:''' A reminder will be sent only to those participants where the "Completed" field is turned off (this means the respondent has either not taken or completed the survey).</div>
+
+
+==== Sending emails by batch====
+
+When sending a large number of emails at the same time, LimeSurvey will only send the first batch of N emails (this threshold is set by the administrator from the [[Global settings#Email settings|email settings]], located in the global settings of your LimeSurvey installation).
+
+=== Confirmation email===
+
+
+If you are using tokens and a participant fills out the survey, a confirmation email is sent to their email address.
+
+If you do not want this message sent, deactivate this functionality from [[Participant settings|the general settings of your survey]].
+
+==Start bounce processing==
+
+When sending an email, the LimeSurvey email bounce tracking system automatically adds a survey-id and token-id to the mail header. These "custom headers" are added to each invitation email that is sent through your LimeSurvey installation to survey participants. When the email is bounced back, the original header along with the "''Delivery notification''" header is received. The system then checks for new emails and parses the emails that have these custom headers and marks the wrong email address in the survey participants table.
+
+
+===Bounce settings===
+
+
+'''Bounce settings''' options:
+
+
+<center>[[File:surveyBounseSettings.png]]</center>
+
+
+For a short description of each field, check [[Global settings#Bounce settings|the following wiki section]]. To use the LimeSurvey installation ''Global settings'', go to '''Used bounce settings''' and select the '''Use global settings''' option. 
+
+{{Note|For more in-depth explanations, check our wiki on [[Email bounce tracking system|email bounce tracking system]].}}
+
+Click the [[Email_bounce_tracking_system#Setting_up_the_system|following link]] for more information on how to correctly configure this feature.
+
+==Edit email templates==
+
+
+To find out more about what placeholders you can use or how you can edit the LimeSurvey email templates, read our wiki section on [[Email templates|email templates]].
+
+
+==Generate tokens==
+
+
+With the help of this function, unique tokens can be created for all the individual entries from the survey participants table that have not yet received a token code.
+
+
+<center>[[File:Survey participants - Generate tokens.png]]</center>
+
+==View in CPDB==
+
+The last option on the tokens management toolbar is the '''View in CPDB''' option. This allows the survey administrator to see the participants that exist in both the central participant database and the survey participants list.
+
+In the following example, we have the following survey participants list:
+
+
+<center>[[File:Survey participants list - view in cpdb.png]]</center>
+
+
+The users with ID 1 and 2 have been shared from the central participant database. To check this, go to the survey participants table management toolbar and click '''View in CPDB'''
+
+
+<center>[[File:View in CPDB - filters.png]]</center>
+
+
+As you can see, the '''View in CPDB''' function basically applies a filter to determine which users from the CPDB are present in the respective survey.
+
+=Delete table=
+
+To delete your survey participants table, click the '''Display participants''' button and look for the '''Delete participants table''' button located in the upper-right part of the screen.
+
+
+<center>[[File:Delete survey participants table.png]]</center>
+
+
+A window will pop up, asking for the final confirmation.
+
+
+<center>[[File:Confirmation - delete survey participants table.png]]</center>
+
+
+Please note that this will not delete the table from your LimeSurvey installation. A backup will be created. In order to access it, you need system administrator rights. 
+
+If you do wish to completely remove it, use the [[Check data integrity|check data integrity]] option that is located in the '''Configuration''' dialog.
+
+=Additional hints & tips=
+
+Feel free to add any hints and tips to the list below. The ones listed were posted by members of our community:
+*[[Survey participants#Allowing public registration|Allowing public registration]]
+*[[Survey participants#Captchas in public registration|Captchas in public registration]]
+*[[Survey participants#Can a survey using tokens ensure anonymous responses?|Can a survey using tokens ensure anonymous responses?]]
+*[[Survey participants#A tip for generating a large number of fake e-mail addresses|A tip for generating a large number of fake e-mail addresses]]
+*[[Survey participants#Spam problems|Spam problems]]
+*[[Survey participants#Pseudonymised participation|Pseudonymised participation]]
+
+
+==Allowing public registration==
+
+You can also open your survey to the public by utilizing the type of respondent control available when using tokens. To do this, initialize your survey participants table and choose to [[Participant settings|allow public registration]] in the main survey setup.  People who visit your survey's URL without a token will be given the opportunity to register.  (This setting can be later changed from the [[Participant settings|participant settings]] section that is located in the settings menu of the survey). 
+
+If a participant provides an email address that is not already in the current database, an entry in the survey participants table will be created and they will be emailed an invitation containing their unique token code.
+
+==CAPTCHAs in public registration==
+
+To protect your survey from robot registrations, a CAPTCHA feature can be activated for all the registration, save, and load forms. For more details, read our wiki on [[Participant settings|participant settings]].
+
+==Can a survey using tokens ensure anonymous responses?==
+
+'''Yes''', tokens can be used both for anonymous and non-anonymous surveys. This is determined when creating a survey. If a survey is not anonymous (or 'tracked') then the token list can be used to find the responses that an individual has made to the survey. If the survey is anonymous, then no link (technically: foreign key relationship) is available between the respondents from the survey participants table and their corresponding answers.
+
+To enable or disable anonymized responses, check the [[Participant settings|participant settings]] wiki section.
+
+==A Tip for generating a large number of fake e-mail addresses==
+
+Sometimes you may need a large number of fake e-mail addresses and tokens. You can use functions in a spreadsheet (e.g. OpenOffice Calc) to generate them. Let's assume you want thousands of addresses in a form: 1@test.com, 2@test.com, 3@test.com, and so on. Type "1" in A1. Insert function =A1+1 in A2, then copy A2 down as many times as you need so that you obtain a list of consecutive numbers. In B1 use the concatenation function to join A1 and "@test.com", which is ''=CONCATENATE(A1;"@test.com")''. Then copy B1 down so that each A cell has a correspondent (you can also generate similarly fake names). Finally, save the file as CSV in order to import it to LimeSurvey.
+
+With the launch of LimeSurvey 1.91, you can use the "Generate dummy token" functionality. However, the dummy entries do not contain any email address.
+
+
+==Spam problems==
+
+Users often complain about not receiving invitations or reminder emails because their email spam filters identified the message from LimeSurvey as spam.
+
+The fact that an email is treated as spam depends mostly on the spam filter being used and its settings. A spam filter usually checks the sender address, and the email subject and content. Changing its settings could solve the way in which the users' email providers treat the messages from LimeSurvey.
+
+Some possible issues and solutions are listed in the following [https://www.survey-consulting.com/how-to-prevent-limesurvey-email-invitations-or-reminders-being-treated-as-spam/ Limesurvey Consulting blog post].
+
+LimeSurvey automatically tries to determine the URL for the invitation link by looking at the URL that you logged into the LimeSurvey administration with. However, with some server (mis)configurations this might not work properly and you will have to set this manually.
+
+You can edit "application/config/config.php" to change the default base URL value. Add a ''hostInfo'' property, as shown below, to the existing 'components' array.
+
+<syntaxhighlight lang="php">    'components' => array(
+       ...
+       'config' => array(
+           .......
+           'publicurl' => 'http://www.example.com',
+           ........
+       ),
+   )
+</syntaxhighlight>
+
+<div class="simplebox">[[File:help.png]]For more details on how to edit the configuration file of your LimeSurvey installation, read our wiki on [[Optional settings|LimeSurvey optional settings]].</div>
+
+Regarding the source of the problem, LimeSurvey tried to determine the domain from the server PHP variable: $_SERVER<nowiki>[</nowiki>'HTTP_HOST'] or $_SERVER<nowiki>[</nowiki>'SERVER_NAME'].
+
+Some web server software do not properly seem to provide this information or are misconfigured.
+
+==Pseudonymised participation== 
+
+With the dummy tokens, you may create a form of pseudonymised participation by exporting the created dummy tokens and then combining them with your participant list externally. That way, LimeSurvey can be used as a survey platform without putting personal information of your participants into the system. 
+
+The only downside is that you will have to distribute the participation tokens yourself.

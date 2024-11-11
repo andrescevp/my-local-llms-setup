@@ -1,0 +1,115 @@
+{
+  "createdAt": "2024-11-09T02:31:39.716Z",
+  "updatedAt": "2024-11-09T02:31:51.000Z",
+  "id": "nK1WfIww4W0mekua",
+  "name": "test",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b67b84fb-d648-475b-955b-1cabd8a1c1a3",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        840,
+        400
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "a0ca8025-2f47-43d6-bb4d-f8efeb2b315d",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        1020,
+        500
+      ],
+      "webhookId": "65d6d4d7-71b3-4c16-a29e-7e3f7b2fd26a"
+    },
+    {
+      "parameters": {
+        "model": "llama3.1:latest",
+        "options": {
+          "temperature": 0.7
+        }
+      },
+      "id": "97d338d6-b70a-408b-a018-60aca9f974fb",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        620
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "yk5ktUb1qUUVX5cC",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "8f46c14b-d91c-4c2c-9e68-1d645266bedd",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1240,
+        400
+      ]
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "04390051-fac0-4d82-8b34-f771493ded09",
+  "triggerCount": 0,
+  "tags": []
+}

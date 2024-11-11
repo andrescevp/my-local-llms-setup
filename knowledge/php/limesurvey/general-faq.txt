@@ -1,0 +1,417 @@
+<languages /> 
+
+__TOC__
+
+
+{{Note|The following answers have been provided by the LimeSurvey user community. In case you do not understand something or you are unsure about what you have to do next, you can address your question(s) to the rest of community members: https://forums.limesurvey.org. For professional help, please check our list of authorized partners: https://limesurvey.com.}}
+
+
+=Getting started=
+
+
+If you don't want to read half the manual to get a feeling what can be done with LimeSurvey, we recommend you to watch some YouTube video tutorials:
+
+*[https://www.youtube.com/watch?v=oyoq14XpkwA How to set up an account and survey installation]
+*[https://www.youtube.com/watch?v=7134QebOQzY Question type - Array]
+*[https://www.youtube.com/watch?v=aeb93vAe7R4 Assessments]
+*[https://www.youtube.com/watch?v=s5OOzDoPjIU Placeholder fields]
+*[https://www.youtube.com/watch?v=7N4xUQMWbJY Radio list]
+*[https://www.youtube.com/watch?v=UI01hwrsiVk Copy/import survey]
+*[https://www.youtube.com/watch?v=QEHyH1YbNEQ Import question]
+
+
+{{Note|If you know any good video out there, do not hesitate to share it with us.}}
+
+
+==I need a quick introduction for LimeSurvey==
+
+
+For a quick text introduction to LimeSurvey, check the following two links:
+
+*[[Quick start guide - LimeSurvey 2.50+|LimeSurvey 2.50+]]
+*[[Quick start guide - LimeSurvey 3.0+|Limesurvey 3+]]
+
+
+{{Alert|We are working at the moment on introductory videos to LimeSurvey.}}
+
+
+=Survey design and layout=
+
+
+==How can I remove index.php from the URL path to get a shorter URL== 
+
+
+If you want to use fancy URLs (not have /index.php in every URL), please edit /application/config/config.php and change
+
+<syntaxhighlight lang="php">'showScriptName' => true,</syntaxhighlight>
+
+to
+
+<syntaxhighlight lang="php">'showScriptName' => false,</syntaxhighlight>
+
+For this to work properly, you must use an Apache webserver with a properly installed mod_rewrite module.
+
+===With nginx webserver===
+
+If you are using the [http://nginx.com/products/ Nginx] http server (with php running via FastCGI) and want to use the ''''urlFormat' => 'path'''' setting (see config.php), consider the following Nginx website configuration:
+
+<syntaxhighlight lang="apache">server {
+    set $host_path "/PATH/TO/LIMESURVEY";
+    server_name  YOUR.SERVER.FQDN;
+    root /PATH/TO/LIMESURVEY;
+    charset utf-8;
+    try_files $uri /index.php?$uri&$args;
+    # Disallow reading inside php script directory, see issue with debug > 1 on note
+    location ~ ^/(application|docs|framework|locale|protected|tests|themes/\w+/views) {
+        deny  all;
+    }
+    # Disallow reading inside runtime directory
+    location ~ ^/tmp/runtime/ {
+        deny  all;
+    }
+
+    # Allow access to well-known directory, different usage, for example ACME Challenge for Let's Encrypt
+    location ~ /\.well-known {
+        allow all;
+    }
+    # Deny all attempts to access hidden files
+    # such as .htaccess, .htpasswd, .DS_Store (Mac).
+        location ~ /\. {
+        deny all;
+    }
+    #Disallow direct read user upload files
+    location ~ ^/upload/surveys/.*/fu_[a-z0-9]*$ {
+        return 444;
+    }
+    #Disallow uploaded potential executable files in upload directory
+    location ~* /upload/.*\.(pl|cgi|py|pyc|pyo|phtml|sh|lua|php|php3|php4|php5|php6|pcgi|pcgi3|pcgi4|pcgi5|pcgi6|icn)$ {
+        return 444;
+    }
+    #avoid processing of calls to unexisting static files by yii
+    location ~ \.(js|css|png|jpg|gif|swf|ico|pdf|mov|fla|zip|rar)$ {
+        try_files $uri =404;
+    }
+    location ~ \.php$ {
+        fastcgi_split_path_info  ^(.+\.php)(.*)$;
+        try_files $uri index.php;
+        fastcgi_pass   127.0.0.1:9000; # Change this to match your settings
+        fastcgi_index index.php;
+        include fastcgi_params;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        fastcgi_param  SCRIPT_NAME      $fastcgi_script_name;
+    }
+}</syntaxhighlight>
+
+{{Note|This disables access to files inside application. Some JavaScript and CSS files located within the application have to be readable with debug > 0. You can force the usage of the asset manager when the debug mode is enabled with <code><nowiki>'use_asset_manager' => 1,</nowiki></code> in your config file (or remove <code><nowiki>application</nowiki></code> from the directory list</code>).}}
+
+The end result should look like this:
+
+
+<center>[[File:Remove index.php steps.png]]</center>
+
+==How do I get rid of the <span style='color:red'>*</span> (red asterisk) of mandatory questions?==
+
+
+===Instructions for LimeSurvey 2===
+
+
+In LimeSurvey 2.x, the red asterisk of mandatory questions is set within the template.css file ("asterisk" class). To hide it:
+*Open the template editor
+*Create a copy of the template you wish to modify
+*Select the "template.css" file and search for the asterix class
+*Add the following line at the end of the asterix class".asterisk {display: none;}".
+*Save template.css
+*Clear your browser cache so that the edited template.css is reloaded and not taken from cache.
+
+
+===Instructions for LimeSurvey 3===
+
+
+The instructions are similar to the ones presented above for LimeSurvey 2.
+
+* Access the desired theme. If it is a default theme, create a copy of it by clicking on the "extend" button.
+* Access the list of themes and click on the '''theme editor''' that corresponds to the newly created theme.
+* On the left side, you can visualise the corresponding CSS files of your theme.
+* Click on custom.css and add the following line:
+
+<syntaxhighlight lang="css">.asterisk {display: none;}</syntaxhighlight>
+
+
+* Save the changes. The red asterisk that is usually displayed at the beginning of the question text is hidden.
+
+
+==How can I embed a flash file?==
+
+
+First, go to [[Global settings]] and deactivate the XSS-filter. Please also read up the implications deactivating that filter has on your instance. The following steps will '''not''' work if the filter is active.
+#Navigate to the place in your survey where you want insert your Flash file. This can be anywhere where you can use the integrated HTML editor, for example in questions, subquestions, answers, survey welcome/end text and many more.
+#Open the [[First login - Your user preferences#Popup|full-screen editor mode]] by clicking the 'LimeFitWin' button on the editor tool-bar.
+#On the full-screen editor tool-bar you will find a little button with a Flash symbol. Click on it. A dialog box will open.
+#In this box you can give either the path to an existing Flash file somewhere or you click the 'Browse server' button.
+#If you clicked the 'Browse server' button you will be presented with a file browser and on the bottom an file upload field. Choose now an existing file or upload a file first.
+
+
+That's it! If you find this description incomplete please update it accordingly.
+
+
+{{Alert|title=Attention|text=The steps to use it in LimeSurvey 3 are similar. However, we do not recommend our users to use flash files!}}
+
+
+==How do I create a survey which is open to everyone?==
+
+
+To create a survey that can be filled out by anyone, do not create a [[Survey participants|survey participants table]]! Share the survey link located on the [[Overview|overview panel]].
+
+
+==Public registration - mandatory fields==
+
+
+If you use a [[Survey participants|survey participants table]] and you also allow [[Participant_settings#Allow_public_registration|public registration]], then users will be prompted by the following message:
+
+
+<center>[[File:non-mandatory public reg.png]]</center>
+
+
+As it can be observed above, only the email field is mandatory.
+
+To have all three fields marked as being mandatory, please edit your survey theme accordingly. If you use '''Fruity''', you have to go to the '''registration''' screen and see how the participants email field looks like:
+
+<syntaxhighlight lang="twig">
+        {# Participants email #}
+        <div class='{{ aSurveyInfo.class.registerformcolrowc }} form-group row' {{ aSurveyInfo.attr.registerformcolrowc }}>
+            <label {{ aSurveyInfo.attr.registerformcolrowclabel }} class='{{ aSurveyInfo.class.registerformcolrowclabel }}  control-label'> {{ gT("Email address:") }} {{ include('./subviews/registration/required.twig') }}</label>
+            <div {{ aSurveyInfo.attr.registerformcolrowcdiv }}  >
+                {{ C.Html.textField('register_email', aSurveyInfo.sEmail, ({'id' : 'register_email','class' : 'form-control input-sm','required' : true})) }}
+            </div>
+        </div>
+</syntaxhighlight>
+
+After that, make sure to edit the first name and last name fields correspondingly by adding the label: <syntaxhighlight lang="twig">{{ include('./subviews/registration/required.twig') }}</syntaxhighlight> and this line which makes the field mandatory to be filled out: <syntaxhighlight lang="twig">'required' : true</syntaxhighlight>
+
+The edited file should look like this:
+
+<syntaxhighlight lang="twig">
+        {# Participants first name #}
+        <div class='{{ aSurveyInfo.class.registerformcolrow }} form-group row' {{ aSurveyInfo.attr.registerformcolrow }}>
+            <label for='register_firstname' class='{{ aSurveyInfo.class.registerformcolrowlabel }} control-label '>{{ gT("First name:") }} {{ include('./subviews/registration/required.twig') }}</label> {# extra label #}
+            <div class="">
+                {{ C.Html.textField('register_firstname', aSurveyInfo.sFirstName, ({'id' : 'register_firstname','class' : 'form-control', 'required' : true})) }} {# mandatory field #}
+            </div>
+        </div>
+
+        {# Participants last name #}
+        <div class='{{ aSurveyInfo.class.registerformcolrowb }} form-group row' {{ aSurveyInfo.attr.registerformcolrowb }}>
+            <label {{ aSurveyInfo.attr.registerformcolrowblabel }}  class='{{ aSurveyInfo.class.registerformcolrowblabel }} control-label '>{{ gT("Last name:") }} {{ include('./subviews/registration/required.twig') }}</label> {# extra label #}
+            <div {{ aSurveyInfo.attr.registerformcolrowbdiv }} >
+                {{ C.Html.textField('register_lastname', aSurveyInfo.sLastName, ({'id' : 'register_lastname', 'class' : 'form-control', 'required' : true})) }} {# mandatory field #}
+            </div>
+        </div>
+</syntaxhighlight>
+
+
+Now, the public registration page should look like this (all the fields being mandatory):
+
+
+<center>[[File:mandatory public reg.png]]</center>
+
+
+== Hiding the language switcher ==
+
+
+The steps to hide both the language switchers (near the survey title and on the top-right side of the page) are described in our wiki section dedicated to [[Multilingual_survey#Hints_.26_tips|multilingual surveys]].
+
+
+== Hiding "Exit and clear survey" ==
+
+
+In case you wish to hide the button "Exit and clear survey", you have to edit the nav_bar.twig file located inside your survey theme.
+
+
+<center>[[File:exit and clear survey pic.png]]</center>
+
+
+The line that needs to be removed (or commented out) is:
+
+<syntaxhighlight lang="twig">
+{{ include('./subviews/navigation/clearall_links.twig') }}
+</syntaxhighlight>
+
+
+<center>[[File:Hide exit and clear survey.png]]</center>
+
+
+Now, there is no option to exit and clear the survey.
+
+
+<center>[[File:no exit clear survey.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] '''Note:''' This customization can be used when you create long surveys and require from your respondents to save and resume later the survey. Sometimes, the users tend to click the "Exit and clear survey" button which deletes the entry from the partially completed responses table.</div>
+
+=Help, I accidentally...=
+
+
+==I forgot my admin password. How do I reset it?==
+
+
+=== Version 2.x ===
+# Access to your server with a command line (ssh for example)
+# Ensure you have php command line access (see http://php.net/features.commandline.php).
+# Go to your LimeSurvey directory
+# Launch this command <code>php application/commands/starter.php resetpassword NEW_ADMIN_NAME NEW_ADMIN_PASS</code> or <code>php application/commands/console.php resetpassword NEW_ADMIN_NAME NEW_ADMIN_PASS</code><sup>The php can need complete directory access, example /usr/bin/php</sup>
+
+
+{{Alert|Title=Attention|text=Please note that this method will not work in LimeSurvey 3.x!}}
+
+
+===Version 2.x.x and newer with only FTP access===
+
+
+See [https://gitlab.com/SondagesPro/coreAndTools/ResetPasswordController ResetPasswordController]
+
+
+=== Directly change the password in the database ===
+If you have direct access to the Limesurvey database you can change the old password there by uploading the new password as SHA256 hash. You can [http://www.xorbin.com/tools/sha256-hash-calculator create the SHA256 hash of your password here].
+
+For example, you can use this instruction to set password to password:
+<syntaxhighlight lang="sql">
+UPDATE lime_users SET password = 0x35653838343839386461323830343731353164306535366638646336323932373733363033643064366161626264643632613131656637323164313534326438 WHERE uid =1;
+</syntaxhighlight>
+Here with prefix to lime_ and database selected.
+
+
+==How can I restore data from a deactivated survey?==
+
+
+We recommend to always use the time-out option instead of deactivating a survey. '''If you closed your survey accidentally, it is important that you don't change anything in the survey!'''
+
+Then, and only then the following steps will work:
+#Activate your survey again
+#Select [[Responses]] from the survey toolbar.
+#Click on [[Import responses|Import]] and select the "Import answers from a deactivated survey table" menu entry.
+#Choose your source table.
+#Click on the "Import" button located on the upper-right part of the screen.
+
+
+{{Note|To understand the difference between "expiry" and "deactivation", visit this following [https://manual.limesurvey.org/Closing_a_survey wiki section].}}
+
+
+==I deleted a question/question group/survey!==
+
+
+If you delete it, it is gone. Only a backup could help you recover it.
+
+
+{{Note|If you are a [https://limesurvey.org LimeSurvey GmbH] professional user, please open a support ticket and ask the team to provide you the backup associated to your account. '''Please note that this service is not free of charge!'''}}
+
+
+=Hard- and Software requirements=
+
+
+For general requirements please refer to our [[Installation#Make sure you can use LimeSurvey on your website|installation instructions]].
+
+
+==What limitations does LimeSurvey have...==
+
+
+=== ...regarding speed===
+
+
+There is no existing speed limit on LimeSurvey. Everything depends on how fast your server and your connection are. If you expect a large number of users within a short amount of time and you are not sure if your server can handle this, '''check our forum for similar topics!''' or '''contact an authorized LimeSurvey partner''': https://limesurvey.com.
+
+=== ...regarding survey size===
+
+==== MySQL and MariaDB ====
+
+Note: 'Survey size' refers to the maximum number of questions (and answers) in your survey - '''don't confuse this with the number of replies on your survey (there is no limitation on that)'''. Theoretically there would also be no limit on the maximum number of questions/answers in LimeSurvey. But the database engine you are using has several limits. The most important one is the limit on the number of fields(columns) in the result table.
+*MySQL ISAM: The sum of the lengths of the VARCHAR and CHAR columns in a table may be up to 64KB.
+*MySQL InnoDB: Maximum number of 1000 columns
+*MS SQL Server 2000: Maximum number of 1024 columns. [https://docs.microsoft.com/en-us/sql/sql-server/maximum-capacity-specifications-for-sql-server There are a maximum of 8,060 bytes for size one row], then even is survey can be activated, if you have a lot of text data : participant can not submit…
+*Postgres: Maximum number of 250-1600 columns depending on column types. The maximum number of columns can be quadrupled by increasing the default block size to 32k. See [[Installation FAQ]] and [http://www.postgresql.org/docs/faqs.FAQ.html#item4.4 PostgreSQL FAQ].
+
+{{Alert|title=Attention|text=Please think about what you do before you do it! An array of 10 x 10 items already costs you 100 columns. Rule of thumb: every item on the screen that can be filled in or selected costs one column!}}
+
+The mySQL ISAM engine is the most tricky one (see [http://dev.mysql.com/doc/refman/5.0/en/column-count-limit.html mysql documentation for more information]). As it allows only up to 65,535 bytes per row and utf8 characters, it can require up to three bytes per character. The maximum may be only 21,844 characters (but this depends on your DB encoding).
+
+You can roughly calculate the size of your survey like this:
+*Every multiple numerical question: 20 chars '''for each answer'''
+*Every multiple choice & array question answers: 5 chars '''for each answer'''
+*Every other question type: 5 chars
+*Add 10% for the usual overhead
+
+==== With Microsoft SQL ====
+
+There are no fixed limit on MSSQL. Some [https://docs.microsoft.com/en-us/sql/sql-server/maximum-capacity-specifications-for-sql-server?view=sql-server-ver15 information on microsoft website].
+
+The 8,060 bytes per row can appear after activation when you want to browse response and data. You can export answer code and not answer text or try to export only some columns.
+
+====With PostgreSQL====
+
+When you try to export response : you can have SQLSTATE[54000] error. You can export some columns. See [https://forums.limesurvey.org/forum/french-forum/125447-erreur-sqlstate-54000 forum post].
+
+=====How to increase the maximum number of columns in PostgreSQL=====
+
+
+In case your survey contains too many questions, you can define a different block size in PostgreSQL to create more columns. This might be tricky because you have to recompile PostgreSQL and set BLCKSZ to a higher value, like 16kiB or 32kiB. Watch for the configuration option "--with-blocksize=BLOCKSIZE". For details see the archives of the PostgreSQL mailing list or ask there (pgsql-patches(at)postgresql(dot)org).
+
+Instructions for Debian (thanks to Martin Pitt):
+
+<syntaxhighlight lang="bash">sudo apt-get build-dep postgresql-8.3
+apt-get source postgresql-8.3
+cd postgresql-8.3-*
+debian/rules patch
+sensible-editor build-tree/postgresql-8.3.5/src/include/pg_config_manual.h
+dpkg-buildpackage -us -uc -b -nc</syntaxhighlight>
+
+Note: '''the above could not be reproduced''' on Ubuntu 14.04 in August 2014. A patch is required (the configuration option is not enough). See (tested with PostgreSQL 9.3 on Linux):
+[[Instructions for increasing the maximum number of columns in PostgreSQL on Linux]]
+
+==Fatal error: Allowed memory size==
+
+
+Depending on your server configuration you might run into memory problems being reported by an error like ''"Fatal error: Allowed memory size of 8388608 bytes exhausted (tried to allocate 233472 bytes) in /path/to/htdocs/limesurvey/filename.php on line 7296"''.
+
+You can try to raise the limit by [[Optional settings#Resources|adding an optional setting]] to LimeSurvey's config file.
+
+Please bear in mind that changes in the default settings of an application can always be overruled by global server settings. To increase the memory limit of your sever to 128M:
+*memory_limit = 128M to your server's main php.ini file (recommended, if you have access)
+*memory_limit = 128M to a php.ini file in the LimeSurvey root
+*php_value memory_limit 32M in a .htaccess file located in the LimeSurvey root folder
+*" ini_set('memory_limit', '128M'); " in your config.php
+
+=Specific configuration=
+
+
+Under certain circumstances, you need to update the LimeSurvey configuration in application/config/config.php
+
+== IE 11 and Windows 7 / Windows 8 ==
+
+There is a known issue with the session with IE 11, that leads to users not being able to finish a survey.
+
+It is solved by giving the session a unique name.
+
+This is done by adding this to the config file.
+<syntaxhighlight lang="php" enclose="pre">
+       // Set the name of the session
+        'session' => array (
+            'sessionName' => "YOURUNIQUESESSIONNAME",
+        ),
+</syntaxhighlight>
+
+== Two LimeSurvey instances on same domain ==
+
+
+If you run 2 LimeSurvey instances on the same domain, but within different directories, you need to update the [[Optional_settings#Yii_settings|session configuration]]. 
+
+
+For example, if you have example.org/ls1 and example.org/ls2, update the ls1 config file:
+<syntaxhighlight lang="php" enclose="pre">
+        'session' => array (
+            'cookieParams' => array(
+                    'path' => '/ls1',
+                ),
+            ),
+        'request' => array(
+            'csrfCookie' => array( 'path' => '/ls1' )
+        ),
+</syntaxhighlight>

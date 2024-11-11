@@ -1,0 +1,119 @@
+<languages />
+
+__TOC__
+
+
+{{Alert|text=Under construction}}
+
+=General=
+
+To create a new menu or add new entries to a preexisting menu: '''Configuration''' -> '''Settings''' -> '''Menu configuration''' 
+
+
+<center>[[File:Menu Configuration.png]]</center>
+
+
+You can change the existing survey menus or create a special survey menu for a certain user groups.  You can also add new [[Menu entries configuration#Create a menu entry|menu entries]] or [[Menu entries configuration#Edit menu entry|edit the existing ones]].
+
+=Survey Menu=
+
+The Menu Configuration panel has a table with all the existing survey menus.
+
+
+<center>[[File:Survey Menus.png]]</center>
+
+
+Four actions are available:
+*[[Menu configuration#Create a menu|Create a menu]]
+*[[Menu configuration#Edit a menu|Edit a menu]]
+*[[Menu configuration#Delete a menu|Delete a menu]]
+*[[Menu configuration#Reset to default values|Reset to default values]]
+
+==Create a menu==
+
+To create a new menu, press the green button ('''+ New''') located in the upper left part of the window. The following window will be displayed:
+
+
+<center>[[File:Create a New Menu.png|Create a New Menu.png]]</center>
+
+
+A group of options is available:
+*'''Parent''': Use this option to select the parent menu of another survey menu. In this way, a survey menu will be displayed within another menu once clicked. For example, the plugin menu is a survey menu that has as parent menu the ''mainmenu'', being displayed the bottom of it due to its '''order'''.
+*'''Survey''': You can choose the survey the menu will be available for. It comes automatically set up for ''All surveys'';
+*'''Ordering''': If you use more menus that have the same position, ordering them would help you better organize them.
+*'''Title''': The tile of the menu;
+*'''Description''': A short summary of the entries that will be added to that menu can be added - useful for other LimeSurvey administrators that wish to later change the configuration of the survey menus;
+*'''Position''': Four positions are available:
+**''Sidemenu'' : The menu will be located on the left side of the window;
+**''Collapsed menu'' : A collapsed menu will display only the icons of the survey menu entries;
+**''Top bar'' : The menu is going to be on a bar located in the upper part of the window;
+**''Bottom bar'' : The menu is going to be on a bar located in the lower part of the window.
+
+==Edit a menu== 
+
+To change the details of an already existing menu, click the green button located in the ''Action'' column. 
+
+
+<center>[[File:Edit existing survey menu.png]]</center>
+
+==Delete a menu==
+
+To delete a menu, click the red trash button that corresponds to that respective menu (located in the '''Action''' column). If you click '''Delete now''', all the menu entries of that menu will also be deleted.
+
+==Reset to default values==
+
+If you edit the default menus and want to reverse the changes, click the '''Reset''' button located in the upper right part of the window. Once clicked, you will be asked to confirm the action. Please note that all the custom menus will be lost if you decide to proceed.
+
+
+<center>[[File:Restore default survey menus.png]]</center>
+
+
+{{Alert|title=Attention|text=Please note that in order to backup your survey menus configuration, create a [[Backup entire database|LimeSurvey database backup]]. A separate option will be introduced in the near future to facilitate only the backup of the survey menus.}}
+
+=Examples=
+
+Check out the following examples to better understand how you can edit survey menus.
+
+== I want the default collapsed menu to become the new side menu ==
+
+The default side menu (located under the [[Survey settings|survey settings tab]]) is:
+
+
+<center>[[File:Default survey settings menu.png]]</center>
+
+
+To change it, access the menu configuration panel. Edit the ''main menu'' and change its position from '''side menu''' to '''collapsed menu''', and the position of the ''quick menu'' from '''collapsed''' to '''side menu'''.
+
+Once the changes are done, the side menu of the survey (the options displayed under the settings tab) will become the following one:
+
+
+<center>[[File:New survey menu example.png]]</center> 
+
+
+==Display a list button menu==
+
+
+Let's suppose that you wish to add a new (sub)menu to easily access from the settings tab the list question and question groups options. To do that, you have to create the menu option:
+
+
+<center></center>
+
+
+We wish to have it displayed in front of the '''Plugin menu''', so we select "Survey menu" to be the parent menu,order "2", to be displayed before the '''plugin menu''', and position "sidemenu" (similar to the position of the parent menu).
+
+Now, the menu is empty. We have to add menu entries to the newly created menu. To do that, we have to access the [[Menu entries configuration|menu entries panel]] and add the two links that correspond to "list questions" and "list question groups":
+
+* '''List questions'''
+
+
+<center></center>
+
+
+*''' List question groups'''
+
+<center></center>
+
+== I want to change the icons and add new menu entries to the default main menu ==
+
+
+To do that, you need to configure the LimeSurvey menu entries. To do that, please continue reading the following [[Menu entries configuration|wiki section]].

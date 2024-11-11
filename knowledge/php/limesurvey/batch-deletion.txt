@@ -1,0 +1,9 @@
+<languages />
+
+If you wish to delete a group of responses according to their IDs, use the '''Batch deletion''' function: 
+
+
+<center>[[File:Responses - batch deletion.png]]</center>
+
+
+However, we advise caution because important data can be accidentally deleted in this way! Therefore, please use a filtering method and perform group deletions with the help of the delete button located in the bottom left part of your [[Responses|response table]].

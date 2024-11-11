@@ -1,0 +1,110 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+This question types allows survey administrators to a create large arrays with numbered dropdown boxes with a set of subquestions on the "y-axis", and another set of subquestions on the "x-axis".
+
+
+<center>[[File:DP_MFN.jpg]]</center>
+
+You can also set a [[Question type - Array (Numbers)#Checkbox layout (multiflexible_checkbox)|special question attribute]] to use this question type with checkboxes:
+
+
+<center>[[File:DP_MFN_CB.jpg]]</center>
+
+
+'''Example 1:''' [[Media:Example_Array_Numbers.zip|Example_Array_Numbers]]
+
+'''Example 2:''' [[Media:Example Array Numbers Checkboxes.zip|Example_Array_Numbers_Checkboxes]]
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+{{Note|Please note that no relevance equation can be used in the subquestion fields located on the X-scale.}}
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+{{QS:preg_validation}}
+
+=Display=
+
+{{QS:subquestion_width}}
+
+{{QS:hide_tip}}
+
+{{QS:get_order_previous_q}}
+
+{{QS:Random_order}}
+
+{{QS:Input_box_size}}
+
+{{QS:Reverse}}
+
+{{QS:multiflexible_checkbox}}
+
+{{QS:Repeat_headers}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:multiflexible_min}}
+
+{{QS:Input_boxes}}
+
+{{QS:multiflexible_step}}
+
+{{QS:multiflexible_max}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Input=
+
+{{QS:input_max_characters}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:array_filter}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:array_filter_style}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+{{QS:em_validation_sq}}
+
+{{QS:em_validation_sq_tip}}
+
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Arrays]]

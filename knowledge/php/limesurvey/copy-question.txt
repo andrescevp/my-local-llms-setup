@@ -1,0 +1,58 @@
+<languages /> 
+
+=Introduction=
+
+
+To quickly create (similar) questions, LimeSurvey provides you a functionality through which survey administrators can easily copy questions within the same survey. This tool is useful especially when you customize a few questions and you need multiple copies of them spread across your survey.
+
+=How to copy a question=
+
+
+First, look for the '''copy''' button located on the top question toolbar:
+
+
+<center>[[File:Copy question first step.png]]</center>
+
+
+Once clicked, the following page will be displayed:
+
+
+<center>[[File:Copy question second step.png]]</center>
+
+
+The most important setting is represented by the question code/id which is highly recommended to be different than any other existing question code from your survey.
+
+
+<div class='simplebox'>[[FIle:help.png]] '''Note:''' LimeSurvey accepts at the moment duplicated question codes. However, you may run later into problems when it comes to exporting survey data or if you wish to use [[ExpressionScript - Presentation|expressions.]]</div>
+
+
+==Copy options==
+
+
+The ''copy options'' tab is located on the right side of the screen:
+
+
+<center>[[File:Copy options screen.png]]</center>
+
+
+*'''Copy subquestions?:''' if enabled, the [[Adding answers or subquestions|subquestions]] will also be copied;
+*'''Copy answer options?:''' if enabled, the [[Adding answers or subquestions|answer options]] will also be copied;
+*'''Copy default answers?:''': if enabled, the [[Default answers|default answers]] will also be copied;
+*'''Copy advanced settings?:''' if enabled, the advanced settings will also be copied. 
+
+
+<div class='simplebox'>[[File:help.png]] '''Note:''' By advanced settings, we refer to all the non general-related options such as: display options, logic options, statistics options, and so on. Each question contains different advanced options. For a comprehensive view of the capabilities of each question, continue reading the following [[Question types|wiki section]].</div>
+
+==General options==
+
+
+The ''general options'' tab is located below the ''copy options'' tab:
+
+
+<center>[[File:Copy questions general options.png]]</center>
+
+
+The options displayed under this tab vary in accordance with the selected [[Question types|question type]]. The only option that is unique is '''Position''', which allows you to select the position of the newly created question (see the last line from the above screenshot).
+
+
+Once done, click on the '''save and close''' button located in the upper right part of the screen to copy the question.

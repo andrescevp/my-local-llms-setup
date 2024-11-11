@@ -1,0 +1,489 @@
+<languages /> 
+__TOC__
+
+The following section is addressed to those of you who would like to edit those configuration settings that could not be modified with the help of the GUI (Graphical User Interface) of the LimeSurvey installation. Please bear in mind that all the changes from the LimeSurvey root directory are done at your own risk. Nevertheless, in the case in which you are experiencing problems/need further guidance, join the [https://www.limesurvey.org/forum discussion forums] or the [irc://irc.freenode.net/limesurvey|IRC IRC channel] for help from the LimeSurvey community.
+
+=Introduction=
+
+To modify the configuration settings of the installation, you have to edit the optional settings. They can be found in the /application/config/'''config-defaults.php''', which is located in the LimeSurvey root directory. The default settings of the standard installation can be found in config-defaults.php. Some of them can be overridden by using the [[Global settings|global settings]] dialog, while the others will have to be manually edited.  
+
+{{Alert|If you want to change these settings, please do not change them in config-defaults.php, but copy the particular setting/line to /application/config/'''config.php''' in <nowiki>'config'=>array( )</nowiki> and change it there. All the newly modified/introduced settings from the config.php file will override the default values from config-defaults.php.}}
+
+When an upgrade occurs, only the config-defaults.php settings are changed. Therefore, editing the config.php file will save your customized settings. 
+
+To update/add the LimeSurvey settings in /application/'''config/config.php''', you have to update the config array:
+<syntaxhighlight lang="php" enclose="pre">
+    'config'=>array(
+        'debug'=>0,
+        'debugsql'=>0,
+        'LimeSurveySetting'=>'New value', // Update default LimeSurvey config here
+    )
+</syntaxhighlight>
+
+=Yii settings=
+
+LimeSurvey uses the Yii framework, which has its own configuration parameters in application/config/'''internal.php''' and application/config/'''config.php''' file. You can also access some specific configuration settings of LimeSurvey via the Yii configuration.
+
+Since config.php array is merged to the whole config, you can replace any Yii params in the config.php file.
+
+The Yii specific settings are set in the components array:
+<syntaxhighlight lang="php" enclose="pre">
+    'components' => array(
+        'db' => array(
+            ....
+        ),
+        'Specific settings'=>array(
+            ....
+        ),
+    ),
+</syntaxhighlight>
+
+{{Note|For more information about the Yii framework, please access the [http://www.yiiframework.com/doc-2.0/guide-index.html following link.]}}
+
+==Database settings==
+The database settings are written to config.php by the installer file when you install LimeSurvey for the first time. If needed, you can update this part of the config.php file. Please remember that you do this at your own risk!
+See also the [http://www.yiiframework.com/doc/blog/1.1/en/prototype.database#establishing-database-connection Yii documentation] and please remember that LimeSurvey supports only the following types of database: mysql, pgsql, dblib, mssql, and sqlsrv.
+
+==Session settings==
+
+You can set some session parameters in config.php (check the two examples from below). You can uncomment/add the part needed in config.php. See the [http://www.yiiframework.com/doc/api/1.1/CHttpSession Yii Documentation] for other settings.
+
+{{Alert|If you need to update session settings to have multiple LimeSurvey instances running on the same server, check if you don't have to update [[Optional_settings#Request_settings|request settings]] for crsf cookie.}}
+
+===Use table-based sessions===
+
+LimeSurvey can use table-based sessions, you find a commented part on the default config.php generated file. To use table-based session, remove the // before each line.
+
+<syntaxhighlight lang="php" enclose="pre">
+        'session' => array (
+            'class' => 'application.core.web.DbHttpSession',
+            'connectionID' => 'db',
+            'sessionTableName' => '{{sessions}}',
+        ),
+</syntaxhighlight>
+
+{{Alert|Table-based sessions are currently not supported on MSSQL server.}}
+
+===Other sessions update===
+
+If you use SSL ('https') for your LimeSurvey installation, adding the following lines to your config.php will increase the security of the session:
+<syntaxhighlight lang="php" enclose="pre">        // Set the cookie via SSL
+        'session' => array (
+            'cookieParams' => array(
+                    'secure' => true, // use SSL for cookies
+                    'httponly' => true // Cookies may not be used by other protocols - experimental
+                ),
+            ),
+</syntaxhighlight>
+
+If you want to fix the domain for a cookie, use the following syntax in config.php:
+<syntaxhighlight lang="php" enclose="pre">        // Set the domain for cookie
+        'session' => array (
+            'cookieParams' => array(
+                    'domain' => '.example.org',
+                ),
+            ),
+</syntaxhighlight>
+
+If you have mutiples installation on the same server, it can be more quick and easy to set different session name for each LimeSurvey instance. This can be need for IE11 in some condition (see [https://bugs.limesurvey.org/view.php?id=12083#c42892 issue 12083])
+<syntaxhighlight lang="php" enclose="pre">        // Set the name of the session
+        'session' => array (
+            'sessionName' => "LimeSurveyN1",
+            ),
+</syntaxhighlight>
+
+==Request settings==
+The request settings are important, but the default settings are already optimized for LimeSurvey usage. To read more about them, see the [http://www.yiiframework.com/doc/api/1.1/CHttpRequest Yii Documentation].
+
+For example, the LimeSurvey request settings configuration may be modified in the following way (at your own risk) :
+<syntaxhighlight lang="php" enclose="pre">        // Disable CSRF protection
+        'request' => array(
+            'enableCsrfValidation'=>false,    
+            ),
+</syntaxhighlight>
+<syntaxhighlight lang="php" enclose="pre">        // Enforce a certain URL base 
+        'request' => array(
+            'hostInfo' => 'http://www.example.org/'  
+            ),
+</syntaxhighlight>
+<syntaxhighlight lang="php" enclose="pre">        // Set the cookie domain name and path for CSRF protection, path is used if you have different instance on same domain
+        'request' => array(
+            'csrfCookie' => array( 
+                'domain' => '.example.com',
+                'path' => '/limesurvey/',
+            )
+        ),
+</syntaxhighlight>
+
+If you need to update only the url for token emails, set your [[Optional_settings#Advanced_path_settings|publicurl]] in your config.php file.
+
+
+==Allow usage of session and Csrf Validation in iFrame {{NewIn|v=3.24.3}}==
+
+After allow [[Global_settings#Security|Iframe embedding]] you need to update some configuration part. 
+
+{{Alert|Attention, even with all settings : allow form in iframe can broke on some browser or with user specific settings. This settings was tested with Firefox 81.0.2 to 115 and Chromium 85.0.4183.121 to 119, and119 Edge with default settings. '''No support on this feature, only community support'''.}}
+
+===Allow session start in iframe===
+
+The session needs to be secure (valid https) , httponly and samesite to None. All settings must be set to all lowercase.
+
+<syntaxhighlight lang="php" enclose="pre"> 		 'session' => array (
+			'sessionName'=>'LS-VBXZZORFJZCAKGYI',
+			// Uncomment the following lines if you need table-based sessions.
+			// Note: Table-based sessions are currently not supported on MSSQL server.
+			// 'class' => 'application.core.web.DbHttpSession',
+			// 'connectionID' => 'db',
+			// 'sessionTableName' => '{{sessions}}',
+			'cookieParams' => array(
+				'secure' => true,
+				'httponly' => true,
+				'samesite' => 'None',
+			),
+		 ),
+</syntaxhighlight>
+
+===Allow csrf cookie in iframe===
+
+Same as session: must be secure and sameSite set to None. The whole array must be added at the same level as session.
+
+<syntaxhighlight lang="php" enclose="pre">		'request' => array(
+			'enableCsrfValidation'=>true,
+			'csrfCookie' => array(
+				'sameSite' => 'None',
+				'secure' => true,
+			),
+		),
+</syntaxhighlight>
+
+==URL settings==
+
+{{Alert|If you need to update only the url for token and other emails, set your [[Optional_settings#Advanced_url_settings|publicurl]] in your config.php file.}}
+
+To change the default URL settings, update the urlManager:
+<syntaxhighlight lang="php" enclose="pre">       // Use short URL
+		'urlManager' => array(
+			'urlFormat' => 'path',
+			'showScriptName' => false,
+		),
+</syntaxhighlight>
+
+
+You can also add .html after the survey id in the following way:
+<syntaxhighlight lang="php" enclose="pre">       // Use short URL
+		'urlManager' => array(
+			'urlFormat' => 'path',
+			'rules' => array (
+			    '<sid:\d+>' => array('survey/index','urlSuffix'=>'.html','matchValue'=>true),
+			 ),
+			'showScriptName' => false,
+		),
+</syntaxhighlight>
+For more information, check the [http://www.yiiframework.com/doc/guide/1.1/en/topics.url Yii documentation].
+
+==Logging settings==
+
+Yii provides different solutions to generate logs. To find out more about them, check the [http://www.yiiframework.com/doc/guide/1.1/en/topics.logging logging special topic]. LimeSurvey uses '1' or '2' by default, which allows every web user to see the logs. You can create your own settings using Yii directly.
+
+For example, a quick solution to log errors and warnings in files is: 
+<syntaxhighlight lang="php" enclose="pre">
+return array(
+	'components' => array(
+		/* Other component part here 'db' for example */
+		'log' => array(
+			'routes' => array(
+				'fileError' => array(
+					'class' => 'CFileLogRoute',
+					'levels' => 'warning, error',
+					'except' => 'exception.CHttpException.404',
+				),
+			),
+		),
+		/* Other component part here 'urlManager' for example */
+	),
+	/* Final part (with 'runtimePath' 'config' for example) */
+);
+</syntaxhighlight>
+
+{{Hint|Text=The file is saved by default to <code><nowiki>limesurvey/tmp/runtime/application.log</nowiki></code>, which is located in the LimeSurvey root folder.}}
+{{Alert|Yii uses runtime path. By default, the logs are web accessible. They may contain a lot of information from your server. It is better to use a directory that cannot be accessed via the web. You can set it in routes or by updating  the [[Optional settings#Yii settings#Runtime path|Runtime path]].}}.
+
+==Runtime path==
+
+[http://www.yiiframework.com/doc/guide/1.1/en/basics.convention#directory The runtime path] must be a readable and writable directory for the “web user”. However, the runtime path contains files with potential security information that are located in the public web access area. LimeSurvey collects these files in the temp directory of the LimeSurvey root directory. In order to eliminate the access to such important data, you can set the runtime path outside the public web access by editing the respective lines in the /application/config/config.php file:
+
+<syntaxhighlight lang="php" enclose="pre"> 
+return array(
+  'components' => array(
+    […]
+    'runtimePath'=>'/var/limesurvey/runtime/',
+    'config'=>array(
+    […]
+    )
+  )
+)
+</syntaxhighlight>
+
+=General settings=
+
+*'''sitename''': Gives your survey site a name. This name will appear in the survey list overview and in the administration header. The default value is 'LimeSurvey' and it can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+*'''siteadminemail:''' This is the default email address of the site administrator and it is used for system messages and contact options. This setting is used only as default value and can be overridden in the [[Global settings|global settings]] dialog.
+*'''siteadminbounce:''' This is the email address where bounced emails will be sent to. This setting is used only as default value and can be  overridden by the [[Global settings|global settings]] dialog.
+*'''siteadminname:''' The real name of the site administrator. This setting is used only as default value and can be overridden in the [[Global settings|global settings]] dialog).
+*'''proxy_host_name:''' This is the host name of your proxy server (it has to be mentioned if you are behind a proxy and you want to update LimeSurvey using [[ComfortUpdate|ComfortUpdate]]).
+*'''proxy_host_port:''' This is the port of your proxy server (it has to be mentioned if you are behind a proxy and you want to update LimeSurvey  using [[ComfortUpdate|ComfortUpdate]]).
+
+= Security=
+
+* '''maxLoginAttempt''': This is the number of attempts a user has to enter the correct password before he or she gets her or his IP address blocked/locked out. The default value is 3 and it can be modified from config.php. 
+* '''timeOutTime''': If the user enters the password incorrectly for <maxLoginAttempt>, she or he gets locked out for <timeOutTime> seconds. The default value is 10 minutes and it can be modified from config.php.
+* '''maxLoginAttemptParticipants''': This is the number of attempts a participant has to enter a valid token before he or she gets her or his IP address blocked/locked out. The default value is 3 and it can be modified from config.php. 
+* '''timeOutParticipants''': If the participant enters the token incorrectly for <maxLoginAttemptParticipants>, she or he gets locked out for <timeOutParticipants> seconds. The default value is 10 minutes and it can be modified from config.php.
+* '''surveyPreview_require_Auth''': Set to true by default. If you set this to 'false', any person can test your survey using the survey URL, without logging in to the administration panel and without having to activate the survey first. This setting is a default value and can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+* '''usercontrolSameGroupPolicy''': Set to true by default. By default, non-admin users defined in the LimeSurvey management interface will only be able to see users they create or users that belong to at least one same group. The default value can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+*'''filterxsshtml:''' This setting enables the filtering of suspicious html tags located within surveys, groups, and questions and answer texts in the administration interface. Leave this to 'false' only if you absolutely trust the users you created for the administration of LimeSurvey and if you want to allow these users to be able to use Javascript, Flash Movies, etc.. <span class="warning">The super admins never have their HTML filtered</span>.  The default value can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+*'''demoMode:''' If this option is set to 'true' in config.php, then LimeSurvey will go into demo mode. The demo mode changes the following things:
+** Disables admin user's details and password changing;
+** Disables the upload of files on the template editor;
+** Disables sending email invitations and reminders;
+** Disables the creation of a database dump;
+** Disables the ability to modify the following global settings: site name, default language, default HTML editor mode, XSS filter.
+*'''forcedsuperadmin:''' Array of user id whith all rights on all LimeSurvey. This settings can only be updated in config.php file.  This user's rights can not be edited in [[Manage_users#Set_global_permissions_for_a_user|global permissions for a user]] even by other forced super administrator. By default : user with this rights is user with id : 1. The first user created just after installation.
+*'''force_ssl:''' forces LimeSurvey to run through HTTPS or to block HTTPS. See [https://manual.limesurvey.org/Global_settings#Security Force HTTPS] in global settings admin GUI.
+*'''ssl_emergency_override:''' This setting forces SSL off. If You've turned HTTPS/SSL on in the global settings but your server doesn't have HTTPS enabled, the only way to turn it off is by changing a value in the database directly. This allows you to force HTTPS off while you change the global settings for Force Secure. This should always be false except in emergencies where you change it to true until you fix the problem. This setting can be only set via config.php file.
+*'''ssl_disable_alert:''' Disable alert for super-admin about unforced SSL, if you really can not or don't want to force ssl.  This setting can be only set via config.php file.
+
+= Resources=
+*'''sessionlifetime:''' Defines the time in seconds after which a survey session expires. It applies only if you are using database sessions. If you do use database sessions, change the parameter in config.php or override the default value from the [[Global settings|global settings]] dialog.
+*'''memorylimit:''' This determines how much memory LimeSurvey can access. '128 MB' is the minimum (MB=Megabyte) recommended. If you receive time out errors or have problems generating statistics or exporting files, raise this limit to '256 MB' or higher. If your web server has set a higher limit in config.php, then this setting will be ignored. 
+
+<div class="warningbox">'''Please bear in mind that such local settings can always be overruled by the changes done in the global settings dialog'''.</div>
+
+To increase the memory limit to 128M you could also try adding:
+*memory_limit = 128M to your server's main php.ini file (recommended, if you have access)
+*memory_limit = 128M to a php.ini file in the LimeSurvey root
+*php_value memory_limit 128M in a .htaccess file in the LimeSurvey root
+
+*'''max_execution_time:''' Set the number of seconds a script is allowed to run. If this is reached, the script returns a fatal error. To be allowed to export big survey data and statistics, LimeSurvey try to set it by default to 1200 seconds. You can set a bigger time or a lower time if needed. Only accessible via php config file.
+
+=Appearance=
+*'''dropdownthreshold'''{{ObsoleteIn|2.50}}: When "R" is selected for <code>$dropdowns</code>, the administrator is allowed to set a maximum number of options that will be displayed as radio buttons, before converting back to a dropdown list. If there is a question that has a large number of options, displaying all of them at once as radio buttons can look unwieldy, and can become counter-intuitive to users. Setting this to a maximum of, say 25 (which is the default) means that large lists are easier to be used by the administrators for the survey participant.
+*'''repeatheadings:''' With the Array question type, you'll often have a lot of subquestions, which - when displayed on screen - take up more than one page. This setting lets you decide how many subquestions should be displayed before repeating the header information for the question. A good setting for this is around 15. If you don't want the headings to repeat at all, set this to 0. This setting is overridden in the [[Global settings|global settings]] dialog {{NewIn|2.05}}.
+*'''minrepeatheadings:''' The minimum number of remaining subquestions that are required before repeating the headings in Array questions. The default value is 3 and it can be edited in config.php. 
+*'''defaulttemplate:''' This setting specifies the default theme used for the 'public list' of surveys. This setting can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+*'''defaulthtmleditormode:''' Sets the default mode for the integrated HTML editor. This setting can be overridden in the [[Global settings|global settings]] dialog or edited in config.php. The valid settings are:
+** 'inline' - Inline replacement of fields by an HTML editor. Slow but convenient and user friendly;
+** 'popup' - Adds an icon that runs the HTML editor in a popup if needed. Faster, but HTML code is displayed in the form;
+** 'none'-  No HTML editor;
+*'''column_style:''' Defines how columns are rendered for survey answers when using [[QS:Display_columns|display_columns]]. It can be edited in the config.php file. The valid settings are: 
+** 'css' - it uses one of the various CSS methods to create columns (see the template style sheet for details);
+** 'ul' - the columns are rendered as multiple floated unordered lists (default);
+** 'table' - it uses conventional-tables-based layout;
+** NULL - it disables the use of columns.
+
+=Language & time=
+*'''defaultlang:''' This should be set to the default language to be used in your administration scripts, and also the default setting for language in the public survey list. This setting can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+*'''timeadjust:''' If your web server is in a different time zone to the location where your surveys will be based, put the difference between your server and your home time zone here. For example, I live in Australia, but I use a US web server. The web server is 14 hours behind my local time zone. So my setting here is "14". In other words, it adds 14 hours to the web servers time. This setting is particularly important when surveys timestamp the responses. This setting can be overridden in the [[Global settings|global settings]] dialog or edited in config.php.
+
+=Survey behavior=
+*'''deletenonvalues:''' Use this feature with caution. By default (a value of 1), irrelevant questions are NULLed in the database. This ensures that the data in your database is internally consistent. However, there are rare cases where you might want to hold onto irrelevant values, in which case you can set the value to 0. For example, you ask a male person his gender, and he accidentally says 'female' and then answers some female-specific questions (questions that are conditioned on being female, so are only relevant for women). Then, he realizes his mistake, backs up, sets the gender to 'male', and continues with the survey.  Now, the female-specific questions are irrelevant. If <code>$deletenonvalues==1</code>, those irrelevant values will be cleared (NULLed) in the database. If <code>$deletenonvalues==0</code>, his erroneous answers will not be deleted, so they will still be present in the database when you analyze it. 
+*'''shownoanswer:''' When a radio button/select type question that contains editable answers (i.e.: List, Array questions) is not mandatory and 'shownoanswer' is set to 1, an additional 'No answer' entry is shown - so that participants may choose to not answer the question. Some people prefer this not to be available. This setting can be overridden from the [[Global settings|global settings]] dialog or edited in config.php. Valid values are:
+**'0': No; 
+**'1': Yes;
+**'2': The Survey admin can choose.  
+*'''printanswershonorsconditions:''' This setting determines if the printanswers feature will display entries from questions that were hidden by conditions-branching (Default: 1 = hide answers from questions hidden by conditions).
+*'''hide_groupdescr_allinone:''' This setting is relevant for all-in-one surveys using conditions . When this is set to 'true', the group name and description is hidden if all questions in the group are hidden. The default value is 'true'  - hides group name and description when all questions in the group are hidden by conditions. It can be edited in config.php.
+*'''showpopups:'''  Show popup messages if mandatory or conditional questions have not been answered correctly:
+**   '2' = defined by Theme option (default)
+**   '1'= show popup message;
+**   '0'= show message on page instead;
+** '-1'= do not show the message at all (in this case, users will still see the question-specific tips indicating which questions must be answered).
+
+== Numerical question type behavior  ==
+
+*'''bFixNumAuto:''' Numeric fields can be automatically filtered to remove all non numeric values. By default this is enable, you can disable it globally. This settings is related to ''Fix automatically numeric value'' in core theme options. It was enable for ''Yes'', disable for ''Only for expression'' and ''No''.
+*'''bNumRealValue:''' Numeric fields used in expression manager can be fixed or not. It's fixed by default. If NUMERIC is a numerical question : disable or 0 : {NUMERIC} with bad caracters send <nowiki>''</nowiki>, enable or 1 : {NUMERIC} send all character entered. This settings is related to ''Fix automatically numeric value'' in core theme options. It was enable for ''Yes'' and ''Only for expression'' and  disable for ''No''.
+
+=Development and debugging=
+*'''debug:''' With this setting, you set the PHP error reporting to E_ALL. This means that every little notice, warning or error related to the script is shown. This setting should be only switched to '1' if you are trying to debug the application for any reason. If you are a developer, switch it to '2'. Don't switch it to '1' or '2' in production since it might cause path disclosure. The default value is '0' and it can be edited in config.php. 
+*'''debugsql:''' Activate this setting if you want to display all SQL queries executed for the script on the bottom of each page. Very useful for the optimization of the the number of queries. In order to activate it, change the default value to '1' from the config.php file.
+*'''use_asset_manager:''' By default : debug mode disable asset manager, you can allow you to use asse manager with debug mode enable. 
+
+In the case in which you experience an error in the application, we strongly recommend to activate the debug setting in order to get a more detailed error that you can submit with the bug report:
+
+<syntaxhighlight lang="php" enclose="pre">
+    'config'=>array(
+        'debug'=>2,
+        'debugsql'=>0,
+    )
+</syntaxhighlight>
+
+If you work on plugin and need a quick way to dump variables on screen : you can use traceVar function. If debug is set : this function use CWebLogRoute to be shown on HTML page. Usage <code>traceVar($MyVariable)</code>
+
+= Email settings=
+
+All the settings from below can be overridden in the [[Global settings|global settings]] dialog.
+*'''emailmethod:'' This determines how email messages are being sent. The following options are available:
+**'mail:' it uses internal PHP mailer;
+**'sendmail:' it uses sendmail mailer;
+**'smtp:' it uses SMTP relaying. Use this setting when you are running LimeSurvey on a host that is not your mail server.
+*'''emailsmtphost:'' If you use 'smtp' as <code>$emailmethod</code>, then you have to put your SMTP-server here. If you are using Google mail you might have to add the port number like $emailsmtphost = 'smtp.gmail.com:465'.
+*''emailsmtpuser:'' If your SMTP-server needs authentication then set this to your user name, otherwise it must be blank.
+*''emailsmtppassword:'' If your SMTP-server needs authentication then set this to your password, otherwise it must be blank.
+*''emailsmtpssl:'' Set this to 'ssl' or 'tls' to use SSL/TLS for SMTP connection.
+*''maxemails:'' When sending invitations or reminders to survey participants, this setting is used to determine how many emails can be sent in one bunch. Different web servers have different email capacities and if your script takes too long to send a bunch of emails, the script could time out and cause errors. Most web servers can send 100 emails at a time within the default 30 second time limit for a PHP script. If you get script timeout errors when sending large numbers of emails, reduce the number in this setting. Clicking the 'send email invitation' button from the token control toolbar (not the button situated on the right of each token) sends the <maxemails> number of invitations, then it displays a list of the addresses of the recipients and a warning that ''there are more emails pending than could be sent in one batch. Continue sending emails by clicking below. There are ### emails still to be sent.'' and provides a "continue button" to proceed with the next batch. I.e., the user determines when to send the next batch after each batch gets emailed. It is not necessary to wait with this screen active. The admin could log out and come back at a later time to send the next batch of invites.
+
+= Statistics and response browsing=
+*'''filterout_incomplete_answers:''' Control the default behavior of filtering incomplete answers when browsing or analyzing responses. For a discussion on incomplete responses see our [[Responses & statistics#Responses summary|browsing survey results wiki]]. Since these records can corrupt the statistics, an option is given to switch this filter on or off in several GUI forms. The parameter can be edited in the config.php. The following options are available:
+**'show': Allows you to visualize both complete and incomplete answers;
+**'filter': It shows only complete answers;
+**'incomplete': Show only incomplete answers.
+*'''strip_query_from_referer_url''': This setting determines if the referrer URL saves the parameter or not. The default value is 'false' (in this case, the referrer URL saves all parameters). Alternatively, this value can be set to 'true' and the parameter part of the referrer URL will be removed.
+*'''showaggregateddata:''' when activated, additional statistical values such as the arithmetic mean and standard deviation are shown. Furthermore, the data is aggregated to get a faster overview. For example, results of scale 1+2 and 4+5 are added to have a general ranking like "good" (1/2), "average" (3) and "bad" (4/5). This only affects question types  "A" (5 point array) and "5" (5 point choice).
+* '''PDF Export Settings:''' This feature activates PDF export for printable surveys and Print Answers. The PDF export function is totally experimental and the output is far from being perfect. Unfortunately, no support can be given at the moment - if you want to help to fix it, please get in touch with us.
+**'usepdfexport': Set '0' to disable and '1' to enable;
+**'pdfdefaultfont': It represents the default font that will be used by the pdf export function. The default value is 'auto'. To change it, you have to set it to one of the [https://tcpdf.org/docs/fonts/ PDF core fonts]. 
+**'alternatepdffontfile': It's an array with language keys and their corresponding font. The default font for each language can be replaced in the config.php file;
+**'pdffontsize': it shows the font size for normal texts; For the title of the survey, it is <pdffontsize>+4, while for the group title is <pdffontsize>+2. It can be edited in the config.php file or from the [Global settings|global settings]] dialog;
+**'notsupportlanguages': it includes a list with the languages for which no PDF font was found. The list includes Amharic ('am'), Sinhala ('si'), and Thai ('th'), and it can be found in the config-defaults.php file;
+**'pdforientation': Set 'L' for Landscape or 'P' for portrait format. It can be edited from the config.php file.
+*'''Graph setting'''
+**'chartfontfile': Sets the font file name that is used to create the statistical charts. The file has to be located in the fonts directory, located in the LimeSurvey root folder. It can be edited in the config.php file;
+**'alternatechartfontfile': It's an array with language keys and their corresponding font. It can be edited in the config.php file.
+*'''showsgqacode:''' This setting is used at the printable survey feature and defaults to 'false''. If you set showsgqacode = 'true';, the IDs of each question - and answer if applicable - will be shown. These IDs match the column heading at the Lime_survey_12345 table, which holds the answer data for a certain survey. These IDs can be used for a code book for manual database queries.
+
+= [[LDAP settings]]=
+
+As this is an extensive topic we have moved [[LDAP settings]] to [[LDAP settings|another page.]]
+
+= Authentication=
+
+Starting with LimeSurvey 2.05, authentication will be handled by plugins. As a result, the information below might be outdated. See [[Plugins|the plugins wiki]] for most up to date information.
+
+== Authentication delegation to the webserver==
+
+System administrators may want to have their '''survey administrators''' authenticated against a central authentication system (Active Directory, openLdap, Radius, ...) rather than using the internal LimeSurvey database. An easy way to do this is to setup your web server software to use this external authentication system, and then ask LimeSurvey to trust the user identity reported by the web server. In order to enable this feature, you have to:
+* set '''auth_webserver''' to 'true' in config.php;
+* enable authentication from the web server side.
+
+Please note that:
+* LimeSurvey will then bypass its own authentication process (by using the login name reported by the web server without asking for a password);
+* this can only replace the LimeSurvey GUI authentication system, '''not the survey invitation system''' (participant interface).
+
+== Authentication delegation with no automatic user import==
+
+Please note that <u>Authentication Delegation doesn't bypass the LimeSurvey authorization system by default</u> - meaning that, even if you don't have to manage passwords in LimeSurvey, you still need to define the users in the LimeSurvey database and assign them the correct set of rights in order to let them access the administration panel.
+
+A user is then granted access to LimeSurvey if and only if:
+* he has been authenticated to the web server;
+* his login name is defined as a user in the LimeSurvey user database (the user is then granted the privileges of the user defined in the LimeSurvey user database).
+
+== Authentication delegation with automatic user import==
+
+When managing a huge user database, it is sometimes easier to auto-import users in the LimeSurvey database:
+*'''auth_webserver_autocreate_user''': If set to 'true', LimeSurvey will try to auto-import users authenticated by the web server but not already in its users DB.
+*'''auth_webserver_autocreate_profile''': An array describing the default profile that will be assigned to the user, including the full (fake) name, email, and privileges.
+
+If you want to customize the user profile so that it matches the logged-in user, you'll have to develop a simple function called '''hook_get_autouserprofile''' - with this function you can retrieve from a central user account database (for instance, from a LDAP directory) the true full name, names, and email of a particular user. You can even customize his privileges on the system based on the groups he is allocated in the external database.
+
+The '''hook_get_auth_webserver_profile''' function takes the user login name as the only argument and can return:
+* False or an empty array - in this case the user is denied access to LimeSurvey;
+* an array containing all common userprofile entries as described in the <code>$WebserverAuth_autouserprofile</code>
+<syntaxhighlight lang="php">function hook_get_auth_webserver_profile($user_name)
+{
+     // Retrieve user's data from your database backend (for instance LDAP) here
+     ... get $user_name_from_backend
+     ... get $user_email_from_backend
+     ... get $user_lang_from_backend
+     ... from groups defined in your backend set $user_admin_status_frombackend_0_or_1
+     return Array(
+                     'full_name' => "$user_name_from_backend",
+                     'email' => "$user_email_from_backend",
+                     'lang' => '$user_lang_from_backend',
+                     'htmleditormode' => 'inline',
+                     'templatelist' => 'default,basic,MyOrgTemplate',
+                     'create_survey' => 1,
+                     'create_user' => 0,
+                     'delete_user' => 0,
+                     'superadmin' => $user_admin_status_frombackend_0_or_1,
+                     'configurator' =>0,
+                     'manage_template' => 0,
+                     'manage_label' => 0);
+}
+
+     // If user should be denied access, return an empty array
+
+     // return Array();</syntaxhighlight>
+{{Alert|The optionnal 'hook_get_auth_webserver_profile' function is for advanced user usage only! For further details, please read the comments from the config-defaults.php file.}}
+
+== User name mapping==
+
+In the case in which some users have an external user name that is different from their LimeSurvey user name, you may find useful to use a user name mapping. This is done in LimeSurvey by using the '''auth_webserver_user_map''' parameter. For instance, imagine you don't have an 'admin' user name defined in your external authentication database. Then, in order to login to LimeSurvey as admin, you'll have to map your external user name (let's call it 'myname') to the admin login name in LimeSurvey. The corresponding setup is:
+
+<syntaxhighlight lang="php">'config'=>array(
+...
+'auth_webserver_user_map' => array ('myname' => 'admin');
+)</syntaxhighlight>
+After a successful authentication with the 'myname' login and web server password, you'll be directly authorized to use LimeSurvey as the 'admin' user. 
+
+This has serious security implications, so use it with care. Also, protect your config.php from write access by the web server.
+
+== Use one-time passwords==
+
+A user can open the LimeSurvey login page at default.com/limesurvey/admin and type the username and the one-time password which was previously written into the users table (column one_time_pw) by an external application.
+
+This setting has to be turned on config.php file to enable the usage of one-time passwords (default = false).
+<syntaxhighlight lang="php" enclose="pre">
+    'config'=>array(
+        'debug'=>0,
+        'debugsql'=>0,
+        'use_one_time_passwords'=>true,
+    )
+</syntaxhighlight>
+
+More information can be found in the [[Manage users#Use one-time passwords|"Manage Users" section]].
+
+
+= Encryption settings {{NewIn|4.0.0}} =
+
+{{Alert|title=Attention|text=Once set, encryption keys should never be changed, otherwise all encrypted data could be lost !}}
+
+{{Note|When update or install, this parameters was generated by LimeSurvey and set in <code>application/config/security.php</code> file. You can move this settings in config.php if you want or leave in security.php.}}
+
+See [[data encryption]] for detail on this feature.
+
+*'''encryptionkeypair'''
+*'''encryptionpublickey'''
+*'''encryptionsecretkey'''
+
+= Advanced url settings=
+
+*'''publicurl:''' This should be set to the URL location of your 'public scripts'. The public scripts are those located in the "limesurvey" folder (or whatever name you gave to the directory that all the other scripts and directories are kept in). '''This settings is available in config.php and it is used when LimeSurvey need an absolute url (for example when token emails are sent).'''
+*'''homeurl:''' This should be set to the URL location of your administration scripts. These are located in the /limesurvey/admin folder. This should be set to the WEB URL location - for example, ''http://www.example.com/limesurvey/html/admin''. Don't add a trailing slash to this entry. The default setting in config.php attempts to detect the name of your server automatically using a php variable setting - <code>{$_SERVER<nowiki>[</nowiki>'SERVER_NAME']}</code>. '''In most cases, you can leave this and just modify the remainder of this string to match the directory name you have put the LimeSurvey scripts in.'''
+*'''tempurl:''' This should be set to the URL location of your "/limesurvey/tmp" directory - or to a directory in which you would like LimeSurvey to use to serve temporary files. 
+*'''uploadurl:''' This should be set to the URL location of your "/limesurvey/upload" directory - or to a directory in which you would like LimeSurvey to use to serve uploaded files. This allow you to set uploaded files on another url domain.
+
+= Advanced path settings=
+
+*'''homedir:''' This should be set to the physical disk location of your administration scripts - for example "/home/usr/htdocs/limesurvey/admin". Don't add a trailing slash to this entry. The default setting in config.php attempts to detect the default root path of all your documents using the php variable setting  <code>{$_SERVER<nowiki>[</nowiki>'DOCUMENT_ROOT']}</code>. In most cases you can leave this and just modify the remainder of this string to match the directory name you have put the LimeSurvey scripts in.
+*'''publicdir:''' This should be set to the physical disk location of your 'public scripts'.
+*'''tempdir:''' This should be set to the physical disk location of your /limesurvey/tmp directory so that the script can read and write files.
+*'''uploaddir:''' This should be set to the physical disk location of your /limesurvey/upload directory so that the script can read and write files.
+*'''sCKEditorURL:''' url of the fckeditor script.
+*'''fckeditexpandtoolbar:''' defines if the fckeditor toolbar should be opened by default.
+*'''pdfexportdir:''' This is the directory with the tcpdf.php extensiontcpdf.php.
+*'''pdffonts:''' This is the directory for the TCPDF fonts.
+
+= Other advanced settings=
+
+== Upload files==
+
+*'''allowedthemeuploads:''' File types allowed to be uploaded in theme editor
+*'''allowedresourcesuploads:''' File types allowed to be uploaded in the resources sections, and with the HTML Editor
+*'''allowedfileuploads''' {{NewIn|4.0.0}} Global restriction on file type to be uploaded
+*'''magic_database:''' {{NewIn|3.17.17}} Allow to use a different MIME database for [https://www.php.net/manual/en/function.finfo-open.php finfo_open]. Can be updated only in config.php file. Example : <code>/usr/share/misc/magic.mgc</code> for redhat based linux.
+*'''magic_file:''' {{NewIn|3.17.17}} Allow to use a different file to get the array of extension by mime type than the [https://github.com/LimeSurvey/LimeSurvey/blob/master/application/core/utils/fileExtensions.php included one]. Must be a PHP file return an array. Can be updated only in config.php file.
+
+== Update ==
+
+*'''updatable:''' This setting is in version.php. Can be true or false. If you set to true : when an super admin user log in : LimeSurvey checks if an update is available and show you a warning. If set to false : no check is done and you can't use ComfortUpdate.

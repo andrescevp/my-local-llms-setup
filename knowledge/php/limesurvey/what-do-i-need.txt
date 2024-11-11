@@ -1,0 +1,128 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+'''Note: LimeSurvey PRO is now LimeSurvey Cloud.'''
+
+
+Before starting the discussion about '''LimeSurvey Cloud''' and '''LimeSurvey CE''' (LimeSurvey Community Edition), it is important to understand the difference between ''LimeSurvey'' and ''LimeSurvey GmbH''.
+
+''LimeSurvey'' refers to the web server-based software that is freely distributed under the [https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html GNU General Public License v2] (GPL v2) and above.
+
+''LimeSurvey GmbH'' refers to the company that was built around the LimeSurvey software in order to better coordinate its development and provide various LimeSurvey paid services (e.g., hosting, personalized templates, add-on packages, technical support, etc.).
+
+<div class="simplebox">[[File:help.png]] Find out more about LimeSurvey's license at https://community.limesurvey.org/licence-trademark/.</div>
+
+Because LimeSurvey has a General Public License and is an <u>[https://en.wikipedia.org/wiki/Open_source_software Open-source software]</u>, it can be used, modified, and distributed for commercial, private, and educational purposes by anyone, '''with the exception of the name and logo, which are trademarked'''.  For example, LimeSurvey can easily be used to create and distribute questionnaires for the evaluation of university classes or professors, or it can be installed on a private server for the purpose of conducting online/offline market research for your business.
+
+<div class="simplebox">[[File:help.png]] LimeSurvey is an Open-source software. The code of the program is fully disclosed. You can access it at https://github.com/LimeSurvey/LimeSurvey.</div>
+
+It is necessary to meet a minimal set of requirements in order to install LimeSurvey on your computer (for development purposes) or on your server. Read our [[Installation – LimeSurvey CE|installation guideline]] for an exhaustive guide on how to install LimeSurvey.
+
+However, for users who may find the installation process too complex and who do not have knowledge of server administration, [https://www.limesurvey.org/ LimeSurvey GmbH] offers [https://www.limesurvey.org/en/pricing Cloud hosting services].  With [https://www.limesurvey.org/en/pricing Cloud hosting services], a LimeSurvey instance is created for you in seconds!
+
+
+<center>[[File:provsce.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] Quite often, you will see words related to ''hosting services'', ''self-hosted software'', and ''personal server'' mentioned within this wiki section. We suggest the [https://www.limesurvey.org/en/blog/20-blog/120-hosting-solutions-two-sides-of-the-same-coin following post from our blog] to better grasp these hosting-related concepts.</div>
+
+=LimeSurvey Cloud vs LimeSurvey CE=
+
+Check out the following table for a brief summary of features of each service for a better understanding of the differences between them:
+
+{| class="wikitable" style="text-align: center; color: black"
+|+LimeSurvey Cloud vs LimeSurvey CE
+|'''LimeSurvey Cloud'''
+|'''LimeSurvey CE'''
+|-
+|Hosting is provided by LimeSurvey. The installation process should take no longer than 5 minutes.
+|Self-hosted. 
+|-
+|You can choose one of the four types of plans: [https://www.limesurvey.org/en/pricing FREE, BASIC, EXPERT and ENTERPRISE].
+|You may either use the free version or pick one of the [https://www.limesurvey.org/en/pricing three premium plans].  The premium plans contain the ComfortUpdate feature, access to older versions and a multitude of design templates.
+|-
+|Always uses the latest stable version of LimeSurvey.
+|You get access not only to the latest releases, but also to the older ones. You choose which to use.
+|-
+|Technical support included for the paid plans.
+|Technical ComfortUpdate support included for the premium plans.
+|-
+|Contains all the features that make LimeSurvey great.
+|Contains all the features that make LimeSurvey great.
+|-
+|LimeSurvey Cloud comes with response and storage usage reminders due to the fact that these are limited on the free plan. 
+|LimeSurvey CE does not have response and storage usage reminders.  Limitations are due to the amount of space allocated from the personal server to the LimeSurvey-related tasks.
+|-
+|No direct server access. Third-party plugins/extensions can be added to your LimeSurvey instance by us on request.
+|If you own your server, you can access your LimeSurvey installation. You can start [[Optional settings|tweaking it]] and make further enhancements by adding additional extensions/add-ons.
+|-
+|The instance is automatically updated by us for minor versions. You decide on the point in time for major versions.
+|The ComfortUpdate tool is used to update the LimeSurvey installation. The update can also be done manually.  
+|-
+| Server and installation configuration is handled by us, saving you valuable time.
+|Ideal for hands-on people with technical knowledge. [[LimeSurvey_Manual|The LimeSurvey manual]] Is a great place to start learning.
+|-
+|Reliable response inflow due to a self-renewing subscription system.
+|The only limitation is related to your server and its configuration.
+|-
+|More flexibility - You have 3 days until the date of renewal to cancel your subscription!
+|The software is hosted on your server. There are no links between the activity performed by you with the help of the ''LimeSurvey software'' and ''LimeSurvey GmbH''.
+|}
+
+{{Box|Please note that the above table is just a summary of the main features provided by the two versions of LimeSurvey. For an exhaustive description, access the following limesurvey.org links: [https://community.limesurvey.org/comfort-update-extension/ LimeSurvey CE] or [https://https://www.limesurvey.org/pricing LimeSurvey Cloud] to get a complete description of each.}}
+
+
+==LimeSurvey CE==
+
+Convinced that '''LimeSurvey CE''' is right for you? You can install it on your server now. To download LimeSurvey CE, click the '''Downloads''' tab from the [https://community.limesurvey.org/ LimeSurvey] page. 
+
+
+<center>[[File:LimeSurvey.org - Project - Downloads.png]]</center>
+
+
+The following page will load:
+
+
+<center>[[File:Project - Downloads - Display.png]]</center>
+
+
+*'''LimeSurvey Cloud''': If you click on the '''Sign up for free''' button, you will be first asked to create a [https://www.limesurvey.org/en/pricing LimeSurvey.org] account in order to create and access your online LimeSurvey site. If you wish to use our hosting services, refer to the following quick start guide: [[Quick start guide - LimeSurvey 3.0+|LimeSurvey Cloud Quick Start Guide]].
+*''LimeSurvey CE'': This option allows you to download the LimeSurvey software, archived in several formats, including an executable file. Use this option if you would like to install LimeSurvey on your own server or on your own computer for personal testing. It is ideal for hands-on people with technical knowledge. You will see that LimeSurvey CE is divided into stable releases and development releases. For a rock-solid software, go for the stable release. If you want to test new LimeSurvey features and help us improve it, go with the development release.
+
+<div class="simplebox">[[File:help.png]] To get access to the latest software developments, [https://github.com/LimeSurvey/LimeSurvey follow us on GitHub].</div>
+
+*'''Templates:''' You may find example surveys here, label sets, and question templates in various languages. All templates are created by the community. You can also contribute by uploading your work and making it publicly available to others.
+*'''Extensions:''' LimeSurvey supports plugins and extensions. By clicking on the "Go to the extensions" link, you get access to a directory that contains all of the LimeSurvey third-party extensions (your own contribution can also be listed there).
+
+
+{{Alert|Title=Attention|text=Only LimeSurvey CE supports third-party plugins! If you would like to use an extension in LimeSurvey Pro, please write [mailto:support@limesurvey.org Support].}}
+
+==LimeSurvey Cloud==
+
+Refer to the following [[Quick start guide - LimeSurvey 3.0+|step-by-step guide]] to learn how to create a [https://www.limesurvey.org/en/pricing LimeSurvey Cloud] account and launch your first survey.
+
+<div class='simplebox'> [[File:help.png]] You can also view the following [https://www.youtube.com/watch?v=oyoq14XpkwA video tutorial] on how to set up a professional account on LimeSurvey.</div>
+
+=What do I need?=
+
+There is a lot of information to grasp. We are completely aware of this and you might feel a bit overwhelmed. 
+We suggest you do a '''cost-benefit analysis'''. Some aspects that are worth taking into consideration:
+*'''Capital:''' Think of the costs of running a server for example. Even though a lot of low-cost hosting providers can be found online, take into account that you have to take care not only of your LimeSurvey installation, but also of the server configuration. If you want to create more complex surveys and/or install/create additional plugins, employees with knowledge in PHP, HTML, CSS will be needed - which means higher costs for you and your business.
+*'''Human resources''': If complex surveys are created, employees with IT-related skills might be needed. That is why it is better (sometimes) to outsource such services. You may use our LimeSurvey Cloud services or the help provided by our official partners.
+*'''Time:''' Time is a limited resource. Different time-related constraints (e.g., deadlines, lots of qualitative research requests from your clients, etc.) transform time into an important independent variable that should definitely influence your final decision. 
+
+Think of all your possible needs and available resources before choosing between LimeSurvey Cloud and LimeSurvey CE.
+
+Generally, if you want to use LimeSurvey without any download or configuration, you should choose LimeSurvey Cloud. You can test it freely as long as you want and then purchase one of the subscription plans.  However, if you have a running server infrastructure and want to integrate LimeSurvey into that, take a look at LimeSurvey CE. We also offer great LimeSurvey CE plans to enhance your installation with one-click updates and more custom themes.
+
+{{Note|Additional help can be found at one of our partners listed here: https://www.limesurvey.com/.}}
+
+=What if I still have questions?=
+
+We have an extremely helpful community. You are more than welcome to post your questions and/or thoughts on our [https://forum.limesurvey.org LimeSurvey forums] or [https://discord.gg/DEjguXn|LimeSurvey Discord channel]:
+
+<div class="simplebox"><center>'''[https://discord.gg/DEjguXn Direct link to the official LimeSurvey Discord group]'''</center></div>

@@ -1,0 +1,61 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+The file upload question type can be used to collect file(s) from a user in response to a question. For example, a company with employment opportunities could use this question type to request the candidate to submit/upload his or her updated CV, as well as any other scanned documents in the employment survey.
+
+<center>[[File:file-upload-screenshot.png]]</center>
+
+
+'''Example:''' [[Media:Question example file upload.zip|File upload question type.zip]]
+
+}}</onlyinclude>
+
+This question gives the survey designer the ability to restrict the files that can be uploaded by the user in response to the question. For example, the survey administrator can allow only PNG, JPG, and JPEG images which are less than 1 MB in size.
+
+=General options=
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:hide_tip}}
+
+{{QS:Question_theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+=File metadata=
+
+{{QS:show_title}}
+
+{{QS:show_comment}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:max_filesize}}
+
+{{QS:maximum_number_of_files}}
+
+{{QS:minimum_number_of_files}}
+
+{{QS:allowed_filetypes}}
+
+=Statistics=
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Mask questions]]

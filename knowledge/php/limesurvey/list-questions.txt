@@ -1,0 +1,81 @@
+<languages /> 
+
+__TOC__
+
+
+=Introduction=
+
+
+To view a list of survey questions, from the '''Settings''' tab, click '''List questions'''. 
+
+
+<center>[[File:List_questions_location.png]]</center>
+
+
+Once clicked, the following page will be displayed.
+
+
+<center>[[File:List questions panel.png]]</center>
+
+=Questions Table=
+
+
+The screenshot above shows (on the top-right side of the table) a search box that allows you to look for a specific question. The group filter can be applied in the case you use similar question names across multiple question groups.
+
+The table columns are:
+
+*'''Question ID:''' Displays a numeric value representing the ID of the question.
+
+*'''Question order:''' Lists the order in which the questions are displayed to the participants.
+
+*'''(Question) Code:''' The question code is mainly used with [[ExpressionScript - Presentation|expressions]].
+
+*'''Question:''' The question text is displayed under this column.
+
+*'''Question type:''' Displays the question type. For further details on the available LimeSurvey question types, check the following [[Question types|link]].
+
+*'''Group:''' Shows the group a question belongs to. For more details on question groups, click [[Question groups - introduction|here]].
+
+*'''Mandatory:''': To find out more about what it means for a question to be mandatory, click [[QS:Mandatory|here]]. Three options can be displayed in the table:
+**''Not specified:'' The question is not mandatory.
+**''Specified:'' The question has to be filled in by respondents.
+**''Not relevant:'' The attribute ''Mandatory'' cannot be edited (e.g., [[Question type - Text display|text display questions]]). 
+
+*'''Other:''' It refers to attribute [[QS:Other|Other]]. If enabled, another answer option will be displayed alongside the ones defined by you. Three options can be displayed in the table:
+**''Not specified:'' The question does not have the attribute ''Other'' enabled (no "other" answer option will be displayed alongside your defined answers).
+**''Specified:'' If specified, option ''Other'' is active. This means that an ''other'' answer option will be displayed alongside your defined question answers. 
+**''Not relevant:'' Certain questions do not allow you to enable the ''Other'' option (such as text display or free text question types). 
+
+
+{{Note| '''Note:''' For a quick introduction on questions, check the following [[Questions - introduction|wiki subsection]].}}
+
+
+*'''Quick-action buttons:''' The last column contains four quick action buttons:
+**''Question preview:''  Allows you to preview a question.
+**''Edit question:'' To edit the question text or other question-related attributes, click the green pencil.
+**''Question summary:'' Provides access to the most important details of the respective question, such as the question text and the enabled attributes.
+**''Delete:'' The red trash button - once clicked, you mustconfirm the question deletion, as well as the deletion of its contents (answer options and subquestions).
+
+
+{{Note| To check the structure of a LimeSurvey survey, please read the following [[Survey structure|wiki subsection]].}} 
+
+
+==Group-Editing Questions==
+
+
+The '''Selected question(s)...''' button is located on the bottom-left side of the table.  As the name suggests, it allows survey administrators to perform certain group-actions. They are divided in general and advanced options:
+
+
+<center>[[File:Select_questions_group_edit.png]]</center>
+
+
+* '''Delete:''' Click to delete at least two questions from your questions table.
+* '''Set question group and position:''' Select multiple questions to move them to another question group.
+* '''Set "Mandatory" state:''' Select multiple questions and edit their [[QS:Mandatory|"Mandatory" state]]. 
+* '''Set CSS class:''' To set up a [[QS:CSS_Class|CSS class]] for multiple questions, use this function.
+* '''Set statistics option:''' Each question contains a set of attributes grouped under the ''Statistics'' tab. For more information, access the [[Category:Question_Statistics_Options|Statistics wiki section]].
+* '''Set ''Other'' state:''' To enable or disable attribute [[QS:Other|Other]] for multiple questions at once, use this button.
+* '''Present subquestions/answer options in random order:''' If enabled, the subquestions and question answers will be displayed to each survey participant in a random order. For more details on this attribute, continue reading [[QS:Random_order|here]].
+
+
+{{Hint|Text=From the bottom-right corner of the table you can select the number of rows/entries to be displayed per page. The default number is 10. However, if you wish to perform certain group-editing actions via the '''Selected question(s)''' button, increase the number.}}

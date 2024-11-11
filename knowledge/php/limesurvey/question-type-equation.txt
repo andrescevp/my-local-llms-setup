@@ -1,0 +1,96 @@
+<languages />
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+
+{{Hint|Text=Unlike all other question types, if an equation is hidden, it is still computed, its value being stored in the database.}}
+
+{{Hint|Text=Equation question type allow to assign a value to another Question. See how to [[ExpressionScript - Presentation#Using assignment operator|use assignment Operator]].}}
+
+{{Alert|No HTML tag can be saved in the database due to security concerns.}}
+
+This question type lets the author create an equation (e.g., a calculation or tailored report) and save it in a database variable. Equations can use any syntax supported by [[ExpressionScript - Presentation|ExpressionScript]]. If you are handling numeric values make sure that you use the advanced question setting "Numbers only" as explained below.
+
+You may find below an example on how to use this question type:
+
+
+<center>[[FIle:Equation q ex 01.png]]</center>
+
+
+<center>[[File:Equation q ex 02.png]]</center>
+
+
+'''Example:''' [[Media:Limesurvey_survey_BMIsample.lss.zip|Limesurvey_survey_BMIsample.lss.zip]].
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+=Editing an equation=
+
+== Using dedicated setting==
+
+The best way to edit equation is to use dedicated setting : this allow using same equation for different languages, and to be sure than no HTML is integrated in equation. This allow you to show a complete sentence to user but save only the needed value in database : for example put {weightkg/tall} in equation setting and show “Your BMI is {self.NAOK}”.
+
+If you need Expression inside : you have to add the curly brace.
+
+== Using Question text==
+
+You can do edits via the HTML/WYSIWYG editor or from the HTML source:
+
+* Using the WYSIWYG editor:
+
+
+<center>[[File:Equation-01.png]]</center>
+
+
+*From the HTML source:
+
+
+<center>[[File:Equation-02.png]]</center>
+
+
+The edits in the source code are recommended when you wish to record in your response table a clean text or a clean numeric value. By editing the source, you can remove/delete any HTML code that can affect the storing process.
+
+
+<center>[[File:Equation-03.png]]</center>
+
+
+<div class="simplebox">[[File:help.png]] '''Hint:''' To check different HTML editors, please see the wiki section on the [[First_login_-_your_user_preferences#HTML_editor_mode|HTML editor mode]].</div>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Hidden}}
+
+{{QS:CSS_Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+=Logic=
+
+{{QS:Equation}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+{{QS:numbers_only}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+[[Category:Question types]][[Category:Mask questions]]

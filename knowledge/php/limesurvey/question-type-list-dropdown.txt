@@ -1,0 +1,101 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question type collects input from a dropdown list menu. You can also create subcategories within this list by making use of the "Category separator" attribute.
+
+
+<center>[[File:EM_ListR.png]]</center>
+
+
+'''Example:''' [[Media:List dropdown question.zip|List dropdown question.zip]]
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:other}}
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+=Display=
+
+{{QS:Answer_order}}
+
+{{QS:Hide_tip}}
+
+{{QS:category_separator}}
+
+{{QS:other_replace_text}}
+{{QS:Other_Position}}
+
+{{QS:Question theme}}
+
+{{QS:Hidden}}
+
+{{QS:CSS Class}}
+
+{{QS:dropdown_size}}
+
+{{QS:Printable survey relevance help}}
+
+{{QS:dropdown_prefix}}
+
+=Logic=
+
+{{QS:other_comment_mandatory}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}} 
+
+{{QS:em_validation_q_tip}}
+
+=Other=
+
+{{QS:Page_break}}
+
+{{QS:scale_export}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+=Timer=
+
+{{QS:time_limit}}
+
+{{QS:time_limit_action}}
+
+{{QS:time_limit_disable_next}}
+
+{{QS:time_limit_disable_prev}}
+
+{{QS:time_limit_countdown_message}}
+
+{{QS:time_limit_timer_style}}
+
+{{QS:time_limit_message_delay}}
+
+{{QS:time_limit_message}}
+
+{{QS:time_limit_message_style}}
+
+{{QS:time_limit_warning}}
+
+{{QS:time_limit_warning_display_time}}
+
+{{QS:time_limit_warning_message}}
+
+{{QS:time_limit_warning_style}}
+
+[[Category:Question types]][[Category:Single choice questions]]

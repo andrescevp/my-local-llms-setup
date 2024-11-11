@@ -1,0 +1,90 @@
+<languages /> __TOC__
+
+
+<div class="simplebox">'''Note:''' ''SGQA identifiers'' and ''INSERTANS: codes'' won't be available for usage any longer in LimeSurvey 4 within [[ExpressionScript Engine - Quick start guide|expressions]]. Instead, use [[ExpressionScript_-_Presentation|ExpressionScript]] compatible question codes. Check out the following link for [[ExpressionScript_-_Presentation#Access_to_variables|naming conventions]].</div>
+
+
+<div class="simplebox">'''Hint:''' This page describes how you can find out an SGQA identifier. For information how to use it please refer to the page [[Adding a question]]. </div>
+
+
+=General Description=
+
+
+The SGQA (Survey/Group/Question/Answer) identifier is a shortcut to the answer of a question. Every survey, group, and question you are creating gets a unique number assigned in your database. You can see this number in the admin interface in the title of the survey, group and question bar (e.g., see "question id" column below)
+
+
+<center>[[File:SGQA.png]]</center>
+
+
+To determine the SGQA identifier, you have to put the survey, group, and question numbers together with the letter 'X' in-between. E.g., an SGQA should look like this: "745X35X5".
+
+
+<div class="simplebox">'''Note:''' Always use capital letters ("X" instead of "x")!</div>
+
+
+=Use editor to add placeholder=
+
+
+The integrated editor has a feature to select the placeholder for a certain question. The icon is called "Placement fields". This feature always lists questions of previous survey pages only, so it depends on the survey mode.
+
+
+<center>[[File:lime_replacement_editor.png]]</center>
+
+
+<center>[[File:Lime replacement editor window.png]]</center>
+
+
+=Identifier for Single Choice Questions=
+
+
+For example: survey has ID 1, Group has ID 6, Question has ID 12. Your identifier for a single choice question would look like this:
+
+1X6X12
+
+
+=Identifier for Multiple Choice Questions=
+
+
+Since it is a multiple choice question the particular answer must be identified too. Just add the code of that answer without an X. For example: Survey has ID 1, Group has ID 6, Question has ID 12. The particular answer has code 'ber1'.
+
+Your identifier for this multiple choice question answer would look like this:
+
+1X6X12ber1
+
+
+=Identifier for Array question types=
+
+
+Since it is a array question, the particular subquestion within the cell must be identified too. Add the subquestion code of the row without an X. For example: Survey has ID 1, Group has ID 6, Question has ID 12. The particular subquestion has code 'ber1'. Your identifier for this "Array" question answer would look like this:
+
+1X6X12ber1
+
+
+=Identifier for Array (Text) or Array (Number) Questions=
+
+
+Since it is a combined array question, the particular answer within the cell must be identified too. Add the subquestion code of the row without an X, then append the underscore char and finally add the subquestion code that indentifies the column. For example: Survey has ID 1, Group has ID 6, Question has ID 12. The particular subquestion has code 'ber1', and the column is identified by the subquestion with code 'lab1'
+
+Your identifier for this "Array (Text)" question answer would look like this:
+
+1X6X12ber1_lab1
+
+
+=Uses of the SGQA identifier=
+
+
+The SGQA identifier can be used to load the answers of previously saved questions into the question text of later questions  (for a short guide, see [[Questions_-_introduction#Information_from_previous_answers|the introduction wiki section on questions]]).
+
+It can also be used in the query URL of a survey to "prefill" answers to a survey. E.g., for SGQA 1X6X121ab1, your query URL could include "&1X6X121ab1=Y" to prefill that answer with a "Y". (See  [[Workarounds: Survey behaviour#Prefilling_survey_answers_using_the_survey_URL|Prefilling survey answers using the survey URL]])
+
+
+{{Note|For more details on URL fields, check the following [[URL fields|wiki section]].}}
+
+
+The SGQA identifier is also the field name where the data for each question is stored in the database/survey responses table.
+
+
+=Dynamically reference the SGQ identifier=
+
+
+Some people may find a need to reference a question dynamically. For instance, if you would like to [[Workarounds: Manipulating a survey at runtime using Javascript#General|hide the input text field]] of a short text answer. You can now do this (as of SVN build 9755) by using the {SGQ} identifier. LimeSurvey will replace the {SGQ} with the full ID of that question, e.g., 3583X84X249

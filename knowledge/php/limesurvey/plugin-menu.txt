@@ -1,0 +1,47 @@
+<languages /> 
+__TOC__
+
+
+{{Alert|title=Attention|text=The following wiki section covers how to install and activate a plugin. '''Note''' that third-party plugins may not be safe to run! '''They may break your installation'''! Please, proceed carefully! In the case in which you do need to use a plugin but you do not know whether you should run it or not, contact your LimeSurvey instance provider!}}
+
+
+{{Note|For advanced information on the plugin system, check our [[Plugins - advanced|wiki section]] for advanced users.}}
+
+
+=Introduction=
+
+
+The following panel allows you to access the settings of the active LimeSurvey plugins (they are located in the [[Plugin manager]]). 
+
+
+To access the local plugin panel, click the '''Settings tab''' and scroll down until you see the ''Plugins'' menu:
+
+
+<center>[[File:Settings_tab_plugins.png]]</center>
+
+
+Click the ''Simple plugins'' button. A page with all the active plugins that allow survey administrators choose certain plugin-related settings will be displayed:
+
+
+<center>[[File:Settings_tab_plugin_panel.png]]</center>
+
+
+In the above screenshot, the "AuditLog" plugin is active and asks the survey administrator whether the survey logs should be audited or not.
+
+
+{{Alert|title=Attention|text=Please note that certain providers limit the access to third-party plugins. For example, LimeSurvey GmbH provides Professional packages (quick access to LimeSurvey instances) without providing the necessary permissions to its users to install third-party plugins because of security concerns - e.g., the installation of an unsupported plugin may break down your LimeSurvey instance.}}
+
+=Other plugin-related information=
+
+
+==List of core LimeSurvey plugins==
+
+
+Click [[Plugin manager#Core plugins|here]] to see all the plugins that are located by default within your LimeSurvey instance. 
+
+They can be activated and configured from the [[Plugin manager]]. Certain [[Manage_users|user permissions]] are required in order to activate and configure them.
+
+==List of Third-Party Plugins==
+
+
+A short list with third-party plugins that can be used with certain LimeSurvey releases can be found [https://www.limesurvey.org/community/extensions here].

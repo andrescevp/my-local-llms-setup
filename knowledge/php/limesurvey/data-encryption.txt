@@ -1,0 +1,103 @@
+<languages />
+
+
+__TOC__
+
+
+==Introduction==
+
+
+'''Data encryption''' is a new feature provided in LimeSurvey 4. It has been created to help survey administrators better cope with the new data-protection regulations adopted in different parts of the world (e.g., GDPR).
+
+This feature permits the encryption of personal data located in the [[Central_Participant_Database|central participant database]] and/or [[Survey participants|survey participants table]]. Moreover, you can also encrypt the data you collect from your respondents if the [[QS:Encryption|encryption question attribute]] is enabled.
+
+Please note that your data will always be visible in the LimeSurvey interface. Only the database entries get encrypted - nobody that accesses the server where you host LimeSurvey can visualize the respective data. Therefore, please pay attention to whom you provide [[Manage users|global and survey permissions]].
+
+
+{{Alert|Once you create encryption keys, make sure to create backups. If you lose the keys, the data will become unusable since it cannot be recovered any longer. If you use LimeSurvey CE, the public and secret keys can be found in '''/application/config/security.php'''.}}
+
+{{Note|You can move [[Optional_settings#Encryption_settings_.28New_in_4.0.0_.29|this settings]] in <code>application/config/config.php</code> after installation.}}
+
+===When to encrypt your data?===
+
+
+There is not one correct answer to this question. It heavily depends on:
+
+*the type of data you collect
+*where your survey is based on
+*national or federal legislation
+
+Most of the time, it is important to encrypt personally identifiable data (e.g., as it is recommended in the General Data Protection Regulation). Therefore, fields such as first name, last name, email address, phone number, address, and so on can be used to identify the responses one person submitted.
+
+In other cases, the data that should be encrypted does not necessarily stop at the examples provided above. In certain scenarios (e.g., in medical research), you might need to encrypt most of your data if you can track back the responses to the person who submitted them.
+
+'''As a result, please adapt your survey and the data collection to the local legislation!'''
+
+==Settings==
+There are three places in LimeSurvey where data encryption settings can be set: 
+* [[Data_encryption#Question_attributes|question attributes]] 
+* [[Data_encryption#Participant_attributes|participant attributes]]
+* [[Data_encryption#Central_participant_database_attribute_management|central participant database attributes]].
+
+
+===Question attributes===
+Question attribute "Encrypted" is used to enable data encryption for corresponding responses. This attribute is '''turned off''' by default. Once survey is activated, it is not possible to change this attribute.
+
+
+<center>[[File:Question attributes.png]]</center>
+
+
+===Participant attributes===
+Three core attributes (firstname, lastname, and email) are always shown in the [[Survey_participants|survey participants table]], the encryption being '''turned on''' by default.
+
+Each new participant attribute will have encryption '''turned off''' by default.
+
+Encryption can be turned on or off at any moment.
+
+
+<center>[[File:Manage attribute fields.png|800px]]</center>
+
+
+===Central participant database attribute management===
+Three core attributes (firstname, lastname and email) are always shown in the [[Central_Participant_Database|central participant database]], the encryption being '''turned on''' by default.
+
+Each new participant attribute will have encryption '''turned off''' by default.
+
+Encryption can be turned on or off at any moment. 
+
+
+<center>[[File:Cpdb attribute management.png|800px]]</center>
+
+==Advanced==
+Sodium library is used to provide data encryption and decryption functionality for LimeSurvey.
+
+<blockquote>''Sodium is a modern, easy-to-use software library for encryption, decryption, signatures, password hashing and more. It is a portable, cross-compilable, installable, packageable fork of NaCl, with a compatible API, and an extended API to improve usability even further. Its goal is to provide all of the core operations needed to build higher-level cryptographic tools.''
+
+
+''Sodium is cross-platforms and cross-languages. It runs on a variety of compilers and operating systems, including Windows (with MinGW or Visual Studio, x86 and x86_64), iOS and Android. Javascript and WebAssembly versions are also available and are fully supported. Bindings for all common programming languages are available and well-supported.''</blockquote>
+
+
+Version 7.2.0 and newer of the PHP programming language includes the Sodium extension (referred to as ext/sodium) as a core cryptography library. Version 2 of the PHP extension in PECL is compatible with ext/sodium in PHP 7.2.
+
+
+LimeSurvey uses the [https://github.com/paragonie/sodium_compat Sodium Compat] library to bridge with different PHP versions.
+This library tentatively supports PHP 5.2.4 - 7.x (latest), but officially it only supports [https://secure.php.net/supported-versions.php non-EOL'd versions of PHP].
+
+
+Data encryption/decryption methods used in LimeSurvey are based on [https://libsodium.gitbook.io/doc/public-key_cryptography/public-key_signatures public-key signatures]. Public and secret keys can be found in /application/config/security.php file. Keys are automatically generated on first usage of encryption feature.
+
+
+{{Alert|title=Warning|text=Once data encryption is turned on, data in corresponding database columns would become unreadable without decrypting them first. '''You should always have a backup of your encryption keys in case they get deleted'''.
+Also, once encryption keys are set, you should never change them because it would make all existing data unusable.}}
+
+
+Partial string search won't be possible for database columns with encrypted data, only exact match search.
+
+==Errors==
+Possible errors when using data encryption: 
+* '''library doesn't exists''':  PHP Sodium library have to be installed to be able to use data encryption feature. Here is a guide on how to install library: [https://www.php.net/manual/en/sodium.installation.php Sodium installation]. If you don't want to use data encryption, you have to disable encryption in [[Data_encryption#Settings|attribute settings]].
+* '''wrong decryption key''': decryption key has changed since data was last saved, so data can't be decrypted. The only way to decrypt data is to retrieve the original key from backup and replace the current decryption key with the original key.
+
+Note: if the ''wrong decryption key'' error happens only when LimeSurvey sends an email (e.g. when you concluded a survey), go in Configuration > Global Settings > E-mail settings, and re-insert your STMP password and press Save.<ref>https://forums.limesurvey.org/forum/installation-a-update-issues/120567-encryption-keys-after-update</ref>
+
+Otherwise, you can still try to compare and eventually recover your decryption keys from a backup (since you do backups... isn't it? Uh?).

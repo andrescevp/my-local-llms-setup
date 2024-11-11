@@ -1,0 +1,451 @@
+<languages />
+== Overview ==
+
+Starting from LimeSurvey 2.05, LimeSurvey will officially support plugins. Some plugins will be supported by the LimeSurvey team and will go into core. Some will be supported by others outside the LimeSurvey team. To help find them, check out the [[Available third party plugins]] and add your own plugin to it!
+
+Plugins allow users to customize the functionality of their installation while still being able to benefit from regular software updates.
+
+This documentation is meant for developers that are extending LimeSurvey for their own use or for their clients; end users will not be helped by this documentation.
+
+Plugins must implement the [https://github.com/LimeSurvey/LimeSurvey/blob/master/application/libraries/PluginManager/iPlugin.php iPlugin] interface. We recommend extending your plugin class from the [https://github.com/LimeSurvey/LimeSurvey/blob/master/application/libraries/PluginManager/PluginBase.php PluginBase] class. 
+
+Plugins are developed around an [http://manual.limesurvey.org/Plugin_events event] mechanism.
+
+== Plugin settings ==
+
+By extending you benefit from common functionality required by plugins that we already have implemented for you. One of these function is the implementation of the getPluginSettings function. This function must return an array describing the configuration options for the user.
+
+The example plugin exposes just 1 configurable setting, the message it'll show.
+
+<syntaxhighlight lang="php">
+protected $settings = array(
+    'logo' => array(
+          'type' => 'logo',
+          'path' => 'assets/logo.png'
+     ),
+
+     'message' => array(
+          'type' => 'string',
+          'label' => 'Message'
+     )
+);
+</syntaxhighlight>
+
+The array contains a name for each setting as a key. The values are arrays containing the required meta data.
+
+Supported types are:
+
+* logo
+* int (integer number)
+* string (alphanumeric)
+* text
+* html
+* relevance
+* info
+* password
+* date
+* select
+
+Besides type a number of other keys are available:
+
+* label, defines a label 
+* default, defines a value to show if no value is specified (only for global settings, not for survey settings)
+* current, defines the current value.
+* readOnly : shown the settings as readonly
+* htmlOptions, the htmlOptions of the input part ( see Yii manual [[https://www.yiiframework.com/doc/api/1.1/CHtml]])
+* pluginOptions, for some settings (html or select) : set the widget option
+* labelOptions : htmlOptions of the label
+* controlOptions : htmlOptions of the wrapper of label and input
+
+You can find a plugin example using all actual settings at [https://gitlab.com/SondagesPro/SampleAndDemo/exampleSettings exampleSettings] 
+=== Read and write plugin settings ===
+
+It's possible to read and write plugin settings directly from your plugin code.
+
+Example:
+
+<syntaxhighlight lang="php">
+$mySetting = $this->get('mySetting');
+$this->set('mySetting', $mySetting + 1);
+</syntaxhighlight>
+
+You can get a default value if the setting happens to be null:
+
+<syntaxhighlight lang="php">
+$mySetting = $this->get('mySetting', null, null, 10);  // 10 is default
+</syntaxhighlight>
+
+=== Survey specific plugin settings ===
+
+Two events are used to create survey specific plugin settings:
+
+* newSurveySettings
+* beforeSurveySettings
+
+Example to disable a plugin for a specific survey:
+
+<syntaxhighlight lang="php">
+   
+    public function init()
+    {
+        $this->subscribe('beforeSurveySettings');
+        $this->subscribe('newSurveySettings');
+        // Other events...
+    }
+
+    public function beforeSurveySettings()
+    {
+	    $event = $this->event;
+	    $surveyId = intval($event->get('survey'));
+
+        $event->set(
+            "surveysettings.{$this->id}",
+            [
+                'name' => get_class($this),
+                'settings' => [
+                    'isActive' => [
+                        'type' => 'boolean',
+                        'label' => 'isActive',
+                        'current' => $this->getIsActive($surveyId),
+                        'help' => 'Activate plugin for this survey'
+                    ],
+                ]
+            ]
+        );
+    }
+
+    public function newSurveySettings()
+    {
+        $event = $this->event;
+        foreach ($event->get('settings') as $name => $value)
+        {
+            $this->set($name, $value, 'Survey', $event->get('survey'), false);
+        }
+    }
+
+    private function getIsActive(int $sid): bool
+    {
+        return (bool) $this->get('isActive', 'Survey', $sid, false);
+    }
+</syntaxhighlight>
+
+== Events ==
+
+Plugins subscribe to events and can interact with LimeSurvey when the event is fired. For a list of currently available events check [[Plugin events]].
+
+== API ==
+
+Plugins should only extend LimeSurvey via its "public" API. This means that directly using classes found in the source code is a bad practice. Though we can't force you not to, you risk having a broken plugin with every minor update we do.
+
+As much as possible interact with LimeSurvey only via methods described [http://api.limesurvey.org/classes/LimeSurvey.PluginManager.LimesurveyApi.html here]. Same as for events.
+
+The API object is available via <code>$this->api</code> when extending from PluginBase, otherwise you can get it from the PluginManager instance that is passed to your plugins' constructor.
+
+New functions can be added to the API object upon request.
+
+== Form extension{{NewIn|v=6}} ==
+
+=== Introduction ===
+
+The form extension system is a more general way to extend forms in core LimeSurvey without adding a new event for each form.
+
+It consists of the following components:
+
+* A global module called '''FormExtensionService'''
+* A library of '''input classes''' that plugins can add to above module initialization
+* A '''widget''', together with custom renderers, that are used in the LimeSurvey view files
+
+Each form is identified by a '''position string''', like <form name><dot><tab name>. Example: <code>globalsettings.general</code> or <code>globalsettings.security</code>.
+
+The point behind a class-based system without HTML is to free the plugin authors of the work to update the HTML when the core HTML changes. Still, the author can use the <code>RawHtmlInput</code> type if needed.
+
+One thing you cannot do in this system is to add ''new form tabs''.
+
+=== Example ===
+
+To add a new input to a form from a plugin, use the following code from your <code>init()</code> function:
+
+TODO: Save in plugin settings instead of global
+
+<syntaxhighlight lang="php">
+// At top of file
+use LimeSurvey\Libraries\FormExtension\Inputs\TextInput;
+use LimeSurvey\Libraries\FormExtension\SaveFailedException;
+
+// Inside init()
+Yii::app()->formExtensionService->add(
+    'globalsettings.general',
+    new TextInput([
+        'name' => 'myinput',
+        'label' => 'Label',
+        'disabled' => true,
+        'tooltip' => 'Moo moo moo',
+        'help' => 'Some help text',
+        'save' => function($request, $connection) {
+            $value = $request->getPost('myinput');
+            if ($value === 'some invalid value') {
+                throw new SaveFailedException("Could not save custom input 'myinput'");
+            } else {
+                SettingGlobal::setSetting('myinput', $value);
+            }
+        },
+        'load' => function () {
+            return getGlobalSetting('myinput');
+        }
+    ])
+);
+</syntaxhighlight>
+
+=== Validation ===
+
+Validation of the input is done in the <code>save</code> function (see example above). If the posted value is invalid, throw a <code>SaveFailedException</code>, and a warning flash message will be shown to the user.
+
+=== Supported forms ===
+
+The following forms can be extended:
+
+* globalsettings.general{{NewIn|v=6.0.0}}
+
+If you want to add support for another core form, you need to apply the following change in a pull-request:
+
+In the view file, add:
+
+<syntaxhighlight lang="php">
+<?php
+use LimeSurvey\Libraries\FormExtension\FormExtensionWidget;
+use LimeSurvey\Libraries\FormExtension\Inputs\DefaultBaseRenderer;
+?>
+... more HTML
+<?= FormExtensionWidget::render(
+    App()->formExtensionService->getAll('globalsettings.security'),
+    new DefaultBaseRenderer()
+); ?>
+</syntaxhighlight>
+
+You might have to create a new renderer class based on <code>DefaultBaseRenderer</code>, if the form HTML is different than other forms. You might also need to extend the default renderer class with input types not yet added.
+
+The second change you have to do is add a call to the form extension service class in the controller action that saves the form:
+
+<syntaxhighlight lang="php">
+$request = App()->request;
+Yii::app()->formExtensionService->applySave('globalsettings', $request);
+</syntaxhighlight>
+
+That's it!
+
+== Localization {{NewIn|v=3}} ==
+
+It's possible for plugins to add their own locale files. File format used is .mo, same as core translations. The files must be stored in 
+
+ <plugin root folder>/locale/<language>/<language>.mo
+
+where "<language>" is a two letter word like "de" or "fr".
+
+To use the specific locale file, use the plugin function gT:
+
+<syntaxhighlight lang="php">
+$this->gT("A plugin text that needs to be translated");
+</syntaxhighlight>
+
+If the given string can't be found in the plugin specific locale file, the function will look in the core locale files. So it's safe to use strings like "Cancel":
+
+<syntaxhighlight lang="php">
+$this->gT("Cancel");  // Will be translated even if "Cancel" is not in the plugin locale file
+</syntaxhighlight>
+
+If you are using views together with your plugin, you should use
+
+<syntaxhighlight lang="php">
+$plugin->gT("Translate me");
+</syntaxhighlight>
+
+to do plugin specific translation in your view.
+
+You can use the [https://github.com/LimeSurvey/LimeSurvey/blob/master/locale/_template/limesurvey.pot limesurvey.pot] file as an example of how a pot file can look like. This is imported into your translation tool.
+
+=== Tools ===
+
+One open-source tool to edit po- and mo-files is [https://poedit.net/ Poedit].
+
+== Logging {{NewIn|v=3}}  ==
+
+If you want to log something from your plugin, just write
+
+<syntaxhighlight lang="php">
+$this->log("Your message");
+</syntaxhighlight>
+
+The default logging level is trace, but you can give another log level as an optional second argument:
+
+<syntaxhighlight lang="php">
+$this->log("Something went wrong!", CLogger::LEVEL_ERROR);
+</syntaxhighlight>
+
+The log file can be found in folder
+
+ <limesurvey root folder>/tmp/runtime/plugin.log
+
+Your plugin name is automatically used as category. A nice way to see only the errors from your plugin is using grep (on Linux):
+
+  $ tail -f tmp/runtime/plugin.log | grep <your plugin name>
+
+More info about configuring logging in Yii 1: [[Optional_settings#Logging_settings]].
+
+== Extension updates {{NewIn|v=4}} ==
+
+Since LimeSurvey version 4.0.0, there's a system in place to deal with plugin and other extension updates. To use this system, your extension config.xml file needs to include updater configuration.
+
+<syntaxhighlight lang="xml">
+<updaters>
+    <updater>
+        <stable>1</stable>
+        <type>rest</type>
+        <source>https://comfortupdate.limesurvey.org/index.php?r=limestorerest</source>
+        <manualUpdateUrl>https://somedownloadlink.com/maybegithub</manualUpdateUrl>
+    </updater>
+</updaters>
+</syntaxhighlight>
+
+(The source tag above points to the LimeStore REST API, which will be used for all extensions available in our LimeStore.)
+
+{| class="wikitable"
+|+ Updater tag descriptions
+|-
+! Tag 
+! Description
+|-
+| stable 
+| "1" if this source only gives you stable version numbers; "0" if the source will also provide unstable versions, like <code>0.3.3-beta</code>.
+|-
+| type 
+| For now, only type <code>rest</code> is supported. It's easy to add new updater types (version checkers), like git, wget, etc.
+|-
+| source 
+| The URL to fetch new versions from.
+|-
+| manualUpdateUrl 
+| URL which the user can go to to update the latest version of the extension.
+|-
+| automaticUpdateUrl 
+| TODO
+|}
+
+If you don't want to supply an updater, you should put the following text in your config XML file:
+
+<syntaxhighlight lang="xml">
+<updaters disabled="disabled">
+</updaters>
+</syntaxhighlight>
+
+This way, you tell the system that you purposefully disabled the update system, and didn't just forget to add it.
+
+The new plugin '''UpdateCheck''' - installed and activated by default - checks for new updates for ''all'' installed extensions when a super admin logs in, asynchronously, max one time every 24 hours. If any new versions are found, a notification is pushed.
+
+[[File:availableupdates.png||Available updates]]
+
+If a new security update is found, the notification will open automatically and be styled in "danger" class.
+
+[[File:availablesecurityupdates.png||Available security updates]]
+
+You can manually check for updates by going to the plugin manager view and click on "Check updates". Note that this button is only visible if the UpdateCheck plugin is activated.
+
+[[File:manuallycheckforupdates.png||Manually check for updates]]
+
+=== Under the hood ===
+
+This section provides a brief overview over the extension updater implementation.
+
+The extension updater is part of the ExtensionInstaller library. Below is a UML diagram for the classes related to the updater process.
+
+[[File:extensionupdateruml.png||Extension updater UML diagram]]
+
+Program flow when Yii starts:
+
+<pre>
+ Yii init
+   VersionFetcherServiceLocator->init()
+     Add REST version fetcher
+   ExtensionUpdaterServiceLocator->init()
+     Add PluginUpdater
+     TODO: Add an updater for each extension type (theme, question template, ...)
+</pre>
+
+Program flow when running the UpdaterCheck plugin:
+
+<pre>
+ Get all updaters from ExtensionUpdaterServiceLocator
+ Loop each updater
+   For each updater, loop through version fetchers configured by <updater> XML
+     For each version fetcher, contact remote source and get version information
+ Compose all versions into a notification
+</pre>
+
+The [https://github.com/LimeSurvey/LimeSurvey/blob/develop/application/core/plugins/UpdateCheck/UpdateCheck.php#L130 checkAll] method in the UpdateCheck plugin provides an example of how to query all extensions for new versions.
+
+==== Adding new version fetchers ====
+
+To add a new custom version fetcher, run this during Yii initialization:
+
+<syntaxhighlight lang="php">
+$service = \Yii::app()->versionFetcherServiceLocator
+$service->addVersionFetcherType(
+  'myNewVersionFetcherType',
+  function (\SimpleXMLElement $updaterXml) {
+    return new MyNewVersionFetcher($updaterXml);
+  }
+);
+</syntaxhighlight>
+
+Of course, the class <code>MyNewVersionFetcher</code> has to subclass <code>VersionFetcher</code>.
+
+To use your new version fetcher, configure the <code>type</code> tag in the updater XML to use 
+<code>myNewVersionFetcherType</code> (instead of e.g. <code>rest</code>).
+
+==== Adding new extension updaters ====
+
+To add a new custom extension updater, run this during Yii initialization:
+
+<syntaxhighlight lang="php">
+$service = \Yii::app()->extensionUpdaterServiceLocator;
+$service->addUpdaterType(
+  'myNewExtensionUpdater',
+  function () {
+    return MyNewExtensionUpdater::createUpdaters();
+  }
+);
+</syntaxhighlight>
+
+Class <code>MyNewExtensionUpdater</code> has to subclass <code>ExtensionUpdater</code>.
+
+The top <code>type</code> tag in config.xml ('plugin', 'theme', ...) will control which extension updater are used for this extension. The system is not fully customizable  yet, since you also need to add a custom ExtensionInstaller, menu items, etc. But in theory, and maybe in the future, it should be possible to add a new type of extension this way.
+
+== Extension installer ==
+
+The extension installer library consists of two abstract classes:
+
+* ExtensionInstaller
+* FileFetcher
+
+The ExtensionInstaller is subclassed for each extension type, like PluginInstaller, QuestionThemeInstaller, etc.
+
+The FileFetcher is subclassed for each different way to fetch files. Currently, only uploaded zip files are supported, but in the future, there could be a Github or LimeStore fetcher too.
+
+[[File: extensioninstalleruml.png]]
+
+== Special plugins ==
+
+* [[Authentication plugin development]]
+* [[Export plugin development]]
+
+== Available plugins ==
+* [[Authentication plugins]]
+* [[Audit log]]
+* [[AzureOAuthSMTP Plugin]]
+* [[CintLink]]
+* [[Available third party plugins]]
+
+== Tutorial ==
+[https://medium.com/@evently/creating-limesurvey-plugins-adcdf8d7e334 This] step-by-step tutorial shows how to create a plugin that sends a post request on every survey response submission. The tutorial shows you how to create and save global and per-survey settings, how to register events and more.
+
+[[Category:Development]]
+[[Category:Plugins]]

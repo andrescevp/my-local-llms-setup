@@ -1,0 +1,36 @@
+<languages />
+
+__TOC__
+
+
+=Introduction=
+
+
+Here you can manage files (pictures, media files) that were uploaded in the HTML Editor. You can access it by going to the '''survey menu''' of your survey and looking for the '''Resources''' tab:
+
+
+<center>[[File:Access Resources tab.png]]</center> 
+
+
+=Resources=
+
+
+Once accessed, the following page will be displayed:
+
+
+<center>[[File:Resources panel.png]]</center>
+
+From this panel, you can:
+* Browse the available files from your installation;
+* Export files as a ZIP archive;
+* Import a ZIP archive of files.
+
+
+=Tips & Hints=
+
+
+The following tips & hints were written by our community members. Feel free to add more:
+* Authorized files extensions are defined [[Optional_settings#Upload_files|by settings in config.php files]].
+* The pictures and media files that have been uploaded via the HTML editor are stored in the "upload/surveys/<sid>" subdirectory, where '''sid''' is the survey id.
+* The uploaded files from survey X will only be seen while browsing the resources of survey X (groups, questions, answers). They cannot be seen from any other survey or objects (labels). However, do not expect this limited visibility to ensure confidentiality of the resources as they are reachable with a simple browser to anyone who knows the URL to the respective file.
+* You can't import a ZIP file containing subdirectories.

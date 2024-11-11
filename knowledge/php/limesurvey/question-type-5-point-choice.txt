@@ -1,0 +1,64 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|
+
+This question shows a horizontal 1 to 5 scale from where the survey participants can select a single answer option.
+
+
+<center>[[File:5_List.jpg]]</center>
+
+
+'''Example:''' [[Media:Single choice question example.zip| Single choice question example.zip]]
+
+
+}}</onlyinclude>
+
+=General options=
+
+{{QS:Mandatory}}
+
+{{QS:Relevance}}
+
+=Display=
+
+{{QS:slider_rating}}
+
+{{QS:Hide_tip}}
+
+{{QS:Question theme}}
+
+{{QS:CSS Class}}
+
+{{QS:Printable_survey_relevance_help}}
+
+{{QS:Hidden}}
+
+=Logic=
+
+{{QS:Random_group}}
+
+=Other=
+
+{{QS:Page_break}}
+
+=Statistics=
+
+{{QS:Public_statistics}}
+
+{{QS:Display_chart}}
+
+{{QS:Chart_type}}
+
+
+
+
+
+
+
+
+
+
+[[Category:Question types]][[Category:Single choice questions]]

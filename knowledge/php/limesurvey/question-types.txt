@@ -1,0 +1,362 @@
+<languages />
+__TOC__
+
+
+=Introduction=
+
+This page offers you a visual overview of all available question types. You can also see it as a starting point from where you can get to different wiki sections that explain in detail every question type.
+
+<div class="simplebox">[[File:help.png]] The LimeSurvey download package includes a sample survey which includes all question types. You'll find it in your "/docs/demosurveys/" directory. Import each of them and try every question type!</div>
+
+Please note that a LimeSurvey survey consists of question groups which contain one or more question. Therefore, you must '''create a question group first''' before you add questions to your survey. For more details on question groups, read the following [[Question groups - introduction|wiki section]].
+
+=Question types=
+
+To change the question type, you must first open the question in ''edit mode'' and click the '''General options''' tab located in the panel on the right side of the page:
+
+
+<center>[[File:Question_type_button_location.png]]</center>
+
+
+Then, select the desired question type from the ''Select question type'' menu.  To help ensure that you choose the correct question type, a preview of the question type is displayed in the ''Select question type'' panel. 
+
+
+<center>[[File:Question type - 2.png]]</center>
+
+
+{{Note|Check our [[Questions - introduction|introduction on questions]] section for more information}}
+
+
+<hr width="50%" style="margin:auto">
+
+
+The following question styles can be used within a survey in LimeSurvey:
+
+*[[Question types#Arrays|Arrays]]
+*[[Question types#Mask questions|Mask questions]]
+*[[Question types#Multiple choice questions|Multiple choice questions]]
+*[[Question types#Single choice questions|Single choice questions]]
+*[[Question types#Text questions|Text questions]]
+
+
+===Subquestions===
+
+Usually a question only has answers. But there are certain question types (like the Array question type) which are basically a subset of questions where each subquestion can be answered by the survey participant (often by using a predefined scale of answer options).
+
+[[File:F_AFL.png]]
+
+A more complex example is the question type 'Array of texts' where the respondent has to enter values for combinations. In that case the value entered by the respondent is the 'answer' and the two scales on the array are two scales of subquestions.
+
+[[File:SC_MFT.png]]
+
+
+==Arrays==
+
+The ''Array question type'' further extends the ''List question type''. Using this question type, a matrix can be displayed where the left column is represented by a subquestion, while each row is represented by the same set of answer options. The text of the question can be either a specific question or a description.
+
+In terms of output there is no difference in how responses are stored compared to ''List (Radio)'' question type. The given answer is stored in a separate column in the result table for both question types.
+
+The most flexible array types are ''Array'', ''Array (Text)'' and ''Array (Numbers)'. However, LimeSurvey also supports a number of array types which have predefined answer options (e.g., ''Array 5 point choice'').
+
+<div class='simplebox'> [[File:help.png]] To quickly understand the basics of array-type questions, check the following [https://www.youtube.com/watch?v=7134QebOQzY video tutorial].</div> 
+
+=== Array===
+
+{{:Question type - Array|transcludesection=short_description}}
+
+'''Example 1:''' [[Media:Question tpye - Array using flexible labels.zip|Question type - Array using flexible labels.zip]]
+
+'''Example 2:''' [[Media:Question type - Array - Semantic Differential Question Type.zip|Question type - Array - Semantic Differential Question Type.zip]]
+
+Find out [[Question type - Array|more about the Array question type...]]
+
+===Array (5 point choice)===
+
+{{:Question type - Array (5 point choice)|transcludesection=short_description}}
+
+Find out [[Question type - Array (5 point choice)|more about the 5 Point Choice Array question type...]]
+
+===Array (10 point choice)===
+
+{{:Question type - Array (10 point choice)|transcludesection=short_description}}
+
+Find out [[Question type - Array (10 point choice)|more about the 10 Point Choice Array question type...]]
+
+===Array (Yes/No/Uncertain)===
+
+{{:Question type - Array (Yes-No-Uncertain)|transcludesection=short_description}}
+
+Find out [[Question type - Array (Yes-No-Uncertain)|more about the Yes/No/Uncertain Array question type...]]
+
+
+===Array (Increase/Same/Decrease)===
+
+{{:Question type - Array (Increase-Same-Decrease)|transcludesection=short_description}}
+
+Find out [[Question type - Array (Increase-Same-Decrease)|more about the Increase/Same/Decrease Array question type...]]
+
+
+===Array by column===
+
+{{:Question type - Array by column|transcludesection=short_description}}
+
+Find out [[Question type - Array by column|more about the Array by Column question type...]]
+
+===Array dual scale===
+
+{{:Question type - Array dual scale|transcludesection=short_description}}
+
+Find out [[Question type - Array dual scale|more about the Array Dual Scale question type...]]
+
+
+=== Array (Numbers)===
+
+{{:Question type - Array (Numbers)|transcludesection=short_description}}
+
+Find out [[Question type - Array (Numbers)|more about the numbers Array question type...]]
+
+
+===Array (Texts)===
+
+{{:Question type - Array (Texts)|transcludesection=short_description}}
+
+Find out [[Question type - Array (Texts) |more about the text Array question type...]]
+
+==Mask questions==
+
+Due to a lack of a better term, we define all questions where the input of answers is predefined as ''mask questions''.
+
+
+===Date===
+
+{{:Question type - Date|transcludesection=short_description}}
+
+Find out [[Question type - Date |more about the Date question type...]]
+
+
+===File upload===
+
+{{:Question type - File upload|transcludesection=short_description}}
+
+Find out [[Question type - File upload |more about the File Upload question type...]]
+
+
+===Gender===
+
+{{:Question type - Gender|transcludesection=short_description}}
+
+You may also add a "No answer" choice if the question is not mandatory.
+
+Find out [[Question type - Gender |more about the Gender question type...]]
+
+
+===Language switch===
+
+{{:Question type - Language switch|transcludesection=short_description}}
+
+Find out [[Question type - Language switch|more about the Language Switch question type...]]
+
+
+===Numerical input===
+
+{{:Question type - Numerical input|transcludesection=short_description}}
+
+Find out [[Question type - Numerical input |more about the Numerical Input question type...]]
+
+
+===Multiple numerical input===
+
+{{:Question type - Multiple numerical input|transcludesection=short_description}}
+
+Find out [[Question type - Multiple numerical input |more about the Multiple numerical input question type...]]
+
+
+===Ranking===
+
+{{:Question type - Ranking|transcludesection=short_description}}
+
+Find out [[Question type - Ranking |more about the Ranking question type...]]
+
+
+===Advanced Ranking (new in 5.x) ===
+
+This question type allows you to present your survey participants a list of possible answers/options in image form, which they may then rank according to their preferences.
+
+
+
+[[file:Advanced_Ranking.png]]
+
+===Text display===
+
+{{:Question type - Text display|transcludesection=short_description}}
+
+Find out [[Question type - Text display|more about the Text Display question type...]]
+
+
+===Yes/No===
+
+{{:Question type - Yes-No|transcludesection=short_description}}
+
+Find out [[Question type - Yes-No |more about the Yes/No question type...]]
+
+
+===Equation===
+
+{{:Question type - Equation|transcludesection=short_description}}
+
+Find out [[Question type - Equation|more about the Equation question type...]]
+
+==Multiple choice questions==
+
+Sometimes you want the participant to mark more than one answer option in the same question; this is achieved using checkboxes.
+
+
+===Multiple choice===
+
+{{:Question type - Multiple choice|transcludesection=short_description}}
+
+Find out [[Question type - Multiple choice|more about the Multiple Choice Question type...]]
+
+
+===Multiple choice with comments===
+
+{{:Question type - Multiple choice with comments|transcludesection=short_description}}
+
+Find out [[Question type - Multiple choice with comments|more about the Multiple Choice With Comments question type...]]
+
+===Bootstrap Buttons (new in 5.x)===
+
+This question type can collect input of multiple selections using a bootstrap button.
+Respondent can click and then it is selected.
+
+[[file:bootstrap_button.png]]
+
+===Image Select Multiple Choice (new in 5.x)===
+
+This question type can collect input of multiple selections using an image. Respondent can click and then the image is selected.
+
+[[file:Image_select.png]]
+
+
+
+
+
+The images must be first imported using the resources link on the survey settings. Then the images can be selected as the image to use for the sub-questions using the HTML editor.
+
+
+[[file:Selection_147.png]]
+
+[[file:Selection_148.png]]
+
+==Single choice questions==
+
+Single choice questions are those where the participant can only pick a single predefined answer option.
+
+
+===5 point choice===
+
+{{:Question type - 5 point choice|transcludesection=short_description}}
+
+Find out [[Question type - 5 point choice|more about the 5 Point Choice question type...]]
+
+
+===List (Dropdown)===
+
+{{:Question type - List (Dropdown)|transcludesection=short_description}}
+
+Find out [[Question type - List (Dropdown)|more about the List Dropdown question type...]]
+
+
+===List (Radio)===
+
+{{:Question type - List (Radio)|transcludesection=short_description}}
+
+Find out [[Question type - List (Radio)|more about the List Radio question type...]]
+
+
+===List with comment===
+
+{{:Question type - List with comment|transcludesection=short_description}}
+
+Find out [[Question type - List with comment |more about the List with comment question type...]]
+
+
+===Image Select List (Radio) (New in 5.x)===
+
+
+This question type will allow you to collect single input from a list of images.
+
+The images can be added using the sub-question HTML Editor.
+
+[[file:Selection_150.png]]
+
+===Bootstrap Button (New in 5.x)===
+
+
+This question type collects single input from a list of bootstrap buttons.
+
+[[file:Selection_151.png]]
+
+==Text questions==
+
+LimeSurvey provides a number of possible variations of the standard text field. All of these can be defined further using the attributes of the question which permit to restrict the number of characters as well as the size of the field.
+
+Furthermore text input can be validated by [[Using regular expressions|using regular expressions]].
+
+
+===Short free text===
+
+{{:Question type - Short free text|transcludesection=short_description}}
+
+Find out [[Question type - Short free text|more about the Short Free Text question type...]]
+
+===Long free text===
+
+{{:Question type - Long free text|transcludesection=short_description}}
+
+Find out [[Question type - Long free text|more about the Long Free Text question type...]]
+
+
+===Huge free text===
+
+{{:Question type - Huge free text|transcludesection=short_description}}
+
+Find out [[Question type - Huge free text|more about the Huge Free Text question type...]]
+
+
+===Multiple short text===
+
+{{:Question type - Multiple short text|transcludesection=short_description}}
+Find out [[Question type - Multiple short text|more about the Multiple Short Text question type...]]
+
+
+
+===Browser Detect (new in 5.x)===
+
+The browser detects question type captures the browser the respondent is using and the operating system.
+
+[[file:Selection_153.png]]
+
+
+When the "use mapping services" is enabled, then there will be a map displayed.
+
+Note: To use google maps, a valid Google Maps API key must be inserted into the field available in the global settings of your installation.
+
+[[file:Selection_152.png]]
+
+
+Respondents can use the pin to select a location on the map.
+
+[[file:Selection_154.png]]
+
+===Input on Demand (new in 5.x)===
+
+The input on demand displays one column at a  time and respondents can use the add button to add more answers.
+Other options are available. Use the question settings to add more options.
+
+
+[[file:Selection_155.png]]
+
+=Styling questions=
+
+It is possible to edit the question layout/design by using CSS. You can find more information at [[The template editor#Styling_questions_with_CSS|styling questions with CSS]]

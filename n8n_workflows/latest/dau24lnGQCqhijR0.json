@@ -1,0 +1,625 @@
+{
+  "createdAt": "2024-11-10T22:38:51.010Z",
+  "updatedAt": "2024-11-11T00:06:09.000Z",
+  "id": "dau24lnGQCqhijR0",
+  "name": "Places LookUp By Direction",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "32df9941-288b-482d-83ac-b9c884072f72",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA",
+          "mode": "list",
+          "cachedResultName": "empresas auto",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2017338988,
+          "mode": "list",
+          "cachedResultName": "1.Datos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit#gid=2017338988"
+        },
+        "options": {}
+      },
+      "id": "0fcca96e-44ab-4ab1-b4b7-d14c06265df9",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1040,
+        360
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "https://serpapi.com/search.json",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "serpApi",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "=restaurente o bar en {{ $json['Direccion'] }}, {{ $json['CODIGO_POSTAL'] }}, {{ $json.MUNICIPIO }}, {{ $json.PROVINCIA }}"
+            },
+            {
+              "name": "engine",
+              "value": "google_maps"
+            },
+            {
+              "name": "type",
+              "value": "search"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 2
+            }
+          }
+        }
+      },
+      "id": "728a42a9-3c21-4f2e-a73c-f0dcf313ff82",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1520,
+        480
+      ],
+      "name": "SerpAPI Search - Page 1",
+      "credentials": {
+        "serpApi": {
+          "id": "aK4P7Zm23AJdETeM",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA",
+          "mode": "list",
+          "cachedResultName": "empresas auto",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2017338988,
+          "mode": "list",
+          "cachedResultName": "1.Datos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit#gid=2017338988"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "ID": "={{ $json.ID }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Empresa",
+              "displayName": "Nombre_Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Direccion",
+              "displayName": "Direccion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CODIGO_POSTAL",
+              "displayName": "CODIGO_POSTAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MUNICIPIO",
+              "displayName": "MUNICIPIO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PROVINCIA",
+              "displayName": "PROVINCIA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AUTONOMIA",
+              "displayName": "AUTONOMIA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Administrador",
+              "displayName": "Nombre_Administrador",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cargo_decodificado",
+              "displayName": "Cargo_decodificado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "GMAPS LINK",
+              "displayName": "GMAPS LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NOMBRE_NEGOCIO",
+              "displayName": "NOMBRE_NEGOCIO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PUNTUACION_GOOGLE MAPS",
+              "displayName": "PUNTUACION_GOOGLE MAPS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OBSERVACIONES",
+              "displayName": "OBSERVACIONES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "site_name",
+              "displayName": "site_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "place_id",
+              "displayName": "place_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "data_id",
+              "displayName": "data_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "data_cid",
+              "displayName": "data_cid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviews_link",
+              "displayName": "reviews_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "gps_coordinates",
+              "displayName": "gps_coordinates",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviews",
+              "displayName": "reviews",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "types",
+              "displayName": "types",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "hours",
+              "displayName": "hours",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "operating_hours",
+              "displayName": "operating_hours",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "site_phone",
+              "displayName": "site_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "website",
+              "displayName": "website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service_options",
+              "displayName": "service_options",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ce56530e-1c39-468d-b32b-d49e1d0ab16b",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2740,
+        340
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ce2a83a0-0a37-4947-a974-1fde42e05210",
+              "name": "site_name",
+              "value": "={{ $json.local_results[0].title }}",
+              "type": "string"
+            },
+            {
+              "id": "6c7495c8-7916-4a8f-bd36-e97060011739",
+              "name": "place_id",
+              "value": "={{ $json.local_results[0].place_id }}",
+              "type": "string"
+            },
+            {
+              "id": "4bd160e6-718a-4518-aa6a-a99a6951ec5f",
+              "name": "data_id",
+              "value": "={{ $json.local_results[0].data_id }}",
+              "type": "string"
+            },
+            {
+              "id": "1bea4cdf-c740-4362-93e2-4befa0ffd603",
+              "name": "data_cid",
+              "value": "={{ $json.local_results[0].data_cid }}",
+              "type": "string"
+            },
+            {
+              "id": "d8da67cb-7e05-4b9b-ad4a-fd391472ca27",
+              "name": "reviews_link",
+              "value": "={{ $json.local_results[0].reviews_link }}",
+              "type": "string"
+            },
+            {
+              "id": "e8cc526b-49a4-443c-85ee-c822ca8209c0",
+              "name": "gps_coordinates",
+              "value": "={{ $json.local_results[0].gps_coordinates.latitude }},{{ $json.local_results[0].gps_coordinates.longitude }}",
+              "type": "string"
+            },
+            {
+              "id": "378ceabd-4cc4-4c4b-8224-cfeefa726d3c",
+              "name": "rating",
+              "value": "={{ $json.local_results[0].rating }}",
+              "type": "number"
+            },
+            {
+              "id": "c62d7f78-664d-4427-8f44-6a08ca187020",
+              "name": "reviews",
+              "value": "={{ $json.local_results[0].reviews }}",
+              "type": "number"
+            },
+            {
+              "id": "e995363e-6928-4997-b3d3-9f3feabb4228",
+              "name": "type",
+              "value": "={{ $json.local_results[0].type }}",
+              "type": "string"
+            },
+            {
+              "id": "bba1ce8b-8580-42ac-833a-f320ef58300f",
+              "name": "types",
+              "value": "={{ $json.local_results[0].types }}",
+              "type": "array"
+            },
+            {
+              "id": "763e6256-84f0-4fd4-becc-0c2f459833bb",
+              "name": "address",
+              "value": "={{ $json.local_results[0].address }}",
+              "type": "string"
+            },
+            {
+              "id": "2623afcb-1c76-4396-b7c6-37e8669b35bc",
+              "name": "hours",
+              "value": "={{ $json.local_results[0].hours }}",
+              "type": "string"
+            },
+            {
+              "id": "5c98e8e0-c43c-424f-936e-f3237ebd1a1b",
+              "name": "operating_hours",
+              "value": "={{ $json.local_results[0].operating_hours }}",
+              "type": "object"
+            },
+            {
+              "id": "9175b4d9-47c1-42ce-b3a0-185972963518",
+              "name": "site_phone",
+              "value": "={{ $json.local_results[0].phone }}",
+              "type": "string"
+            },
+            {
+              "id": "cdc443b8-02ae-4278-a6eb-2fd9615b236a",
+              "name": "website",
+              "value": "={{ $json.local_results[0].website }}",
+              "type": "string"
+            },
+            {
+              "id": "72267c99-444a-48b1-a143-3c95398ec711",
+              "name": "service_options",
+              "value": "={{ $json.local_results[0].service_options }}",
+              "type": "object"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "61aaab1d-8732-4920-b9dd-1092f1236f17",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1820,
+        480
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "d025ba9b-a1aa-4d96-8865-8035a017b7f0",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2120,
+        380
+      ],
+      "alwaysOutputData": true
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "SerpAPI Search - Page 1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI Search - Page 1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "369c6a9e-3d93-4284-bf0c-9484bb78b061",
+  "triggerCount": 0,
+  "tags": []
+}

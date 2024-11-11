@@ -1,0 +1,170 @@
+<languages />
+__TOC__
+
+
+=Quick start guide=
+
+
+Within [https://www.limesurvey.org LimeSurvey], you can further customize your surveys via the usage of the ExpressionScript (short: ES).
+Sidenote: "ExpressionScript was named Expression Manager (EM) in earlier version. If you read Expression Manager somewhere, it is just the old name of ES."
+
+ES can be used to specify the following:
+
+# '''Navigation/Branching''' - allows a respondent's answers to change the order in which the questions are displayed;
+# '''Tailoring/Piping''' - helps you phrase the question (such as referring to prior answers, or conjugating sentences based upon the age or gender of your subjects) or how to generate custom reports (like assessment scores or tailored advice);
+# '''Validation''' - ensures that answers pass certain criteria, like min and max values or a certain input pattern.
+
+ES provides an intuitive way to specify the logic for each of those features. Nearly anything that you can write as a standard mathematical equation is a valid expression. 
+
+ES currently provides access to 70 functions and it can be easily extended to support more. It also lets you access you 
+variables using human-readable variable names (rather than [[SGQA_identifier|SGQA names]]).
+
+The upcoming sections show the main places where the ES is used.
+
+
+==Relevance (Controlling Navigation/Branching)==
+
+
+Some surveys use "Goto Logic", such that if you answer Question1 with option C, you are redirected to Question5. This approach is very limited since it is hard to validate it. Moreover, it easily breaks when you have to reorder questions. On the other hand, ES uses [https://en.wikipedia.org/wiki/Boolean_algebra Boolean relevance equations] to specify all the conditions under which a question might be valid. If the question is relevant, then the question is shown, otherwise, it is not applicable, and the value "NULL" is stored in the database. 
+
+<div class='simplebox'> '''Note:''' This is similar to what can be done via the [[Setting conditions|Conditions editor]], but ES lets you easily specify much more complex and powerful criteria (and lets you use the variable name rather than SGQA identifiers).</div>
+
+
+<hr width="50%" style="margin:auto"> 
+
+
+To better understand the relevance concept, let's focus on the following survey which computes the Body Mass Index (BMI) of survey respondents. To download it, click on the following link: [[Media:LS3_em_tailoring.zip|Body Mass Index survey example]].
+
+The relevance equation is shown below in the '''Relevance''' column after the variable name. The relevance values of weight, weight_units, height, and height_units are all 1 (default value), meaning that those questions are always displayed. However, the relevance for BMI is {!is_empty(height) and !is_empty(weight)}, which means that BMI will only be computed if the subject enters a value for both height and weight (thereby avoiding the risk of getting a zero error). Also, question "Report" is only shown if the respondent answers all four main questions (height, heightunits, weight, weightunits).
+
+
+<center>[[File:tutorial1.jpg]]</center>
+
+
+<div class="simplebox"> [[File:help.png]] '''Note:''' The above image comes from the [[Show logic file|survey logic file]] which allows you to look for syntax errors before activating the survey.</div>
+
+
+Relevance is shown and editable when:
+*you wish to view/edit question-level relevance
+*you wish to view/edit group-level relevance
+
+
+===Viewing / Editing Question-Level Relevance===
+
+
+This equation computes the Body Mass Index (BMI). It is only asked if the person enters their height and weight.
+
+
+<center>[[File:tutorial2.jpg]]</center>
+
+
+This is the edit screen for the "BMI" question.
+
+
+<center>[[File:tutorial3.jpg]]</center>
+
+
+Note that you do not use the curly braces when you enter a relevance equation.
+
+
+===Viewing / Editing Group-Level Relevance===
+
+
+Let's focus now on another example - a simple census survey. To download it, click on the following link: [[Media:LS3_group_relevance.zip|Census survey example]]. 
+
+The first page asks how many people live with you and stores that in the "cohabs" variable. This page is only shown if you have more than one cohabitant (it is shown for the second person cohabitating with you). Also, p2name, p2age. p2sum are displayed only if the question before each of them contains a response.
+
+
+<center>[[File:tutorial4.jpg]]</center>
+
+
+So, the group also has question-level relevance criteria, such that some questions only appear if you answered certain questions before them (e.g., p2age is displayed if p2name was answered). ES combines the Group and Question-level relevance for you. '''Questions in a group are only asked if the group as a whole is relevant. Then, only the subset of questions within the group that are relevant are asked.'''
+
+Here is the screenshot for editing the group-level relevance of ''Cohabitant 2'':
+
+
+<center>[[File:tutorial5.jpg]]</center>
+
+
+Note that you do not use the curly braces when you enter a relevance equation.
+
+==Tailoring/Piping==
+
+
+ES lets you easily do simple and complex conditional tailoring. Sometimes you just need a simple substitution, like saying, "You said you purchased <nowiki>[</nowiki>Product]. What did you like best about it?". Sometimes you need conditional substitution like "<nowiki>[</nowiki>Mr./Mrs.] <nowiki>[</nowiki>LastName], would you be willing to complete our survey?". In this case, you want to use "Mr. or Mrs." based on the person's gender. Other times you need even more complex substitution (such as based upon a mathematical computation). ES supports each of these types of tailoring/piping.
+
+
+===Conditional Equations===
+
+
+The Body Mass Index example shows the ability to compute a person's BMI, even while letting them enter their height and weight in two different units (cms vs inches and kgs vs lbs):
+
+
+<center>[[File:tutorial1.jpg]]</center>
+
+
+In this case, weightkg is {if(weightunits == "kg", weight, weight * 0.453592)}. This "if()" function means that if the subject enters the weight using kilograms, use that value, otherwise multiply the entered value (pounds is the alternative) by 0.453592 to convert it to kilograms. The heightm variable uses a similar approach to compute the person's height in meters (height in cms/100), even if he has entered his height in inches (1 meter=3.28084 inches).
+
+BMI is computed as: {weightkg / (heightm * heightm)}.
+
+Lastly, the report conditionally tailors the message for the subject, telling her what he entered. (e.g., "You said you are 2 meters tall and weight 70 kg.")
+
+In the below image, weightstatus uses nested "if()" statements to categorize the person as underweight to severely obese. You can see its equation by checking its logic:
+
+
+<center>[[File:tailoring8.jpg]]</center>
+
+
+From the edit window for this question, you can see two things:
+#Tailoring must surround expressions with curly braces
+#Expressions can span multiple lines if, as in this case, you want to make it easier to read the nested conditional logic.
+
+
+<center>[[File:tailoring9.jpg]]</center>
+
+
+===Tailored Questions, Answers, and Reports===
+
+
+<div class="simplebox">[[File:help.png]] '''Note:''' Dynamic tailoring may not work if answer options are made available in select boxes on the same question page. This results from the fact that tailoring inserts a <nowiki><span></nowiki> tag which is not valid inside select options.</div>
+
+The BMI report looks like this:
+
+
+<center>[[File:tailoring10.jpg]]</center>
+
+
+Here is the edit window for the same question.
+
+
+<center>[[File:tailoring11.jpg]]</center>
+
+
+Anything within curly braces is treated as an expression, being syntax-highlighted (color coded) in the prior image. If you have any typos (such as misspelled or undefined variable names or functions), ES would show an error. In our below example:
+* heightunit.shown is an undefined variable name (it is actually heightunits.shown) and 
+* "rnd()" is an undefined function (the proper function name is "round()"). 
+
+In both cases, the errors are located within a red box to make it easier to spot and fix them.
+
+
+<center>[[File:tailoring12.jpg]]</center>
+
+
+You can also see that you can quickly create complex reports, such as a table of entered values or tailored advice.
+
+Please remember that all tailoring must surround expressions with curly braces so that LimeSurvey knows which parts of the question are free text and which should be parsed by the ExpressionScript engine.
+
+
+==Validation==
+
+
+ES controls how most of the advanced question options work. These control aspects like min/max numbers of answers, min/max individual values, min/max sum values, and checking that entered values match specified string patterns. Any value in one of those fields is considered an expression, so you can have min/max criteria with complex conditional relationships to other questions.
+
+In all of these cases, since the advanced question attribute is always considered an expression, you do not use curly braces when specifying it.
+
+The [[ExpressionScript sample surveys|sample surveys]] page shows many working examples containing a variety of validation expressions.
+
+=ExpressionScript - presentation=
+
+
+To find out more about ExpressionScript and how you can use different expressions to enhance your survey, please click on the following [https://manual.limesurvey.org/ExpressionScript_-_Presentation link].

@@ -1,0 +1,80 @@
+<languages />
+
+__TOC__
+
+<div class="simplebox">[[File:help.png]] '''LimeSurvey 3''' introduces a complete new template engine system, based on [https://twig.symfony.com/ Twig 1.29] and [https://getbootstrap.com/ Bootstrap], and allowing template inheritance and template options. The frontend HTML page can be 100% customize to suit your needs.</div>
+
+
+{{Box|Install Limesurvey 3.0+ to get access to the survey '''theme options''' feature. This option are '''not''' available in the older LimeSurvey versions!}}
+
+{{Alert|text='''The following section is still under construction. If you wish to get a short introduction on the new theme system from LimeSurvey 3.x, please continue reading the following [[New_Template_System_in_LS3.x|wiki section]]. If you are still using LimeSurvey 2.x, please continue reading the following [[Theme editor|wiki section]] (we always recommend our users to upgrade their installations!).'''}}
+
+=Introduction=
+
+The '''theme options''' is available on LimeSurvey 3.x, and offers a set of various tools that allows the survey administrators to quickly and easily change the themes-related settings of their surveys.
+
+=Options to change a theme=
+There are two ways to use a theme in LimeSurvey 3.x, either through the global setting or through the theme option panel inside a survey.
+
+Changing the Theme from the '''global setting''' makes the chosen theme the default theme for all surveys you create.
+If the theme is changed for a particular survey using the '''Theme option panel''' inside the theme, only the theme for that particular survey is changed.
+
+==Global setting default theme==
+
+<center>[[File:default theme setting.png]]</center>
+
+==Theme options panel==
+This option changes the theme for a particular survey.
+To access the new '''theme options''' feature, go to the [[Survey settings|survey settings]]:
+
+<center>[[File:Survey menu - theme options.png]]</center>
+
+=Available list of themes=
+The list of themes available can be access from the Administration Dashboard. Configuration > Advanced > Themes <br>
+<center>[[File:list of themes.png|800px]]</center>
+
+
+The list is divided into 5 columns:
+*'''Preview of the theme:''' This shows how the theme will look like when used.
+*'''Theme title:''' Specifies the name of the theme.
+*'''Description of the themes:''' Users can always get more information about the theme using the URL on the description.
+*'''Type of theme:''' Core themes are themes provided with LimeSurvey and cannot be changed while User themes are extended themes added in upload directory by users.
+*'''Extends:''' if the theme extends other themes, the name of the extended theme will be displayed here.
+*'''Last Column with some action buttons:''' The last Column contains five buttons as shown on the image.
+The buttons are ways in which a theme can be edited and each button will be explained in details below,
+
+**'''Theme editor:''' it will redirect you to the theme editor
+**'''Theme options:''' it will lead you the global configuration of theme options
+**'''Uninstall:''' it will delete the configuration entries of a theme in the database
+**'''Install:''' it will load the manifest of a theme to add it to database and make it available for selection at the survey level
+**'''Reset:''' This will completely reset the theme.
+
+
+==Theme editor==
+The LimeSurvey '''core themes''' (default themes) cannot be modified. The "extend" button give users the opportunity for a core theme to be modified(extended).
+
+<div class="simplebox">[[File:help.png]] This documentation assumes you already know how to use the Template Editor in the previous version of LS. </div>
+
+The fruity theme is used for this demonstration on how to extend/modify a theme using the theme editor.
+
+When the theme editor button is clicked, the page below is displayed. The theme can be previewed using the "Previous" and "Next" buttons. The screen size can be adjusted to see how responsive the theme is on all devices.
+A new template can be imported or the current template can be exported as a zip file.
+
+
+
+
+<center>[[File:Theme editor button clicked.png|800px]]</center>
+<br>
+ The "Extend" button will ask for a new name to save a copy of the theme you want to modify. 
+ In our case, the fruity theme will be named "extends_fruity".<br>
+
+
+<center>[[File:extended theme edit.png|800px]]</center>
+
+==Theme inheritance overview==
+When a theme is extended, a copy of the original theme can easily be modified.
+In our case, we have a copy of the fruity theme saved as "extends_fruity" which will be available for use in the list of themes available.
+<div class="simplebox">[[File:help.png]] Modifying the theme is for advance users with basic knowledge of HTML, CSS and Twig.</div>
+
+=Development=
+[[File:theme_overview.jpg]]

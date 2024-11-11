@@ -1,0 +1,91 @@
+<languages /> 
+__TOC__
+
+=Short description=
+
+<div style="display:none;"></div>
+<onlyinclude>{{#ifeq:{{{transcludesection|short_description}}}|short_description|<div style="display:none;"></div>
+
+This question type is a variation on the "Short Text" question type which allows more than one text entry per question. The user first defines the question and can then add additional text boxes by adding 'Answers'. Each answer becomes the label of the new text box.
+
+
+<center>[[File:Q_MST.jpg]]</center>
+
+
+'''Example''': [[Media:Multiple_short_text_example.zip|Multiple_short_text_example.zip]]
+
+<div style="display:none;"></div>}}</onlyinclude><div style="display:none;"></div>
+
+=General options=
+
+{{QS:mandatory}}
+
+{{QS:relevance}}
+
+{{QS:preg_validation}}
+
+=Display=
+
+{{QS:Prefix}}
+
+{{QS:suffix}}
+
+{{QS:text_input_width}}
+
+{{QS:Label column width}}
+
+{{QS:Question theme}}
+
+{{QS:Hide_tip}}
+
+{{QS:display_rows}}
+
+{{QS:Random_order}}
+
+{{QS:input_box_size}}
+
+{{QS:Hidden}}
+
+{{QS:CSS Class}}
+
+=Input=
+
+{{QS:maximum_chars}}
+
+=Logic=
+
+{{QS:min_answers}}
+
+{{QS:max_answers}}
+
+{{QS:array_filter_exclude}}
+
+{{QS:array_filter_style}}
+
+{{QS:array_filter}}
+
+{{QS:Exclusive option}}
+
+{{QS:Random_group}}
+
+{{QS:em_validation_q}}
+
+{{QS:em_validation_q_tip}}
+
+{{QS:em_validation_sq}}
+
+{{QS:em_validation_sq_tip}}
+
+=Other=
+
+{{QS:numbers_only}}
+
+{{QS:Page_break}}
+
+=Statistics=
+
+{{QS:Display chart}}
+
+{{QS:Chart type}}
+
+[[Category:Question types]][[Category:Text questions]]
