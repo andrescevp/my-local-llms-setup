@@ -1,0 +1,196 @@
+{
+  "createdAt": "2024-11-13T01:48:58.454Z",
+  "updatedAt": "2024-11-13T02:05:44.000Z",
+  "id": "w5xCo10pXK4IZztE",
+  "name": "CFO",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "7fddf8cd-dac4-4031-b8f9-d8719e6001ac",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.manualChatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        740,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "f2abe60b-3455-4b0a-98e0-673ff7db04aa",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        680,
+        580
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "T5jdxSwNa48cKr5W",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "9c09b5b8-2768-4648-9026-bdd6fba50b8c",
+      "name": "Vector Store Tool",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        620
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "qdrantCollection": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "id": "6b3174a0-e434-4443-a06e-138921e319ef",
+      "name": "Qdrant Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreQdrant",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        840
+      ],
+      "credentials": {
+        "qdrantApi": {
+          "id": "VKgyjSSot7M1DnGY",
+          "name": "QdrantApi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:3b-instruct-q4_K_M",
+        "options": {}
+      },
+      "id": "af318ee6-2461-4123-9f74-2ec93a6a0e12",
+      "name": "Ollama Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        780
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "yk5ktUb1qUUVX5cC",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:3b-instruct-q4_K_M",
+        "options": {}
+      },
+      "id": "004532c5-4102-4bee-91ec-2647de476b08",
+      "name": "Ollama Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        940,
+        560
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "yk5ktUb1qUUVX5cC",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "efb7ac8e-eba6-4e88-98fb-8d1ebbf87453",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1040,
+        360
+      ]
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Vector Store Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Qdrant Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Vector Store Tool",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "7dec7d04-7355-418c-9c0c-3b6d09dd1ac5",
+  "triggerCount": 0,
+  "tags": []
+}

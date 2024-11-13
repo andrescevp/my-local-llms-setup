@@ -1,6 +1,6 @@
 {
   "createdAt": "2024-11-09T18:07:04.540Z",
-  "updatedAt": "2024-11-10T21:41:56.000Z",
+  "updatedAt": "2024-11-11T11:46:05.000Z",
   "id": "QcNgpKSw0nFwXEnK",
   "name": "Google Scrapper",
   "active": false,
@@ -40,6 +40,17 @@
       ]
     },
     {
+      "parameters": {},
+      "id": "5f4856f0-7059-4e13-ab15-ad4944266277",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        1080,
+        40
+      ]
+    },
+    {
       "parameters": {
         "workflowId": {
           "__rl": true,
@@ -62,29 +73,19 @@
       "alwaysOutputData": true
     },
     {
-      "parameters": {},
-      "id": "5f4856f0-7059-4e13-ab15-ad4944266277",
-      "name": "Execute Workflow Trigger",
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1,
-      "position": [
-        1080,
-        40
-      ]
-    },
-    {
       "parameters": {
         "resource": "Browser Rest Apis",
         "operation": "Scrape",
-        "url": "={{ $json.organic_results.link }}",
+        "url": "={{ $json.output.link }}",
         "elements": {
           "items": [
             {
               "selector": "body",
-              "timeout": 1000
+              "timeout": 5000
             }
           ]
         },
+        "waitForTimeout": 5000,
         "waitForSelector": {
           "items": {
             "selector": "body",
@@ -103,14 +104,15 @@
         1660,
         40
       ],
-      "alwaysOutputData": true,
+      "alwaysOutputData": false,
+      "retryOnFail": true,
       "credentials": {
         "browserlessApi": {
           "id": "9mIEXR9FRmqEku7t",
           "name": "Browserless Credentials account"
         }
       },
-      "onError": "continueErrorOutput"
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -119,7 +121,7 @@
             {
               "id": "a38246ef-4a9b-48a8-b3dc-2aef05e9e044",
               "name": "organic_results",
-              "value": "={{ $('Google Search').first().json.organic_results }}",
+              "value": "={{ $('Google Search').item.json.output }}",
               "type": "object"
             },
             {
@@ -132,7 +134,7 @@
         },
         "options": {}
       },
-      "id": "8f9f8f13-c927-4b68-8b9e-3c5416ef3861",
+      "id": "093b901e-3c71-4853-9607-48338bd9a6d5",
       "name": "Output",
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
@@ -201,7 +203,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "01a28118-ec93-4fd8-a34d-1e893ae53ab8",
+  "versionId": "a88588e1-d154-4d5c-9537-10724f5fc9dc",
   "triggerCount": 0,
   "tags": []
 }

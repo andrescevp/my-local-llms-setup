@@ -1,6 +1,6 @@
 {
   "createdAt": "2024-11-09T19:22:50.034Z",
-  "updatedAt": "2024-11-10T21:42:01.000Z",
+  "updatedAt": "2024-11-11T11:32:33.000Z",
   "id": "iJzOZiXtaGwfzClt",
   "name": "Google Search",
   "active": false,
@@ -171,29 +171,12 @@
     },
     {
       "parameters": {
-        "mode": "combine",
-        "fieldsToMatchString": "link",
-        "joinMode": "keepEverything",
-        "options": {}
-      },
-      "id": "effa2d0b-52fd-493a-b4d3-4e9f96a1ecc8",
-      "name": "Merge",
-      "type": "n8n-nodes-base.merge",
-      "typeVersion": 3,
-      "position": [
-        4360,
-        -40
-      ],
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
               "id": "b55d0b4b-2f00-4ff3-a307-8ad8425960b3",
-              "name": "organic_results",
-              "value": "={{ $json.organic_results }}",
+              "name": "output",
+              "value": "={{ $json }}",
               "type": "object"
             }
           ]
@@ -205,7 +188,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4540,
+        5040,
         -40
       ]
     },
@@ -286,8 +269,8 @@
     {
       "parameters": {
         "content": "## Pagination Block\n\nEdit Limit Node to increase the number of pages. 0 - No Pagination",
-        "height": 350.5232558139531,
-        "width": 1330.8720930232548
+        "height": 401.9651162790693,
+        "width": 1676.2674418604693
       },
       "id": "7883902f-ed37-4e43-af84-e5b8a4f8de3f",
       "name": "Sticky Note",
@@ -295,7 +278,7 @@
       "typeVersion": 1,
       "position": [
         2900,
-        160
+        128.55813953488376
       ]
     },
     {
@@ -309,6 +292,196 @@
       "position": [
         3380,
         280
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "effa2d0b-52fd-493a-b4d3-4e9f96a1ecc8",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        4580,
+        -40
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f0ae61ae-c1a3-4e26-89ed-0946bbec8ec2",
+              "name": "position",
+              "value": "={{ $json.organic_results.position }}",
+              "type": "number"
+            },
+            {
+              "id": "9256a026-3aa2-46e8-a549-4134c8933987",
+              "name": "title",
+              "value": "={{ $json.organic_results.title }}",
+              "type": "string"
+            },
+            {
+              "id": "8e2203be-7e38-4e00-af8c-5f688950203b",
+              "name": "link",
+              "value": "={{ $json.organic_results.link }}",
+              "type": "string"
+            },
+            {
+              "id": "5645139b-c833-41dd-8cd1-8a33c81fba6c",
+              "name": "redirect_link",
+              "value": "={{ $json.organic_results.redirect_link }}",
+              "type": "string"
+            },
+            {
+              "id": "123f9225-8e4a-47cb-95d5-aca437be5921",
+              "name": "displayed_link",
+              "value": "={{ $json.organic_results.displayed_link }}",
+              "type": "string"
+            },
+            {
+              "id": "58b204f3-cfac-42b8-98f0-d00becf9c08c",
+              "name": "favicon",
+              "value": "={{ $json.organic_results.favicon }}",
+              "type": "string"
+            },
+            {
+              "id": "c51de78e-d791-4606-a12d-79a404b537b5",
+              "name": "snippet",
+              "value": "={{ $json.organic_results.snippet }}",
+              "type": "string"
+            },
+            {
+              "id": "698561eb-c35c-4cda-87db-8626bfa79a2f",
+              "name": "snippet_highlighted_words",
+              "value": "={{ $json.organic_results.snippet_highlighted_words }}",
+              "type": "array"
+            },
+            {
+              "id": "f3d28a52-3283-480a-b3da-1c271565caf2",
+              "name": "source",
+              "value": "={{ $json.organic_results.source }}",
+              "type": "string"
+            },
+            {
+              "id": "4f6f91db-3b6e-4e96-8f20-b3861a4d1029",
+              "name": "date",
+              "value": "={{ $json.organic_results.date }}",
+              "type": "string"
+            },
+            {
+              "id": "7d1042b4-6c9c-4e7e-852e-b8dfefcd8771",
+              "name": "page",
+              "value": "1",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d277be18-7745-43fe-b2de-69e42372fb57",
+      "name": "Add page",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3380,
+        -60
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0cd41177-df1f-4bab-93b4-a3273ee80af3",
+              "name": "position",
+              "value": "={{ $json.position }}",
+              "type": "number"
+            },
+            {
+              "id": "b77f8a41-5ec0-4db8-8669-0ce4012ee002",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "94b3cd9d-ea6e-40d8-9cb8-f074b75c1dfd",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "de51a2bc-626b-4dbe-963c-bb1ca1506d27",
+              "name": "redirect_link",
+              "value": "={{ $json.redirect_link }}",
+              "type": "string"
+            },
+            {
+              "id": "f6b0e5e9-951f-4395-bb8b-89fc94f29bdb",
+              "name": "displayed_link",
+              "value": "={{ $json.displayed_link }}",
+              "type": "string"
+            },
+            {
+              "id": "8fd916ed-82d0-4b11-8fea-980419cd2249",
+              "name": "favicon",
+              "value": "={{ $json.favicon }}",
+              "type": "string"
+            },
+            {
+              "id": "ed256933-c46b-493c-8607-4f797ec45989",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "a03962b2-04b0-4014-83d3-4a2a6515c2ac",
+              "name": "snippet",
+              "value": "={{ $json.snippet }}",
+              "type": "string"
+            },
+            {
+              "id": "7d7629b1-7d33-40ca-b884-7b96a107b96d",
+              "name": "snippet_highlighted_words",
+              "value": "={{ $json.snippet_highlighted_words }}",
+              "type": "array"
+            },
+            {
+              "id": "a632fdb5-0aa2-4331-9c24-8e47f1fde6e2",
+              "name": "source",
+              "value": "={{ $json.source }}",
+              "type": "string"
+            },
+            {
+              "id": "96d143e7-7080-4e12-b7d2-3ccae02c5ac5",
+              "name": "thumbnail",
+              "value": "={{ $json.thumbnail }}",
+              "type": "string"
+            },
+            {
+              "id": "9937b044-148b-47b9-8bfd-9801c55525da",
+              "name": "duration",
+              "value": "={{ $json.duration }}",
+              "type": "string"
+            },
+            {
+              "id": "7b2d7339-a2b4-49bf-8f03-191ef9b3ec4f",
+              "name": "page",
+              "value": "={{ $('Pagination Limit').item['pairedItem']['item'] + 2 }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ebd3e758-21cf-4a4d-8fb3-39272b5401c8",
+      "name": "Add Page Pagination",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        4400,
+        160
       ]
     }
   ],
@@ -377,7 +550,7 @@
       "main": [
         [
           {
-            "node": "Merge",
+            "node": "Add page",
             "type": "main",
             "index": 0
           }
@@ -399,29 +572,7 @@
       "main": [
         [
           {
-            "node": "Merge",
-            "type": "main",
-            "index": 1
-          }
-        ]
-      ]
-    },
-    "Merge": {
-      "main": [
-        [
-          {
-            "node": "Output",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Execute Workflow Trigger": {
-      "main": [
-        [
-          {
-            "node": "SerpAPI Search - Page 1",
+            "node": "Add Page Pagination",
             "type": "main",
             "index": 0
           }
@@ -461,11 +612,6 @@
         ]
       ]
     },
-    "Edit Fields": {
-      "main": [
-        []
-      ]
-    },
     "Pagination Limit": {
       "main": [
         [
@@ -473,6 +619,55 @@
             "node": "Get Page",
             "type": "main",
             "index": 0
+          },
+          {
+            "node": "Add Page Pagination",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "SerpAPI Search - Page 1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add page": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add Page Pagination": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
           }
         ]
       ]
@@ -486,7 +681,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "89a45e73-19ee-4a18-977f-3496bccb3ae2",
+  "versionId": "c8aae006-8f1a-49c8-96fa-5ba1e5e65ce0",
   "triggerCount": 0,
   "tags": []
 }

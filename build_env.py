@@ -63,10 +63,10 @@ class Installer:
     def check_service(self, service_name, docker_name):
         if subprocess.call(f"docker ps -q -f name={docker_name}", shell=True) == 0:
             if (
-                input(
-                    f"{service_name} is already running. Do you want to rebuild the Docker image? (y/n): "
-                ).lower()
-                == "y"
+                    input(
+                        f"{service_name} is already running. Do you want to rebuild the Docker image? (y/n): "
+                    ).lower()
+                    == "y"
             ):
                 self.log(f"Rebuilding {service_name}...")
                 subprocess.call(
@@ -118,7 +118,7 @@ class Installer:
             n8n_args = "-p 5678:5678 --add-host=host.docker.internal:host-gateway"
         for choice in self.choices:
             if choice == "OpenWebUIGPU" and self.check_service(
-                "OpenWebUI (GPU)", "open-webui"
+                    "OpenWebUI (GPU)", "open-webui"
             ):
                 self.log("Installing OpenWebUI (GPU)...")
                 command = f"""
@@ -137,7 +137,7 @@ ghcr.io/open-webui/open-webui:cuda
                     shell=True,
                 )
             elif choice == "OpenWebUI" and self.check_service(
-                "OpenWebUI", "open-webui"
+                    "OpenWebUI", "open-webui"
             ):
                 command = f"""
 docker run -d 
@@ -155,7 +155,7 @@ ghcr.io/open-webui/open-webui:main
                     shell=True,
                 )
             elif choice == "OpenWebUI Pipelines" and self.check_service(
-                "OpenWebUI Pipelines", "open-webui-pipelines"
+                    "OpenWebUI Pipelines", "open-webui-pipelines"
             ):
                 self.log("Installing OpenWebUI Pipelines...")
                 command = f"""
@@ -284,7 +284,7 @@ qdrant/qdrant
                     shell=True,
                 )
             elif choice == "Browserless" and self.check_service(
-                "Browserless", "browserless"
+                    "Browserless", "browserless"
             ):
                 self.log("Installing Browserless...")
                 command = f"""
@@ -294,7 +294,9 @@ docker run -d
 -e "CORS=true" 
 -e "CORS_MAX_AGE=300" 
 -e "TOKEN=6R0W53R135510" 
+-e "CONCURRENT=100" 
 -v {self.base_dir}/browserless:/root
+--restart always 
 --name browserless 
 ghcr.io/browserless/chromium
 """

@@ -1,6 +1,6 @@
 {
   "createdAt": "2024-11-09T01:56:25.245Z",
-  "updatedAt": "2024-11-10T21:41:25.000Z",
+  "updatedAt": "2024-11-11T12:28:19.000Z",
   "id": "bOHJfQ0TMuWs950I",
   "name": "Competitors Research",
   "active": false,
@@ -44,28 +44,6 @@
         340
       ],
       "typeVersion": 3.3
-    },
-    {
-      "parameters": {
-        "model": "gpt-4o-mini",
-        "options": {
-          "temperature": 0.7
-        }
-      },
-      "id": "7d5d53ac-6d3c-4b24-97c7-deb6b76749e5",
-      "name": "OpenAI Chat Model",
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "position": [
-        3060,
-        420
-      ],
-      "typeVersion": 1,
-      "credentials": {
-        "openAiApi": {
-          "id": "T5jdxSwNa48cKr5W",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -128,7 +106,10 @@
           "mode": "list",
           "cachedResultName": "Google Scrapper"
         },
-        "options": {}
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
       },
       "id": "d5539ba4-8bbd-4e2a-82df-96e74807d30f",
       "name": "Scrappe Google Results",
@@ -138,7 +119,7 @@
         2060,
         -80
       ],
-      "alwaysOutputData": true
+      "alwaysOutputData": false
     },
     {
       "parameters": {
@@ -153,7 +134,7 @@
       "typeVersion": 1,
       "position": [
         2800,
-        100
+        120
       ],
       "credentials": {
         "openAiApi": {
@@ -199,7 +180,7 @@
             {
               "id": "3b096102-8cf1-408b-aeb0-307f8c35807b",
               "name": "Company",
-              "value": "={{ $('Input').first().json.company_input }}",
+              "value": "={{ $('Input').item.json.company_input }}",
               "type": "string"
             }
           ]
@@ -214,6 +195,120 @@
         3160,
         -80
       ]
+    },
+    {
+      "parameters": {
+        "maxItems": 3
+      },
+      "id": "92a81d89-2e2b-4c80-9a51-69f533a2b396",
+      "name": "Limit",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        2280,
+        -80
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b32be09a-3980-42f1-8908-418591a3d8b9",
+              "leftValue": "={{ $json.data[0].results[0].text }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "34628a41-830b-440c-be58-55c3a29a2c74",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2480,
+        -80
+      ],
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "id": "4e122e43-fed9-43fe-bc54-46bc95acafd5",
+      "name": "No Operation, do nothing",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "documentId": {
+          "__rl": true,
+          "value": "184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI",
+          "mode": "list",
+          "cachedResultName": "Competencia Research",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit?usp=drivesdk"
+        },
+        "title": "=output",
+        "options": {}
+      },
+      "id": "542eb35f-3372-4d28-a042-f1b22cfe7e6e",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1680,
+        380
+      ],
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=Website url: {{ $json.organic_results.link }}\nWebsite snippet: {{ $json.organic_results.snippet }}\nGoogle Page: {{ $json.organic_results.page }}\nPosition in page: {{ $json.organic_results.position }}\nSource: {{ $json.organic_results.source }}\nTEXT TO ANALIZE:\n{{ $json.data[0].results[0].text }}",
+        "options": {
+          "systemMessage": "You are a SEO Expert Assitant Analize websites text content of competitors to help to create my company in Spain. Your duty is create human format deep and detailed SEO analysis based ONLY in the text. Additionally to your deep analysis as expert make sure to cover if they are B2B or B2C. Answer only with \"B2B\" or \"B2B\" or \"B2B2C\", the lowest paid plan the company offers, if the company offers an API, if the company has an enterprise plan, if the company has a free trial mentioned on their homepage. Answer false if you can't find solid evidence, Does it have integrations with other services like zappier or salesforce? Pricing summary, list of company or service strengths, detailed analysis of the post so I can use it as a reference on my own website, it must contain keywords, content quality, relevance based on your knowledge, length, etc. Please use Spanish to answer and only the report in human format with formal spell.\nANSWER TEMPLATE EXAMPLE:\n```\nSEO Analysis:\nLong and deep analysis..\n...\n..\n\nAditionals points:\n- aditional point 1\n```",
+          "maxIterations": 20,
+          "returnIntermediateSteps": false
+        }
+      },
+      "id": "088aa2d2-580b-41fa-8a08-0058b4d5e8c1",
+      "name": "Contet Summarizer",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        2780,
+        -80
+      ],
+      "alwaysOutputData": true,
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
     },
     {
       "parameters": {
@@ -304,78 +399,6 @@
     },
     {
       "parameters": {
-        "maxItems": 5
-      },
-      "id": "92a81d89-2e2b-4c80-9a51-69f533a2b396",
-      "name": "Limit",
-      "type": "n8n-nodes-base.limit",
-      "typeVersion": 1,
-      "position": [
-        2280,
-        -80
-      ]
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "b32be09a-3980-42f1-8908-418591a3d8b9",
-              "leftValue": "={{ $json.data[0].results[0].text }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "id": "34628a41-830b-440c-be58-55c3a29a2c74",
-      "name": "If",
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        2480,
-        -80
-      ],
-      "alwaysOutputData": true
-    },
-    {
-      "parameters": {},
-      "id": "4e122e43-fed9-43fe-bc54-46bc95acafd5",
-      "name": "No Operation, do nothing",
-      "type": "n8n-nodes-base.noOp",
-      "typeVersion": 1,
-      "position": [
-        2460,
-        160
-      ]
-    },
-    {
-      "parameters": {
-        "jsonSchemaExample": "{\n  \"properties\": {\n    \"is_official_site\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"market\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"cheapest_plan\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"has_API\": {\n      \"type\": [\"boolean\", \"null\"]\n    },\n    \"has_enterprise_plan\": {\n      \"type\": [\"boolean\", \"null\"]\n    },\n    \"has_free_trial\": {\n      \"type\": [\"boolean\", \"null\"]\n    },\n    \"integrations\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": [\"string\", \"null\"]\n      }\n    },\n    \"pricing\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"analysis\": {\n      \"type\": [\"string\", \"null\"]\n    },\n    \"strong_points\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": [\"string\", \"null\"]\n      }\n    },\n    \"weak_points\": {\n      \"type\": \"array\",\n      \"items\": {\n        \"type\": [\"string\", \"null\"]\n      }\n    }\n  }\n}"
-      },
-      "id": "f7e4fddf-728b-4bea-b79b-7c456db436e6",
-      "name": "Structured Output Parser",
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.2,
-      "position": [
-        3400,
-        460
-      ]
-    },
-    {
-      "parameters": {
         "assignments": {
           "assignments": [
             {
@@ -399,7 +422,7 @@
             {
               "id": "0c747013-926d-4820-9908-acd95f22f0dd",
               "name": "original_text",
-              "value": "={{ $('If').item.json.data[0].results[0].text }}",
+              "value": "={{ $('If').item.json.data[0].results[0].text.length > 5000 ? $('If').item.json.data[0].results[0].text.slice(0, 4900)+'...[truncated] check link' : $('If').item.json.data[0].results[0].text }}",
               "type": "string"
             },
             {
@@ -407,6 +430,18 @@
               "name": "keywords",
               "value": "={{ $('If').item.json.organic_results.snippet_highlighted_words }}",
               "type": "array"
+            },
+            {
+              "id": "f05089b1-a2e2-4c39-bc18-e7f0305c39c8",
+              "name": "page",
+              "value": "={{ $('If').item.json.organic_results.page }}",
+              "type": "string"
+            },
+            {
+              "id": "999f0a41-8b50-4b82-9cc2-d6b5c756dab0",
+              "name": "position",
+              "value": "={{ $('If').item.json.organic_results.position }}",
+              "type": "number"
             }
           ]
         },
@@ -420,23 +455,6 @@
         3440,
         -80
       ]
-    },
-    {
-      "parameters": {
-        "mode": "raw",
-        "jsonOutput": "{\n\"link\":null,\n\"company\":null,\n\"text_analysis\": null,\n\"original_text\": null,\n\"keywords\": null\n}\n",
-        "includeOtherFields": "=",
-        "options": {}
-      },
-      "id": "f503c52f-c09d-4754-9569-7a310c2b99fe",
-      "name": "Edit Fields",
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        1940,
-        360
-      ],
-      "alwaysOutputData": true
     },
     {
       "parameters": {
@@ -479,52 +497,18 @@
     },
     {
       "parameters": {
-        "operation": "create",
-        "documentId": {
-          "__rl": true,
-          "value": "184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI",
-          "mode": "list",
-          "cachedResultName": "Competencia Research",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/184ozG9Tcq145jMfgPO10Iah3XO0qeXhLSSyNMpDsmZI/edit?usp=drivesdk"
-        },
-        "title": "=output",
+        "mode": "raw",
+        "jsonOutput": "{\n\"link\":null,\n\"company\":null,\n\"text_analysis\": null,\n\"original_text\": null,\n\"keywords\": null\n}\n",
+        "includeOtherFields": "=",
         "options": {}
       },
-      "id": "542eb35f-3372-4d28-a042-f1b22cfe7e6e",
-      "name": "Google Sheets",
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.5,
+      "id": "f503c52f-c09d-4754-9569-7a310c2b99fe",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        1680,
-        380
-      ],
-      "alwaysOutputData": true,
-      "executeOnce": false,
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "wjFOa1acipWvz1if",
-          "name": "Google Sheets account"
-        }
-      },
-      "onError": "continueErrorOutput"
-    },
-    {
-      "parameters": {
-        "agent": "conversationalAgent",
-        "promptType": "define",
-        "text": "=You are a SEO Expert Assitant Analize websites text content of competitors to help to create my company in Spain. Your duty is create human format deep and detailed SEO analysis based ONLY in the text. Additionally to your deep analysis as expert make sure to cover:\nsi son B2B o B2C. Responde solo con \"B2B\" o \"B2B\" o \"B2B2C\"\nel plan pago más bajo que ofrece la empresa. Si no estás seguro, responde null.\ndime si la empresa ofrece una API\ndime si la empresa tiene un plan empresarial\ndime si la empresa tiene una prueba gratuita mencionada en su página de inicio. Responde false si no encuentras evidencia sólida.\nTiene integraciones con otros servios como zappier o salesforce?\nresumen de precios\nLista de Puntos fuertes de la empresa o servicio\nAnálisis detallado de la publicacion para poder usarla como referencia en mi propia web, debe contener keywords, calidad del contenido, relenvancia en base a tu conocimiento, longitud, etc\nPlease use Spanish to answer and only the report in human format with formal spell.\nEXPETED ANSWER:\n```\nSEO Analysis:\nLong and deep analysis..\n...\n..\n\nAditionals points:\n- aditional point 1\n```\n\nWebsite url: {{ $json.organic_results.link }}\nWebsite snippet: {{ $json.organic_results.snippet }}\nTEXT TO ANALIZE:\n{{ $json.data[0].results[0].text }}",
-        "options": {
-          "maxIterations": 20,
-          "returnIntermediateSteps": false
-        }
-      },
-      "id": "088aa2d2-580b-41fa-8a08-0058b4d5e8c1",
-      "name": "Contet Summarizer",
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.6,
-      "position": [
-        2780,
-        -80
+        1940,
+        360
       ],
       "alwaysOutputData": true
     }
@@ -652,28 +636,6 @@
         ]
       ]
     },
-    "Edit Fields2": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets3",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields": {
-      "main": [
-        [
-          {
-            "node": "Google Sheets1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Google Sheets": {
       "main": [
         [
@@ -695,6 +657,28 @@
           }
         ]
       ]
+    },
+    "Edit Fields2": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {},
@@ -704,7 +688,7 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "24a65e82-2335-4897-91d4-dfda3cb07750",
+  "versionId": "cda8d65b-90f2-4e09-883d-e6b48831c805",
   "triggerCount": 0,
   "tags": []
 }

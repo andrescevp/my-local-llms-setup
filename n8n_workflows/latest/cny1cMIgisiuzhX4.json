@@ -1,0 +1,708 @@
+{
+  "createdAt": "2024-11-12T00:46:43.241Z",
+  "updatedAt": "2024-11-13T12:25:27.000Z",
+  "id": "cny1cMIgisiuzhX4",
+  "name": "Clientes oQuanta Scrapper",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5e3c2aec-1fd4-4ad9-a03e-514a6713c192",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        820,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA",
+          "mode": "list",
+          "cachedResultName": "empresas auto",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2017338988,
+          "mode": "list",
+          "cachedResultName": "1.Datos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit#gid=2017338988"
+        },
+        "options": {}
+      },
+      "id": "c8c12662-dd3d-4162-895b-2185d195ffb1",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        1040,
+        360
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA",
+          "mode": "list",
+          "cachedResultName": "empresas auto",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2017338988,
+          "mode": "list",
+          "cachedResultName": "1.Datos",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1f1Tanuse6SZrVm4u204EXIggM1KeWvFhJvt1tl14KBA/edit#gid=2017338988"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "ID": "={{ $json.ID }}"
+          },
+          "matchingColumns": [
+            "ID"
+          ],
+          "schema": [
+            {
+              "id": "ID",
+              "displayName": "ID",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Empresa",
+              "displayName": "Nombre_Empresa",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Direccion",
+              "displayName": "Direccion",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CODIGO_POSTAL",
+              "displayName": "CODIGO_POSTAL",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "MUNICIPIO",
+              "displayName": "MUNICIPIO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PROVINCIA",
+              "displayName": "PROVINCIA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "AUTONOMIA",
+              "displayName": "AUTONOMIA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefono",
+              "displayName": "Telefono",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Nombre_Administrador",
+              "displayName": "Nombre_Administrador",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Cargo_decodificado",
+              "displayName": "Cargo_decodificado",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "GMAPS LINK",
+              "displayName": "GMAPS LINK",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "NOMBRE_NEGOCIO",
+              "displayName": "NOMBRE_NEGOCIO",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "PUNTUACION_GOOGLE MAPS",
+              "displayName": "PUNTUACION_GOOGLE MAPS",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "OBSERVACIONES",
+              "displayName": "OBSERVACIONES",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "site_name",
+              "displayName": "site_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "place_id",
+              "displayName": "place_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "data_id",
+              "displayName": "data_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "data_cid",
+              "displayName": "data_cid",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviews_link",
+              "displayName": "reviews_link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "gps_coordinates",
+              "displayName": "gps_coordinates",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "reviews",
+              "displayName": "reviews",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "types",
+              "displayName": "types",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "address",
+              "displayName": "address",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "hours",
+              "displayName": "hours",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "operating_hours",
+              "displayName": "operating_hours",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "site_phone",
+              "displayName": "site_phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "website",
+              "displayName": "website",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "service_options",
+              "displayName": "service_options",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7334b6fe-4606-4116-8d80-d44db5c3a303",
+      "name": "Google Sheets1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        3660,
+        360
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "wjFOa1acipWvz1if",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "maxItems": 5
+      },
+      "id": "2dd90317-1fdd-4bb2-8e28-dfbb9c22a90b",
+      "name": "Limit",
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        360
+      ],
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d0497ea5-ae7f-4411-8d31-7fd694bb8140",
+              "leftValue": "={{ $json.website }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ba52b9f5-2667-4078-880d-65b8735fef70",
+      "name": "If",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1260,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "3e61cb8d-d6bb-48a8-bd9f-b93a153495d8",
+      "name": "Merge",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        2340,
+        380
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 1
+        }
+      },
+      "id": "88ceb45a-439c-48c2-a19d-8df79db96489",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        2760,
+        660
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "T5jdxSwNa48cKr5W",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "30b602dd-2ca2-4673-a7f8-5931e3c45e27",
+              "name": "ID",
+              "value": "={{ $json.ID }}",
+              "type": "number"
+            },
+            {
+              "id": "54979ad1-bacc-43f0-9d26-045ced340a15",
+              "name": "row_number",
+              "value": "={{ $json.row_number }}",
+              "type": "number"
+            },
+            {
+              "id": "92f10edd-cd1e-4d9e-9745-e79d5f4a6e15",
+              "name": "prospecto_ventas",
+              "value": "={{ $json.output }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8d1e0981-54a4-4e2f-91bd-9101f72ec530",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        3400,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineByPosition",
+        "options": {}
+      },
+      "id": "2dbacf80-21c6-47c3-af75-dac6c0d11261",
+      "name": "Merge1",
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3,
+      "position": [
+        3180,
+        360
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "Browser Rest Apis",
+        "operation": "Scrape",
+        "url": "={{ $json.website }}",
+        "elements": {
+          "items": [
+            {
+              "selector": "body",
+              "timeout": 4000
+            }
+          ]
+        },
+        "waitForTimeout": 5000,
+        "requestOptions": {
+          "batching": {
+            "batch": {
+              "batchSize": 5,
+              "batchInterval": 6000
+            }
+          }
+        }
+      },
+      "id": "ddb27b55-358c-4c3b-bff8-cff349aa8738",
+      "name": "Browserless",
+      "type": "n8n-nodes-browserless.browserless",
+      "typeVersion": 2,
+      "position": [
+        1960,
+        480
+      ],
+      "retryOnFail": true,
+      "credentials": {
+        "browserlessApi": {
+          "id": "9mIEXR9FRmqEku7t",
+          "name": "Browserless Credentials account"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=Nombre del negocio: {{ $json.site_name }}\nrating: {{ $json.rating }}\nnumero de reviews: {{ $json.reviews }}\ntipos: {{ $json.types }}\nhorario: {{ $json.operating_hours }}\nContenido de su sitio web:\n\"\"\"\n{{ $json.data[0].results[0].text }}\n\"\"\"",
+        "options": {
+          "systemMessage": "You are an expert in SaaS sales for the hospitality sector.\nYour duty is to analyze the information of a business help me tu success my SaaS company in Spain and create 1 Millon dolars the first year.\nTo do so you must create a hyper-personalized sales proposal from my product to the company given, minimal 1000 words, must include a face-to-face visit script and a telephone call script. Properly contextualize the content of the wbesite, taking into account situations such as old sites, sites under construction, or third-party sites that are used by companies to host their website. \nOur products are:\nStandard satisfaction surveys for restaurants and personalized\nAutomated promotions of the premises' offers on their social networks.\nGoogle review trainer through a gamified interface where consumers receive prizes that the business chooses at their convenience and collecting one or two questions along the way.\nAnalysis and monitoring of reviews on Google Maps.\nAnswering machine for reviews on Google Maps.\nChatbot on Whatsapp that answers questions and makes reservations at the restaurant.\nYour response MUST BE in a human format and with a Spanish friendly formal tone to create trust, do your duty even if you do not have enough information using a standard prospectus, make sure you always include all the propected information required.",
+          "maxIterations": 5
+        }
+      },
+      "id": "006a10d3-c913-44eb-8d96-a15e15c4fce9",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        2780,
+        460
+      ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "onError": "continueRegularOutput"
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Browserless",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Limit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Browserless": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "a3dc0759-9d35-4ba0-a67b-46efabaf97ed",
+  "triggerCount": 0,
+  "tags": []
+}

@@ -1,0 +1,275 @@
+{
+  "createdAt": "2024-11-11T23:25:14.725Z",
+  "updatedAt": "2024-11-12T00:38:02.000Z",
+  "id": "bPyjXsBs5E7DRW0S",
+  "name": "Google Reviews",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "9caf3fcb-7e34-47c0-af10-74711f59b2f7",
+      "name": "When clicking ‘Test workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        860,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0f49ea4-15e3-4b07-bd77-6a730f8e7560",
+              "name": "review",
+              "value": "El sitio es algo pequeño, la variedad de pinchos y comidas y platos y bebidas es inmensa y de precio genial, a mí lo que no me cuadra mucho es el ambiente que suele haber y la iluminación, a veces tengo la sensación más de un bar ser un after....La atención también correcta",
+              "type": "string"
+            },
+            {
+              "id": "5292020b-c5db-4d89-8c24-4f36068185a6",
+              "name": "rate",
+              "value": "3.5",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5ecb9718-ea60-49f3-b811-b623e4d6afc8",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1200,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o-mini",
+        "options": {
+          "temperature": 0.5
+        }
+      },
+      "id": "1aac7a68-390b-4f55-ae11-85c67fdea19c",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1640,
+        800
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "T5jdxSwNa48cKr5W",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"product-service-quality\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    },\n    \"customer-experience\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\"\n      ]\n    },\n    \"ambience-decoration\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    },\n    \"price-value\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    },\n    \"customer-service\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    },\n    \"cleanliness-hygiene\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    },\n    \"innovation-originality\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    },\n    \"location-access\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"rate\": {\n          \"type\": [\"number\", \"null\"]\n        },\n        \"message\": {\n          \"type\": [\"string\", \"null\"]\n        },\n        \"improve\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        },\n        \"well_done\": {\n          \"type\": \"array\",\n          \"items\": {\n            \"type\": [\"string\", \"null\"]\n          }\n        }\n      },\n      \"required\": [\n        \"rate\",\n        \"message\",\n        \"improve\",\n        \"well_done\"\n      ]\n    }\n  },\n  \"required\": [\n    \"product-service-quality\",\n    \"customer-experience\",\n    \"ambience-decoration\",\n    \"price-value\",\n    \"customer-service\",\n    \"cleanliness-hygiene\",\n    \"innovation-originality\",\n    \"location-access\"\n  ]\n}"
+      },
+      "id": "953e97cb-59f6-48fe-937c-3dec6c37feff",
+      "name": "Structured Output Parser",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.2,
+      "position": [
+        1940,
+        800
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "output",
+        "options": {}
+      },
+      "id": "12317eb2-bc9b-4848-a6e4-ab78b663f952",
+      "name": "Split Out",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        2020,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5fc8fd82-55b4-436f-acff-8945b7d55fa0",
+              "name": "product-service-quality",
+              "value": "={{ $json['product-service-quality'] }}",
+              "type": "object"
+            },
+            {
+              "id": "1ce6b7f6-422f-435a-af34-9fa0d4ea70c7",
+              "name": "customer-experience",
+              "value": "={{ $json['customer-experience'] }}",
+              "type": "object"
+            },
+            {
+              "id": "9472db6e-0da6-462a-97f7-553ec0129a72",
+              "name": "ambience-decoration",
+              "value": "={{ $json['ambience-decoration'] }}",
+              "type": "object"
+            },
+            {
+              "id": "9daf7028-7aef-42ae-b2bb-495b1326297b",
+              "name": "price-value",
+              "value": "={{ $json['price-value'] }}",
+              "type": "object"
+            },
+            {
+              "id": "bae05cc3-f267-4a48-b75d-58d7aca202b9",
+              "name": "customer-service",
+              "value": "={{ $json['customer-service'] }}",
+              "type": "object"
+            },
+            {
+              "id": "c38b5372-8aaf-4b9e-bd63-0afc06269fb4",
+              "name": "cleanliness-hygiene",
+              "value": "={{ $json['cleanliness-hygiene'] }}",
+              "type": "object"
+            },
+            {
+              "id": "9db2bd04-de3a-4d02-8f19-80e7d27ae77f",
+              "name": "innovation-originality",
+              "value": "={{ $json['innovation-originality'] }}",
+              "type": "object"
+            },
+            {
+              "id": "2290461e-1c67-4543-9aae-6adcfd7cba8e",
+              "name": "location-access",
+              "value": "={{ $json['location-access'] }}",
+              "type": "object"
+            },
+            {
+              "id": "744682a2-7330-4270-875e-494f9820014e",
+              "name": "review",
+              "value": "={{ $('Edit Fields').item.json.review }}",
+              "type": "string"
+            },
+            {
+              "id": "9e50a558-6cac-4ab6-a3ae-4ee40d01de29",
+              "name": "rate",
+              "value": "={{ $('Edit Fields').item.json.rate }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "be366041-dc6b-4fb9-9f8b-dfaf0c629920",
+      "name": "Edit Fields1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2240,
+        580
+      ]
+    },
+    {
+      "parameters": {
+        "agent": "conversationalAgent",
+        "promptType": "define",
+        "text": "=Rating Original: `{{ $json.rate }}`\nReview: `{{ $json.review }}`",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Eres un experto virtual en hostelería y restaurantes, propietario de un hotel-restaurante de 5 estrellas en Burgos, España. \nEstas capacitado para analizar reseñas de clientes y brindar recomendaciones y puntuaciones para mejorar diferentes dimensiones de los negocios del sector de hostelería, hotelería y turismo utilizando EXCLUSIVAMENTE el texto y la puntuacion original de la review para balancear tus puntuaciones.\nTu objetivo y deber es ayudar a los propietarios a mejorar la calidad de sus establecimientos y alcanzar altos estándares de excelencia en todos los aspectos relevantes para el éxito del negocio.\nproduct-service-quality: \"Examina y analiza las reseñas en busca de comentarios relacionados con la calidad de los alimentos, bebidas y otros servicios que ofrece el bar. \nPresta atención a la satisfacción general de los clientes con los productos y servicios, así como a comentarios específicos sobre la presentación, sabor, variedad y precio de los productos.\nCentrate únicamente en los productos y servicios del restaurante obviando otro tipo de comentarios.\"\ncustomer-experience: Examina y analiza las reseñas en busca de comentarios sobre la experiencia general de los clientes en el bar. Busca comentarios sobre la atención al cliente, la cortesía y amabilidad del personal, la velocidad del servicio en mesa, en barra, servicio de entrega a domicilio y otros servicios que se mencionen. También es útil saber si los clientes se sintieron atendidos y si sus necesidades fueron atendidas adecuadamente. Centrate unicamente en la experiencia del cliente del negocio obiando otro tipo de comentarios.\nambience-decoration: Examina y analiza las reseñas sobre el ambiente fisico, la ambientacion y la decoración pueden ser importantes para atraer y retener clientes. Observa si los clientes destacan la atmósfera del bar, la comodidad de los asientos, la música, la iluminación y otros elementos que contribuyan a la experiencia general.\nprice-value: Examina y analiza las reseñas sobre los precios y el valor percibido de los productos y servicios. Presta atención a si los clientes consideran que los precios son razonables en relación con la calidad, porciones, opciones de menú y la experiencia proporcionada.\ncustomer-service: Examina y analiza las reseñas relacionadas con el servicio al cliente, como la rapidez en la atención, la capacidad de respuesta a solicitudes especiales, la atención personalizada y la resolución de problemas. Estos aspectos pueden influir en la satisfacción general de los clientes y su disposición a regresar.\ncleanliness-hygiene: Examina y analiza las reseñas sobre la limpieza y la higiene del bar. Los clientes valoran un ambiente limpio y seguro, por lo que es importante identificar cualquier preocupación o halagos relacionados con la limpieza de las mesas, baños y áreas comunes.\ninnovation-originality: Examina y analiza las reseñas que destaquen la originalidad y la innovación en términos de concepto, menú, promociones especiales u otros aspectos distintivos del bar. Estos comentarios pueden ayudarte a evaluar la diferenciación del negocio en el mercado y su atractivo para los clientes.\nlocation-access: \"Examina y analiza las reseñas en busca de informacion sobre la ubicación del bar y la facilidad de acceso: la proximidad a lugares de interés, la seguridad de la zona, la disponibilidad de estacionamiento y el acceso al transporte público.\nCentrate únicamente en  la ubicación del bar y la facilidad de acceso del restaurante.\"\nOtorga una puntiacion a cada elemento de la lista. La puntuacion nunca es negativa. Una percepcion de calidad muy alta corresponde a un 5 mientras que una percepcion muy baja corresponde a un 1, utiliza `null` si no se puede obtener una puntuacion a partir del texto. Se deben considerar los puntos fuertes y los puntos a mejorar para dar una puntuacion lo mas cercana a la realidad posible."
+        }
+      },
+      "id": "f9c43eb7-b8db-4a40-8c52-fa7a40500799",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        1640,
+        580
+      ],
+      "retryOnFail": true
+    }
+  ],
+  "connections": {
+    "When clicking ‘Test workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Split Out",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "5f7e7e37-c16d-4543-88fd-d9e71aac6f09",
+  "triggerCount": 0,
+  "tags": []
+}
